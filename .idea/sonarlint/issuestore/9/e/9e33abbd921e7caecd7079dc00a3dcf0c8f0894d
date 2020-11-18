@@ -1,0 +1,6 @@
+
+T	java:S106""9Replace this use of System.out or System.err by a logger.(Î…Ôu8â◊¬µ›.
+c
+java:S2789!"FEnsure this "Optional" could never be null and remove this null-check.(ûõπë8â◊¬µ›.
+Z
+java:S3655%">Call "optionalArticle.isPresent()" before accessing the value.(Çœ‰O8ù¿√µ›.
