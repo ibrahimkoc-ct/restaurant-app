@@ -1,0 +1,17 @@
+
+T
+java:S1128"2Remove this unused import 'com.ba.entity.Product'.(«ŒÒÿÿÿÿÿ8á¡Ş.
+b
+java:S1128"@Remove this unused import 'com.ba.repository.ProductRepository'.(ñ¶—øÿÿÿÿ8“ø‰ŒŞ.
+T	java:S106$"9Replace this use of System.out or System.err by a logger.(ëÉïu8Ï ÍŞ.
+]
+java:S3655'";Call "optionalUser.isPresent()" before accessing the value.(ÈÛ½Ôúÿÿÿÿ8§İ¨Ş.
+l
+java:S2259'"JA "NullPointerException" could be thrown; "optionalUser" is nullable here.(ÈÛ½Ôúÿÿÿÿ8§İ¨Ş.
+b
+java:S2789#"FEnsure this "Optional" could never be null and remove this null-check.(é´¿8Ï ÍŞ.
+s
+java:S1128"QRemove this unused import 'org.springframework.web.bind.annotation.PathVariable'.(¹ûñÅşÿÿÿÿ8˜ßËŞ.
+M
+java:S1128
+"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8“ôˆŒŞ.

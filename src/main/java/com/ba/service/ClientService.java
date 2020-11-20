@@ -20,4 +20,13 @@ public class ClientService {
     public Optional<Product> getProductById(Long id){
 
         return repository.findById(id);
-    }}
+    }
+    public List<Product> listSelectedCategory(String categoryName){
+        return repository.findCategoryByName(categoryName);
+    }
+    public List<String> AllCategory(){
+        return repository.getAllCategory();
+
+    }
+
+}

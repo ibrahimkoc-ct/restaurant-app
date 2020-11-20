@@ -1,51 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState, useEffect} from 'react';
-import Product from "./companent/Product";
-import Navbar from "./companent/Navbar";
-import AddProduct from "./companent/addProduct";
+
+import ListComponent from "./companent/ListComponent";
+import HeaderComponent from "./companent/HeaderComponent";
+import FooterComponent from "./companent/FooterComponent";
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
+import CreateProductComponent from "./companent/CreateProductComponent";
+import UpdateProductComponent from "./companent/UpdateProductComponent";
+import ProductSalesTable from "./companent/ProductSalesTable";
+import UserListComponent from "./companent/UserListComponent"
+import CreateUserComponent from "./companent/CreateUserComponent";
+import UpdateUserComponent from "./companent/UpdateUserComponent";
+import LoginComponent from "./companent/LoginComponent"
 function App() {
-  const [content, setContent] = useState();
-
-  useEffect(() => {
-    fetch('http://localhost:8080/product/list')
-        .then(response => response.json())
-        .then(data => {
-          setContent(data);
-        }).catch(e => {
-      console.warn("e : ", e);
-    });
-  }, []);
-  if (!content) {
-    return null;
-  }
   return (
+      <div>
+          <Router>
+
+          <HeaderComponent/>
       <div className="container">
-        <Navbar title="Ürün Giriş Paneli"/>
-          <hr/>
-          <Navbar title="Ürünler"/>
-        <hr/>
-        {
-          content.map(v => {
-            return (<div>
+          <Switch>
+              <Route path="/" exact component={ListComponent}></Route>
+              <Route path="/products" component={ListComponent}></Route>
+              <Route path="/add-product" component={CreateProductComponent}></Route>
+              <Route path="/update-product/:id" component={UpdateProductComponent}></Route>
+              <Route path="/salestable" component={ProductSalesTable}></Route>
+              <Route path="/user-table" component={UserListComponent}></Route>
+              <Route path="/add-users" component={CreateUserComponent}></Route>
+              <Route path="/update-user/:id" component={UpdateUserComponent}></Route>
 
-              <Product
-                  title={v.title}
-                  description={v.description}
-                  category={v.category}
-                  price={v.price}
-                  id={v.id}
 
-              />
+          </Switch>
+      </div>
+          <FooterComponent/>
 
-              <br/>
-              <hr/>
-
-            </div>)
-
-          })
-        }
-        <AddProduct/>
+          </Router>
       </div>
   );
 }

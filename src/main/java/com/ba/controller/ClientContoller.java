@@ -29,5 +29,14 @@ public class ClientContoller {
     public List<Product> getAllProduct() {
         return clientService.getAllProduct();
     }
+    @GetMapping("/product/{categoryName}")
+            public List<Product> findCategory(@PathVariable String categoryName){
+            return  clientService.listSelectedCategory(categoryName);
+    }
+    @GetMapping("/product/category/")
+    public List<String> getCategory(){
+        return clientService.AllCategory();
+
+    }
 
 }

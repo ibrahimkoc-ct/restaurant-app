@@ -4,7 +4,9 @@ import com.ba.entity.Product;
 import com.ba.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +16,11 @@ public class BackofficeService {
     ProductRepository repository;
 
 
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct() {
         repository.findAll();
         return repository.findAll();
     }
+
     public List<Product> deleteProduct(Long id) {
         repository.deleteById(id);
         return repository.findAll();
@@ -28,7 +31,8 @@ public class BackofficeService {
         repository.save(product);
         return repository.findAll();
     }
-    public List<Product> updateProduct( long id,Product product) {
+
+    public List<Product> updateProduct(long id, Product product) {
         Optional<Product> optionalArticle = repository.findAll().stream().filter(news1 -> news1.getId() == id).findAny();
         if (optionalArticle == null) {
             System.out.println("girilen ID ile haber bulunamadı!");
@@ -42,8 +46,18 @@ public class BackofficeService {
         return repository.findAll();
     }
 
-    public Optional<Product> getProductById(Long id){
+    public Optional<Product> getProductById(Long id) {
 
         return repository.findById(id);
     }
+
+    public String categoryID(Long id) {
+        Optional<Product> optionalArticle = repository.findAll().stream().filter(news1 -> news1.getId() == id).findAny();
+        if (optionalArticle == null) {
+            System.out.println("girilen ID ile haber bulunamadı!");
+
+        }
+      return optionalArticle.get().getCategory();
+    }
+
 }
