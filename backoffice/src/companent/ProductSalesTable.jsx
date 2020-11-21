@@ -2,6 +2,9 @@
 import React, {Component} from 'react';
 import ProductService from "../services/ProductService";
 import Table from "react-bootstrap/Table";
+import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
+import {BrowserRouter as Router} from "react-router-dom";
 class ProductSalesTable extends Component {
     constructor(props) {
         super(props);
@@ -20,6 +23,8 @@ class ProductSalesTable extends Component {
     render() {
         return (
             <div>
+                <HeaderComponent/>
+                <div className="container">
                 <h2 className="text-center">Urun Satış Tablosu</h2>
                 <div className="row">
                 </div>
@@ -56,7 +61,9 @@ class ProductSalesTable extends Component {
                             </Table>
                             </div>
 
-                            </div>
+            </div>
+                <FooterComponent/>
+            </div>
 
         );
     }

@@ -12,15 +12,17 @@ import UserListComponent from "./companent/UserListComponent"
 import CreateUserComponent from "./companent/CreateUserComponent";
 import UpdateUserComponent from "./companent/UpdateUserComponent";
 import LoginComponent from "./companent/LoginComponent"
+import React from "react";
+import LoginHeaderComponent from "./companent/LoginHeaderComponent";
 function App() {
   return (
       <div>
           <Router>
 
-          <HeaderComponent/>
-      <div className="container">
+
+      <div className="">
           <Switch>
-              <Route path="/" exact component={ListComponent}></Route>
+              <Route path="/" exact component={LoginComponent}></Route>
               <Route path="/products" component={ListComponent}></Route>
               <Route path="/add-product" component={CreateProductComponent}></Route>
               <Route path="/update-product/:id" component={UpdateProductComponent}></Route>
@@ -32,11 +34,12 @@ function App() {
 
           </Switch>
       </div>
-          <FooterComponent/>
+
 
           </Router>
       </div>
   );
+
 }
 
 export default App;

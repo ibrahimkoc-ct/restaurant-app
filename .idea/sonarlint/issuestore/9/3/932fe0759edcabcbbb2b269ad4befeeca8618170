@@ -1,5 +1,7 @@
 
+`
+java:S5344'">Don't use the default "PasswordEncoder" relying on plain-text.(¢õæ•ûÿÿÿÿ8ˆÈÅ§Þ.
+s
+java:S1192"QDefine a constant instead of duplicating this literal "hasRole('ADMIN')" 4 times.(‰µÑþÿÿÿÿ8¼¸î­Þ.
 
 java:S1128"dRemove this unused import 'org.springframework.security.config.annotation.web.builders.WebSecurity'.(–ëðž8þá˜§Þ.
-`
-java:S5344">Don't use the default "PasswordEncoder" relying on plain-text.(¢õæ•ûÿÿÿÿ8ˆÈÅ§Þ.

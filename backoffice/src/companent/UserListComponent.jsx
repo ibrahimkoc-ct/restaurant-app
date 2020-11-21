@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import Table from "react-bootstrap/Table";
 import UserService from "../services/UserService";
 import ProductService from "../services/ProductService";
+import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
+import {BrowserRouter as Router} from "react-router-dom";
 
 class UserListComponent extends Component {
     constructor(props) {
@@ -33,6 +36,8 @@ class UserListComponent extends Component {
     render() {
         return (
             <div>
+                <HeaderComponent/>
+                <div className="container">
                 <h2 className="text-center">Kullanıcılar</h2>
                 <div className="row">
 
@@ -70,6 +75,8 @@ class UserListComponent extends Component {
                     </Table>
                 </div>
 
+            </div>
+                <FooterComponent/>
             </div>
                 
 

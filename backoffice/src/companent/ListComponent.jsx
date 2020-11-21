@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
 import ProductService from "../services/ProductService";
 import Table from "react-bootstrap/Table";
-import { Link } from 'react-router-dom';
+
+import {BrowserRouter as Router, Link} from 'react-router-dom';
+import axios from 'axios';
+import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
+import UserService from "../services/UserService";
 
 class ListComponent extends Component {
     constructor(props) {
@@ -13,21 +18,27 @@ class ListComponent extends Component {
         this.editProduct=this.editProduct.bind(this);
         this.deleteProduct=this.deleteProduct.bind(this);
     }
-    componentDidMount(){
+    componentDidMount() {
+
+
         ProductService.getProduct().then((res)=>{
             this.setState({ productslist:res.data});
         });
 
+
     }
+
 
     editProduct(id){
         this.props.history.push('/update-product/'+id);
-        console.log(id)
+
+
 
     }
     deleteProduct(id){
         ProductService.deleteProduct(id).then(res =>{
             this.setState({productslist:this.state.productslist.filter(product => product.id !==id)})
+
         })
 
     }
@@ -35,6 +46,8 @@ class ListComponent extends Component {
     render() {
         return (
             <div>
+                <HeaderComponent/>
+                <div className="container">
                 <h2 className="text-center">Urun Listesi</h2>
                 <div className="row">
 
@@ -72,6 +85,8 @@ class ListComponent extends Component {
                     </Table>
                 </div>
 
+                </div>
+                <FooterComponent/>
             </div>
         );
 

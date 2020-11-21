@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import ProductService from "../services/ProductService";
+import HeaderComponent from "./HeaderComponent";
+import FooterComponent from "./FooterComponent";
+import {BrowserRouter as Router} from "react-router-dom";
 
 class UpdateProductComponent extends Component {
     constructor(props) {
@@ -46,6 +49,7 @@ class UpdateProductComponent extends Component {
     render() {
         return (
             <div>
+                <HeaderComponent/>
                 <div className="container">
                     <div className="row">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
@@ -81,6 +85,7 @@ class UpdateProductComponent extends Component {
                         </div>
                     </div>
                 </div>
+                <FooterComponent/>
             </div>
         );
     }
