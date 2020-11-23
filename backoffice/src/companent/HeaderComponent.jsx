@@ -8,32 +8,39 @@ class HeaderComponent extends Component {
         this.Exitbutton=this.Exitbutton.bind(this);
     }
     Exitbutton(){
-        sessionStorage.removeItem("token")
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("key");
+
+
+
     }
     render() {
         return (
             <div>
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-
-                        <div><a href="https://localhost:4000" className="navbar-brand">Urun Yonetim Uygulaması</a> </div>
                         <Link to='/products'>
-                            <button className="btn btn-info" >Urunler</button>
+                            <div className="navbar-brand">Urun Yonetim Uygulaması </div>
                         </Link>
-                        <Link to='/add-product'>
-                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Urun Ekle</button>
+                        <Link>
+                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Kategoriler</button>
                         </Link>
+                        <Link to='/products'>
+                        <button style={{marginLeft: "10px"}} className="btn btn-info" >Urunler</button>
+                    </Link>
+
+
                         <Link to ='/salestable' >
-                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Satış Tablosu</button>
+                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Raporlar</button>
                         </Link>
-                        <Link to ='/add-users' >
-                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Kullanıcı Ekle</button>
+                        <Link to='/auth-table'>
+                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Yetkiler</button>
                         </Link>
                         <Link to ='/user-table' >
                             <button style={{marginLeft: "10px"}} className="btn btn-info" >Kullanıcılar</button>
                         </Link>
                         <Link to ='/' >
-                            <button style={{marginLeft: "10px"}} className="btn btn-danger" onClick={()=>this.Exitbutton()}>Çıkıs</button>
+                            <button className="btn btn-danger usernamepage" onClick={()=>this.Exitbutton()}>Çıkıs: {sessionStorage.getItem("key")}</button>
                         </Link>
 
                     </nav>

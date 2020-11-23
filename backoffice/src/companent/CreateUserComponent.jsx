@@ -10,17 +10,24 @@ class CreateUserComponent extends Component {
         this.state ={
             username:'',
             password:'',
-            role:''
+            enabled:'',
+            authority:'',
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
         this.chargePasswordHandler=this.chargePasswordHandler.bind(this);
         this.chargeRoleHandler=this.chargeRoleHandler.bind(this);
         this.saveUser=this.saveUser.bind(this);
+        this.chargeauthHandler=this.chargeauthHandler.bind(this);
 
     }
     saveUser = (e) =>{
         e.preventDefault()
-        let user={username: this.state.username,password: this.state.password,role: this.state.role};
+        let user={username: this.state.username,password:"{noop}"+ this.state.password,enabled: this.state.enabled};
+        let auth={username: this.state.username,authority: this.state.authority};
+        UserService.createAuth(auth).then(res =>{
+
+        })
+
         UserService.createUser(user).then(res =>{
             this.props.history.push('/user-table');
         })
@@ -36,9 +43,12 @@ class CreateUserComponent extends Component {
         this.setState({password:event.target.value});
     }
     chargeRoleHandler =(event) =>{
-        this.setState({role:event.target.value});
+        this.setState({authority:event.target.value});
     }
+    chargeauthHandler =(event) =>{
+        this.setState({enabled:event.target.value});
 
+    }
 
 
     render() {
@@ -66,7 +76,12 @@ class CreateUserComponent extends Component {
                                     <div className="form-group">
                                         <label>Rol</label>
                                         <input placeholder="rol" name="role" className="form-control"
-                                               value={this.state.role} onChange={this.chargeRoleHandler}/>
+                                               value={this.state.authority} onChange={this.chargeRoleHandler}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Aktiflik</label>
+                                        <input type ="text" placeholder="atkiflik" name="enable" className="form-control"
+                                               value={this.state.enabled} onChange={this.chargeauthHandler}/>
                                     </div>
                                     <button className="btn btn-success" onClick={this.saveUser}>Kaydet</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>

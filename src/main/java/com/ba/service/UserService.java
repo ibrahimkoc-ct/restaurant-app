@@ -1,11 +1,8 @@
 package com.ba.service;
-import com.ba.entity.Product;
 import com.ba.entity.User;
-import com.ba.repository.ProductRepository;
 import com.ba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
+
     @Autowired
     UserRepository repository;
+
+
 
     public List<User> getAllUser() {
         repository.findAll();
@@ -26,8 +27,10 @@ public class UserService {
     }
     public List<User> addUser(User user) {
 
+
         repository.save(user);
         return repository.findAll();
+
 
     }
     public List<User> updateUser(long id, User user) {
@@ -45,9 +48,9 @@ public class UserService {
 
     }
 
-    public List<User>  getUserById( Long id){
-        repository.findById(id);
-        return repository.findAll();
+    public Optional<User>  getUserById(Long id){
+
+     return  repository.findById(id);
     }
 
 }

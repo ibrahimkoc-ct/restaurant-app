@@ -14,6 +14,11 @@ import UpdateUserComponent from "./companent/UpdateUserComponent";
 import LoginComponent from "./companent/LoginComponent"
 import React from "react";
 import LoginHeaderComponent from "./companent/LoginHeaderComponent";
+import ViewUserComponent from "./companent/ViewUserComponent";
+import ViewProductComponent from "./companent/ViewProductComponent"
+import AuthListComponent from "./companent/AuthListComponent";
+import UpdateAuthComponent from "./companent/UpdateAuthComponent";
+import ViewAuthComponwnt from "./companent/ViewAuthComponwnt";
 function App() {
   return (
       <div>
@@ -30,6 +35,11 @@ function App() {
               <Route path="/user-table" component={UserListComponent}></Route>
               <Route path="/add-users" component={CreateUserComponent}></Route>
               <Route path="/update-user/:id" component={UpdateUserComponent}></Route>
+              <Route path="/update-auth/:id" component={UpdateAuthComponent}></Route>
+              <Route path="/view-user/:id" component={ViewUserComponent}></Route>
+              <Route path="/view-product/:id" component={ViewProductComponent}></Route>
+              <Route path="/view-auth/:id" component={ViewAuthComponwnt}></Route>
+              <Route path="/auth-table" component={AuthListComponent}></Route>
 
 
           </Switch>

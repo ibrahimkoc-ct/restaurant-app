@@ -1,6 +1,7 @@
 package com.ba.service;
 
 import com.ba.entity.Product;
+import com.ba.entity.User;
 import com.ba.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

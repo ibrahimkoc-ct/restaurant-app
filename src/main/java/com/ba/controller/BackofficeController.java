@@ -38,7 +38,7 @@ public class BackofficeController {
     public List<Product> updateProduct(@PathVariable long id, @RequestBody Product product) {
         return productService.updateProduct(id,product);
     }
-    @GetMapping("/product/id/{id}")
+        @GetMapping("/product/id/{id}")
     public Optional<Product> getProductById(@PathVariable Long id){
         return productService.getProductById(id);
     }

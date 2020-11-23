@@ -1,17 +1,20 @@
 
-c
-java:S27898"FEnsure this "Optional" could never be null and remove this null-check.(›¹‘8‹ÇöÚİ.
 s
-java:S1128"QRemove this unused import 'org.springframework.web.bind.annotation.PathVariable'.(¹ûñÅşÿÿÿÿ8‹ÇöÚİ.
-T	java:S106&"9Replace this use of System.out or System.err by a logger.(ëÉïu8‰×Âµİ.
+java:S1128"QRemove this unused import 'org.springframework.web.bind.annotation.PathVariable'.(¹ûñÅşÿÿÿÿ8‹ÇöÚİ.
+T	java:S106'"9Replace this use of System.out or System.err by a logger.(ëÉïu8‰×Âµİ.
+T	java:S106:"9Replace this use of System.out or System.err by a logger.(ëÉïu8‹ÇöÚİ.
 o
-java:S2259<"MA "NullPointerException" could be thrown; "optionalArticle" is nullable here.(¾£šÏùÿÿÿÿ8¬øÚİ.
-T	java:S1069"9Replace this use of System.out or System.err by a logger.(ëÉïu8‹ÇöÚİ.
+java:S2259="MA "NullPointerException" could be thrown; "optionalArticle" is nullable here.(¾£šÏùÿÿÿÿ8¬øÚİ.
 c
-java:S2789%"FEnsure this "Optional" could never be null and remove this null-check.(›¹‘8‰×Âµİ.
-`
-java:S3655<">Call "optionalArticle.isPresent()" before accessing the value.(¾£šÏùÿÿÿÿ8‹ÇöÚİ.
+java:S2789&"FEnsure this "Optional" could never be null and remove this null-check.(›¹‘8‰×Âµİ.
 Z
-java:S3655)">Call "optionalArticle.isPresent()" before accessing the value.(‚ÏäO8ÀÃµİ.
+java:S3655*">Call "optionalArticle.isPresent()" before accessing the value.(‚ÏäO8ÀÃµİ.
+c
+java:S27899"FEnsure this "Optional" could never be null and remove this null-check.(›¹‘8‹ÇöÚİ.
+`
+java:S3655=">Call "optionalArticle.isPresent()" before accessing the value.(¾£šÏùÿÿÿÿ8‹ÇöÚİ.
 M
-java:S1128	"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ŞïÂÛİ.
+java:S1128
+"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ŞïÂÛİ.
+Q
+java:S1128"/Remove this unused import 'com.ba.entity.User'.(„‰¶µüÿÿÿÿ8ŒäŠşŞ.

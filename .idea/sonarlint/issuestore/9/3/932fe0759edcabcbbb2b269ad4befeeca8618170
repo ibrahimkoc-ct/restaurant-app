@@ -1,7 +1,15 @@
 
-`
-java:S5344'">Don't use the default "PasswordEncoder" relying on plain-text.(¢õæ•ûÿÿÿÿ8ˆÈÅ§Ş.
-s
-java:S1192"QDefine a constant instead of duplicating this literal "hasRole('ADMIN')" 4 times.(‰µÑşÿÿÿÿ8¼¸î­Ş.
 
-java:S1128"dRemove this unused import 'org.springframework.security.config.annotation.web.builders.WebSecurity'.(–ëğ8şá˜§Ş.
+java:S1128"dRemove this unused import 'org.springframework.security.config.annotation.web.builders.WebSecurity'.(–ëğ8úµÉµŞ.
+‘
+java:S1128	"oRemove this unused import 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity'.(ŸÜÑıÿÿÿÿ8–ô‚·Ş.
+}
+java:S1128"[Remove this unused import 'org.springframework.web.servlet.config.annotation.CorsRegistry'.(âÁ’©şÿÿÿÿ8ÈÂîµŞ.
+}
+java:S1128"[Remove this unused import 'org.springframework.web.servlet.config.annotation.EnableWebMvc'.(Â°Ä¡úÿÿÿÿ8ÈÂîµŞ.
+`
+java:S53443">Don't use the default "PasswordEncoder" relying on plain-text.(¢õæ•ûÿÿÿÿ8ˆÈÅ§Ş.
+ƒ
+java:S1128"fRemove this unused import 'org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter'.(Ùõ’ß8ÈÂîµŞ.
+o
+java:S1192"RDefine a constant instead of duplicating this literal "hasRole('ADMIN')" 11 times.(ê¹¿±8ƒŠ½ß.

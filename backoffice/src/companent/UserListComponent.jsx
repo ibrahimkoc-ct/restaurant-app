@@ -4,7 +4,7 @@ import UserService from "../services/UserService";
 import ProductService from "../services/ProductService";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-import {BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter as Router, Link} from "react-router-dom";
 
 class UserListComponent extends Component {
     constructor(props) {
@@ -22,10 +22,12 @@ class UserListComponent extends Component {
         });
 
     }
-    deleteUser(id){
-        UserService.deleteUser(id).then(res =>{
-            this.setState({userlist:this.state.userlist.filter(product => product.id !==id)})
+    deleteUser(username){
+        UserService.deleteAuth(username);
+        UserService.deleteUser(username).then(res =>{
+            this.setState({userlist:this.state.userlist.filter(product => product.username !==username)})
         })
+
 
     }
     editUser(id){
@@ -33,11 +35,18 @@ class UserListComponent extends Component {
         console.log(id)
 
     }
+    viewUser(id){
+        this.props.history.push('/view-user/'+id);
+        sessionStorage.setItem("wiew",id)
+    }
     render() {
         return (
             <div>
                 <HeaderComponent/>
-                <div className="container">
+                <Link to="/add-users">
+                    <button className="btn btn-info addbutton">Kullanıcı Ekle</button>
+                </Link>
+                <div className="container productlist">
                 <h2 className="text-center">Kullanıcılar</h2>
                 <div className="row">
 
@@ -48,10 +57,9 @@ class UserListComponent extends Component {
                     <Table striped bordered hover >
                         <thead>
                         <tr>
-                            <th>Kullanıcı ID</th>
                             <th>Kullanıcı Adı</th>
                             <th>Parola</th>
-                            <th>Rol</th>
+                            <th>Aktif</th>
                             <th >Actions</th>
                         </tr>
                         </thead>
@@ -60,13 +68,13 @@ class UserListComponent extends Component {
                             this.state.userlist.map(
                                 user =>
                                     <tr >
-                                        <td>{user.id}</td>
                                         <td>{user.username}</td>
-                                        <td itemType="password">{user.password}</td>
-                                        <td>{user.role}</td>
+                                        <td>{user.password}</td>
+                                        <td>{user.enabled.toString()}</td>
                                         <td>
-                                            <button  onClick={()=>this.editUser(user.id)} className=" btn btn-info btn-sm ">Edit</button>
-                                            <button style={{marginLeft: "10px"}} onClick={()=>this.deleteUser(user.id)} className="btn btn-danger btn-sm">Sil</button>
+                                            <button  onClick={()=>this.editUser(user.username)} className=" btn btn-info  ">Güncelle</button>
+                                            <button style={{marginLeft: "10px"}} onClick={()=>this.viewUser(user.username)} className="btn btn-success">Görüntüle</button>
+                                            <button style={{marginLeft: "10px"}} onClick={()=>this.deleteUser(user.username)} className="btn btn-danger ">Sil</button>
                                         </td>
                                     </tr>
                             )

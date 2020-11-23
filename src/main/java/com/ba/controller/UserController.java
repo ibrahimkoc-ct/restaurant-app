@@ -39,8 +39,8 @@ public class UserController {
        return userepository.updateUser(id,user);
     }
     @GetMapping("/id/{id}")
-    public List<User>  getUsertById(@PathVariable Long id){
-        userepository.getUserById(id);
-        return userepository.getAllUser();
+    public Optional<User> getUsertById(@PathVariable long id){
+        return userepository.getUserById(id);
+
     }
 }

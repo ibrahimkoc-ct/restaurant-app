@@ -24,7 +24,7 @@ class ProductSalesTable extends Component {
         return (
             <div>
                 <HeaderComponent/>
-                <div className="container">
+                <div className="container productlist">
                 <h2 className="text-center">Urun Satış Tablosu</h2>
                 <div className="row">
                 </div>

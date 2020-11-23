@@ -4,6 +4,7 @@ const Product_Api_Add_URL="http://localhost:8080/backoffice/product/add";
 const Product_Api_Update_URL="http://localhost:8080/backoffice/product/update";
 const Product_Api_Delete_URL="http://localhost:8080/backoffice/product/delete";
 const Product_Api_ProductSales="http://localhost:8080/productsales/list";
+const Product_Api_View_URL="http://localhost:8080/backoffice/product/id";
 
 class ProductService{
 
@@ -42,6 +43,13 @@ class ProductService{
            headers: {
                Authorization:sessionStorage.getItem("token")
            }});
+    }
+    getProductById(productId){
+        return axios.get(Product_Api_View_URL+'/'+productId,{
+            headers: {
+                Authorization: sessionStorage.getItem("token")
+            }});
+
     }
 
 }

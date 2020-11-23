@@ -1,0 +1,151 @@
+.btn-girisyap{
+    margin-top: 4%;
+    margin-left: 0;
+    width: 100%;
+    height: 8%;
+
+}
+.login{
+    margin-top: 8%;
+}
+.kullanicigiris{
+    margin-top: 2%;
+}
+.homebutton{
+    box-shadow: #2F4050;
+
+    width: 28%;
+    height: 200px;
+    margin-top: 2%;
+    margin-left: 4%;
+    font-family: 'Trebuchet MS','Lucida Sans Unicode','Lucida Sans',Arial,sans-serif;
+
+}
+.HomePage{
+    width: 100%;
+    height: 100%;
+
+}
+.backbutton{
+    margin-top: 10px;
+    margin-left: 91%;
+    width: 5%;
+    height: 40px;
+
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    text-align: center;
+    color: white;
+}
+
+.tableclass{
+    margin-top: 10px;
+    height: 650px;
+}
+.categorybutton{
+    margin-right:20px;
+    margin-left: 10px;
+    margin-top: 7px;
+    width: 200%;
+    height: 10%;
+    font-family: "Trebuchet MS";
+
+}
+
+.headertable{
+    text-align: center;
+    width: 220%;
+    font-family: 'Trebuchet MS';
+    font-size: x-large;
+}
+.carheadertable{
+    text-align: center;
+    width: 1000px;
+    font-family: 'Trebuchet MS';
+    font-size: x-large;
+
+
+}
+
+.cardbodytable{
+    width: 450px;
+    margin-top: 10px;
+
+
+
+
+}
+.card2for{
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.baskettable{
+    width: 25%;
+    height:650px;
+
+}
+.cardtable{
+    width: 60%;
+    height: 650px;
+
+
+
+}
+.categorytable{
+    width:15%;
+    height:650px;
+
+
+}
+.basketproduct{
+
+}
+.basketheader{
+    text-align: center;
+    width: 400px;
+    font-family: 'Trebuchet MS';
+    font-size: x-large;
+    margin-bottom: 10px;
+}
+.totalpaymentcss{
+    width: 200px;
+
+
+}
+.basketbody{
+    height: 640px;
+    overflow-y: auto;
+}
+.baskettitle{
+    width: 170px;
+}
+.basketprice{
+    width: 50px;
+}
+.paybutton{
+    width: 120px;
+
+}
+.totalpaycss{
+    width: 120px;
+}
+.baskettotalprice{
+    width: 50px;
+}
+.baskettotalbutton{
+    width: 200px;
+}
+.usernamepage{
+    position: absolute;
+    right: 1%;
+    margin-top: 0.4%;
+    font-size: x-large;
+    color: white;
+}

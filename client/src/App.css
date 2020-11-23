@@ -1,8 +1,5 @@
 .App {
-  text-align: left;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+
 }
 
 
@@ -18,46 +15,21 @@
     transform: rotate(360deg);
   }
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 50px;
-  background-color: black;
-  text-align: center;
-  color: white;
-}
-.Sidebar{
-  height: 600px;
-  width: auto;
-  background-color:#2F4050;
-}
 
-.SidebarList{
-  height: 100%;
-  padding: 20px;
-  width: 100%;
-}
-.SidebarList .row{
-  width: 100%;
-  height: 50px;
-  border: 1px solid black;
-  list-style-type: none;
-  margin: 0%;
-  display: flex;
-  flex-direction: row;
-  color: white;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Trebuchet MS','Lucida Sans Unicode','Lucida Sans',Arial,sans-serif;
-}
-.SidebarList .row:hover {
-  cursor: pointer;
-  background-color: #293846;
-}
-.SidebarList .row #active{
-  background-color: #293846;
-}
+
+
 .row #title{
   flex: 70%;
+}
+.login {
+
+  margin-top:20%;
+}
+.btn-girisyap{
+  margin-top: 10px;
+  margin-left: 50px;
+
+}
+.basketheader{
+
 }

@@ -42,13 +42,22 @@ class ListComponent extends Component {
         })
 
     }
+    viewProduct(id){
+        this.props.history.push('/view-product/'+id);
+    }
 
     render() {
         return (
             <div>
                 <HeaderComponent/>
-                <div className="container">
-                <h2 className="text-center">Urun Listesi</h2>
+                <Link to="/add-product">
+                    <button className="btn btn-info addbutton">Ürün Ekle</button>
+
+                </Link>
+                <div className="container productlist">
+
+                <h2 className="text-center ">Urun Listesi</h2>
+
                 <div className="row">
 
 
@@ -75,8 +84,11 @@ class ListComponent extends Component {
                                         <td>{product.category}</td>
                                         <td>{product.price}</td>
                                         <td>
-                                            <button  onClick={()=>this.editProduct(product.id)} className=" btn btn-info btn-sm ">Edit</button>
-                                            <button style={{marginLeft: "10px"}} onClick={()=>this.deleteProduct(product.id)} className="btn btn-danger btn-sm">Sil</button>
+                                            <button  onClick={()=>this.editProduct(product.id)} className=" btn btn-info">Güncelle</button>
+
+                                            <button style={{marginLeft: "10px"}} onClick={()=>this.deleteProduct(product.id)} className="btn btn-danger">Sil</button>
+
+                                            <button style={{marginLeft: "10px"}} onClick={()=>this.viewProduct(product.id)} className="btn btn-success">Görüntüle</button>
                                         </td>
                                     </tr>
                             )
