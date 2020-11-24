@@ -19,6 +19,12 @@ import ViewProductComponent from "./companent/ViewProductComponent"
 import AuthListComponent from "./companent/AuthListComponent";
 import UpdateAuthComponent from "./companent/UpdateAuthComponent";
 import ViewAuthComponwnt from "./companent/ViewAuthComponwnt";
+import CategoryListComponent from "./companent/CategoryListComponent";
+import CreateCategoryComponent from "./companent/CreateCategoryComponent";
+import ViewCategoryComponent from "./companent/ViewCategoryComponent";
+import UpdateCategoryComponent from "./companent/UpdateCategoryComponent";
+import CategoryProductList from "./companent/CategoryProductList";
+
 function App() {
   return (
       <div>
@@ -40,6 +46,11 @@ function App() {
               <Route path="/view-product/:id" component={ViewProductComponent}></Route>
               <Route path="/view-auth/:id" component={ViewAuthComponwnt}></Route>
               <Route path="/auth-table" component={AuthListComponent}></Route>
+              <Route path="/category-table" component={CategoryListComponent}></Route>
+              <Route path="/add-category" component={CreateCategoryComponent}></Route>
+              <Route path="/update-category/:id" component={UpdateCategoryComponent}></Route>
+              <Route path="/view-category/:id" component={ViewCategoryComponent}></Route>
+              <Route path="/view-product-category/:id" component={CategoryProductList}></Route>
 
 
           </Switch>

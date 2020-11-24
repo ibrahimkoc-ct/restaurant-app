@@ -87,3 +87,16 @@
 .productlist{
   margin-top: 2%;
 }
+.dropdown123{
+  position: absolute;
+  left: 67.4%;
+  top: 8%;
+  margin-top: 2%;
+  margin-bottom: 10%;
+  font-size: x-large;
+  color: white;
+  width: 12%;
+}
+.actions123{
+  width: 300px;
+}

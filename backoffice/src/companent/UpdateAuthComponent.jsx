@@ -8,10 +8,10 @@ class UpdateAuthComponent extends Component {
         super(props);
         this.state = {
             username:'',
-            authority:''
+            authority:'',
+            role_message:'Rol Seciniz',
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
-        this.chargeAuhtoritydHandler=this.chargeAuhtoritydHandler.bind(this);
         this.updateAuth=this.updateAuth.bind(this);
     }
     updateAuth = (e) =>{
@@ -30,8 +30,13 @@ class UpdateAuthComponent extends Component {
     chargeUsernameHandler =(event) =>{
         this.setState({username:event.target.value});
     }
-    chargeAuhtoritydHandler =(event) =>{
-        this.setState({authority:event.target.value});
+    onClickAdminItem =()=>{
+        this.setState({authority:"ROLE_ADMIN",
+            role_message:"ROLE_ADMIN",});
+    }
+    onClickUserItem =()=>{
+        this.setState({authority:"ROLE_USER",
+            role_message:"ROLE_USER",});
     }
     render() {
         return (
@@ -50,11 +55,19 @@ class UpdateAuthComponent extends Component {
                                         />
 
                                     </div>
-                                    <div className="form-group">
-                                        <label>Yetkinlik</label>
-                                        <input type ="text" placeholder="Yetkinlik" name="password" className="form-control"
-                                               value={this.state.authority} onChange={this.chargeAuhtoritydHandler}/>
+                                    <div className="dropdown show">
+                                        <a className="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {this.state.role_message}
+                                        </a>
+
+                                        <div className="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink">
+                                            <a className="dropdown-item" onClick={this.onClickAdminItem.bind(this)}>ROLE_ADMIN</a>
+                                            <a className="dropdown-item" onClick={this.onClickUserItem.bind(this)}>ROLE_USER</a>
+
+                                        </div>
                                     </div>
+                                    <hr/>
                                     <button className="btn btn-success" onClick={this.updateAuth}>Guncelle</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>
                                 </form>

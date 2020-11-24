@@ -4,14 +4,19 @@ import ListComponent from "./ListComponent";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import {BrowserRouter as Router} from "react-router-dom";
+import CategoryService from "../services/CategoryService";
 class CreateProductComponent extends Component {
     constructor(props) {
         super(props);
         this.state ={
+            id:'',
             title:'',
             description:'',
             category:'',
-            price:''
+            price:'',
+            categoryid:'',
+            categorylist:[],
+            categoryName:"Kategori Seçiniz"
         }
 
         this.chargeTitleHandler=this.chargeTitleHandler.bind(this);
@@ -22,9 +27,9 @@ class CreateProductComponent extends Component {
     }
     saveProduct = (e) =>{
         e.preventDefault()
-        let product={title: this.state.title,description: this.state.description,category: this.state.category,price: this.state.price};
+        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.category,price: this.state.price};
         console.log('product=>'+JSON.stringify(product));
-        ProductService.createProduct(product).then(res =>{
+        ProductService.addProductId(product,this.state.categoryid).then(res =>{
             this.props.history.push('/products');
         })
     }
@@ -43,6 +48,17 @@ class CreateProductComponent extends Component {
     cancel(){
         this.props.history.push('/products');
     }
+
+    componentDidMount() { CategoryService.getCategory().then((res)=>{
+        this.setState({categorylist:res.data});
+    });
+    }
+    onClickItem(e){
+        this.setState({categoryid:e.id,
+            categoryName:e.name})
+
+    }
+
     render() {
         return (
             <div>
@@ -65,16 +81,29 @@ class CreateProductComponent extends Component {
                                                value={this.state.description} onChange={this.chargeDescriptionHandler}/>
 
                                     </div>
-                                    <div className="form-group">
-                                        <label>Urun Kategorisi</label>
-                                        <input placeholder="Urun kategorisi" name="category" className="form-control"
-                                               value={this.state.category} onChange={this.chargeCategoryHandler}/>
-                                    </div>
+
                                     <div className="form-group">
                                         <label>Urun Fiyatı</label>
                                         <input placeholder="Urun fiyatı" name="price" className="form-control"
                                                value={this.state.price} onChange={this.chargePriceHandler}/>
                                     </div>
+                                    <div className="dropdown show">
+                                        <a className="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {this.state.categoryName}
+                                        </a>
+
+                                        <div className="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink">
+                                            {
+                                                this.state.categorylist.map(
+                                                    category =>
+                                                        <a className="dropdown-item" onClick={this.onClickItem.bind(this,category)}>{category.name}</a>
+                                                )
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <hr/>
                                     <button className="btn btn-success" onClick={this.saveProduct}>Kaydet</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>
                                 </form>

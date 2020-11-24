@@ -22,7 +22,7 @@ class HeaderComponent extends Component {
                         <Link to='/products'>
                             <div className="navbar-brand">Urun Yonetim Uygulaması </div>
                         </Link>
-                        <Link>
+                        <Link to="/category-table">
                             <button style={{marginLeft: "10px"}} className="btn btn-info" >Kategoriler</button>
                         </Link>
                         <Link to='/products'>

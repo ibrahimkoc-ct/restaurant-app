@@ -43,6 +43,11 @@ public class BackofficeController {
         return productService.getProductById(id);
     }
 
+    @PostMapping("/product/category/add/{id}")
+    public void addProductId(@RequestBody Product product,@PathVariable Long id){
+        productService.addProductId(product,id);
+    }
+
 
 
 

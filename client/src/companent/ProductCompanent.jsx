@@ -37,7 +37,7 @@ class ProductCompanent extends Component {
     }
     onClickSidebar =(category) => {
 
-    axios.get("http://localhost:8080/client/product/" + category,{
+    axios.get("http://localhost:8080/category/product/id/" + category.id,{
     headers: {
         Authorization: sessionStorage.getItem("token")
 
@@ -119,16 +119,16 @@ class ProductCompanent extends Component {
                         <tr>
 
                                 {this.state.productslist.map(
-                                    product => {
+                                    category => {
                                         return (
 
-                                                <div
+                                                <div>
 
-                                                id={window.location.pathname == product ? "active" : ""}
-                                                onClick={() =>
-                                                    this.onClickSidebar(product)}
-                                            >
-                                                <button className="btn btn-secondary categorybutton">{product}</button>
+
+
+
+                                                <button className="btn btn-secondary categorybutton"onClick={() =>
+                                                    this.onClickSidebar(category)}>{category.name}</button>
                                                 </div>
 
                                         )

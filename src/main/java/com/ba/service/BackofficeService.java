@@ -1,7 +1,9 @@
 package com.ba.service;
 
+import com.ba.entity.Category;
 import com.ba.entity.Product;
 import com.ba.entity.User;
+import com.ba.repository.CategoryRepository;
 import com.ba.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ import java.util.Optional;
 public class BackofficeService {
     @Autowired
     ProductRepository repository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
 
     public List<Product> getAllProduct() {
@@ -60,5 +65,14 @@ public class BackofficeService {
         }
       return optionalArticle.get().getCategory();
     }
+
+    public void addProductId(Product product,Long id){
+        Optional<Category> category =categoryRepository.findById(id);
+        category.get().getProducts().add(product);
+        categoryRepository.save(category.get());
+    }
+
+
+
 
 }

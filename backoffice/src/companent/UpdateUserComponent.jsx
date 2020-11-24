@@ -9,11 +9,12 @@ class UpdateUserComponent extends Component {
         this.state ={
             username:'',
             password:'',
-            enabled:''
+            enabled:'',
+            enabled_message:'Atkiflik Seciniz'
+
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
         this.chargePasswordHandler=this.chargePasswordHandler.bind(this);
-        this.chargeEnabledHandler=this.chargeEnabledHandler.bind(this);
         this.updateUser=this.updateUser.bind(this);
 
     }
@@ -36,8 +37,16 @@ class UpdateUserComponent extends Component {
     chargePasswordHandler =(event) =>{
         this.setState({password:event.target.value});
     }
-    chargeEnabledHandler =(event) =>{
-        this.setState({enabled:event.target.value});
+
+    onClickTrueItem=()=>{
+        this.setState({enabled_message:"TRUE",
+            enabled:"true"});
+
+    }
+    onClickFalseItem=()=>{
+        this.setState({enabled_message:"FALSE",
+            enabled:"false"});
+
     }
 
     render() {
@@ -60,13 +69,20 @@ class UpdateUserComponent extends Component {
                                         <label>Parola</label>
                                         <input type ="password" placeholder="Parola" name="password" className="form-control"
                                                value={this.state.password} onChange={this.chargePasswordHandler}/>
+                                    </div>
+                                        <div className="dropdown show">
+                                            <a className="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {this.state.enabled_message}
+                                            </a>
 
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Aktiflik</label>
-                                        <input placeholder="enable" name="enable" className="form-control"
-                                               value={this.state.enabled} onChange={this.chargeEnabledHandler}/>
-                                    </div>
+                                            <div className="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink">
+                                                <a className="dropdown-item" onClick={this.onClickTrueItem.bind(this)}>TRUE</a>
+                                                <a className="dropdown-item" onClick={this.onClickFalseItem.bind(this)}>FALSE</a>
+
+                                            </div>
+                                        </div>
+                                        <hr/>
                                     <button className="btn btn-success" onClick={this.updateUser}>Guncelle</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>
                                 </form>

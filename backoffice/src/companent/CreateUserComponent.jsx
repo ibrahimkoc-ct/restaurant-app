@@ -12,18 +12,21 @@ class CreateUserComponent extends Component {
             password:'',
             enabled:'',
             authority:'',
+            role_message:'Rol Seciniz',
+            enabled_message:'Atkiflik Seciniz',
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
         this.chargePasswordHandler=this.chargePasswordHandler.bind(this);
-        this.chargeRoleHandler=this.chargeRoleHandler.bind(this);
         this.saveUser=this.saveUser.bind(this);
-        this.chargeauthHandler=this.chargeauthHandler.bind(this);
+
 
     }
     saveUser = (e) =>{
         e.preventDefault()
         let user={username: this.state.username,password:"{noop}"+ this.state.password,enabled: this.state.enabled};
         let auth={username: this.state.username,authority: this.state.authority};
+        console.log(user);
+        console.log(auth)
         UserService.createAuth(auth).then(res =>{
 
         })
@@ -42,14 +45,25 @@ class CreateUserComponent extends Component {
     chargePasswordHandler =(event) =>{
         this.setState({password:event.target.value});
     }
-    chargeRoleHandler =(event) =>{
-        this.setState({authority:event.target.value});
+
+    onClickAdminItem =()=>{
+        this.setState({authority:"ROLE_ADMIN",
+            role_message:"ROLE_ADMIN",});
     }
-    chargeauthHandler =(event) =>{
-        this.setState({enabled:event.target.value});
+    onClickUserItem =()=>{
+        this.setState({authority:"ROLE_USER",
+            role_message:"ROLE_USER",});
+    }
+    onClickTrueItem=()=>{
+        this.setState({enabled_message:"TRUE",
+            enabled:"true"});
 
     }
+    onClickFalseItem=()=>{
+        this.setState({enabled_message:"FALSE",
+            enabled:"false"});
 
+    }
 
     render() {
         return (
@@ -73,16 +87,36 @@ class CreateUserComponent extends Component {
                                                value={this.state.password} onChange={this.chargePasswordHandler}/>
 
                                     </div>
-                                    <div className="form-group">
-                                        <label>Rol</label>
-                                        <input placeholder="rol" name="role" className="form-control"
-                                               value={this.state.authority} onChange={this.chargeRoleHandler}/>
+                                    <div className="dropdown show">
+                                        <a className="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {this.state.role_message}
+                                        </a>
+
+                                        <div className="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink">
+                                            <a className="dropdown-item" onClick={this.onClickAdminItem.bind(this)}>ROLE_ADMIN</a>
+                                            <a className="dropdown-item" onClick={this.onClickUserItem.bind(this)}>ROLE_USER</a>
+
+                                        </div>
                                     </div>
-                                    <div className="form-group">
-                                        <label>Aktiflik</label>
-                                        <input type ="text" placeholder="atkiflik" name="enable" className="form-control"
-                                               value={this.state.enabled} onChange={this.chargeauthHandler}/>
+                                    <hr/>
+                                    <div className="dropdown show">
+                                        <a className="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {this.state.enabled_message}
+                                        </a>
+
+                                        <div className="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink">
+                                            <a className="dropdown-item" onClick={this.onClickTrueItem.bind(this)}>TRUE</a>
+                                            <a className="dropdown-item" onClick={this.onClickFalseItem.bind(this)}>FALSE</a>
+
+                                        </div>
                                     </div>
+                                    <hr/>
+
+
+
+
                                     <button className="btn btn-success" onClick={this.saveUser}>Kaydet</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>
                                 </form>

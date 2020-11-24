@@ -23,6 +23,7 @@ public class Product {
         this.category=category;
     }
 
+
     public String getCategory() {
         return category;
     }
