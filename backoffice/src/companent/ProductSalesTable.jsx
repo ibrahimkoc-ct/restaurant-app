@@ -34,6 +34,7 @@ class ProductSalesTable extends Component {
                         <tr>
                             <th>Siparis Numarası</th>
                             <th>Siparis Tarihi</th>
+                            <th>Masa Numarası</th>
                             <th>Urun Adi</th>
                             <th>Urun ID</th>
                             <th>Urun Adeti</th>
@@ -48,6 +49,7 @@ class ProductSalesTable extends Component {
                                         <tr key={product.orderId}>
                                             <td>{product.orderId}</td>
                                             <td>{product.createDate}</td>
+                                            <td>{product.selectedtable}</td>
                                             <td>{product.title}</td>
                                             <td>{product.id}</td>
                                             <td>{product.piece}</td>
@@ -62,7 +64,6 @@ class ProductSalesTable extends Component {
                             </div>
 
             </div>
-                <FooterComponent/>
             </div>
 
         );

@@ -23,7 +23,7 @@ class HomePageCompanent extends Component {
                 <Link>
                     <button className="btn btn-secondary homebutton">SEPET</button>
                 </Link>
-                <Link >
+                <Link to ="/table">
                     <button className="btn btn-secondary homebutton">MASALAR</button>
                 </Link>
                 <Link>

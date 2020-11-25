@@ -36,7 +36,7 @@ class ViewCategoryComponent extends Component {
                 <HeaderComponent/>
                 <br></br>
                 <div className="card col-md-6 offset-md-3" >
-                    <h2 className="text-center">Kullanıcı Detayları</h2>
+                    <h2 className="text-center">Kategori Detayları</h2>
                     <div className="card-body">
                         <div className="row">
                             <h3>Kategori Adı: {this.state.category.name}</h3>

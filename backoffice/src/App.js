@@ -24,6 +24,15 @@ import CreateCategoryComponent from "./companent/CreateCategoryComponent";
 import ViewCategoryComponent from "./companent/ViewCategoryComponent";
 import UpdateCategoryComponent from "./companent/UpdateCategoryComponent";
 import CategoryProductList from "./companent/CategoryProductList";
+import ServerListInfoComponent from "./companent/ServerListInfoComponent";
+import RestaurantTableListComponent from "./companent/RestaurantTableListComponent";
+import CategoryTableListComponent from "./companent/CategoryTableListComponent";
+import CreateRestaurantTableComponent from "./companent/CreateRestaurantTableComponent";
+import CreateCategoryTableComponent from "./companent/CreateCategoryTableComponent";
+import UpdateCategoryTableComponent from "./companent/UpdateCategoryTableComponent";
+import ViewCategoryTable from "./companent/ViewCategoryTable";
+import UpdateRestaurantTable from "./companent/UpdateRestaurantTable";
+import ViewRestaurantTable from "./companent/ViewRestaurantTable";
 
 function App() {
   return (
@@ -49,8 +58,17 @@ function App() {
               <Route path="/category-table" component={CategoryListComponent}></Route>
               <Route path="/add-category" component={CreateCategoryComponent}></Route>
               <Route path="/update-category/:id" component={UpdateCategoryComponent}></Route>
+              <Route path="/update-categorytable/:id" component={UpdateCategoryTableComponent}></Route>
               <Route path="/view-category/:id" component={ViewCategoryComponent}></Route>
               <Route path="/view-product-category/:id" component={CategoryProductList}></Route>
+              <Route path="/server-info" component={ServerListInfoComponent}></Route>
+              <Route path="/restaurant-table" component={RestaurantTableListComponent}></Route>
+              <Route path="/categorytable-table" component={CategoryTableListComponent}></Route>
+              <Route path="/add-table" component={CreateRestaurantTableComponent}></Route>
+              <Route path="/add-categorytable" component={CreateCategoryTableComponent}></Route>
+              <Route path="/view-categorytable/:id" component={ViewCategoryTable}></Route>
+              <Route path="/update-restaurantable/:id" component={UpdateRestaurantTable}></Route>
+              <Route path="/view-table/:id" component={ViewRestaurantTable}></Route>
 
 
           </Switch>

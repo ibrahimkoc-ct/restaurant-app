@@ -27,7 +27,7 @@ class CreateProductComponent extends Component {
     }
     saveProduct = (e) =>{
         e.preventDefault()
-        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.category,price: this.state.price};
+        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.categoryName,price: this.state.price};
         console.log('product=>'+JSON.stringify(product));
         ProductService.addProductId(product,this.state.categoryid).then(res =>{
             this.props.history.push('/products');
@@ -55,7 +55,8 @@ class CreateProductComponent extends Component {
     }
     onClickItem(e){
         this.setState({categoryid:e.id,
-            categoryName:e.name})
+            categoryName:e.name
+        })
 
     }
 

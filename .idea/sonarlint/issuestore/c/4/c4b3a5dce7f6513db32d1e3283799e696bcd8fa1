@@ -1,0 +1,9 @@
+
+b
+java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(½‹„øÿÿÿÿ8ù³Õß.
+T
+java:S1128"2Remove this unused import 'com.ba.entity.Product'.(«ŒÒÿÿÿÿÿ8”ŞµÕß.
+P
+java:S1128"3Remove this unused import 'com.ba.entity.Category'.(ÕŞêö8•œÁÕß.
+]
+java:S4684'"@Replace this persistent entity with a simple POJO or DTO object.(’ğÙ‘8ù³Õß.

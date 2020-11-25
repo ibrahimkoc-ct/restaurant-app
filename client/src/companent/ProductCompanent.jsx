@@ -23,7 +23,8 @@ class ProductCompanent extends Component {
                 price: 0,
                 title:'',
                 total: 0,
-                id: 0
+                id: 0,
+                selectedtable:'',
             },
 
         }
@@ -55,7 +56,6 @@ class ProductCompanent extends Component {
 
             cart[0].total=cart[0].total+cart[0].price;
             this.setState([{...this.state.salelist,[cart[0].id]:cart[0]}])
-            console.log(cart)
         }
         else{
             this.setState({
@@ -65,11 +65,12 @@ class ProductCompanent extends Component {
                     title:product.title,
                     price:Number(product.price),
                     piece:1,
-                    total:Number(product.price)
+                    total:Number(product.price),
+                    selectedtable:sessionStorage.getItem("product")
                 }
             },()=>this.setState({salelist:[...this.state.salelist,this.state.cart]}))
         }
-        console.log(product.id)
+
     }
     addPrice =(product)=>{
         product.piece+=1;
@@ -93,10 +94,12 @@ class ProductCompanent extends Component {
 
     }
     pay() {
-        console.log(this.state.salelist)
+        console.log(this.state.salelist+"bu saledir")
+
         ProductService.pay(this.state.salelist).then(res=>{
             this.props.history.push('/homepage')
         });
+        sessionStorage.setItem("product","Secili masa yok")
 
     }
 
@@ -104,9 +107,11 @@ class ProductCompanent extends Component {
         return (
             <div>
                 <HeaderComponent/>
+
                 <Link to="/homepage">
                     <button className="btn btn-info backbutton fas fa-edit" ></button>
                 </Link>
+                <h3 className="tablelable2">{sessionStorage.getItem("product")}</h3>
                 <Table bordered className="tableclass" >
                     <tbody>
                     <th>
@@ -127,7 +132,7 @@ class ProductCompanent extends Component {
 
 
 
-                                                <button className="btn btn-secondary categorybutton"onClick={() =>
+                                                <button className="btn btn-info categorybutton"onClick={() =>
                                                     this.onClickSidebar(category)}>{category.name}</button>
                                                 </div>
 

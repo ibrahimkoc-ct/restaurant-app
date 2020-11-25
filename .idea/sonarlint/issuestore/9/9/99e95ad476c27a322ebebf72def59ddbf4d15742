@@ -1,0 +1,12 @@
+
+P
+java:S1128"3Remove this unused import 'com.ba.entity.Category'.(ХЮкц8Я«лХЯ.
+T	java:S106$"9Replace this use of System.out or System.err by a logger.(лЙпu8ІЬгХЯ.
+`
+java:S3655'">Call "optionalArticle.isPresent()" before accessing the value.(ѕ‘ГЈшяяяя8ІЬгХЯ.
+c
+java:S2789#"FEnsure this "Optional" could never be null and remove this null-check.(ћ›№‘8ІЬгХЯ.
+T
+java:S1128"2Remove this unused import 'com.ba.entity.Product'.(Ѓ«ЊТяяяяя8ЭыкХЯ.
+T
+java:S3655."7Call "category.isPresent()" before accessing the value.(§—јЇ8€ъмХЯ.

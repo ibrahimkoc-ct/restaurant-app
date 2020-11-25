@@ -16,6 +16,7 @@ const Users_Api_Update_URL="http://localhost:8080/users/update";
 const Auth_Api_Update_URL="http://localhost:8080/auth/update";
 const Users_Api_Viwe_URL="http://localhost:8080/users/id";
 const Auth_Api_Viwe_URL="http://localhost:8080/auth/id";
+const ServerInfo_Api_Viwe_URL="http://localhost:8080/server-info";
 class UserService {
 
 
@@ -28,6 +29,7 @@ class UserService {
         });
 
     }
+
     getAuth() {
         return axios.get(AutOne_Base_URL, {
             headers: {
@@ -41,7 +43,7 @@ class UserService {
     getList() {
         return axios.get(User_Api_List_URL, {
             headers: {
-                Authorization:'Basic YWRtaW46cGFzczE='
+                Authorization: 'Basic YWRtaW46cGFzczE='
 
             }
         });
@@ -56,6 +58,7 @@ class UserService {
         });
 
     }
+
     createAuth(user) {
         return axios.post(Auth_Api_Add_URL, user, {
             headers: {
@@ -66,15 +69,16 @@ class UserService {
     }
 
     updateUser(user, userId) {
-        return axios.put(Users_Api_Update_URL , user, {
+        return axios.put(Users_Api_Update_URL, user, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
             }
         });
 
     }
+
     updateAuth(auth, authid) {
-        return axios.put(Auth_Api_Update_URL , auth, {
+        return axios.put(Auth_Api_Update_URL, auth, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
             }
@@ -90,7 +94,8 @@ class UserService {
         });
 
     }
-    deleteAuth(username){
+
+    deleteAuth(username) {
         return axios.delete(Auth_Api_Delete_URL + '/' + username, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -108,6 +113,7 @@ class UserService {
         });
 
     }
+
     getUsersById(userId) {
         return axios.get(Users_Api_Viwe_URL + '/' + userId, {
             headers: {
@@ -116,6 +122,7 @@ class UserService {
         });
 
     }
+
     getAuthById(userId) {
         return axios.get(Auth_Api_Viwe_URL + '/' + userId, {
             headers: {
@@ -133,5 +140,14 @@ class UserService {
         return axios.get(AutOne_URL)
 
     }
+
+    getServerInfo() {
+        return axios.get(ServerInfo_Api_Viwe_URL, {
+            headers: {
+                Authorization: sessionStorage.getItem("token")
+            }
+        });
+    }
 }
+
 export default new UserService()

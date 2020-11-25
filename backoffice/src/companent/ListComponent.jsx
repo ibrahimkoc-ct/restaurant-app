@@ -20,6 +20,7 @@ class ListComponent extends Component {
 
         this.editProduct=this.editProduct.bind(this);
         this.deleteProduct=this.deleteProduct.bind(this);
+        this.ViewCategory=this.ViewCategory.bind(this);
     }
     componentDidMount() {
 
@@ -48,6 +49,13 @@ class ListComponent extends Component {
     }
     viewProduct(id){
         this.props.history.push('/view-product/'+id);
+    }
+    ViewCategory=(category)=> {
+        console.log(category)
+        this.setState({
+            productslist:this.state.productslist.filter(product => product.category==category)
+
+        })
     }
 
     render() {
@@ -95,6 +103,7 @@ class ListComponent extends Component {
                         <tr>
                             <th>Urun Adi</th>
                             <th>Urun Icerigi</th>
+                            <th>Urun Kategorisi</th>
                             <th>Urun Fiyati</th>
                             <th className="actions123">Actions</th>
                         </tr>
@@ -106,6 +115,10 @@ class ListComponent extends Component {
                                     <tr key={product.id}>
                                         <td>{product.title}</td>
                                         <td>{product.description}</td>
+                                        <td>
+
+                                            <button className="btn btn-link" onClick={()=>this.ViewCategory(product.category)}>{product.category}</button>
+                                        </td>
                                         <td>{product.price}</td>
                                         <td>
 

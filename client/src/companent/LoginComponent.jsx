@@ -36,6 +36,7 @@ class LoginComponent extends Component {
             sessionStorage.setItem("token", 'Basic ' + btoa(this.state.username + ':' + this.state.password))
         sessionStorage.setItem("key",this.state.username)
         this.props.history.push('/homepage');
+            sessionStorage.setItem("product","Secili Masa yok")
 
     }
         else{

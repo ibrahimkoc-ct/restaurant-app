@@ -1,11 +1,13 @@
 package com.ba.entity;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name="Category")
+
+@Table (name="Category")
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

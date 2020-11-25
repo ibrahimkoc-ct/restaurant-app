@@ -14,6 +14,7 @@ public class ProductSales {
     private Long price;
     private Long piece;
     private String title;
+    private String selectedtable;
     @Column
     private Date createDate = new Timestamp(System.currentTimeMillis());
 
@@ -70,15 +71,11 @@ public class ProductSales {
         this.createDate = createDate;
     }
 
-    @Override
-    public String toString() {
-        return "ProductSales{" +
-                "OrderId=" + OrderId +
-                ", id=" + id +
-                ", price=" + price +
-                ", piece=" + piece +
-                ", title='" + title + '\'' +
-                ", createDate=" + createDate +
-                '}';
+    public String getSelectedtable() {
+        return selectedtable;
+    }
+
+    public void setSelectedtable(String selectedtable) {
+        this.selectedtable = selectedtable;
     }
 }

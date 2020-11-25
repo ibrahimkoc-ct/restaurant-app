@@ -36,7 +36,7 @@ class UpdateCategoryComponent extends Component {
 
     }
     cancel(){
-        this.props.history.push('/category-table');
+        this.props.history.push('/categorytable-table');
 
     }
 
@@ -45,7 +45,7 @@ class UpdateCategoryComponent extends Component {
         let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl};
         console.log('category=>'+JSON.stringify(category));
         CategoryService.updateCategory(category).then(res =>{
-            this.props.history.push('/category-table');
+            this.props.history.push('/categorytable-table');
         })
 
     }
