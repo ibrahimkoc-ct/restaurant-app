@@ -191,3 +191,9 @@ S
 #client/src/services/TableService.js,5\9\5978de7fd3cf9ff38e960276852b8d18f0c5fcb7
 W
 'client/src/companent/TableComponent.jsx,e\f\ef1bb45ba0c3d847ccb93fff7b97dc7c7cc9a245
+_
+/src/main/java/profiles/ProfilesApplication.java,5\1\511bc47921a4e80b5e41fe600322c4749ef017bb
+h
+8src/main/java/profiles/controller/ProfileController.java,a\1\a1c873a947dffa611ffcc2b3654d2ba17d215ce8
+i
+9src/main/java/profiles/configuration/DBConfiguration.java,b\f\bf749126c2e85b9324d95a500b22a06a24939911

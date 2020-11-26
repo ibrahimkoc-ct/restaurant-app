@@ -1,0 +1,9 @@
+
+I
+java:S1068"'Remove this unused "url" private field.(«Œåùÿÿÿÿ8‘ğûß.
+U
+java:S1068"3Remove this unused "driverClassName" private field.(‘ä•÷ûÿÿÿÿ8‘ğûß.
+I
+java:S1068",Remove this unused "username" private field.(‘ó¹²8‘ğûß.
+T	java:S106"9Replace this use of System.out or System.err by a logger.(Õ³‰=8‘ğûß.
+Z	java:S106"9Replace this use of System.out or System.err by a logger.(“âÎúÿÿÿÿ8Â’¿üß.
