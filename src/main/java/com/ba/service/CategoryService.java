@@ -35,10 +35,10 @@ public class CategoryService {
         return "kisi eklendi";
     }
 
-    public void updateCategory (CategoryDTO categoryDTO){
+    public CategoryDTO updateCategory (CategoryDTO categoryDTO){
 
         categoryRepository.saveAndFlush(CategoryDtoConventer.categoryDTOaddCategory(categoryDTO));
-
+        return categoryDTO;
     }
     public CategoryDTO getCategoryById(Long id) {
 
@@ -51,4 +51,5 @@ public class CategoryService {
         return CategoryDtoConventer.categoryDTOgetProductCategory(category);
 
     }
+
 }

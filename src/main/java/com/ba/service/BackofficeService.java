@@ -29,15 +29,18 @@ public class BackofficeService {
     return BackofficeDtoConverter.productListTOProductList(productList);
     }
 
-    public void deleteProduct(Long id) {
+    public String deleteProduct(Long id) {
         repository.deleteById(BackofficeDtoConverter.deleteProductDTOToProduct(id));
+        return "kisi silindi";
+
     }
 
 
 
-    public void updateProduct(long id, ProductDTO product) {
+    public ProductDTO updateProduct(long id, ProductDTO product) {
 
         repository.saveAndFlush(BackofficeDtoConverter.updateProductDto(product));
+        return product;
     }
 
     public ProductDTO getProductById(Long id) {
@@ -48,10 +51,11 @@ public class BackofficeService {
     }
 
 
-    public void addProductId(ProductDTO product,Long id){
+    public String  addProductId(ProductDTO product,Long id){
         Optional<Category> category =categoryRepository.findById(id);
 
         categoryRepository.save(BackofficeDtoConverter.addProductIDtoDto(category,product));
+        return "kisi eklendi";
     }
 
 

@@ -39,13 +39,14 @@ public class CategoryTableService {
         return "kisi eklendi";
     }
 
-    public void updateCategory (CategoryTableDTO category){
+    public CategoryTableDTO updateCategory (CategoryTableDTO category){
         repository.saveAndFlush(CategoryTableDtoConverter.categoryTableAddDTO(category));
+        return category;
 
     }
 
-    public CategoryTableDTO getCategoryById(Long id) {
 
+    public CategoryTableDTO getCategoryById(Long id) {
         Optional<CategoryTable> dtoList= repository.findById(id);
        return CategoryTableDtoConverter.categoryTableDTOgetById(dtoList);
 
