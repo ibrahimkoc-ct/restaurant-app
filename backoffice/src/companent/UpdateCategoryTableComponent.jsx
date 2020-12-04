@@ -11,12 +11,14 @@ class UpdateCategoryTableComponent extends Component {
             id: this.props.match.params.id,
             name: '',
             description: '',
-            imageToUrl: ''
+            imageToUrl: '',
+            tableAmount:''
         }
         this.chargeDescriptionHandler=this.chargeDescriptionHandler.bind(this);
         this.chargeNameHandler=this.chargeNameHandler.bind(this);
         this.chargeurlToImageHandler=this.chargeurlToImageHandler.bind(this);
         this.updateCategory=this.updateCategory.bind(this);
+        this.chargeTableAmountHandler=this.chargeTableAmountHandler.bind(this);
 
 
     }
@@ -35,6 +37,9 @@ class UpdateCategoryTableComponent extends Component {
             event.target.value});
 
     }
+    chargeTableAmountHandler=(event)=>{
+        this.setState({tableAmount:event.target.value});
+    }
     cancel(){
         this.props.history.push('/categorytable-table');
 
@@ -42,7 +47,7 @@ class UpdateCategoryTableComponent extends Component {
 
     updateCategory= (e) =>{
         e.preventDefault()
-        let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl};
+        let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,tableAmount:this.state.tableAmount};
         console.log('category=>'+JSON.stringify(category));
         CategoryTable.updateCategory(category).then(res =>{
             this.props.history.push('/categorytable-table');
@@ -79,6 +84,12 @@ class UpdateCategoryTableComponent extends Component {
                                         <input placeholder="Kategori Resim" name="imageToUrl" className="form-control"
                                                value={this.state.imageToUrl} onChange={this.chargeurlToImageHandler}/>
                                     </div>
+                                    <div className="form-group">
+                                        <label>Masa Sayisi</label>
+                                        <input placeholder="Masa Sayisi" name="category" className="form-control"
+                                               value={this.state.tableAmount} onChange={this.chargeTableAmountHandler}/>
+                                    </div>
+
 
                                     <button className="btn btn-success" onClick={this.updateCategory}>Kaydet</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>

@@ -1,5 +1,6 @@
 package com.ba.controller;
 
+import com.ba.dto.AuthoritiesDTO;
 import com.ba.entity.Authorities;
 import com.ba.entity.Users;
 import com.ba.service.AuthoritiesService;
@@ -17,35 +18,26 @@ public class AuthoritiesController {
     @Autowired
     AuthoritiesService authoritiesService;
 
-    @GetMapping("/loadadminauth")
-    public void loadAdmin(){
-        Authorities auth = new Authorities("admin","ROLE_ADMIN");
-        authoritiesService.loadAdmin(auth);
+    @DeleteMapping("/delete/{username}")
+    public void deleteAuth(@PathVariable String username){
+         authoritiesService.deleteAuth(username);
+    }
+    @PutMapping("/update")
+    public void updateAuth(@RequestBody AuthoritiesDTO auth){ authoritiesService.updateAuth(auth);
+    }
+
+    @GetMapping("/id/{id}")
+    public AuthoritiesDTO AuthById(@PathVariable String id){
+        return authoritiesService.getAuthById(id);
     }
 
     @GetMapping("/listall")
-    public List<Authorities> authoritiesList(){
+    public List<AuthoritiesDTO> authoritiesList(){
         return authoritiesService.authoritiesList();
     }
 
     @PostMapping("/add")
-    public void addAuth(@RequestBody Authorities auth){
-        authoritiesService.addAuth(auth);
-    }
-
-    @DeleteMapping("/delete/{username}")
-    public List<Authorities> deleteAuth(@PathVariable String username){
-        return authoritiesService.deleteAuth(username);
-    }
-
-    @PutMapping("/update")
-    public List<Authorities> updateAuth(@RequestBody Authorities auth){
-        return authoritiesService.updateAuth(auth);
-    }
-
-    @GetMapping("/id/{id}")
-    public Optional<Authorities> getUsersById(@PathVariable String id){
-        return authoritiesService.getAuthById(id);
-
+    public void addAuth(@RequestBody AuthoritiesDTO authDto){
+        authoritiesService.addAuth(authDto);
     }
 }

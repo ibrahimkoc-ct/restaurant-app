@@ -2,6 +2,7 @@ package com.ba.controller;
 
 
 
+import com.ba.dto.ProductSalesDTO;
 import com.ba.entity.ProductSales;
 import com.ba.service.ProductSalesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,13 @@ public class ProductSalesController {
     private ProductSalesService productsales;
 
     @PostMapping("/add")
-    public void addProductSales(@RequestBody List<ProductSales> productSales) {
+    public void addProductSales(@RequestBody List<ProductSalesDTO> productSalesdto) {
 
-        productsales.addProductSales(productSales);
+        productsales.addProductSales(productSalesdto);
 
     }
     @GetMapping("/list")
-    public List<ProductSales> getAllProduct() {
+    public List<ProductSalesDTO> getAllProduct() {
         return productsales.getAllProductSales();
     }
 

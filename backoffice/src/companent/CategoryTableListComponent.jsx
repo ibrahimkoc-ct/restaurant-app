@@ -54,6 +54,7 @@ class CategoryTableListComponent extends Component {
                                     <th>Kategori Id</th>
                                     <th>Kategori Adı</th>
                                     <th>Kategori Bilgileri</th>
+                                    <th>Masa Sayısı</th>
                                     <th>Fotograf</th>
                                     <th>Butonlar</th>
                                 </tr>
@@ -66,6 +67,7 @@ class CategoryTableListComponent extends Component {
                                                 <td>{user.id}</td>
                                                 <td>{user.name}</td>
                                                 <td>{user.description}</td>
+                                                <td>{user.tableAmount}</td>
                                                 <td>{user.imageToUrl}</td>
 
                                                 <td>
@@ -82,7 +84,7 @@ class CategoryTableListComponent extends Component {
                         </div>
 
                     </div>
-                    <FooterComponent/>
+
 
             </div>
         );

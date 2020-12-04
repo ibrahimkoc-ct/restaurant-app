@@ -217,5 +217,25 @@
 }
 .tablelable2{
     margin-left: 10px;
-    margin-top: 10px;
+
+}
+.homepage{
+    height: 700px;
+}
+.productbody{
+    height: 600px;
+
+
+
+}
+.buttoncategory{
+    width: 60%;
+}
+.basketnew{
+    height: 10%;
+}
+.newproduct{
+    height: calc(100%);
+    overflow-y: auto;
+
 }

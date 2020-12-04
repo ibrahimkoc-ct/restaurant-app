@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Authorities {
+    public class Authorities {
     @Id
     private String username;
     private String authority;

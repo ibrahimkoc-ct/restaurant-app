@@ -49,6 +49,10 @@ class ViewCategoryTable extends Component {
                         <div className="row">
                             <h3>Fotograf: {this.state.category.imageToUrl}</h3>
                         </div>
+                        <hr></hr>
+                        <div className="row">
+                            <h3>Masa Sayisi: {this.state.category.tableAmount}</h3>
+                        </div>
 
 
                     </div>

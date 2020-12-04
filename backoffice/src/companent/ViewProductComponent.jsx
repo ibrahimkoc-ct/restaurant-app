@@ -39,9 +39,14 @@ class ViewUserComponent extends Component {
                         <div className="row">
                             <h3>Ürün Kategorisi: {this.state.product.category}</h3>
                         </div>
+
                         <hr></hr>
                         <div className="row">
                             <h3>Ürün Fiyatı: {this.state.product.price}</h3>
+                        </div>
+                        <hr></hr>
+                        <div className="row">
+                            <h3>Ürün Resmi: <img src={this.state.product.urlToImage}/></h3>
                         </div>
 
 

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const User_Api_Base_URL="http://localhost:8080/user/list";
+
 const User_Api_Add_URL="http://localhost:8080/users/add";
 const Auth_Api_Add_URL="http://localhost:8080/auth/add";
-const User_Api_Update_URL="http://localhost:8080/user/update";
+
 const User_Api_Viwe_URL="http://localhost:8080/user/id";
 
 const User_Api_List_URL="http://localhost:8080/users/listall";

@@ -69,7 +69,7 @@ class UserListComponent extends Component {
                                 user =>
                                     <tr >
                                         <td>{user.username}</td>
-                                        <td>{user.password}</td>
+                                        <td className="pass">{user.password}</td>
                                         <td>{user.enabled.toString()}</td>
                                         <td>
                                             <button  onClick={()=>this.editUser(user.username)} className=" btn btn-info  ">Güncelle</button>
@@ -84,7 +84,7 @@ class UserListComponent extends Component {
                 </div>
 
             </div>
-                <FooterComponent/>
+
             </div>
                 
 

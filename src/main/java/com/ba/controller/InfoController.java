@@ -1,15 +1,11 @@
 package com.ba.controller;
 
-import com.ba.repository.ProductRepository;
-import model.ServerInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ba.model.ServerInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -31,6 +31,8 @@ class ListComponent extends Component {
         CategoryService.getCategory().then((res)=>{
             this.setState({categorylist:res.data});
         });
+
+        console.log(this.state.productslist)
     }
 
 
@@ -104,6 +106,7 @@ class ListComponent extends Component {
                             <th>Urun Adi</th>
                             <th>Urun Icerigi</th>
                             <th>Urun Kategorisi</th>
+                            <th>Urun Resmi</th>
                             <th>Urun Fiyati</th>
                             <th className="actions123">Actions</th>
                         </tr>
@@ -119,6 +122,7 @@ class ListComponent extends Component {
 
                                             <button className="btn btn-link" onClick={()=>this.ViewCategory(product.category)}>{product.category}</button>
                                         </td>
+                                        <td>{product.urlToImage}</td>
                                         <td>{product.price}</td>
                                         <td>
 
@@ -134,7 +138,7 @@ class ListComponent extends Component {
                 </div>
 
                 </div>
-                <FooterComponent/>
+
             </div>
         );
 

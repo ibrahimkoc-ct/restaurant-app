@@ -108,3 +108,6 @@
   font-size: x-large;
   color: white;
 }
+.pass{
+  -webkit-text-security: disc;
+}

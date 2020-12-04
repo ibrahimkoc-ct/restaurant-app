@@ -66,7 +66,6 @@ class AuthListComponent extends Component {
                     </div>
 
                 </div>
-                <FooterComponent/>
 
             </div>
         );

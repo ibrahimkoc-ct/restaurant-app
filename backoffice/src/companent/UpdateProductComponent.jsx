@@ -12,6 +12,7 @@ class UpdateProductComponent extends Component {
             title:'',
             description:'',
             category:'',
+            urlToImage:'',
             price:''
         }
 
@@ -20,16 +21,18 @@ class UpdateProductComponent extends Component {
         this.chargeCategoryHandler=this.chargeCategoryHandler.bind(this);
         this.chargePriceHandler=this.chargePriceHandler.bind(this);
         this.updateProduct=this.updateProduct.bind(this);
+        this.chargeUrlToImageHandler=this.chargeUrlToImageHandler.bind(this);
     }
 
     updateProduct = (e) =>{
-        e.preventDefault()
-        let product={title: this.state.title,description: this.state.description,category: this.state.category,price: this.state.price};
+
+
+        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.category,price: this.state.price,urlToImage: this.state.urlToImage};
         console.log('product=>'+JSON.stringify(product));
         ProductService.updateProduct(product,this.state.id).then(res =>{
             this.props.history.push('/products');
         })
-
+        e.preventDefault()
     }
     chargeTitleHandler =(event) =>{
         this.setState({title:event.target.value});
@@ -42,6 +45,9 @@ class UpdateProductComponent extends Component {
     }
     chargePriceHandler =(event) =>{
         this.setState({price:event.target.value});
+    }
+    chargeUrlToImageHandler =(event)=>{
+        this.setState({urlToImage:event.target.value})
     }
     cancel(){
         this.props.history.push('/products');
@@ -72,6 +78,12 @@ class UpdateProductComponent extends Component {
                                         <label>Urun Kategorisi</label>
                                         <input placeholder="Urun kategorisi" name="category" className="form-control"
                                                value={this.state.category} onChange={this.chargeCategoryHandler}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Urun Resmi</label>
+                                        <input placeholder="Urun resmi" name="urltoImage" className="form-control"
+                                               value={this.state.urlToImage} onChange={this.chargeUrlToImageHandler}/>
+
                                     </div>
                                     <div className="form-group">
                                         <label>Urun Fiyatı</label>

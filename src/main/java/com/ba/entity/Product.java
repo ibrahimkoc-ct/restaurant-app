@@ -1,9 +1,6 @@
 package com.ba.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Product {
@@ -14,7 +11,11 @@ public class Product {
     private String description;
     private String price;
     private String category;
+    private String urlToImage;
 
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category1;
 
     public Product(String title, String description, String price,String category) {
         this.title = title;
@@ -23,6 +24,21 @@ public class Product {
         this.category=category;
     }
 
+    public String getUrlToImage() {
+        return urlToImage;
+    }
+
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
+    }
+
+    public Category getCategory1() {
+        return category1;
+    }
+
+    public void setCategory1(Category category1) {
+        this.category1 = category1;
+    }
 
     public String getCategory() {
         return category;

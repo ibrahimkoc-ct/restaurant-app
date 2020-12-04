@@ -15,15 +15,21 @@ public class CategoryTable implements Serializable {
     private String name;
     private String description;
     private String imageToUrl;
-    @OneToMany(
-            cascade =CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    private Set<RestaurantTable> restaurantTables;
+    private int tableAmount;
 
-    public CategoryTable(String name, String description, String imageToUrl) {
+    public CategoryTable(String name, String description, String imageToUrl,int tableAmount ) {
         this.name = name;
         this.description = description;
         this.imageToUrl = imageToUrl;
+        this.tableAmount=tableAmount;
+    }
+
+    public int getTableAmount() {
+        return tableAmount;
+    }
+
+    public void setTableAmount(int tableAmount) {
+        this.tableAmount = tableAmount;
     }
 
     public CategoryTable() {
@@ -62,11 +68,11 @@ public class CategoryTable implements Serializable {
         this.imageToUrl = imageToUrl;
     }
 
-    public Set<RestaurantTable> getRestaurantTables() {
-        return restaurantTables;
-    }
-
-    public void setRestaurantTables(Set<RestaurantTable> restaurantTables) {
-        this.restaurantTables = restaurantTables;
-    }
+//    public Set<RestaurantTable> getRestaurantTables() {
+//        return restaurantTables;
+//    }
+//
+//    public void setRestaurantTables(Set<RestaurantTable> restaurantTables) {
+//        this.restaurantTables = restaurantTables;
+//    }
 }

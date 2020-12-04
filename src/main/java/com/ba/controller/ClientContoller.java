@@ -1,5 +1,6 @@
 package com.ba.controller;
 
+import com.ba.dto.ProductDTO;
 import com.ba.entity.Product;
 import com.ba.repository.ProductRepository;
 import com.ba.service.BackofficeService;
@@ -15,28 +16,26 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/client")
 public class ClientContoller {
-    @Autowired
-    ProductRepository repository;
 
     @Autowired
     private ClientService clientService;
 
     @GetMapping("/product/id/{id}")
-    public Optional<Product> getProductById(@PathVariable Long id){
+    public ProductDTO getProductById(@PathVariable Long id){
         return clientService.getProductById(id);
     }
     @GetMapping("/product/list")
-    public List<Product> getAllProduct() {
+    public List<ProductDTO> getAllProduct() {
         return clientService.getAllProduct();
     }
     @GetMapping("/product/{categoryName}")
-            public List<Product> findCategory(@PathVariable String categoryName){
+            public List<ProductDTO> findCategory(@PathVariable String categoryName){
             return  clientService.listSelectedCategory(categoryName);
     }
-    @GetMapping("/product/category/")
-    public List<String> getCategory(){
-        return clientService.AllCategory();
-
-    }
+//    @GetMapping("/product/category/")
+//    public List<String> getCategory(){
+//        return clientService.AllCategory();
+//
+//    }
 
 }

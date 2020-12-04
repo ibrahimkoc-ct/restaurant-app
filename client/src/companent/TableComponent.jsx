@@ -12,8 +12,9 @@ class TableComponent extends Component {
         this.state = {
             categorylist: [],
             tablelist: [],
-            categoryName:''
-
+            categoryName:'',
+            tableNumber:0,
+            items: []
         }
 
     }
@@ -28,21 +29,21 @@ class TableComponent extends Component {
     }
 
     onClickSidebar = (category) => {
+        this.state.items=[];
+       this.setState({tableNumber:category.tableAmount})
 
-        axios.get("http://localhost:8080/categorytable/table/id/" + category.id, {
-            headers: {
-                Authorization: sessionStorage.getItem("token")
+        for (let i=1; i<=category.tableAmount; i++)  {
+            this.state.items.push(<button className="btn btn-secondary cardbutton "
+                                          onClick={() =>
+                                              this.addProduct(category,i)}>Masa {i}</button>)
+        }
+        console.log((this.state.items))
+        return this.state.items;
 
-            }
-        }).then((res) => {
-            this.setState({tablelist: res.data,
-            categoryName:category.name});
-            console.log(res.data)
-        });
     }
-    addProduct= (product)=>{
-
-        sessionStorage.setItem("product","Secili Kategori: "+this.state.categoryName+" Secili Masa: "+product.title)
+    addProduct= (product,i)=>{
+            console.log(i);
+        sessionStorage.setItem("product","Secili Kategori: "+product.name+" Secili Masa: "+i)
         this.props.history.push('/products')
     }
     onClickExit(){
@@ -50,6 +51,7 @@ class TableComponent extends Component {
     }
 
     render() {
+
         return (
            <div>
                <HeaderComponent/>
@@ -91,34 +93,7 @@ class TableComponent extends Component {
                                    <h4 className="d-inline">Masalar</h4>
                                </div>
                                <div className="card-body ">
-                                   {
-                                       this.state.tablelist.map(
-                                           table =>{
-                                               return(
-                                                           <button className="btn btn-secondary cardbutton "onClick={()=>this.addProduct(table)}>{table.title}</button>
-
-
-
-
-
-                                               )
-
-
-                                           }
-
-
-                                       )
-                                   }
-
-
-
-
-
-
-
-
-
-
+                                   {this.state.items}
 
                                </div>
 

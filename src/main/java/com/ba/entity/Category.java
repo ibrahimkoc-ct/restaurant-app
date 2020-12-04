@@ -1,5 +1,7 @@
 package com.ba.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -15,9 +17,10 @@ public class Category implements Serializable {
     private String name;
     private String description;
     private String imageToUrl;
+    @JsonIgnore
     @OneToMany(
+            mappedBy = "category1",
             cascade =CascadeType.ALL)
-    @JoinColumn(name = "category_id")
     private Set<Product> products;
 
     public Category(String name, String description, String imageToUrl) {

@@ -1,22 +1,22 @@
 
-T
-java:S3655G"7Call "category.isPresent()" before accessing the value.(‚ú†á8•–¡Øﬂ.
-T	java:S106,"9Replace this use of System.out or System.err by a logger.(Î…Ôu8â◊¬µ›.
+T	java:S106?"9Replace this use of System.out or System.err by a logger.(Î…Ôu8ã«ˆ⁄›.
 c
 java:S2789+"FEnsure this "Optional" could never be null and remove this null-check.(ûõπë8â◊¬µ›.
-Z
-java:S3655/">Call "optionalArticle.isPresent()" before accessing the value.(Çœ‰O8ù¿√µ›.
-s
-java:S1128
-"QRemove this unused import 'org.springframework.web.bind.annotation.PathVariable'.(π˚Ò≈˛ˇˇˇˇ8ã«ˆ⁄›.
-c
-java:S2789>"FEnsure this "Optional" could never be null and remove this null-check.(ûõπë8ã«ˆ⁄›.
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(˜âÓÉ8ﬁÔ¬€›.
+T
+java:S3655G"7Call "category.isPresent()" before accessing the value.(‚ú†á8•–¡Øﬂ.
 o
 java:S2259B"MA "NullPointerException" could be thrown; "optionalArticle" is nullable here.(æ£öœ˘ˇˇˇˇ8¨Å¯⁄›.
 Q
 java:S1128"/Remove this unused import 'com.ba.entity.User'.(Ñâ∂µ¸ˇˇˇˇ8å‰ä˛ﬁ.
 `
 java:S3655B">Call "optionalArticle.isPresent()" before accessing the value.(æ£öœ˘ˇˇˇˇ8ã«ˆ⁄›.
-T	java:S106?"9Replace this use of System.out or System.err by a logger.(Î…Ôu8ã«ˆ⁄›.
+T	java:S106,"9Replace this use of System.out or System.err by a logger.(Î…Ôu8â◊¬µ›.
+c
+java:S2789>"FEnsure this "Optional" could never be null and remove this null-check.(ûõπë8ã«ˆ⁄›.
+s
+java:S1128
+"QRemove this unused import 'org.springframework.web.bind.annotation.PathVariable'.(π˚Ò≈˛ˇˇˇˇ8ã«ˆ⁄›.
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(˜âÓÉ8ﬁÔ¬€›.
+Z
+java:S3655/">Call "optionalArticle.isPresent()" before accessing the value.(Çœ‰O8ù¿√µ›.

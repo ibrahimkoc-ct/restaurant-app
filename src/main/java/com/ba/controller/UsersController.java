@@ -1,6 +1,6 @@
 package com.ba.controller;
 
-import com.ba.entity.User;
+import com.ba.dto.UsersDTO;
 import com.ba.entity.Users;
 import com.ba.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,33 +17,27 @@ public class UsersController {
     @Autowired
     UsersService usersService;
 
-    @GetMapping("/loadadminusers")
-    public void loadAdmin(){
-        Users users = new Users("admin","{noop}pass1",true);
-        usersService.loadAdmin(users);
-    }
-
     @GetMapping("/listall")
-    public List<Users> listUsers(){
+    public List<UsersDTO> listUsers(){
         return usersService.listUsers();
     }
 
     @PostMapping("/add")
-    public void addUsers(@RequestBody Users users){
+    public void addUsers(@RequestBody UsersDTO users){
         usersService.addUsers(users);
     }
 
     @DeleteMapping("/delete/{username}")
-    public List<Users> deleteUsers(@PathVariable String username){
-        return usersService.deleteUsers(username);
+    public void deleteUsers(@PathVariable String username){
+        usersService.deleteUsers(username);
     }
 
     @PutMapping("/update")
-    public List<Users> updateUsers(@RequestBody Users users){
-        return usersService.updateUsers(users);
+    public void updateUsers(@RequestBody UsersDTO users){
+         usersService.updateUsers(users);
     }
     @GetMapping("/id/{id}")
-    public Optional<Users> getUsersById(@PathVariable String id){
+    public UsersDTO getUsersById(@PathVariable String id){
         return usersService.getUsersById(id);
 
     }

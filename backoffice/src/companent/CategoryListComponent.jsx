@@ -85,7 +85,6 @@ class CategoryListComponent extends Component {
                     </div>
 
                 </div>
-                <FooterComponent/>
 
 
             </div>

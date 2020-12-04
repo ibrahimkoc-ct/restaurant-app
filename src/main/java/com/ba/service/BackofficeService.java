@@ -1,11 +1,14 @@
 package com.ba.service;
 
+import com.ba.converter.BackofficeDtoConverter;
+import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
+import com.ba.entity.CategoryTable;
 import com.ba.entity.Product;
-import com.ba.entity.User;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -21,57 +24,35 @@ public class BackofficeService {
     @Autowired
     CategoryRepository categoryRepository;
 
-
-    public List<Product> getAllProduct() {
-        repository.findAll();
-        return repository.findAll();
+    public List<ProductDTO> getAllProduct() {
+    List<Product> productList=repository.findAll();
+    return BackofficeDtoConverter.productListTOProductList(productList);
     }
 
-    public List<Product> deleteProduct(Long id) {
-        repository.deleteById(id);
-        return repository.findAll();
+    public void deleteProduct(Long id) {
+        repository.deleteById(BackofficeDtoConverter.deleteProductDTOToProduct(id));
     }
 
-    public List<Product> addProduct(Product product) {
 
-        repository.save(product);
-        return repository.findAll();
+
+    public void updateProduct(long id, ProductDTO product) {
+
+        repository.saveAndFlush(BackofficeDtoConverter.updateProductDto(product));
     }
 
-    public List<Product> updateProduct(long id, Product product) {
-        Optional<Product> optionalArticle = repository.findAll().stream().filter(news1 -> news1.getId() == id).findAny();
-        if (optionalArticle == null) {
-            System.out.println("girilen ID ile haber bulunamadı!");
-            return repository.findAll();
-        }
-        optionalArticle.get().setTitle(product.getTitle());
-        optionalArticle.get().setPrice(product.getPrice());
-        optionalArticle.get().setDescription(product.getDescription());
-        repository.saveAndFlush(optionalArticle.get());
+    public ProductDTO getProductById(Long id) {
 
-        return repository.findAll();
+        Optional<Product> dtoList =repository.findById(id);
+        return BackofficeDtoConverter.productDTOgetbyID(dtoList);
+
     }
 
-    public Optional<Product> getProductById(Long id) {
 
-        return repository.findById(id);
-    }
-
-    public String categoryID(Long id) {
-        Optional<Product> optionalArticle = repository.findAll().stream().filter(news1 -> news1.getId() == id).findAny();
-        if (optionalArticle == null) {
-            System.out.println("girilen ID ile haber bulunamadı!");
-
-        }
-      return optionalArticle.get().getCategory();
-    }
-
-    public void addProductId(Product product,Long id){
+    public void addProductId(ProductDTO product,Long id){
         Optional<Category> category =categoryRepository.findById(id);
-        category.get().getProducts().add(product);
-        categoryRepository.save(category.get());
-    }
 
+        categoryRepository.save(BackofficeDtoConverter.addProductIDtoDto(category,product));
+    }
 
 
 

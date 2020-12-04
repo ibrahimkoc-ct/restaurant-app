@@ -1,13 +1,16 @@
 package com.ba.service;
 
+import com.ba.converter.CategoryTableDtoConverter;
+import com.ba.dto.CategoryTableDTO;
 import com.ba.entity.Category;
 import com.ba.entity.CategoryTable;
 import com.ba.entity.Product;
-import com.ba.entity.RestaurantTable;
+
 import com.ba.repository.CategoryTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,31 +19,36 @@ import java.util.Set;
 public class CategoryTableService {
     @Autowired
     CategoryTableRepository repository;
-    public List<CategoryTable> getAllCategory() {
-        repository.findAll();
-        return repository.findAll();
-    }
 
-    public List<CategoryTable> deleteCategory(Long id) {
-        repository.deleteById(id);
-        return repository.findAll();
-    }
-    public List<CategoryTable> addCategory(CategoryTable category) {
 
-        repository.save(category);
-        return repository.findAll();
-    }
-    public List<CategoryTable> updateCategory (CategoryTable category){
-        repository.saveAndFlush(category);
-        return getAllCategory();
-    }
-    public Optional<CategoryTable> getCategoryById(Long id) {
-
-        return repository.findById(id);
-    }
-    public Set<RestaurantTable> getProductCategory(Long id){
-        Optional<CategoryTable> category=repository.findById(id);
-        return category.get().getRestaurantTables();
+    public List<CategoryTableDTO> getAllCategory() {
+       List<CategoryTable> categoryTableList= repository.findAll();
+        return CategoryTableDtoConverter.categoryListToCategoryDTOList(categoryTableList);
 
     }
+
+    public String deleteCategory(Long id) {
+
+        repository.deleteById(CategoryTableDtoConverter.categoryTabledelete(id));
+        return "kisi silindi";
+
+    }
+
+    public String addCategory(CategoryTableDTO category) {
+        repository.save(CategoryTableDtoConverter.categoryTableAddDTO(category));
+        return "kisi eklendi";
+    }
+
+    public void updateCategory (CategoryTableDTO category){
+        repository.saveAndFlush(CategoryTableDtoConverter.categoryTableAddDTO(category));
+
+    }
+
+    public CategoryTableDTO getCategoryById(Long id) {
+
+        Optional<CategoryTable> dtoList= repository.findById(id);
+       return CategoryTableDtoConverter.categoryTableDTOgetById(dtoList);
+
+    }
+
 }

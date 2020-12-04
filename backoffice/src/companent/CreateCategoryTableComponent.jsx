@@ -11,6 +11,7 @@ class CreateCategoryTableComponent extends Component {
             name: '',
             description: '',
             imageToUrl: '',
+            tableAmount:'',
 
             products:[]
         }
@@ -18,6 +19,7 @@ class CreateCategoryTableComponent extends Component {
         this.chargeNameHandler=this.chargeNameHandler.bind(this);
         this.chargeurlToImageHandler=this.chargeurlToImageHandler.bind(this);
         this.saveCategory=this.saveCategory.bind(this);
+        this.chargeTableAmountHandler=this.chargeTableAmountHandler.bind(this);
 
     }
     chargeNameHandler =(event) =>{
@@ -29,9 +31,12 @@ class CreateCategoryTableComponent extends Component {
     chargeurlToImageHandler =(event) =>{
         this.setState({imageToUrl:event.target.value});
     }
+    chargeTableAmountHandler=(event)=>{
+        this.setState({tableAmount:event.target.value});
+    }
     saveCategory = (e) =>{
         e.preventDefault()
-        let category={name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products};
+        let category={name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products,tableAmount:this.state.tableAmount};
         console.log('category=>'+JSON.stringify(category));
         CategoryTable.addCategory(category).then(res =>{
             this.props.history.push('/categorytable-table');
@@ -69,6 +74,11 @@ class CreateCategoryTableComponent extends Component {
                                         <label>Kategori Resim Url</label>
                                         <input placeholder="Kategori Resim" name="category" className="form-control"
                                                value={this.state.imageToUrl} onChange={this.chargeurlToImageHandler}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Masa Sayisi</label>
+                                        <input type ="number" placeholder="Masa Sayisi" name="category" className="form-control"
+                                               value={this.state.tableAmount} onChange={this.chargeTableAmountHandler}/>
                                     </div>
 
                                     <button className="btn btn-success" onClick={this.saveCategory}>Kaydet</button>
