@@ -86,6 +86,11 @@
 }
 .productlist{
   margin-top: 2%;
+
+}
+.tbody-heigth{
+  height: 800px;
+  overflow-y: auto;
 }
 .dropdown123{
   position: absolute;

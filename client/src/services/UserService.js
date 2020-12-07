@@ -10,6 +10,7 @@ class UserService extends Component {
             }});
 
     }
+
 }
 
 export default new UserService;

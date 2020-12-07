@@ -25,13 +25,15 @@ public class BackofficeController {
     }
 
     @DeleteMapping("/product/delete/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
+        return "ürün silindi";
     }
 
     @PutMapping("/product/update/{id}")
-    public void updateProduct(@PathVariable long id, @RequestBody ProductDTO product) {
+    public ProductDTO updateProduct(@PathVariable long id, @RequestBody ProductDTO product) {
         productService.updateProduct(id,product);
+        return product;
     }
         @GetMapping("/product/id/{id}")
     public ProductDTO getProductById(@PathVariable Long id){
@@ -39,8 +41,9 @@ public class BackofficeController {
     }
 
     @PostMapping("/product/category/add/{id}")
-    public void addProductId(@RequestBody ProductDTO product,@PathVariable Long id){
+    public ProductDTO addProductId(@RequestBody ProductDTO product,@PathVariable Long id){
         productService.addProductId(product,id);
+        return product;
     }
 
 

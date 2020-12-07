@@ -21,24 +21,27 @@ public class CategoryTableController {
     @Autowired
     CategoryTableService repository;
     @PostMapping("/add")
-    public void addCategory(@RequestBody CategoryTableDTO category) {
+    public String addCategory(@RequestBody CategoryTableDTO category) {
          repository.addCategory(category);
+         return "category eklendi";
     }
     @GetMapping("/list")
     public List<CategoryTableDTO> getAllCategory() {
         return repository.getAllCategory();
     }
     @DeleteMapping("/delete/{id}")
-    public void deleteCategory(@PathVariable Long id) {
+    public String deleteCategory(@PathVariable Long id) {
          repository.deleteCategory(id);
+         return "category silindi";
     }
     @GetMapping("/id/{id}")
     public CategoryTableDTO getCategoryById(@PathVariable Long id){
         return repository.getCategoryById(id);
     }
     @PutMapping("/update")
-    public void updateCategory(@RequestBody CategoryTableDTO category){
+    public CategoryTableDTO updateCategory(@RequestBody CategoryTableDTO category){
          repository.updateCategory(category);
+         return category;
     }
 
 

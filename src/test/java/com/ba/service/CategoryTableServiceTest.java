@@ -31,7 +31,7 @@ public class CategoryTableServiceTest {
 
     @Mock
     private CategoryTableRepository repository;
-    List<CategoryTable> list= new ArrayList<>();
+    List<CategoryTable> list = new ArrayList<>();
     List<CategoryTableDTO> dtoList = new ArrayList<>();
     CategoryTable categoryTable = new CategoryTable();
     CategoryTableDTO categoryTableDTO = new CategoryTableDTO();
@@ -48,44 +48,46 @@ public class CategoryTableServiceTest {
         categoryTableDTO.setImageToUrl("no image");
     }
 
-        @Test
-        public void shouldAddNewCategoryTable(){
-       Mockito.when(repository.save(any())).thenReturn(categoryTable);
-       String result=service.addCategory(categoryTableDTO);
-        assertEquals(result,"kisi eklendi");
-        }
-        @Test(expected =RuntimeException.class)
-        public void shouldDeleteCategoryTableById(){
-        Long id=1L;
+    @Test
+    public void shouldAddNewCategoryTable() {
+        Mockito.when(repository.save(any())).thenReturn(categoryTable);
+        String result = service.addCategory(categoryTableDTO);
+        assertEquals(result, "kisi eklendi");
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldDeleteCategoryTableById() {
+        Long id = 1L;
         doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
-        String result=service.deleteCategory(id);
-        assertEquals(result,"kisi silindi");
-        verify(repository,times(1)).deleteById(id);
+        String result = service.deleteCategory(id);
+        assertEquals(result, "kisi silindi");
+        verify(repository, times(1)).deleteById(id);
 
     }
-        @Test
-        public void shouldCategoryTableList(){
+
+    @Test
+    public void shouldCategoryTableList() {
         list.add(categoryTable);
         Mockito.when(repository.findAll()).thenReturn(list);
         List<CategoryTableDTO> dtoList = CategoryTableDtoConverter.categoryListToCategoryDTOList(list);
-        List<CategoryTableDTO> dtoList1 =service.getAllCategory();
-        assertEquals(dtoList1.get(0).getId(),dtoList.get(0).getId());
-        }
+        List<CategoryTableDTO> dtoList1 = service.getAllCategory();
+        assertEquals(dtoList1.get(0).getId(), dtoList.get(0).getId());
+    }
 
     @Test
-    public void shouldUpdateCategoryTable(){
+    public void shouldUpdateCategoryTable() {
         Mockito.when(repository.saveAndFlush(categoryTable)).thenReturn(categoryTable);
-        CategoryTableDTO result=service.updateCategory(categoryTableDTO);
-        assertEquals(result,categoryTableDTO);
+        CategoryTableDTO result = service.updateCategory(categoryTableDTO);
+        assertEquals(result, categoryTableDTO);
 
     }
 
     @Test
-    public void shouldGetCategoryById(){
-        Long id=1L;
-        Optional<CategoryTable> dtolist1=Optional.of(categoryTable);
+    public void shouldGetCategoryById() {
+        Long id = 1L;
+        Optional<CategoryTable> dtolist1 = Optional.of(categoryTable);
         Mockito.when(repository.findById(id)).thenReturn(dtolist1);
-        CategoryTableDTO result=service.getCategoryById(id);
-        assertEquals(result.getId(),id);
+        CategoryTableDTO result = service.getCategoryById(id);
+        assertEquals(result.getId(), id);
     }
 }

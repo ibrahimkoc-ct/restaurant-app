@@ -22,24 +22,27 @@ public class CategoryController {
 
 
     @PostMapping("/add")
-    public void addCategory(@RequestBody CategoryDTO category) {
+    public CategoryDTO addCategory(@RequestBody CategoryDTO category) {
          categoryService.addCategory(category);
+         return category;
     }
     @GetMapping("/list")
     public List<CategoryDTO> getAllCategory() {
         return categoryService.getAllCategory();
     }
     @DeleteMapping("/delete/{id}")
-    public void deleteCategory(@PathVariable Long id) {
+    public String deleteCategory(@PathVariable Long id) {
          categoryService.deleteCategory(id);
+         return "category silindi";
     }
     @GetMapping("/id/{id}")
     public CategoryDTO getCategoryById(@PathVariable Long id){
         return categoryService.getCategoryById(id);
     }
     @PutMapping("/update")
-    public void updateCategory(@RequestBody CategoryDTO category){
+    public CategoryDTO updateCategory(@RequestBody CategoryDTO category){
          categoryService.updateCategory(category);
+         return category;
     }
 
     @GetMapping("/product/id/{id}")

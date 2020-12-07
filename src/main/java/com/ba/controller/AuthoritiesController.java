@@ -1,14 +1,11 @@
 package com.ba.controller;
 
 import com.ba.dto.AuthoritiesDTO;
-import com.ba.entity.Authorities;
-import com.ba.entity.Users;
 import com.ba.service.AuthoritiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,11 +16,13 @@ public class AuthoritiesController {
     AuthoritiesService authoritiesService;
 
     @DeleteMapping("/delete/{username}")
-    public void deleteAuth(@PathVariable String username){
+    public String deleteAuth(@PathVariable String username){
          authoritiesService.deleteAuth(username);
+         return "rol silindi";
     }
     @PutMapping("/update")
-    public void updateAuth(@RequestBody AuthoritiesDTO auth){ authoritiesService.updateAuth(auth);
+    public AuthoritiesDTO updateAuth(@RequestBody AuthoritiesDTO auth){ authoritiesService.updateAuth(auth);
+    return auth;
     }
 
     @GetMapping("/id/{id}")
@@ -37,7 +36,8 @@ public class AuthoritiesController {
     }
 
     @PostMapping("/add")
-    public void addAuth(@RequestBody AuthoritiesDTO authDto){
+    public String addAuth(@RequestBody AuthoritiesDTO authDto){
         authoritiesService.addAuth(authDto);
+        return "rol eklendi";
     }
 }

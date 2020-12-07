@@ -40,7 +40,6 @@ public class ProductSalesServiceTest {
         s.setPiece(25l);
         sales.add(s);
 
-
     }
     @Test
     public void shouldAddNewProductSales(){

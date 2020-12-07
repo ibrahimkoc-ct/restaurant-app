@@ -19,9 +19,10 @@ public class ProductSalesController {
     private ProductSalesService productsales;
 
     @PostMapping("/add")
-    public void addProductSales(@RequestBody List<ProductSalesDTO> productSalesdto) {
+    public String addProductSales(@RequestBody List<ProductSalesDTO> productSalesdto) {
 
         productsales.addProductSales(productSalesdto);
+        return "Product Sales Eklendi";
 
     }
     @GetMapping("/list")

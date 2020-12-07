@@ -11,6 +11,15 @@ public class ProductSalesDTO {
     private String title;
     private String selectedtable;
     private Date createDate = new Timestamp(System.currentTimeMillis());
+    private String waiterName;
+
+    public String getWaiterName() {
+        return waiterName;
+    }
+
+    public void setWaiterName(String waiterName) {
+        this.waiterName = waiterName;
+    }
 
     public Date getCreateDate() {
         return createDate;

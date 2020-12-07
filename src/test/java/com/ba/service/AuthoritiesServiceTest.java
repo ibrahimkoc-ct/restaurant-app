@@ -71,8 +71,6 @@ public class AuthoritiesServiceTest {
     }
     @Test
     public void shouldGetAuthById(){
-
-
         String id="ibrahim";
         Optional<Authorities> dtoList1 = Optional.of(authorities);
         Mockito.when(authoritiesRepository.findById(id)).thenReturn(dtoList1);

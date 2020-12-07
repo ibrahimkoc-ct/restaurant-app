@@ -22,9 +22,6 @@ class ViewUserComponent extends Component {
 
 
 
-
-
-
             this.setState({
                 user:res.data,
                 enabled:res.data.enabled.toString()

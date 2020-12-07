@@ -142,13 +142,19 @@
 .baskettotalbutton{
     width: 200px;
 }
-.usernamepage{
+.usernamepage {
     position: absolute;
     right: 1%;
     margin-top: 0.4%;
     font-size: x-large;
-    color: white;
 }
+.ModalBody{
+    height: 300px;
+    overflow-y: auto;
+
+}
+
+
 .tablebodytable{
     width: 350px;
     margin-top: 10px;

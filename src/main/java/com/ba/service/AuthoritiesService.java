@@ -18,7 +18,6 @@ public class AuthoritiesService {
     @Autowired
     AuthoritiesRepository authoritiesRepository;
 
-    //yapıldı
     public String deleteAuth(String username) {
 
         authoritiesRepository.deleteById(AuthoritiesDtoConverter.authDTOdeleteAuth(username));

@@ -42,9 +42,9 @@ class HeaderComponent extends Component {
                         <Link to ='categorytable-table' >
                             <button style={{marginLeft: "10px"}} className="btn btn-info" >Masa Kategorileri</button>
                         </Link>
-                        {/*<Link to ='/restaurant-table' >*/}
-                        {/*    <button style={{marginLeft: "10px"}} className="btn btn-info" >Masalar</button>*/}
-                        {/*</Link>*/}
+                        <Link to ='/waiter-table' >
+                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Garsonlar</button>
+                        </Link>
                         <Link to ='/' >
                             <button className="btn btn-danger usernamepage" onClick={()=>this.Exitbutton()}>Çıkıs: {sessionStorage.getItem("key")}</button>
                         </Link>

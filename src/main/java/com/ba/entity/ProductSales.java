@@ -15,6 +15,16 @@ public class ProductSales {
     private Long piece;
     private String title;
     private String selectedtable;
+    private String waiterName;
+
+    public String getWaiterName() {
+        return waiterName;
+    }
+
+    public void setWaiterName(String waiterName) {
+        this.waiterName = waiterName;
+    }
+
     @Column
     private Date createDate = new Timestamp(System.currentTimeMillis());
 

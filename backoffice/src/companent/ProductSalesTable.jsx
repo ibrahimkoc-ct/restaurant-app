@@ -5,6 +5,7 @@ import Table from "react-bootstrap/Table";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import {BrowserRouter as Router} from "react-router-dom";
+import '../App.css'
 class ProductSalesTable extends Component {
     constructor(props) {
         super(props);
@@ -24,16 +25,17 @@ class ProductSalesTable extends Component {
         return (
             <div>
                 <HeaderComponent/>
-                <div className="container productlist">
+                <div className="container productlist tbody-heigth">
                 <h2 className="text-center">Urun Satış Tablosu</h2>
                 <div className="row">
                 </div>
                 <div className="row">
-                    <Table striped bordered hover >
+                    <Table striped bordered hover>
                         <thead>
                         <tr>
                             <th>Siparis Numarası</th>
                             <th>Siparis Tarihi</th>
+                            <th>Garson Adı</th>
                             <th>Masa Numarası</th>
                             <th>Urun Adi</th>
                             <th>Urun ID</th>
@@ -42,13 +44,15 @@ class ProductSalesTable extends Component {
                             <th>Toplam Fiyat</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             {
+
                                 this.state.ProductSales.map(
                                     product =>
                                         <tr key={product.orderId}>
                                             <td>{product.orderId}</td>
                                             <td>{product.createDate}</td>
+                                            <td>{product.waiterName}</td>
                                             <td>{product.selectedtable}</td>
                                             <td>{product.title}</td>
                                             <td>{product.id}</td>

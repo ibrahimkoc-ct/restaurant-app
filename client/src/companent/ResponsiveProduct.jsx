@@ -16,7 +16,7 @@ class ResponsiveProduct extends Component {
             categorylist: [],
             salelist: [],
             shoppinglistprice: 0,
-
+            paymentText:'',
             cart: {
                 cartId: 0,
                 piece: 1,
@@ -25,6 +25,7 @@ class ResponsiveProduct extends Component {
                 total: 0,
                 id: 0,
                 selectedtable: '',
+                waiterName:''
             },
 
         }
@@ -35,6 +36,35 @@ class ResponsiveProduct extends Component {
         ProductService.getCategory().then((res) => {
             this.setState({productslist: res.data});
         });
+        axios.get("http://localhost:8080/category/product/id/" + 1, {
+            headers: {
+                Authorization: sessionStorage.getItem("token")
+
+            }
+        }).then((res) => {
+
+
+        });
+
+        let orders = ResponsiveProduct.getOrderFromStorage();
+        let table=[];
+        for(let i=0; i<orders.length; i++){
+            if(orders[i][0].selectedtable.indexOf(localStorage.getItem("product"))!==-1){
+                for(let j=0; j<orders[i].length; j++){
+
+                    table.push(orders[i][j])
+                   this.state.shoppinglistprice+=(orders[i][j].piece*orders[i][j].price);
+
+
+                }
+                orders.splice(i,1);
+            }
+
+        }
+        this.setState({salelist: table});
+        localStorage.setItem("orders", JSON.stringify(orders));
+
+
 
     }
 
@@ -49,6 +79,7 @@ class ResponsiveProduct extends Component {
             this.setState({categorylist: res.data});
             console.log(res.data)
         });
+
     }
     addProduct = (product) => {
         this.state.shoppinglistprice += Number(product.price)
@@ -68,7 +99,8 @@ class ResponsiveProduct extends Component {
                     price: Number(product.price),
                     piece: 1,
                     total: Number(product.price),
-                    selectedtable: sessionStorage.getItem("product")
+                    selectedtable: localStorage.getItem("product"),
+                    waiterName:localStorage.getItem("waiter")
                 }
             }, () => this.setState({salelist: [...this.state.salelist, this.state.cart]}))
         }
@@ -97,23 +129,58 @@ class ResponsiveProduct extends Component {
     }
 
     pay() {
-        console.log(this.state.salelist + "bu saledir")
 
-        ProductService.pay(this.state.salelist).then(res => {
-            this.props.history.push('/homepage')
-        });
-        sessionStorage.setItem("product", "Secili masa yok")
+            ProductService.pay(this.state.salelist).then(res => {
+                this.props.history.push('/homepage')
+            });
+
+
+
+           localStorage.setItem("product", "Secili Masa Yok");
+           localStorage.setItem("waiter","Seçili Garson Yok");
+
+
+
 
     }
+
+    onClickExit(){
+
+
+        if(this.state.salelist.length>0){
+            let orders=ResponsiveProduct.getOrderFromStorage();
+            orders.push(this.state.salelist);
+            localStorage.setItem("orders",JSON.stringify(orders));
+        }
+
+        localStorage.setItem("product", "Secili Masa Yok");
+        localStorage.setItem("waiter","Seçili Garson Yok");
+
+        this.props.history.push('/homepage')
+
+    }
+    static getOrderFromStorage(){
+        let orders;
+
+        if(localStorage.getItem("orders") === null){
+            orders = [];
+        }else{
+            orders = JSON.parse(localStorage.getItem("orders"));
+        }
+
+        return orders;
+    }
+
 
     render() {
         return (
             <div>
                 <HeaderComponent/>
                 <Link to="/homepage">
-                    <button className="btn btn-info backbutton fas fa-edit"></button>
+                    <button className="btn btn-info backbutton fas fa-edit buttonhome" onClick={()=>
+                        this.onClickExit()}></button>
                 </Link>
-                <h3 className="tablelable2">{sessionStorage.getItem("product")}</h3>
+                <h3 className="tablelable2">{localStorage.getItem("product")}</h3>
                 <div className="container-fluid">
                     <div className="row mt-4">
                         <div className="col-xl-2 col-lg-2 text-center my-3">
@@ -195,7 +262,7 @@ class ResponsiveProduct extends Component {
                                                     <div className="col-xl-1 col-lg-1">
                                                         <h5 htmlFor="name">x{v.piece}</h5>
                                                     </div>
-                                                    <div className="col-xl-5 col-lg-5">
+                                                    <div className="col-xl-5 col-lg-5 text-left">
                                                         <h5 htmlFor="name">{v.title}</h5>
                                                     </div>
                                                     <div className="col-xl-2 col-lg-2">
@@ -233,7 +300,7 @@ class ResponsiveProduct extends Component {
                                     <label htmlFor="name">{this.state.shoppinglistprice} ₺</label></div>
                                 <div className="col xl-5 col-lg-5 text-center ">
                                     <button className="btn btn-info btn-block paybutton"
-                                            onClick={() => this.pay(this.state.salelist)}>Ode
+                                            onClick={() => this.pay(this.state.salelist)}>Öde
                                     </button>
                                 </div>
                             </div>

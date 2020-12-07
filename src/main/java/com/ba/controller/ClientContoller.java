@@ -32,10 +32,6 @@ public class ClientContoller {
             public List<ProductDTO> findCategory(@PathVariable String categoryName){
             return  clientService.listSelectedCategory(categoryName);
     }
-//    @GetMapping("/product/category/")
-//    public List<String> getCategory(){
-//        return clientService.AllCategory();
-//
-//    }
+
 
 }

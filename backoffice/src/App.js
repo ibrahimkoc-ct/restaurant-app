@@ -29,6 +29,10 @@ import CategoryTableListComponent from "./companent/CategoryTableListComponent";
 import CreateCategoryTableComponent from "./companent/CreateCategoryTableComponent";
 import UpdateCategoryTableComponent from "./companent/UpdateCategoryTableComponent";
 import ViewCategoryTable from "./companent/ViewCategoryTable";
+import WaiterListComponent from "./companent/WaiterListComponent";
+import CreateWaiterComponent from "./companent/CreateWaiterComponent";
+import ViewWaiterComponent from "./companent/ViewWaiterComponent";
+import UpdateWaiterComponent from "./companent/UpdateWaiterComponent";
 
 // import UpdateRestaurantTable from "./companent/UpdateRestaurantTable";
 // import ViewRestaurantTable from "./companent/ViewRestaurantTable";
@@ -66,11 +70,10 @@ function App() {
               <Route path="/categorytable-table" component={CategoryTableListComponent}></Route>
               <Route path="/add-categorytable" component={CreateCategoryTableComponent}></Route>
               <Route path="/view-categorytable/:id" component={ViewCategoryTable}></Route>
-              {/*<Route path="/restaurant-table" component={RestaurantTableListComponent}></Route>*/}
-              {/*<Route path="/add-table" component={CreateRestaurantTableComponent}></Route>*/}
-              {/*<Route path="/update-restaurantable/:id" component={UpdateRestaurantTable}></Route>*/}
-              {/*<Route path="/view-table/:id" component={ViewRestaurantTable}></Route>*/}
-
+              <Route path="/waiter-table" component={WaiterListComponent}></Route>
+              <Route path="/add-waiter-table" component={CreateWaiterComponent}></Route>
+              <Route path="/view-waiter-table/:id" component={ViewWaiterComponent}></Route>
+              <Route path="/update-waiter-table/:id" component={UpdateWaiterComponent}></Route>
 
           </Switch>
       </div>

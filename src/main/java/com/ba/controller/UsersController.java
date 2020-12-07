@@ -23,18 +23,21 @@ public class UsersController {
     }
 
     @PostMapping("/add")
-    public void addUsers(@RequestBody UsersDTO users){
+    public String addUsers(@RequestBody UsersDTO users){
         usersService.addUsers(users);
+        return "kisi eklendi";
     }
 
     @DeleteMapping("/delete/{username}")
-    public void deleteUsers(@PathVariable String username){
+    public String deleteUsers(@PathVariable String username){
         usersService.deleteUsers(username);
+        return "kisi silindi";
     }
 
     @PutMapping("/update")
-    public void updateUsers(@RequestBody UsersDTO users){
+    public UsersDTO updateUsers(@RequestBody UsersDTO users){
          usersService.updateUsers(users);
+         return users;
     }
     @GetMapping("/id/{id}")
     public UsersDTO getUsersById(@PathVariable String id){

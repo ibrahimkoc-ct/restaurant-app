@@ -19,6 +19,7 @@ public class ProductSalesDtoConverter {
             salesDTO.setPiece(productSalesListItem.getPiece());
             salesDTO.setPrice(productSalesListItem.getPrice());
             salesDTO.setSelectedtable(productSalesListItem.getSelectedtable());
+            salesDTO.setWaiterName(productSalesListItem.getWaiterName());
             orderListDTO.add(salesDTO);
         }
 
@@ -35,6 +36,7 @@ public class ProductSalesDtoConverter {
             product.setPiece(productSalesDTO.get(i).getPiece());
             product.setPrice(productSalesDTO.get(i).getPrice());
             product.setSelectedtable(productSalesDTO.get(i).getSelectedtable());
+            product.setWaiterName(productSalesDTO.get(i).getWaiterName());
             dtoList.add(product);
 
         }

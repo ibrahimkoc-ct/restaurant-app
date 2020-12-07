@@ -43,7 +43,6 @@ public class UsersServiceTest {
         users.setEnabled(true);
         users.setPassword("12345");
         users.setUsername("ibrahim");
-
         usersDTO.setUsername("ibrahim");
         usersDTO.setPassword("12345");
         usersDTO.setEnabled(true);
@@ -52,9 +51,7 @@ public class UsersServiceTest {
     @Test
     public void shouldAddNewUsers() {
         Mockito.when(usersRepository.save(any())).thenReturn(users);
-
         String res = usersService.addUsers(usersDTO);
-
         assertNotNull(res);
         assertEquals(res,"kisi eklendi");
     }
@@ -92,7 +89,6 @@ public class UsersServiceTest {
         users1.add(users);
         Mockito.when(usersRepository.findAll()).thenReturn(users1);
         List<UsersDTO> list= usersService.listUsers();
-
         assertNotNull(list);
         assertNotNull(users1);
     }

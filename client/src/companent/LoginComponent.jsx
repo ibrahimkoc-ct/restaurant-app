@@ -36,7 +36,7 @@ class LoginComponent extends Component {
             sessionStorage.setItem("token", 'Basic ' + btoa(this.state.username + ':' + this.state.password))
         sessionStorage.setItem("key",this.state.username)
         this.props.history.push('/homepage');
-            sessionStorage.setItem("product","Secili Masa yok")
+            localStorage.setItem("waiter","Seçili Garson Yok");
 
     }
         else{
@@ -49,7 +49,7 @@ class LoginComponent extends Component {
            <div>
                 <LoginHeaderComponent/>
                    <div className="login">
-                <div className="card col-md-6 offset-md-3 offset-md-3 " >
+                <div className="card col-md-4 offset-md-4 offset-md-4 " >
                     <h3 className="text-center kullanicigiris">Kullanıcı Girişi</h3>
                     <div className="card-body">
                         <form>
