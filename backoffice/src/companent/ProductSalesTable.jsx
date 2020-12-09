@@ -6,6 +6,7 @@ import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import {BrowserRouter as Router} from "react-router-dom";
 import '../App.css'
+import LoginComponent from "./LoginComponent";
 class ProductSalesTable extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +18,6 @@ class ProductSalesTable extends Component {
         ProductService.getProductSales().then((res)=>{
             this.setState({ ProductSales:res.data});
         });
-
     }
 
 

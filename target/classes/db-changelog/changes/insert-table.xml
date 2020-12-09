@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+<changeSet author="ibrahim.koc" id="07_12_2020_15-:58">
+    <insert tableName="users">
+        <column name="username" value="admin"/>
+        <column name="password" value="{noop}pass1"/>
+        <column name="enabled" value="true"/>
+    </insert>
+    <insert tableName="authorities">
+        <column name="username" value="admin"/>
+        <column name="authority" value="ROLE_ADMIN"/>
+    </insert>
+    <insert tableName="users">
+        <column name="username" value="user"/>
+        <column name="password" value="{noop}user1"/>
+        <column name="enabled" value="true"/>
+    </insert>
+    <insert tableName="authorities">
+        <column name="username" value="user"/>
+        <column name="authority" value="ROLE_USER"/>
+    </insert>
+    <insert tableName="category">
+        <column name="id" valueNumeric="1"/>
+        <column name="name" value="Pizza"/>
+        <column name="description" value="pizza"/>
+        <column name="image_To_Url" value="no image"/>
+    </insert>
+    <insert tableName="category">
+        <column name="id" valueNumeric="2"/>
+        <column name="name" value="Çorba"/>
+        <column name="description" value="çorba"/>
+        <column name="image_To_Url" value="no image"/>
+    </insert>
+    <insert tableName="category">
+        <column name="id" valueNumeric="3"/>
+        <column name="name" value="Atıştırmalık"/>
+        <column name="description" value="atıştırmalık"/>
+        <column name="image_To_Url" value="no image"/>
+    </insert>
+    <insert tableName="category">
+        <column name="id" valueNumeric="4"/>
+        <column name="name" value="Et yemekleri"/>
+        <column name="description" value="et"/>
+        <column name="image_To_Url" value="no image"/>
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="1"/>
+        <column name="title" value="4 mevsim pizza"/>
+        <column name="description" value="Pizza"/>
+        <column name="price" value="25"/>
+        <column name="category" value="Pizza"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="2"/>
+        <column name="title" value="Akdeniz mevsim pizza"/>
+        <column name="description" value="Pizza"/>
+        <column name="price" value="25"/>
+        <column name="category" value="Pizza"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="3"/>
+        <column name="title" value="Dominos mevsim pizza"/>
+        <column name="description" value="Pizza"/>
+        <column name="price" value="25"/>
+        <column name="category" value="Pizza"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="4"/>
+        <column name="title" value="Bol malzemos"/>
+        <column name="description" value="Pizza"/>
+        <column name="price" value="25"/>
+        <column name="category" value="Pizza"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="5"/>
+        <column name="title" value="Mercimek Çorbası"/>
+        <column name="description" value="çorba"/>
+        <column name="price" value="10"/>
+        <column name="category" value="Çorba"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="6"/>
+        <column name="title" value="Tarhana Çorbası"/>
+        <column name="description" value="çorba"/>
+        <column name="price" value="10"/>
+        <column name="category" value="Çorba"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="7"/>
+        <column name="title" value="Ezo gelin Çorbası"/>
+        <column name="description" value="çorba"/>
+        <column name="price" value="10"/>
+        <column name="category" value="Çorba"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="8"/>
+        <column name="title" value="Kellepaça Çorbası"/>
+        <column name="description" value="çorba"/>
+        <column name="price" value="10"/>
+        <column name="category" value="Çorba"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="9"/>
+        <column name="title" value="Sosisli"/>
+        <column name="description" value="sosisli"/>
+        <column name="price" value="10"/>
+        <column name="category" value="Atıştırmalık"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="10"/>
+        <column name="title" value="Hamburger"/>
+        <column name="description" value="hamburger"/>
+        <column name="price" value="30"/>
+        <column name="category" value="Atıştırmalık"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="11"/>
+        <column name="title" value="Kebap"/>
+        <column name="description" value="kebap"/>
+        <column name="price" value="20"/>
+        <column name="category" value="Et yemekleri"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="Product">
+        <column name="id" valueNumeric="12"/>
+        <column name="title" value="İskender"/>
+        <column name="description" value="iskender"/>
+        <column name="price" value="30"/>
+        <column name="category" value="Et yemekleri"/>
+        <column name="url_To_Image" value="no image"/>
+
+    </insert>
+    <insert tableName="category_table">
+        <column name="id" valueNumeric="1"/>
+        <column name="name" value="Salon"/>
+        <column name="description" value="Salon"/>
+        <column name="image_To_Url" value="no image"/>
+        <column name="table_Amount" valueNumeric="25"/>
+    </insert>
+    <insert tableName="category_table">
+        <column name="id" valueNumeric="2"/>
+        <column name="name" value="Balkon"/>
+        <column name="description" value="Balkon"/>
+        <column name="image_To_Url" value="no image"/>
+        <column name="table_Amount" valueNumeric="25"/>
+    </insert>
+    <insert tableName="category_table">
+        <column name="id" valueNumeric="3"/>
+        <column name="name" value="Bahçe"/>
+        <column name="description" value="Bahçe"/>
+        <column name="image_To_Url" value="no image"/>
+        <column name="table_Amount" valueNumeric="25"/>
+    </insert>
+    <insert tableName="category_table">
+        <column name="id" valueNumeric="4"/>
+        <column name="name" value="Teras"/>
+        <column name="description" value="Teras"/>
+        <column name="image_To_Url" value="no image"/>
+        <column name="table_Amount" valueNumeric="25"/>
+    </insert>
+    <insert tableName="waiter">
+        <column name="id" valueNumeric="1"/>
+        <column name="name" value="ibrahim"/>
+        <column name="phone_Number" value="123"/>
+        <column name="mail" value="123"/>
+        <column name="address" value="123"/>
+        <column name="url_To_Image" value="no image"/>
+        <column name="salary" valueNumeric="2500"/>
+    </insert>
+    <insert tableName="waiter">
+        <column name="id" valueNumeric="3"/>
+        <column name="name" value="ahmet"/>
+        <column name="phone_Number" value="123"/>
+        <column name="mail" value="123"/>
+        <column name="address" value="123"/>
+        <column name="url_To_Image" value="no image"/>
+        <column name="salary" valueNumeric="2500"/>
+    </insert>
+    <insert tableName="waiter">
+        <column name="id" valueNumeric="2"/>
+        <column name="name" value="mehmet"/>
+        <column name="phone_Number" value="123"/>
+        <column name="mail" value="123"/>
+        <column name="address" value="123"/>
+        <column name="url_To_Image" value="no image"/>
+        <column name="salary" valueNumeric="2500"/>
+    </insert>
+
+</changeSet>
+</databaseChangeLog>

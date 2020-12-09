@@ -4,9 +4,9 @@ import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BackofficeDtoConverter {
 
@@ -21,7 +21,7 @@ public class BackofficeDtoConverter {
             dto.setPrice(product.getPrice());
             dto.setDescription(product.getDescription());
             dto.setCategory(product.getCategory());
-            dto.setCategory1(product.getCategory1());
+            dto.setCategories(product.getCategories());
             productDTO.add(dto);
         }
         return productDTO;
@@ -34,7 +34,7 @@ public class BackofficeDtoConverter {
     public static ProductDTO productDTOgetbyID(Optional<Product> dtoList){
         ProductDTO dto =new ProductDTO();
         dto.setId(dtoList.get().getId());
-        dto.setCategory1(dtoList.get().getCategory1());
+        dto.setCategories(dtoList.get().getCategories());
         dto.setCategory(dtoList.get().getCategory());
         dto.setDescription(dtoList.get().getDescription());
         dto.setUrlToImage(dtoList.get().getUrlToImage());
@@ -49,13 +49,12 @@ public class BackofficeDtoConverter {
         product1.setCategory(product.getCategory());
         product1.setUrlToImage(product.getUrlToImage());
         product1.setPrice(product.getPrice());
-        product1.setCategory1(product.getCategory1());
+        product1.setCategories(product.getCategories());
         product1.setTitle(product.getTitle());
         product1.setDescription(product.getDescription());
         return product1;
     }
-    public static Category addProductIDtoDto( Optional<Category> category,ProductDTO product){
-        product.setCategory1(category.get());
+    public static Product addProductIDtoDto(Category categorySet, ProductDTO product){
 
         Product product1 = new Product();
         product1.setId(product.getId());
@@ -64,9 +63,9 @@ public class BackofficeDtoConverter {
         product1.setPrice(product.getPrice());
         product1.setUrlToImage(product.getUrlToImage());
         product1.setCategory(product.getCategory());
-        product1.setCategory1(product.getCategory1());
+        product1.setCategories(Stream.of(categorySet).collect(Collectors.toSet()));
+        categorySet.getProducts().add(product1);
 
-        category.get().getProducts().add(product1);
-       return category.get();
+       return product1;
     }
 }

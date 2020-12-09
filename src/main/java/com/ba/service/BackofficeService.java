@@ -1,6 +1,7 @@
 package com.ba.service;
 
 import com.ba.converter.BackofficeDtoConverter;
+import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.CategoryTable;
@@ -12,9 +13,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BackofficeService {
@@ -26,6 +25,7 @@ public class BackofficeService {
 
     public List<ProductDTO> getAllProduct() {
     List<Product> productList=repository.findAll();
+
     return BackofficeDtoConverter.productListTOProductList(productList);
     }
 
@@ -51,13 +51,12 @@ public class BackofficeService {
     }
 
 
-    public String  addProductId(ProductDTO product,Long id){
-        Optional<Category> category =categoryRepository.findById(id);
+    public String  addProductId(ProductDTO product, Long id){
+        Category category =categoryRepository.findById(id).get();
 
-        categoryRepository.save(BackofficeDtoConverter.addProductIDtoDto(category,product));
+        repository.save(BackofficeDtoConverter.addProductIDtoDto(category,product));
+
         return "kisi eklendi";
     }
-
-
 
 }

@@ -1,6 +1,8 @@
 package com.ba.service;
 
 
+import com.ba.builder.AuthoritiesBuilder;
+import com.ba.builder.AuthoritiesDTOBuilder;
 import com.ba.dto.AuthoritiesDTO;
 import com.ba.entity.Authorities;
 import com.ba.repository.AuthoritiesRepository;
@@ -30,17 +32,11 @@ public class AuthoritiesServiceTest {
 
     @Mock
     private AuthoritiesRepository authoritiesRepository;
-    private Authorities authorities = new Authorities();
-    private AuthoritiesDTO dto = new AuthoritiesDTO();
 
-    @Before
-    public void setUp() throws Exception {
-        authorities.setUsername("ibrahim");
-        authorities.setAuthority("ROLE_USER");
-        dto.setAuthority("ROLE_USER");
-        dto.setUsername("ibrahim");
-
-    }
+    private AuthoritiesDTOBuilder dtoBuilder = new AuthoritiesDTOBuilder();
+    private AuthoritiesBuilder authoritiesBuilder = new AuthoritiesBuilder();
+    AuthoritiesDTO dto=dtoBuilder.authority("ROLE_ADMIN").username("ibrahim").build();
+    Authorities authorities=authoritiesBuilder.username("ibrahim").authority("ROLE_ADMIN").build();
 
     @Test
     public void shouldAddNewAuthorities(){

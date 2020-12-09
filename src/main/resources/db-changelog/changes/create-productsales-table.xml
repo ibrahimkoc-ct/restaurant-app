@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="07-12-2020_09_15:50" author="ibrahim.koc">
+        <createTable tableName="product_sales">
+            <column autoIncrement="true" name="order_id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="selectedtable" type="VARCHAR(255)"/>
+            <column name="waiter_name" type="VARCHAR(255)"/>
+            <column name="id" type="int(10)"/>
+            <column name="price" type="int(10)"/>
+            <column name="piece" type="int(10)"/>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="create_date" type="TIMESTAMP"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="product_sales"/>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

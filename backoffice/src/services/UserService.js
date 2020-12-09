@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-
+import {Component} from "react";
+import LoginComponent from "../companent/LoginComponent";
 const User_Api_Add_URL="http://localhost:8080/users/add";
 const Auth_Api_Add_URL="http://localhost:8080/auth/add";
 
@@ -17,10 +18,15 @@ const Auth_Api_Update_URL="http://localhost:8080/auth/update";
 const Users_Api_Viwe_URL="http://localhost:8080/users/id";
 const Auth_Api_Viwe_URL="http://localhost:8080/auth/id";
 const ServerInfo_Api_Viwe_URL="http://localhost:8080/server-info";
+
+
+
+
 class UserService {
 
+     getUser() {
 
-    getUser() {
+
         return axios.get(User_Api_List_URL, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -30,7 +36,7 @@ class UserService {
 
     }
 
-    getAuth() {
+     getAuth() {
         return axios.get(AutOne_Base_URL, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -40,7 +46,7 @@ class UserService {
 
     }
 
-    getList() {
+     getList() {
         return axios.get(User_Api_List_URL, {
             headers: {
                 Authorization: 'Basic YWRtaW46cGFzczE='
@@ -50,7 +56,7 @@ class UserService {
 
     }
 
-    createUser(user) {
+     createUser(user) {
         return axios.post(User_Api_Add_URL, user, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -59,7 +65,7 @@ class UserService {
 
     }
 
-    createAuth(user) {
+     createAuth(user) {
         return axios.post(Auth_Api_Add_URL, user, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -68,7 +74,7 @@ class UserService {
 
     }
 
-    updateUser(user, userId) {
+     updateUser(user, userId) {
         return axios.put(Users_Api_Update_URL, user, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -77,7 +83,7 @@ class UserService {
 
     }
 
-    updateAuth(auth, authid) {
+     updateAuth(auth, authid) {
         return axios.put(Auth_Api_Update_URL, auth, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -86,7 +92,7 @@ class UserService {
 
     }
 
-    deleteUser(username) {
+     deleteUser(username) {
         return axios.delete(User_Api_Delete_URL + '/' + username, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -95,7 +101,7 @@ class UserService {
 
     }
 
-    deleteAuth(username) {
+     deleteAuth(username) {
         return axios.delete(Auth_Api_Delete_URL + '/' + username, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -105,7 +111,7 @@ class UserService {
     }
 
 
-    getUserById(userId) {
+     getUserById(userId) {
         return axios.get(User_Api_Viwe_URL + '/' + userId, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -114,7 +120,7 @@ class UserService {
 
     }
 
-    getUsersById(userId) {
+     getUsersById(userId) {
         return axios.get(Users_Api_Viwe_URL + '/' + userId, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -123,7 +129,7 @@ class UserService {
 
     }
 
-    getAuthById(userId) {
+     getAuthById(userId) {
         return axios.get(Auth_Api_Viwe_URL + '/' + userId, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -132,16 +138,17 @@ class UserService {
 
     }
 
-    oneUser() {
+     oneUser() {
         return axios.get(UserOne_URL)
     }
 
-    oneAuth() {
+     oneAuth() {
         return axios.get(AutOne_URL)
 
     }
 
-    getServerInfo() {
+     getServerInfo() {
+
         return axios.get(ServerInfo_Api_Viwe_URL, {
             headers: {
                 Authorization: sessionStorage.getItem("token")
@@ -150,4 +157,4 @@ class UserService {
     }
 }
 
-export default new UserService()
+export default new UserService();

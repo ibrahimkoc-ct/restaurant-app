@@ -1,6 +1,10 @@
 package com.ba.service;
 
 
+import com.ba.builder.CategoryBuilder;
+import com.ba.builder.CategoryDTOBuilder;
+import com.ba.builder.ProductBuilder;
+import com.ba.builder.ProductDTOBuilder;
 import com.ba.converter.CategoryDtoConventer;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
@@ -36,32 +40,18 @@ public class CategoryServiceTest {
     @Mock
     private CategoryRepository repository;
 
-    Category category = new Category();
-    CategoryDTO categoryDTO = new CategoryDTO();
     List<Category> list = new ArrayList<>();
     List<CategoryDTO> dtoList = new ArrayList<>();
     Set<ProductDTO> dtos= new HashSet<>();
     Set<Product> setProduct= new HashSet<>();
-    ProductDTO productDTO = new ProductDTO();
-    Product product = new Product();
-
-    @Before
-    public void setUp() throws Exception {
-        category.setId(1L);
-        category.setImageToUrl("no image");
-        category.setName("pizza");
-        category.setDescription("no desc");
-        categoryDTO.setId(1L);
-        categoryDTO.setImageToUrl("no image");
-        categoryDTO.setName("pizza");
-        categoryDTO.setDescription("no desc");
-        productDTO.setId(1L);
-        productDTO.setDescription("no");
-        productDTO.setTitle("pizza");
-        product.setId(1L);
-        product.setDescription("no");
-        product.setTitle("pizza");
-    }
+    CategoryBuilder categoryBuilder= new CategoryBuilder();
+    CategoryDTOBuilder categoryDTOBuilder= new CategoryDTOBuilder();
+    Category category = categoryBuilder.name("Pizza").imageToUrl("no image").description("pizza").id(1L).build();
+    CategoryDTO categoryDTO = categoryDTOBuilder.name("Pizza").imageToUrl("no image").description("pizza").id(1L).build();
+    ProductBuilder productBuilder = new ProductBuilder();
+    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
+    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
 
     @Test
     public void shouldCategoryList(){

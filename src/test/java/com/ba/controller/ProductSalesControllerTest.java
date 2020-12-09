@@ -1,5 +1,9 @@
 package com.ba.controller;
 
+import com.ba.builder.ProductBuilder;
+import com.ba.builder.ProductDTOBuilder;
+import com.ba.builder.ProductSalesBuilder;
+import com.ba.builder.ProductSalesDTOBuilder;
 import com.ba.dto.ProductSalesDTO;
 import com.ba.entity.Product;
 import com.ba.entity.ProductSales;
@@ -36,17 +40,13 @@ public class ProductSalesControllerTest {
     private ProductSalesService service;
     List<ProductSales> sales = new ArrayList<>();
     List<ProductSalesDTO> dto = new ArrayList<>();
+    ProductSalesBuilder productBuilder= new ProductSalesBuilder();
+    ProductSalesDTOBuilder productDTOBuilder= new ProductSalesDTOBuilder();
+    ProductSales s =productBuilder.id(15L).OrderId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
+    ProductSalesDTO productSalesDTO=productDTOBuilder.id(15L).OrderId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
     @Before
     public void setUp() throws Exception {
-        ProductSales s = new ProductSales();
-        s.setSelectedtable("masa 1");
-        s.setPrice(12L);
-        s.setPiece(25l);
         sales.add(s);
-        ProductSalesDTO productSalesDTO =new ProductSalesDTO();
-        productSalesDTO.setId(12L);
-        productSalesDTO.setSelectedtable("12.masa");
-        productSalesDTO.setPrice(12L);
         dto.add(productSalesDTO);
 
     }

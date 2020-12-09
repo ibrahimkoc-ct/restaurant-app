@@ -3,8 +3,10 @@ import UserService from "../services/UserService";
 import HeaderComponent from "./HeaderComponent";
 import Table from "react-bootstrap/Table";
 import FooterComponent from "./FooterComponent";
+import BackofficeContext from "../BackofficeContext";
 
 class AuthListComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props)
         this.state = {
@@ -13,6 +15,9 @@ class AuthListComponent extends Component {
 
     }
     componentDidMount(){
+        const token=this.context;
+        console.log(token.token)
+
         UserService.getAuth().then((res)=>{
             this.setState({ authlist:res.data});
         });

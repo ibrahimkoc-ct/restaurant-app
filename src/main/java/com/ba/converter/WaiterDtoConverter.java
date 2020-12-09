@@ -26,29 +26,30 @@ public class WaiterDtoConverter {
         return waiter;
     }
     public static WaiterDTO waiterDTOgetById(Optional<Waiter> optionalWaiter) {
-        WaiterDTO waiterDTO = new WaiterDTO(
-                optionalWaiter.get().getId(),
-                optionalWaiter.get().getName()
-                , optionalWaiter.get().getPhoneNumber()
-                , optionalWaiter.get().getMail(),
-                optionalWaiter.get().getAddress()
-                , optionalWaiter.get().getUrlToImage()
-                , optionalWaiter.get().getSalary());
+        WaiterDTO waiterDTO = new WaiterDTO();
+        waiterDTO.setAddress(optionalWaiter.get().getAddress());
+        waiterDTO.setId(optionalWaiter.get().getId());
+        waiterDTO.setMail(optionalWaiter.get().getMail());
+        waiterDTO.setName(optionalWaiter.get().getName());
+        waiterDTO.setPhoneNumber(optionalWaiter.get().getPhoneNumber());
+        waiterDTO.setUrlToImage(optionalWaiter.get().getUrlToImage());
+        waiterDTO.setSalary(optionalWaiter.get().getSalary());
+
         return waiterDTO;
 
     }
     public static List<WaiterDTO> waiterDTOListToWaiter(List<Waiter> waiterList){
         List<WaiterDTO> waiterDTOList = new ArrayList<>();
         for(Waiter waiter:waiterList ){
-            WaiterDTO dto= new WaiterDTO(
-                    waiter.getId(),
-                    waiter.getName()
-                    , waiter.getPhoneNumber()
-                    , waiter.getMail(),
-                    waiter.getAddress()
-                    , waiter.getUrlToImage()
-                    , waiter.getSalary()
-            );
+            WaiterDTO dto= new WaiterDTO();
+            dto.setSalary(waiter.getSalary());
+            dto.setMail(waiter.getMail());
+            dto.setId(waiter.getId());
+            dto.setPhoneNumber(waiter.getPhoneNumber());
+            dto.setAddress(waiter.getAddress());
+            dto.setUrlToImage(waiter.getUrlToImage());
+           dto.setName(waiter.getName());
+
             waiterDTOList.add(dto);
         }
         return waiterDTOList;

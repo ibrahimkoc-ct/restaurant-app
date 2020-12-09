@@ -6,8 +6,10 @@ import Table from "react-bootstrap/Table";
 import FooterComponent from "./FooterComponent";
 import {Link} from "react-router-dom";
 import ProductService from "../services/ProductService";
+import BackofficeContext from "../BackofficeContext";
 
 class CategoryListComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props)
         this.state = {
@@ -16,11 +18,15 @@ class CategoryListComponent extends Component {
 
     }
     componentDidMount() {
-        CategoryService.getCategory().then((res) => {
+        const token = this.context;
+        console.log(token.token)
+
+        CategoryService.getCategory(token.token).then((res) => {
             this.setState({categorylist: res.data});
         });
     }
     deleteCategory(id) {
+
         console.log(id)
         CategoryService.deleteCategory(id).then(res => {
             this.setState({categorylist: this.state.categorylist.filter(product => product.id !== id)})

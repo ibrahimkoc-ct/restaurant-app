@@ -33,19 +33,24 @@ import WaiterListComponent from "./companent/WaiterListComponent";
 import CreateWaiterComponent from "./companent/CreateWaiterComponent";
 import ViewWaiterComponent from "./companent/ViewWaiterComponent";
 import UpdateWaiterComponent from "./companent/UpdateWaiterComponent";
+import CreateMediaComponent from "./companent/CreateMediaComponent";
+import {BackofficeProvider} from "./BackofficeContext";
+import UserService from "./services/UserService";
 
-// import UpdateRestaurantTable from "./companent/UpdateRestaurantTable";
-// import ViewRestaurantTable from "./companent/ViewRestaurantTable";
-// import CreateRestaurantTableComponent from "./companent/CreateRestaurantTableComponent";
-// import RestaurantTableListComponent from "./companent/RestaurantTableListComponent";
+
+const backoffice={token:'',username:''}
+
 
 function App() {
+
   return (
+
       <div>
+          <BackofficeProvider value={backoffice}>
           <Router>
 
 
-      <div className="">
+      <div>
           <Switch>
               <Route path="/" exact component={LoginComponent}></Route>
               <Route path="/products" component={ListComponent}></Route>
@@ -72,15 +77,18 @@ function App() {
               <Route path="/view-categorytable/:id" component={ViewCategoryTable}></Route>
               <Route path="/waiter-table" component={WaiterListComponent}></Route>
               <Route path="/add-waiter-table" component={CreateWaiterComponent}></Route>
+              <Route path="/add-media" component={CreateMediaComponent}></Route>
               <Route path="/view-waiter-table/:id" component={ViewWaiterComponent}></Route>
               <Route path="/update-waiter-table/:id" component={UpdateWaiterComponent}></Route>
 
+
           </Switch>
       </div>
-
-
           </Router>
+
+          </BackofficeProvider>
       </div>
+
   );
 
 }

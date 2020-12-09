@@ -3,6 +3,7 @@ package com.ba.dto;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class ProductDTO {
@@ -12,16 +13,17 @@ public class ProductDTO {
     private String price;
     private String category;
 
-    public Category getCategory1() {
-        return category1;
-    }
-
-    public void setCategory1(Category category1) {
-        this.category1 = category1;
-    }
-
     private String urlToImage;
-    private Category category1;
+    private Set<Category> categories= new HashSet<>();
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public ProductDTO setCategories(Set<Category> categories) {
+        this.categories = categories;
+        return this;
+    }
 
     public long getId() {
         return id;

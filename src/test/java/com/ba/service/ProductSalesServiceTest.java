@@ -1,6 +1,8 @@
 package com.ba.service;
 
 
+import com.ba.builder.ProductSalesBuilder;
+import com.ba.builder.ProductSalesDTOBuilder;
 import com.ba.dto.ProductSalesDTO;
 import com.ba.entity.Product;
 import com.ba.entity.ProductSales;
@@ -32,12 +34,11 @@ public class ProductSalesServiceTest {
     private ProductSalesRepository repository;
     List<ProductSales> sales = new ArrayList<>();
     List<ProductSalesDTO> dto = new ArrayList<>();
+    ProductSalesBuilder productBuilder= new ProductSalesBuilder();
+    ProductSales s =productBuilder.id(15L).OrderId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
+
     @Before
     public void setUp() throws Exception {
-        ProductSales s = new ProductSales();
-        s.setSelectedtable("masa 1");
-        s.setPrice(12L);
-        s.setPiece(25l);
         sales.add(s);
 
     }

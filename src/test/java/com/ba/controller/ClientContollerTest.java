@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.ba.builder.ProductBuilder;
+import com.ba.builder.ProductDTOBuilder;
 import com.ba.converter.ClientDtoConverter;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
@@ -35,25 +37,12 @@ public class ClientContollerTest {
     List<Product> list = new ArrayList<>();
     List<ProductDTO> dtoList =new ArrayList<>();
 
-    Product product = new Product();
-    ProductDTO dto= new ProductDTO();
+    ProductBuilder productBuilder = new ProductBuilder();
+    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
+    ProductDTO dto = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
 
 
-    @Before
-    public void setUp() throws Exception {
-        product.setId(1L);
-        product.setCategory("Pizza");
-        product.setUrlToImage("No name");
-        product.setPrice("15");
-        product.setTitle("pizza");
-        product.setDescription("Pizza");
-        dto.setId(1L);
-        dto.setCategory("Pizza");
-        dto.setUrlToImage("No name");
-        dto.setPrice("15");
-        dto.setTitle("pizza");
-        dto.setDescription("Pizza");
-    }
 
     @Test
     public void getProductByIdControllerTest(){

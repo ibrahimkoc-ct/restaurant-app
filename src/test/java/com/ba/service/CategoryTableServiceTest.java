@@ -5,6 +5,8 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 
+import com.ba.builder.CategoryTableBuilder;
+import com.ba.builder.CategoryTableDTOBuilder;
 import com.ba.converter.CategoryTableDtoConverter;
 import com.ba.dto.CategoryTableDTO;
 import com.ba.dto.UsersDTO;
@@ -33,20 +35,11 @@ public class CategoryTableServiceTest {
     private CategoryTableRepository repository;
     List<CategoryTable> list = new ArrayList<>();
     List<CategoryTableDTO> dtoList = new ArrayList<>();
-    CategoryTable categoryTable = new CategoryTable();
-    CategoryTableDTO categoryTableDTO = new CategoryTableDTO();
+    CategoryTableDTOBuilder categoryDTOBuilder = new CategoryTableDTOBuilder();
+    CategoryTableBuilder categoryBuilder=new CategoryTableBuilder();
+    CategoryTable categoryTable =categoryBuilder.tableAmount(15).description("balkon").id(1L).imageToUrl("no image").name("balkon").build();
+    CategoryTableDTO categoryTableDTO = categoryDTOBuilder.description("balkon").id(1L).imageToUrl("no image").name("balkon").build();
 
-    @Before
-    public void setUp() throws Exception {
-        categoryTable.setId(1L);
-        categoryTable.setName("masa");
-        categoryTable.setTableAmount(123);
-        categoryTable.setImageToUrl("no image");
-        categoryTableDTO.setId(1L);
-        categoryTableDTO.setName("masa");
-        categoryTableDTO.setTableAmount(123);
-        categoryTableDTO.setImageToUrl("no image");
-    }
 
     @Test
     public void shouldAddNewCategoryTable() {

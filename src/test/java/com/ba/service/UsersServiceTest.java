@@ -1,5 +1,7 @@
 package com.ba.service;
 
+import com.ba.builder.UsersBuilder;
+import com.ba.builder.UsersDTOBuilder;
 import com.ba.dto.AuthoritiesDTO;
 import com.ba.dto.UsersDTO;
 import com.ba.entity.Users;
@@ -34,19 +36,12 @@ public class UsersServiceTest {
 
     @Mock
     private UsersRepository usersRepository;
+    UsersBuilder usersBuilder= new UsersBuilder();
+    UsersDTOBuilder usersDTOBuilder=new UsersDTOBuilder();
+    private Users users = usersBuilder.enabled(true).password("12345").username("ibrahim").build();
+    private UsersDTO usersDTO = usersDTOBuilder.enabled(true).password("12345").username("ibrahim").build();
 
-    private Users users = new Users();
-    private UsersDTO usersDTO = new UsersDTO();
 
-    @Before
-    public void setUp() throws Exception {
-        users.setEnabled(true);
-        users.setPassword("12345");
-        users.setUsername("ibrahim");
-        usersDTO.setUsername("ibrahim");
-        usersDTO.setPassword("12345");
-        usersDTO.setEnabled(true);
-    }
 
     @Test
     public void shouldAddNewUsers() {

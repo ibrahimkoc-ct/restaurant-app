@@ -1,6 +1,11 @@
 package com.ba.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -13,16 +18,26 @@ public class Product {
     private String category;
     private String urlToImage;
 
-    @ManyToOne
-    @JoinColumn(name="category_id")
-    private Category category1;
+    @JsonBackReference
+    @ManyToMany(mappedBy = "products")
+    private Set<Category> categories= new HashSet<>();
 
-    public Product(String title, String description, String price,String category) {
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public Product setCategories(Set<Category> categories) {
+        this.categories = categories;
+        return this;
+    }
+
+    public Product(String title, String description, String price, String category) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.category=category;
     }
+
 
     public String getUrlToImage() {
         return urlToImage;
@@ -30,14 +45,6 @@ public class Product {
 
     public void setUrlToImage(String urlToImage) {
         this.urlToImage = urlToImage;
-    }
-
-    public Category getCategory1() {
-        return category1;
-    }
-
-    public void setCategory1(Category category1) {
-        this.category1 = category1;
     }
 
     public String getCategory() {

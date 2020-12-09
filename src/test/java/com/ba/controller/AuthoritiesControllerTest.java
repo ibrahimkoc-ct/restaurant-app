@@ -3,6 +3,8 @@ package com.ba.controller;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import com.ba.builder.AuthoritiesBuilder;
+import com.ba.builder.AuthoritiesDTOBuilder;
 import com.ba.dto.AuthoritiesDTO;
 import com.ba.entity.Authorities;
 import com.ba.service.AuthoritiesService;
@@ -26,17 +28,12 @@ public class AuthoritiesControllerTest {
 
     @Mock
     private AuthoritiesService service;
-    private AuthoritiesDTO dto = new AuthoritiesDTO();
-    private Authorities authorities = new Authorities();
 
-    @Before
-    public void setUp() throws Exception {
-        authorities.setUsername("ibrahim");
-        authorities.setAuthority("ROLE_USER");
-        dto.setAuthority("ROLE_USER");
-        dto.setUsername("ibrahim");
-
-    }
+    private AuthoritiesDTOBuilder dtoBuilder = new AuthoritiesDTOBuilder();
+    private AuthoritiesBuilder authoritiesBuilder = new AuthoritiesBuilder();
+    AuthoritiesDTO dto=dtoBuilder.authority("ROLE_ADMIN").username("ibrahim").build();
+    Authorities authorities=authoritiesBuilder.username("ibrahim").authority("ROLE_ADMIN").build();
+   
 
     @Test
     public void deleteAuthControllerTest(){

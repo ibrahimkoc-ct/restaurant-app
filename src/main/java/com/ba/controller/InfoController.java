@@ -25,9 +25,6 @@ public class InfoController {
     @Value("${spring.datasource.url}")
     private String  databaseUrl;
 
-    @Value("${spring.jpa.hibernate.ddl-auto}")
-    private String  ddlAuto;
-
 
 
     @Value("${logging.level.org.hibernate.type}")
@@ -71,8 +68,6 @@ public class InfoController {
         server_info.add(info9);
         ServerInfo info10= new ServerInfo("spring.datasource.password",password);
         server_info.add(info10);
-        ServerInfo info3 = new ServerInfo("spring.jpa.hibernate.ddl-auto",ddlAuto);
-        server_info.add(info3);
         ServerInfo info5 = new ServerInfo("logging.level.org.hibernate.type",hiberbateType);
         server_info.add(info5);
         ServerInfo info6 = new ServerInfo("spring.jpa.show-sql",showSql);

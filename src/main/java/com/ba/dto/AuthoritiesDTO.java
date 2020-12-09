@@ -1,5 +1,7 @@
 package com.ba.dto;
 
+import com.ba.builder.MediaBuilder;
+
 public class AuthoritiesDTO {
     private String username;
     private String authority;
@@ -19,4 +21,5 @@ public class AuthoritiesDTO {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
+
 }

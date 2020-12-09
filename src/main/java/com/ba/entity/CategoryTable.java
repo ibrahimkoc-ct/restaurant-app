@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name="CategoryTable")
-public class CategoryTable implements Serializable {
+
+public class CategoryTable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -68,11 +68,5 @@ public class CategoryTable implements Serializable {
         this.imageToUrl = imageToUrl;
     }
 
-//    public Set<RestaurantTable> getRestaurantTables() {
-//        return restaurantTables;
-//    }
-//
-//    public void setRestaurantTables(Set<RestaurantTable> restaurantTables) {
-//        this.restaurantTables = restaurantTables;
-//    }
+
 }

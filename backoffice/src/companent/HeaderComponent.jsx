@@ -1,12 +1,33 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import BackofficeContext from "../BackofficeContext";
+import createBrowserHistory from 'history/createBrowserHistory';
 
+const history = createBrowserHistory({forceRefresh:true});
 class HeaderComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            username:''
+        }
         this.Exitbutton=this.Exitbutton.bind(this);
     }
+    componentDidMount() {
+        const username = this.context;
+
+        if(username.username.length>0){
+            this.state.username=username.username;
+
+            console.log(username.username)
+        }
+        else{
+            history.push('/');
+        }
+
+
+    }
+
     Exitbutton(){
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("key");
@@ -45,8 +66,11 @@ class HeaderComponent extends Component {
                         <Link to ='/waiter-table' >
                             <button style={{marginLeft: "10px"}} className="btn btn-info" >Garsonlar</button>
                         </Link>
+                        <Link to ='/add-media' >
+                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Medya</button>
+                        </Link>
                         <Link to ='/' >
-                            <button className="btn btn-danger usernamepage" onClick={()=>this.Exitbutton()}>Çıkıs: {sessionStorage.getItem("key")}</button>
+                            <button className="btn btn-danger usernamepage" onClick={()=>this.Exitbutton()}>Çıkıs: {this.state.username}</button>
                         </Link>
                         <Link to ='/server-info' >
                             <button style={{marginLeft: "10px"}} className="btn btn-info serverinfo">Server Bilgileri </button>

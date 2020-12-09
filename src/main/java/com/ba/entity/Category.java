@@ -1,6 +1,7 @@
 package com.ba.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.persistence.Table;
@@ -9,7 +10,6 @@ import java.util.Set;
 
 @Entity
 
-@Table (name="Category")
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +17,10 @@ public class Category implements Serializable {
     private String name;
     private String description;
     private String imageToUrl;
-    @JsonIgnore
-    @OneToMany(
-            mappedBy = "category1",
-            cascade =CascadeType.ALL)
+    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(name = "TBL_CATEGORY_PRODUCT",joinColumns = @JoinColumn(name ="category_id"),inverseJoinColumns = @JoinColumn(name = "product_id"))
+
     private Set<Product> products;
 
     public Category(String name, String description, String imageToUrl) {

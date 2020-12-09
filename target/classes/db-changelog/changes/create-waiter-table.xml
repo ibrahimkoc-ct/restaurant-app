@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="07-12-2020_09_15:44" author="ibrahim.koc">
+        <createTable tableName="waiter">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="phone_Number" type="VARCHAR(255)"/>
+            <column name="mail" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="url_To_Image" type="VARCHAR(255)"/>
+            <column name="salary" type="int(10)"/>
+
+
+        </createTable>
+        <rollback>
+            <dropTable tableName="waiter"/>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

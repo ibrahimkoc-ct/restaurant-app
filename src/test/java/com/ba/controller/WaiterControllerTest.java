@@ -1,6 +1,9 @@
 package com.ba.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.ba.builder.WaiterBuilder;
+import com.ba.builder.WaiterDTOBuilder;
 import com.ba.converter.WaiterDtoConverter;
 import com.ba.dto.WaiterDTO;
 import com.ba.entity.Waiter;
@@ -28,22 +31,13 @@ public class WaiterControllerTest {
 
     @Mock
     private WaiterService service;
-    Waiter waiter= new Waiter();
-    WaiterDTO waiterDTO= new WaiterDTO(1L,"ibrahim","1234"
-            ,"ibrahim@hot","istanbul","no image",2500L);
+    WaiterBuilder waiterBuilder=new WaiterBuilder();
+    WaiterDTOBuilder waiterDTOBuilder= new WaiterDTOBuilder();
+    Waiter waiter= waiterBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).urlToImage("no image").phoneNumber("132456").build();
+    WaiterDTO waiterDTO= waiterDTOBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).urlToImage("no image").phoneNumber("132456").build();
     List<Waiter> waiterList= new ArrayList<>();
     List<WaiterDTO> waiterDTOList = new ArrayList<>();
 
-    @Before
-    public void setUp() throws Exception {
-        waiter.setId(1L);
-        waiter.setSalary(2500L);
-        waiter.setUrlToImage("no image");
-        waiter.setPhoneNumber("1234");
-        waiter.setAddress("istanbul");
-        waiter.setMail("ibrahim@hot");
-        waiter.setName("ibrahim");
-    }
     @Test
     public void addWaiterDTOControllerTest(){
         when(service.addWaiterDTO(waiterDTO)).thenReturn("kisi eklendi");

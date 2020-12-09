@@ -2,6 +2,8 @@ package com.ba.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.ba.builder.ProductBuilder;
+import com.ba.builder.ProductDTOBuilder;
 import com.ba.converter.ClientDtoConverter;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
@@ -32,18 +34,12 @@ public class ClientServiceTest {
     List<Product> list = new ArrayList<>();
     List<ProductDTO> dtoList =new ArrayList<>();
 
-    Product product = new Product();
+    ProductBuilder productBuilder = new ProductBuilder();
+    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
+    ProductDTO dto = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
 
 
-    @Before
-    public void setUp() throws Exception {
-        product.setId(1L);
-        product.setCategory("Pizza");
-        product.setUrlToImage("No name");
-        product.setPrice("15");
-        product.setTitle("pizza");
-        product.setDescription("Pizza");
-    }
 
     @Test
     public void shouldClientProductList(){

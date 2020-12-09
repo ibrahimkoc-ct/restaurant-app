@@ -65,13 +65,4 @@ public class WaiterDTO {
         this.salary = salary;
     }
 
-    public WaiterDTO(Long id, String name, String phoneNumber, String mail, String address, String urlToImage, Long salary) {
-        this.id = id;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.mail = mail;
-        this.address = address;
-        this.urlToImage = urlToImage;
-        this.salary = salary;
-    }
 }

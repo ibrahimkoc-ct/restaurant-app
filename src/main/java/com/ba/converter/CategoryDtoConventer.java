@@ -52,7 +52,6 @@ public class CategoryDtoConventer {
         for(Product prod: category.get().getProducts() ){
             ProductDTO productDTO = new ProductDTO();
             productDTO.setId(prod.getId());
-            productDTO.setCategory1(prod.getCategory1());
             productDTO.setCategory(prod.getCategory());
             productDTO.setDescription(prod.getDescription());
             productDTO.setUrlToImage(prod.getUrlToImage());
