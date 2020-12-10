@@ -13,12 +13,27 @@ class HeaderComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            waiter:'',
+            waiter1:'',
+            token:'',
         }
     }
-    componentDidMount() {
-        const{waiter,setWaiter}=this.context
-        this.state.waiter=waiter;
+    async componentDidMount() {
+        const userToken = this.context;
+        if (localStorage.getItem("token") == null) {
+
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
+                const {waiter, setWaiter} = this.context
+                this.state.waiter1 = waiter;
+                console.log(this.state.token)
+            } else {
+                history.push('/');
+            }
+        } else {
+            this.state.token = localStorage.getItem("token")
+            
+        }
+
 
     }
 
@@ -35,8 +50,8 @@ class HeaderComponent extends Component {
             <div>
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                        <div><a href="https://localhost:4040" className="navbar-brand">Urun Siparis Uygulaması</a> </div>
-                        <button onClick={this.waiterbutton} className="usernamepage btn btn-outline-danger">Garson: {this.state.waiter}</button>
+                        <div><a href="/homepage" className="navbar-brand">Urun Siparis Uygulaması</a> </div>
+                        <button onClick={this.waiterbutton} className="usernamepage btn btn-outline-danger">Garson: {this.state.waiter1}</button>
 
                     </nav>
 

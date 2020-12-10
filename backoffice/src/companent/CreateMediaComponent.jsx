@@ -3,7 +3,7 @@ import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 
 
-function CreateMediaComponent() {
+function MediaListComponent() {
     const [selectedFile, setSelectedFile] = useState();
     const [imageList, setImageList] = useState();
     const onImageChange = event => {
@@ -58,7 +58,7 @@ function CreateMediaComponent() {
                 <div>
                     <li>
                         <a href={'data:image/png;base64,' + v.fileContent} onClick={()=>debugBase64('data:image/png;base64,' + v.fileContent)} target="_blank">{v.name}
-                      </a>
+                        </a>
                     </li>
                 </div>
             )
@@ -73,29 +73,29 @@ function CreateMediaComponent() {
     return (
         <div>
             <HeaderComponent/>
-
             <div className="login">
                 <div className="card col-md-4 offset-md-4 offset-md-4  ">
                     <h3 className="text-center kullanicigiris">Resim Ekle</h3>
                     <div className="card-body">
-                        <form>
+
                             <div className="form-group">
                                 <label>Resim ekle</label>
-                                <input type="file" name="file" style={{paddingTop: 20}}
-                                       onChange={(e) => onImageChange(e)}/>
-                                <button style={{marginTop: 20}} onClick={() => onFileUpload()}>Resim yükle</button>
+            <input type="file" name="file" style={{paddingTop:20}} onChange={(e)=> onImageChange(e)}/>
+            <button style={{marginTop:20}} onClick={()=> onFileUpload()}>Upload Image</button>
+            {getFiles()}
+
+
                             </div>
-                        </form>
-                        <div className="imagelist">{getFiles()}</div>
+
 
                     </div>
-
                 </div>
             </div>
             <FooterComponent/>
         </div>
+
     );
 }
 
 
-export default CreateMediaComponent;
+export default MediaListComponent;

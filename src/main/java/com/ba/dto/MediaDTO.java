@@ -5,6 +5,7 @@ public class MediaDTO {
     private String name;
     private byte[] fileContent;
 
+
     public Long getId() {
         return id;
     }

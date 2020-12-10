@@ -24,6 +24,22 @@ public class MediaDtoConventer {
 
     @Value("C:/Users/ibrahim/IdeaProjects/rest-api/target/media/")
     private static String uploadDir;
+    public static Media mediaDTOtoMedia(MediaDTO mediaDTO){
+        Media media= new Media();
+        media.setId(mediaDTO.getId());
+        media.setName(media.getName());
+        media.setFileContent(media.getFileContent());
+        return media;
+    }
+
+    public static MediaDTO meidaTMediaDTO(Media media){
+        MediaDTO mediaDTO= new MediaDTO();
+        mediaDTO.setName(media.getName());
+        mediaDTO.setId(media.getId());
+        mediaDTO.setFileContent(media.getFileContent());
+        return mediaDTO;
+    }
+
 
     public static List<MediaDTO> mediaListToMediaDTOList(List<Media> mediaList){
         List<MediaDTO> mediaDTOList= new ArrayList<>();

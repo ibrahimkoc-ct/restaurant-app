@@ -3,7 +3,9 @@ package com.ba.converter;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
+import com.ba.entity.Media;
 import com.ba.entity.Product;
+import liquibase.pro.packaged.C;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -35,6 +37,7 @@ public class CategoryDtoConventer {
             dto.setName(category.getName());
             dto.setDescription(category.getDescription());
             dto.setImageToUrl(category.getImageToUrl());
+            dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(category.getMedia()));
 //            dto.setProducts(BackofficeDtoConverter.convertListtoDTOList(category.getProducts()));
 
             dtoList.add(dto);
@@ -56,6 +59,7 @@ public class CategoryDtoConventer {
         category.setImageToUrl(categoryDTO.getImageToUrl());
         category.setName(categoryDTO.getName());
         category.setProducts(BackofficeDtoConverter.convertDTOListToList(categoryDTO.getProducts()));
+        category.setMedia(MediaDtoConventer.mediaDTOtoMedia(categoryDTO.getMediaDTO()));
         return category;
     }
     public static Category categoryDTOUpdateCategory(CategoryDTO categoryDTO,Optional<Category> category2 ){
@@ -65,7 +69,7 @@ public class CategoryDtoConventer {
         category.setDescription(categoryDTO.getDescription());
         category.setImageToUrl(categoryDTO.getImageToUrl());
         category.setName(categoryDTO.getName());
-
+        category.setMedia(MediaDtoConventer.mediaDTOtoMedia(categoryDTO.getMediaDTO()));
         category.setProducts(category2.get().getProducts());
 
         return category;
@@ -77,6 +81,7 @@ public class CategoryDtoConventer {
         dto.setProducts(BackofficeDtoConverter.convertListtoDTOList(dtoList.get().getProducts()));
         dto.setImageToUrl(dtoList.get().getImageToUrl());
         dto.setId(dtoList.get().getId());
+        dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(dtoList.get().getMedia()));
       dto.setDescription(dtoList.get().getDescription());
 
         return dto;

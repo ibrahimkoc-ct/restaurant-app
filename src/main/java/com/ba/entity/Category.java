@@ -21,12 +21,20 @@ public class Category implements Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "TBL_CATEGORY_PRODUCT",joinColumns = @JoinColumn(name ="category_id"),inverseJoinColumns = @JoinColumn(name = "product_id"))
-
-    @JsonIgnore
-    @OneToMany(mappedBy = ""
-    cascade=CascadeType.ALL)
-
     private List<Product> products;
+
+    @ManyToOne
+    @JoinColumn(name="media_id")
+    private Media media;
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public Category setMedia(Media media) {
+        this.media = media;
+        return this;
+    }
 
     public Category(String name, String description, String imageToUrl) {
         this.name = name;

@@ -17,9 +17,11 @@ class UpdateCategoryComponent extends Component {
             name: '',
             description: '',
             imageToUrl: '',
-            token:'',
-            products:[]
+            token: '',
+            products: [],
+            category:[]
         }
+
         this.chargeDescriptionHandler=this.chargeDescriptionHandler.bind(this);
         this.chargeNameHandler=this.chargeNameHandler.bind(this);
         this.chargeurlToImageHandler=this.chargeurlToImageHandler.bind(this);
@@ -42,6 +44,10 @@ class UpdateCategoryComponent extends Component {
         else {
             this.state.token=localStorage.getItem("token")
         }
+        CategoryService.viewCategory(this.state.id,this.state.token).then((res)=>{
+            this.setState({category:res.data})
+
+        })
 
 
     }
@@ -66,8 +72,9 @@ class UpdateCategoryComponent extends Component {
     }
 
     updateCategory= (e) =>{
+        console.log(this.state.category)
         e.preventDefault()
-        let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products};
+        let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products,mediaDTO:this.state.category.mediaDTO};
         console.log('category=>'+JSON.stringify(category));
         CategoryService.updateCategory(category,this.state.token).then(res =>{
             this.props.history.push('/categorytable-table');
@@ -77,6 +84,7 @@ class UpdateCategoryComponent extends Component {
 
 
     render() {
+
         return (
             <div>
                 <HeaderComponent/>
@@ -89,13 +97,13 @@ class UpdateCategoryComponent extends Component {
 
                                     <div className="form-group">
                                         <label>Kategori Adı</label>
-                                        <input placeholder="Kategori Adı" name="name" className="form-control"
+                                        <input placeholder="Kategori Adı" name="this.state.category.name" className="form-control"
                                                value={this.state.name} onChange={this.chargeNameHandler}/>
 
                                     </div>
                                     <div className="form-group">
                                         <label>Kategori Acıklaması</label>
-                                        <input placeholder="Kategori acıklaması" name="description" className="form-control"
+                                        <input placeholder={"Kategori acıklaması"} name="description" className="form-control"
                                                value={this.state.description} onChange={this.chargeDescriptionHandler}/>
 
                                     </div>

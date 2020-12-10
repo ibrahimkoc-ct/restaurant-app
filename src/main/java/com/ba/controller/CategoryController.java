@@ -18,7 +18,7 @@ import java.util.Set;
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
 
     @PostMapping("/add")

@@ -1,13 +1,12 @@
 package com.ba.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Media {
-
-    @ManyToOne
-    @JoinColumn(name="category_id")
-        private Category category;
 
 
     @Id

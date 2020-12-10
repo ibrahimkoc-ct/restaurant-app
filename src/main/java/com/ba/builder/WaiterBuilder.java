@@ -1,5 +1,6 @@
 package com.ba.builder;
 
+import com.ba.entity.Media;
 import com.ba.entity.Waiter;
 
 public class WaiterBuilder extends IdBuilder {
@@ -9,7 +10,12 @@ public class WaiterBuilder extends IdBuilder {
     private String address;
     private String urlToImage;
     private Long salary;
+    private Media media;
 
+    public WaiterBuilder media(Media media) {
+        this.media = media;
+        return this;
+    }
     public WaiterBuilder name(String name) {
         this.name = name;
         return this;
@@ -48,6 +54,7 @@ public class WaiterBuilder extends IdBuilder {
         waiter.setName(this.name);
         waiter.setAddress(this.address);
         waiter.setMail(this.mail);
+        waiter.setMedia(this.media);
         return waiter;
 
     }

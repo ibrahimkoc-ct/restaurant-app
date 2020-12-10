@@ -1,6 +1,7 @@
 package com.ba.builder;
 
 import com.ba.entity.Category;
+import com.ba.entity.Media;
 import com.ba.entity.Product;
 
 import java.util.List;
@@ -11,9 +12,15 @@ public class CategoryBuilder extends IdBuilder {
     private String description;
     private String imageToUrl;
     private List<Product> products;
+    private Media media;
 
     public CategoryBuilder name(String name) {
         this.name = name;
+        return this;
+
+    }
+    public CategoryBuilder media(Media media) {
+        this.media = media;
         return this;
 
     }
@@ -42,6 +49,7 @@ public class CategoryBuilder extends IdBuilder {
         category.setImageToUrl(this.imageToUrl);
         category.setName(this.name);
         category.setId(this.getId());
+        category.setMedia(this.media);
         return category;
 
     }

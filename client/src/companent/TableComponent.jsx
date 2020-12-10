@@ -49,6 +49,8 @@ class TableComponent extends Component {
         }
         else {
             this.state.token=localStorage.getItem("token")
+            const{waiter,setWaiter}=this.context
+            setWaiter("Seçili Garson Yok")
         }
         TableService.getCategory(this.state.token).then((res) => {
             this.setState({categorylist: res.data});

@@ -1,12 +1,12 @@
 package com.ba.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 public class Waiter {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,6 +16,20 @@ public class Waiter {
     private String address;
     private String urlToImage;
     private Long salary;
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "media_id")
+    private Media media;
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public Waiter setMedia(Media media) {
+        this.media = media;
+        return this;
+    }
 
     public Waiter(String name, String phoneNumber, String mail, String address, String urlToImage, Long salary) {
         this.name = name;

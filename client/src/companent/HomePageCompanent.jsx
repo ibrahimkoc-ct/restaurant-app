@@ -10,36 +10,42 @@ import createBrowserHistory from 'history/createBrowserHistory';
 const history = createBrowserHistory({forceRefresh:true});
 class HomePageCompanent extends Component {
     static contextType=ClientContext;
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state={
+            token:'',
             waiterList:[],
             show:false,
-            token:'',
+
 
         }
     }
-    componentDidMount() {
-        const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
+     componentDidMount() {
 
-                console.log(this.state.token)
-            }
-            else{
-                history.push('/');
-            }
-        }
-        else {
-            this.setState({token:localStorage.getItem("token")})
 
-        }
+         const userToken = this.context;
+         if (localStorage.getItem("token") == null) {
 
-        WaiterService.getWaiter(this.state.token).then((res)=>{
-            this.setState({waiterList:res.data})
-        })
-    }
+             if (userToken.token.length > 0) {
+                 this.state.token = userToken.token;
+
+                 console.log(this.state.token)
+             } else {
+                 this.props.history.push('/');
+             }
+         } else {
+             this.state.token = localStorage.getItem("token")
+
+         }
+
+         WaiterService.getWaiter("this.state.token").then((res) => {
+             this.setState({waiterList: res.data})
+         })
+     }
+
+
+
+
 
     signOut = (e) => {
 
@@ -82,7 +88,7 @@ class HomePageCompanent extends Component {
                 </Link>
                     <button onClick={() =>
                         this.onClickProduct()} className="btn btn-secondary homebutton">ÜRÜNLER</button>
-                <Link>
+                <Link to="/category">
                     <button className="btn btn-secondary homebutton">KULLANICILAR</button>
                 </Link>
                 <Link>

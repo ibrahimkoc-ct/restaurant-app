@@ -33,6 +33,7 @@ class ResponsiveProduct extends Component {
 
             },
             waiterName:'',
+            token:''
 
         }
 
@@ -43,8 +44,6 @@ class ResponsiveProduct extends Component {
         if(localStorage.getItem("token")==null){
             if(userToken.token.length>0){
                 this.state.token=userToken.token;
-
-                console.log(this.state.token)
             }
             else{
                 history.push('/');
@@ -53,22 +52,24 @@ class ResponsiveProduct extends Component {
 
         else {
             this.state.token=localStorage.getItem("token")
+            const{waiter,setWaiter}=this.context
+            setWaiter("Seçili Garson Yok")
 
 
         }
 
-        const{waiter}=this.context
-        this.state.waiterName=waiter;
 
         ProductService.getCategory(this.state.token).then((res) => {
             this.setState({productslist: res.data});
         });
+
         axios.get("http://localhost:8080/category/product/id/" + 1, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: this.state.token
 
             }
         }).then((res) => {
+            this.setState({categorylist:res.data})
 
 
         });
@@ -224,23 +225,26 @@ class ResponsiveProduct extends Component {
 
                     </div>
                     <div className="row border productbody">
-                        <div className="col-xl-2 col-lg-2 text-center border">
+                        <div className="col-xl-2 col-lg-2 text-center border categoryBody">
                             {this.state.productslist.map(
                                 category => {
                                     return (
 
                                         <div>
-
-
-                                            <button className="btn btn-secondary mt-3 btn-xl-6 buttoncategory"
+                                            <button className="btn btn-secondary buttoncategory"
                                                     onClick={() =>
-                                                        this.onClickSidebar(category)}>{category.name}</button>
+                                                        this.onClickSidebar(category)}>
+
+                                                        {category.name} <br/>
+                                                        <img src={'data:image/png;base64,' + category.mediaDTO.fileContent} width="150" style={{margin:1}}/>
+
+                                            </button>
                                         </div>
 
                                     )
                                 })}
+                            </div>
 
-                        </div>
                         <div className="col-xl-7 col-lg-7 text-center newproduct ">
                             <div className="row">
 

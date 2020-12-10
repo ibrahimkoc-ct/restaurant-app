@@ -85,14 +85,15 @@ class CategoryListComponent extends Component {
                             </tr>
                             </thead>
                             <tbody>
+
                             {
                                 this.state.categorylist.map(
                                     user =>
-                                        <tr >
+                                        <tr  >
                                             <td>{user.id}</td>
                                             <td>{user.name}</td>
                                             <td>{user.description}</td>
-                                            <td>{user.imageToUrl}</td>
+                                            <td align="center"><img src={'data:image/png;base64,' + user.mediaDTO.fileContent} width="100"/></td>
 
                                             <td>
 

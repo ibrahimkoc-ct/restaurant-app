@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-import ProductService from "../services/ProductService";
+import axios from 'axios';
 import CategoryService from "../services/CategoryService";
 import BackofficeContext from "../BackofficeContext";
 import createBrowserHistory from 'history/createBrowserHistory';
@@ -16,8 +16,10 @@ class CreateCategoryComponent extends Component {
             name: '',
             description: '',
             imageToUrl: '',
+            media:[],
 
-            products:[]
+            products:[],
+            mediaSelect:{}
         }
         this.chargeDescriptionHandler=this.chargeDescriptionHandler.bind(this);
         this.chargeNameHandler=this.chargeNameHandler.bind(this);
@@ -25,6 +27,11 @@ class CreateCategoryComponent extends Component {
         this.saveCategory=this.saveCategory.bind(this);
 
     }
+     debugBase64(base64URL){
+        var win = window.open();
+        win.document.write('<iframe src="' + base64URL  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+    }
+
     componentDidMount() {
         const userToken = this.context;
         if(localStorage.getItem("token")==null){
@@ -41,8 +48,10 @@ class CreateCategoryComponent extends Component {
             this.state.token=localStorage.getItem("token")
         }
 
-
-    }
+        axios.get("http://localhost:8080/file/list").then((res)=>{
+            this.setState({media:res.data});
+        });
+   }
 
     chargeNameHandler =(event) =>{
         this.setState({name:event.target.value});
@@ -53,14 +62,19 @@ class CreateCategoryComponent extends Component {
     chargeurlToImageHandler =(event) =>{
         this.setState({imageToUrl:event.target.value});
     }
+    changeSelect=(media)=>{
+        this.state.mediaSelect=media;
+    }
 
     saveCategory = (e) =>{
         e.preventDefault()
-        let category={name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products};
+        let category={name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products,mediaDTO:this.state.mediaSelect};
         console.log('category=>'+JSON.stringify(category));
         CategoryService.addCategory(category,this.state.token).then(res =>{
             this.props.history.push('/category-table');
         })
+
+
     }
 
 
@@ -90,12 +104,22 @@ class CreateCategoryComponent extends Component {
                                                value={this.state.description} onChange={this.chargeDescriptionHandler}/>
 
                                     </div>
+                                    <label>Kategori Resmi</label>
                                     <div className="form-group">
-                                        <label>Kategori Resim Url</label>
-                                        <input placeholder="Kategori Resim" name="category" className="form-control"
-                                               value={this.state.imageToUrl} onChange={this.chargeurlToImageHandler}/>
+                                        <div className="form-check" style={{height:"4rem",overflow:"auto"}}>
+                                            {
+                                                this.state.media.map(
+                                                    media=>
+                                                        <div className="row col-md -12 custom-control custom-radio">
+                                                            <input className="form-check-input" name="customRadio" type="radio" onClick={()=>this.changeSelect(media)} />
+                                                            <label className="form-check-label">
+                                                                <a onClick={()=>this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
+                                                        </div>
+                                                )
+                                            }
                                     </div>
 
+                                    </div>
                                     <button className="btn btn-success" onClick={this.saveCategory}>Kaydet</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>
                                 </form>
