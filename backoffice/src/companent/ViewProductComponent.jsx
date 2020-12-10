@@ -2,20 +2,39 @@ import React, {Component} from 'react';
 import UserService from "../services/UserService";
 import HeaderComponent from "./HeaderComponent";
 import ProductService from "../services/ProductService";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class ViewUserComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state={
             id:this.props.match.params.id,
-            product:{}
+            product:{},
+            token:''
         }
 
     }
     componentDidMount() {
-        ProductService.getProductById(this.state.id).then(res =>{
-            this.setState({product:res.data})
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
 
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+        ProductService.getProductById(this.state.id,this.state.token).then(res =>{
+            this.setState({product:res.data})
         })
 
     }

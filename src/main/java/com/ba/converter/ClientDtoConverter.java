@@ -32,7 +32,7 @@ public class ClientDtoConverter {
         dto.setDescription(dtoList.get().getDescription());
         dto.setId(dtoList.get().getId());
         dto.setCategory(dtoList.get().getCategory());
-        dto.setCategories(dtoList.get().getCategories());
+        dto.setCategories(CategoryDtoConventer.convertListToDTOList(dtoList.get().getCategories()));
 
         return dto;
     }

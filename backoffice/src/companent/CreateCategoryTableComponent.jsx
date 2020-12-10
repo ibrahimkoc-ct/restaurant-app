@@ -3,8 +3,12 @@ import CategoryService from "../services/CategoryService";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import CategoryTable from "../services/CategoryTable";
+import BackofficeContext from "../BackofficeContext";
+import createBrowserHistory from 'history/createBrowserHistory';
+const history = createBrowserHistory({forceRefresh:true});
 
 class CreateCategoryTableComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -12,7 +16,7 @@ class CreateCategoryTableComponent extends Component {
             description: '',
             imageToUrl: '',
             tableAmount:'',
-
+            token:'',
             products:[]
         }
         this.chargeDescriptionHandler=this.chargeDescriptionHandler.bind(this);
@@ -20,6 +24,24 @@ class CreateCategoryTableComponent extends Component {
         this.chargeurlToImageHandler=this.chargeurlToImageHandler.bind(this);
         this.saveCategory=this.saveCategory.bind(this);
         this.chargeTableAmountHandler=this.chargeTableAmountHandler.bind(this);
+
+    }
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
 
     }
     chargeNameHandler =(event) =>{
@@ -38,7 +60,7 @@ class CreateCategoryTableComponent extends Component {
         e.preventDefault()
         let category={name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products,tableAmount:this.state.tableAmount};
         console.log('category=>'+JSON.stringify(category));
-        CategoryTable.addCategory(category).then(res =>{
+        CategoryTable.addCategory(category,this.state.token).then(res =>{
             this.props.history.push('/categorytable-table');
         })
     }

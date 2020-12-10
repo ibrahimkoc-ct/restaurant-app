@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import UserService from "../services/UserService";
 import LoginHeaderComponent from "./LoginHeaderComponent";
-import FooterComponent from "./FooterComponent";
-import ProductService from "../services/ProductService";
-import {Link} from "react-router-dom";
-import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
-import axios from "axios";
+
 import BackofficeContext from '../BackofficeContext';
 class LoginComponent extends Component {
     static contextType = BackofficeContext;
@@ -17,7 +13,8 @@ class LoginComponent extends Component {
             username: '',
             password: '',
             userslist: [],
-            label:''
+            label:'',
+            checkTrue: false
 
         }
 
@@ -31,11 +28,20 @@ class LoginComponent extends Component {
     chargePasswordHandler =(event) =>{
         this.setState({password:event.target.value});
     }
+    chargeCheckHandler=(event)=>{
+        this.setState({checkTrue:!this.state.checkTrue})
+        console.log(this.state.checkTrue)
+
+    }
+
     componentDidMount() {
         UserService.getList().then((res)=>{
             this.setState({ userslist:res.data});
         });
 
+        if(localStorage.getItem("token")!==null){
+            this.props.history.push('/user-table');
+        }
 
     }
 
@@ -44,10 +50,13 @@ class LoginComponent extends Component {
 
 
       if(this.state.userslist.filter(name => (name.username === this.state.username)&& (name.password.substring(6,name.password.size) === this.state.password)).length>0) {
-            sessionStorage.setItem("token", 'Basic ' + btoa(this.state.username + ':' + this.state.password))
-            sessionStorage.setItem("key", this.state.username)
-            this.props.history.push('/user-table');
 
+
+            if(this.state.checkTrue===true){
+                localStorage.setItem("token", 'Basic ' + btoa(this.state.username + ':' + this.state.password))
+                localStorage.setItem("username", this.state.username);
+
+            }
 
           const{token,setToken}=this.context
           setToken('Basic ' + btoa(this.state.username + ':' + this.state.password))
@@ -56,12 +65,15 @@ class LoginComponent extends Component {
 
           let us = {username: this.state.username, password: +this.state.password};
 
+          this.props.history.push('/user-table');
+
        }
 
            else{
            this.props.history.push('/');
                this.setState({label:"Kullanıcı adı veya şifre yanlış"})
        }
+
         e.preventDefault();
         }
 
@@ -86,16 +98,25 @@ class LoginComponent extends Component {
                                                        value={this.state.username}
                                                        onChange={this.chargeUsernameHandler}/>
                                             </div>
+
                                             <div className="form-group">
                                                 <label>Parola</label>
                                                 <input type="password" placeholder="Parola" name="password"
                                                        className="form-control"
                                                        value={this.state.password}
                                                        onChange={this.chargePasswordHandler}/>
+                                                <div className="form-group form-check ">
+                                                    <input type="checkbox" className="form-check-input" id="exampleCheck1"
+                                                           onChange={this.chargeCheckHandler}/>
+                                                    <p>Beni Hatırla</p>
+                                            </div>
                                                 <button className="btn btn-success btn-girisyap"
                                                         onClick={this.signIn}>Giriş Yap
                                                 </button>
                                             </div>
+
+
+
                                         </form>
                                         <div className="card-body text-center">
                                             <h3>{this.state.label}</h3>

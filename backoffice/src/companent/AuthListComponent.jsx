@@ -4,21 +4,36 @@ import HeaderComponent from "./HeaderComponent";
 import Table from "react-bootstrap/Table";
 import FooterComponent from "./FooterComponent";
 import BackofficeContext from "../BackofficeContext";
-
+import createBrowserHistory from 'history/createBrowserHistory';
+const history = createBrowserHistory({forceRefresh:true});
 class AuthListComponent extends Component {
     static contextType = BackofficeContext;
     constructor(props) {
         super(props)
         this.state = {
-            authlist: []
+            authlist: [],
+            token:''
         }
 
     }
     componentDidMount(){
-        const token=this.context;
-        console.log(token.token)
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
 
-        UserService.getAuth().then((res)=>{
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+
+        UserService.getAuth(this.state.token).then((res)=>{
             this.setState({ authlist:res.data});
         });
 

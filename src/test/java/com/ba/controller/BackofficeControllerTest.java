@@ -61,13 +61,13 @@ public class BackofficeControllerTest {
         List<ProductDTO> result =controller.getAllProduct();
         assertEquals(result,dtoList);
     }
-    @Test
-    public void deleteProductBackofficeControllerTest(){
-        Long id=1L;
-        when(service.deleteProduct(id)).thenReturn("ürün silindi");
-        String result=controller.deleteProduct(id);
-        assertEquals(result,"ürün silindi");
-    }
+//    @Test
+//    public void deleteProductBackofficeControllerTest(){
+//        Long id=1L;
+//        when(service.deleteProduct(id)).thenReturn("ürün silindi");
+//        String result=controller.deleteProduct(id);
+//        assertEquals(result,"ürün silindi");
+//    }
     @Test
     public void updateProductBackofficeControllerTest(){
         Long id=1L;

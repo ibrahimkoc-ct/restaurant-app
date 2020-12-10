@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import BackofficeContext from "../BackofficeContext";
 import createBrowserHistory from 'history/createBrowserHistory';
-
 const history = createBrowserHistory({forceRefresh:true});
+
 class HeaderComponent extends Component {
     static contextType = BackofficeContext;
     constructor(props) {
@@ -14,23 +14,29 @@ class HeaderComponent extends Component {
         this.Exitbutton=this.Exitbutton.bind(this);
     }
     componentDidMount() {
-        const username = this.context;
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.username=userToken.username;
 
-        if(username.username.length>0){
-            this.state.username=username.username;
-
-            console.log(username.username)
+                
+            }
+            else{
+                history.push('/');
+            }
         }
-        else{
-            history.push('/');
+        else {
+            this.state.token=localStorage.getItem("token")
+            this.state.username=localStorage.getItem("username")
         }
 
 
     }
 
     Exitbutton(){
-        sessionStorage.removeItem("token");
-        sessionStorage.removeItem("key");
+        localStorage.removeItem("token");
+        localStorage.removeItem("username")
+
 
 
 

@@ -3,13 +3,14 @@ package com.ba.builder;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
 
+import java.util.List;
 import java.util.Set;
 
 public class CategoryBuilder extends IdBuilder {
     private String name;
     private String description;
     private String imageToUrl;
-    private Set<Product> products;
+    private List<Product> products;
 
     public CategoryBuilder name(String name) {
         this.name = name;
@@ -29,7 +30,7 @@ public class CategoryBuilder extends IdBuilder {
         this.imageToUrl = imageToUrl;
         return this;
     }
-    public CategoryBuilder products(Set<Product> products) {
+    public CategoryBuilder products(List<Product> products) {
         this.products = products;
         return this;
     }

@@ -9,13 +9,18 @@ import FooterComponent from "./FooterComponent";
 import UserService from "../services/UserService";
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import CategoryService from "../services/CategoryService";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class ListComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props)
         this.state = {
             productslist: [],
-            categorylist: []
+            categorylist: [],
+            token:''
         }
 
         this.editProduct=this.editProduct.bind(this);
@@ -23,12 +28,25 @@ class ListComponent extends Component {
         this.ViewCategory=this.ViewCategory.bind(this);
     }
     componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
 
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
 
-        ProductService.getProduct().then((res)=>{
+        ProductService.getProduct(this.state.token).then((res)=>{
             this.setState({ productslist:res.data});
         });
-        CategoryService.getCategory().then((res)=>{
+        CategoryService.getCategory(this.state.token).then((res)=>{
             this.setState({categorylist:res.data});
         });
 
@@ -43,7 +61,7 @@ class ListComponent extends Component {
 
     }
     deleteProduct(id){
-            ProductService.deleteProduct(id).then(res =>{
+            ProductService.deleteProduct(id,this.state.token).then(res =>{
                 this.setState({productslist:this.state.productslist.filter(product => product.id !==id)})
 
             })
@@ -53,7 +71,7 @@ class ListComponent extends Component {
         this.props.history.push('/view-product/'+id);
     }
     ViewCategory=(category)=> {
-        console.log(category)
+        console.log(category,this.state.token)
         this.setState({
             productslist:this.state.productslist.filter(product => product.category==category)
 
@@ -68,26 +86,7 @@ class ListComponent extends Component {
                     <button className="btn btn-info addbutton">Ürün Ekle</button>
 
                 </Link>
-                <div className="dropdown show">
-                    <a className="btn btn-secondary dropdown-toggle dropdown123" href="#" role="button" id="dropdownMenuLink"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Kategoriler
-                    </a>
 
-                    <div className="dropdown-menu " aria-labelledby="dropdownMenuLink">
-                        {
-                            this.state.categorylist.map(
-                                product =>
-                                    <a className="dropdown-item" href={`/view-product-category/${product.id}`}>{product.name}</a>
-                            )
-                        }
-
-
-
-
-
-                    </div>
-                </div>
                 <div className="container productlist">
 
 

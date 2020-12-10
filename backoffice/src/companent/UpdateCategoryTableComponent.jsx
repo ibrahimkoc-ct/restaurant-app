@@ -3,8 +3,13 @@ import CategoryService from "../services/CategoryService";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import CategoryTable from "../services/CategoryTable";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
+
 
 class UpdateCategoryTableComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -12,7 +17,8 @@ class UpdateCategoryTableComponent extends Component {
             name: '',
             description: '',
             imageToUrl: '',
-            tableAmount:''
+            tableAmount:'',
+            token:''
         }
         this.chargeDescriptionHandler=this.chargeDescriptionHandler.bind(this);
         this.chargeNameHandler=this.chargeNameHandler.bind(this);
@@ -20,6 +26,24 @@ class UpdateCategoryTableComponent extends Component {
         this.updateCategory=this.updateCategory.bind(this);
         this.chargeTableAmountHandler=this.chargeTableAmountHandler.bind(this);
 
+
+    }
+
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
 
     }
     chargeNameHandler =(event) =>{
@@ -49,7 +73,7 @@ class UpdateCategoryTableComponent extends Component {
         e.preventDefault()
         let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,tableAmount:this.state.tableAmount};
         console.log('category=>'+JSON.stringify(category));
-        CategoryTable.updateCategory(category).then(res =>{
+        CategoryTable.updateCategory(category,this.state.token).then(res =>{
             this.props.history.push('/categorytable-table');
         })
 

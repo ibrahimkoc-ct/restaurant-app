@@ -25,7 +25,7 @@ public class AuthoritiesService {
 
     }
 
-    //yapıldı
+
     public AuthoritiesDTO updateAuth(AuthoritiesDTO authDto) {
 
         authoritiesRepository.saveAndFlush(AuthoritiesDtoConverter.authDTOaddAuth(authDto));

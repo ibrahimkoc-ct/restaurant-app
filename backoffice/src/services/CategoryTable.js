@@ -9,47 +9,47 @@ const CategoryTable_Api_getByCategort_URL="http://localhost:8080/categorytable/i
 
 
 class CategoryTable  {
-    getCategory() {
+    getCategory(token) {
         return axios.get(CategoryTable_Api_Base_URL,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
 
     }
-    addCategory(category) {
+    addCategory(category,token) {
         return axios.post(CategoryTable_Api_add_URL,category,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
 
-    deleteCategory(id) {
+    deleteCategory(id,token) {
         return axios.delete(CategoryTable_Api_Delete_URL+ '/' + id,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    viewCategory(id) {
+    viewCategory(id,token) {
         return axios.get(CategoryTable_Api_getByCategort_URL+'/'+id,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    updateCategory(category) {
+    updateCategory(category,token) {
         return axios.put(CategoryTable_Api_Update_URL,category,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    getCategoryTableId(id){
+    getCategoryTableId(id,token){
         return axios.get(CategoryTable_Api_getProductByCategort_URL+'/'+id,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
     }
 

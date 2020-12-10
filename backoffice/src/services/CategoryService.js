@@ -17,38 +17,38 @@ class CategoryService {
             }});
 
     }
-    addCategory(category) {
+    addCategory(category,token) {
         return axios.post(Category_Api_Add_URL,category,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    deleteCategory(id) {
+    deleteCategory(id,token) {
         return axios.delete(Category_Api_Delete_URL+ '/' + id,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    viewCategory(id) {
+    viewCategory(id,token) {
         return axios.get(Category_Api_View_URL+'/'+id,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    updateCategory(category) {
+    updateCategory(category,token) {
         return axios.put(Category_Api_Update_URL,category,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    getCategoryProductId(id){
+    getCategoryProductId(id,token){
         return axios.get(Category_Api_ProductId_URL+'/'+id,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
     }
 

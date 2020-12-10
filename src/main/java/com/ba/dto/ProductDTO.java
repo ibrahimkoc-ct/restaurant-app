@@ -3,7 +3,9 @@ package com.ba.dto;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ProductDTO {
@@ -14,13 +16,13 @@ public class ProductDTO {
     private String category;
 
     private String urlToImage;
-    private Set<Category> categories= new HashSet<>();
+    private List<CategoryDTO> categories= new ArrayList<>();
 
-    public Set<Category> getCategories() {
+    public List<CategoryDTO> getCategories() {
         return categories;
     }
 
-    public ProductDTO setCategories(Set<Category> categories) {
+    public ProductDTO setCategories(List<CategoryDTO> categories) {
         this.categories = categories;
         return this;
     }

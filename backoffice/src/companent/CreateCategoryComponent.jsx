@@ -3,11 +3,16 @@ import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import ProductService from "../services/ProductService";
 import CategoryService from "../services/CategoryService";
+import BackofficeContext from "../BackofficeContext";
+import createBrowserHistory from 'history/createBrowserHistory';
+const history = createBrowserHistory({forceRefresh:true});
 
 class CreateCategoryComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state = {
+            token:'',
             name: '',
             description: '',
             imageToUrl: '',
@@ -20,6 +25,25 @@ class CreateCategoryComponent extends Component {
         this.saveCategory=this.saveCategory.bind(this);
 
     }
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+
+    }
+
     chargeNameHandler =(event) =>{
         this.setState({name:event.target.value});
     }
@@ -34,7 +58,7 @@ class CreateCategoryComponent extends Component {
         e.preventDefault()
         let category={name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products};
         console.log('category=>'+JSON.stringify(category));
-        CategoryService.addCategory(category).then(res =>{
+        CategoryService.addCategory(category,this.state.token).then(res =>{
             this.props.history.push('/category-table');
         })
     }

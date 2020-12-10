@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,11 +18,15 @@ public class Category implements Serializable {
     private String name;
     private String description;
     private String imageToUrl;
-    @JsonManagedReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "TBL_CATEGORY_PRODUCT",joinColumns = @JoinColumn(name ="category_id"),inverseJoinColumns = @JoinColumn(name = "product_id"))
 
-    private Set<Product> products;
+    @JsonIgnore
+    @OneToMany(mappedBy = ""
+    cascade=CascadeType.ALL)
+
+    private List<Product> products;
 
     public Category(String name, String description, String imageToUrl) {
         this.name = name;
@@ -65,11 +70,11 @@ public class Category implements Serializable {
         this.imageToUrl = imageToUrl;
     }
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

@@ -2,10 +2,10 @@ import axios from "axios";
 
 const Waiter_Api_Base_URL="http://localhost:8080/waiter/list";
 class WaiterService{
-    getWaiter() {
+    getWaiter(token) {
         return axios.get(Waiter_Api_Base_URL,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
 

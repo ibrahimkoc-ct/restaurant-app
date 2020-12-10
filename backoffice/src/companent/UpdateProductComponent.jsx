@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import ProductService from "../services/ProductService";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
-import {BrowserRouter as Router} from "react-router-dom";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class UpdateProductComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state ={
@@ -13,7 +16,8 @@ class UpdateProductComponent extends Component {
             description:'',
             category:'',
             urlToImage:'',
-            price:''
+            price:'',
+            token:''
         }
 
         this.chargeTitleHandler=this.chargeTitleHandler.bind(this);
@@ -23,13 +27,30 @@ class UpdateProductComponent extends Component {
         this.updateProduct=this.updateProduct.bind(this);
         this.chargeUrlToImageHandler=this.chargeUrlToImageHandler.bind(this);
     }
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+    }
 
     updateProduct = (e) =>{
 
 
         let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.category,price: this.state.price,urlToImage: this.state.urlToImage};
         console.log('product=>'+JSON.stringify(product));
-        ProductService.updateProduct(product,this.state.id).then(res =>{
+        ProductService.updateProduct(product,this.state.id,this.state.token).then(res =>{
             this.props.history.push('/products');
         })
         e.preventDefault()

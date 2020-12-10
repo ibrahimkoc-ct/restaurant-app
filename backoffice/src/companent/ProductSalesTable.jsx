@@ -3,19 +3,39 @@ import React, {Component} from 'react';
 import ProductService from "../services/ProductService";
 import Table from "react-bootstrap/Table";
 import HeaderComponent from "./HeaderComponent";
-import FooterComponent from "./FooterComponent";
-import {BrowserRouter as Router} from "react-router-dom";
 import '../App.css'
-import LoginComponent from "./LoginComponent";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
+
+
+
 class ProductSalesTable extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state = {
-            ProductSales: []
+            ProductSales: [],
+            token:''
         }
     }
     componentDidMount(){
-        ProductService.getProductSales().then((res)=>{
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+        ProductService.getProductSales(this.state.token).then((res)=>{
             this.setState({ ProductSales:res.data});
         });
     }

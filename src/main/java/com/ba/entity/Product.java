@@ -2,9 +2,12 @@ package com.ba.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,15 +21,15 @@ public class Product {
     private String category;
     private String urlToImage;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(mappedBy = "products")
-    private Set<Category> categories= new HashSet<>();
+    private List<Category> categories= new ArrayList<>();
 
-    public Set<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
-    public Product setCategories(Set<Category> categories) {
+    public Product setCategories(List<Category> categories) {
         this.categories = categories;
         return this;
     }

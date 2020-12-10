@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import UserService from "../services/UserService";
 import HeaderComponent from "./HeaderComponent";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class ViewUserComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state= {
@@ -11,14 +15,30 @@ class ViewUserComponent extends Component {
             enabled: "",
             password: "",
 
-            user: []
+            user: [],
+            token:''
 
 
         }
     }
     componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
         const {enabled }=this.state
-        UserService.getUsersById(sessionStorage.getItem("wiew")).then(res =>{
+        UserService.getUsersById(sessionStorage.getItem("wiew"),this.state.token).then(res =>{
 
 
 

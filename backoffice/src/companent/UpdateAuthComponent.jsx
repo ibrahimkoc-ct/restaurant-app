@@ -2,22 +2,45 @@ import React, {Component} from 'react';
 import UserService from "../services/UserService";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
+
 
 class UpdateAuthComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state = {
             username:'',
             authority:'',
             role_message:'Rol Seciniz',
+            token:''
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
         this.updateAuth=this.updateAuth.bind(this);
     }
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+    }
     updateAuth = (e) =>{
         e.preventDefault()
         let auth={username: this.state.username,authority: this.state.authority};
-        UserService.updateAuth(auth).then(res =>{
+        UserService.updateAuth(auth,this.state.token).then(res =>{
 
             console.log('user=>'+JSON.stringify(auth));
             this.props.history.push('/auth-table');

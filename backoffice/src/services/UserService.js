@@ -24,22 +24,22 @@ const ServerInfo_Api_Viwe_URL="http://localhost:8080/server-info";
 
 class UserService {
 
-     getUser() {
+     getUser(token) {
 
 
         return axios.get(User_Api_List_URL, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
 
             }
         });
 
     }
 
-     getAuth() {
+     getAuth(token) {
         return axios.get(AutOne_Base_URL, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
 
             }
         });
@@ -56,83 +56,83 @@ class UserService {
 
     }
 
-     createUser(user) {
+     createUser(user,token) {
         return axios.post(User_Api_Add_URL, user, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
     }
 
-     createAuth(user) {
+     createAuth(user,token) {
         return axios.post(Auth_Api_Add_URL, user, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
     }
 
-     updateUser(user, userId) {
+     updateUser(user,token) {
         return axios.put(Users_Api_Update_URL, user, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
     }
 
-     updateAuth(auth, authid) {
+     updateAuth(auth,token) {
         return axios.put(Auth_Api_Update_URL, auth, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
     }
 
-     deleteUser(username) {
+     deleteUser(username,token) {
         return axios.delete(User_Api_Delete_URL + '/' + username, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
     }
 
-     deleteAuth(username) {
+     deleteAuth(username,token) {
         return axios.delete(Auth_Api_Delete_URL + '/' + username, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
     }
 
 
-     getUserById(userId) {
+     getUserById(userId,token) {
         return axios.get(User_Api_Viwe_URL + '/' + userId, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
     }
 
-     getUsersById(userId) {
+     getUsersById(userId,token) {
         return axios.get(Users_Api_Viwe_URL + '/' + userId, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
     }
 
-     getAuthById(userId) {
+     getAuthById(userId,token) {
         return axios.get(Auth_Api_Viwe_URL + '/' + userId, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
 
@@ -147,11 +147,11 @@ class UserService {
 
     }
 
-     getServerInfo() {
+     getServerInfo(token) {
 
         return axios.get(ServerInfo_Api_Viwe_URL, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }
         });
     }

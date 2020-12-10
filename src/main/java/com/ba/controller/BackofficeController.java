@@ -42,13 +42,14 @@ public class BackofficeController {
     }
         @GetMapping("/product/id/{id}")
     public ProductDTO getProductById(@PathVariable Long id){
+
         return productService.getProductById(id);
     }
 
     @PostMapping("/product/category/add/{id}")
-    public String addProductId(@RequestBody Product product1, @PathVariable Long id){
-//        ProductDTO product= new ProductDTO();
-//        productService.addProductId(product,id);
+    public String addProductId(@RequestBody ProductDTO product, @PathVariable Long id){
+       productService.addProductId(product,id);
+
         return "product";
     }
 

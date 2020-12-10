@@ -1,16 +1,18 @@
 package com.ba.builder;
 
 import com.ba.dto.CategoryDTO;
+import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
 
+import java.util.List;
 import java.util.Set;
 
 public class CategoryDTOBuilder extends IdBuilder  {
     private String name;
     private String description;
     private String imageToUrl;
-    private Set<Product> products;
+    private List<ProductDTO> products;
 
     public CategoryDTOBuilder name(String name) {
         this.name = name;
@@ -30,7 +32,7 @@ public class CategoryDTOBuilder extends IdBuilder  {
         this.imageToUrl = imageToUrl;
         return this;
     }
-    public CategoryDTOBuilder products(Set<Product> products) {
+    public CategoryDTOBuilder products(List<ProductDTO> products) {
         this.products = products;
         return this;
     }

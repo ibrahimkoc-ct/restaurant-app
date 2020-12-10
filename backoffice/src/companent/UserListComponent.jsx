@@ -5,26 +5,47 @@ import ProductService from "../services/ProductService";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import {BrowserRouter as Router, Link} from "react-router-dom";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class UserListComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props)
         this.state = {
-            userlist: []
+            userlist: [],
+            token:''
         }
 
         this.editUser=this.editUser.bind(this);
         this.deleteUser=this.deleteUser.bind(this);
     }
     componentDidMount(){
-        UserService.getUser().then((res)=>{
+
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+        UserService.getUser(this.state.token).then((res)=>{
             this.setState({ userlist:res.data});
         });
 
     }
     deleteUser(username){
-        UserService.deleteAuth(username);
-        UserService.deleteUser(username).then(res =>{
+        UserService.deleteAuth(username,this.state.token);
+        UserService.deleteUser(username,this.state.token).then(res =>{
             this.setState({userlist:this.state.userlist.filter(product => product.username !==username)})
         })
 

@@ -2,15 +2,20 @@ import React, {Component} from 'react';
 import UserService from "../services/UserService";
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class UpdateUserComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state ={
             username:'',
             password:'',
             enabled:'',
-            enabled_message:'Atkiflik Seciniz'
+            enabled_message:'Atkiflik Seciniz',
+            token:''
 
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
@@ -18,10 +23,28 @@ class UpdateUserComponent extends Component {
         this.updateUser=this.updateUser.bind(this);
 
     }
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+
+    }
     updateUser = (e) =>{
         e.preventDefault()
         let user={username: this.state.username,password: this.state.password,enabled: this.state.enabled};
-        UserService.updateUser(user).then(res =>{
+        UserService.updateUser(user,this.state.token).then(res =>{
 
             console.log('user=>'+JSON.stringify(user));
             this.props.history.push('/user-table');

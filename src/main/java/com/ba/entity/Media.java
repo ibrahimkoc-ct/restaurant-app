@@ -4,6 +4,12 @@ import javax.persistence.*;
 
 @Entity
 public class Media {
+
+    @ManyToOne
+    @JoinColumn(name="category_id")
+        private Category category;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

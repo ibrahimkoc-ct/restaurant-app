@@ -5,33 +5,56 @@ import {Link} from "react-router-dom";
 import {Button, Modal} from "react-bootstrap"
 import "./App2.css";
 import WaiterService from "../services/WaiterService";
-
+import ClientContext from "../ClientContext";
+import createBrowserHistory from 'history/createBrowserHistory';
+const history = createBrowserHistory({forceRefresh:true});
 class HomePageCompanent extends Component {
+    static contextType=ClientContext;
     constructor() {
         super();
         this.state={
             waiterList:[],
             show:false,
+            token:'',
 
         }
     }
     componentDidMount() {
-        WaiterService.getWaiter().then((res)=>{
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.setState({token:localStorage.getItem("token")})
+
+        }
+
+        WaiterService.getWaiter(this.state.token).then((res)=>{
             this.setState({waiterList:res.data})
         })
     }
 
     signOut = (e) => {
-        e.preventDefault()
 
-        sessionStorage.removeItem("token")
+
+        localStorage.removeItem("token")
         this.props.history.push('/');
+        e.preventDefault()
     }
 
-    onClickWaiter=(waiter)=>{
+    onClickWaiter=(waiter1)=>{
         this.setState({show:false})
         this.props.history.push('/products')
-        localStorage.setItem("waiter",waiter.name)
+        const{waiter,setWaiter}=this.context
+       setWaiter(waiter1.name)
+        // localStorage.setItem("waiter",waiter.name)
     }
     onClickProduct(){
         this.setState({show:true})

@@ -1,26 +1,32 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import createBrowserHistory from 'history/createBrowserHistory';
+import ClientContext from "../ClientContext";
+const history = createBrowserHistory({forceRefresh:true});
+
 
 
 
 class HeaderComponent extends Component {
+    static contextType=ClientContext;
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            waiter:'',
+        }
     }
-    Exitbutton(){
-        sessionStorage.removeItem("token")
+    componentDidMount() {
+        const{waiter,setWaiter}=this.context
+        this.state.waiter=waiter;
+
     }
-    waiterbutton(){
-        const history = createBrowserHistory();
-        history.push('/homepage');
-        localStorage.setItem("waiter","Seçili Garson Yok");
-        window.location.reload(false);
 
 
+    waiterbutton=(e)=>{
+        e.preventDefault()
 
+      history.push('/homepage');
 
 
     }
@@ -30,7 +36,7 @@ class HeaderComponent extends Component {
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                         <div><a href="https://localhost:4040" className="navbar-brand">Urun Siparis Uygulaması</a> </div>
-                        <button onClick={this.waiterbutton} className="usernamepage btn btn-outline-danger">Garson: {localStorage.getItem("waiter")}</button>
+                        <button onClick={this.waiterbutton} className="usernamepage btn btn-outline-danger">Garson: {this.state.waiter}</button>
 
                     </nav>
 

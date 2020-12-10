@@ -7,8 +7,12 @@ import ProductService from "../services/ProductService";
 import nextId from "react-id-generator";
 import {Link} from "react-router-dom";
 import "./App2.css";
+import ClientContext from "../ClientContext";
+import createBrowserHistory from 'history/createBrowserHistory';
+const history = createBrowserHistory({forceRefresh:true});
 
 class ResponsiveProduct extends Component {
+    static contextType=ClientContext;
     constructor(props) {
         super(props)
         this.state = {
@@ -26,14 +30,37 @@ class ResponsiveProduct extends Component {
                 id: 0,
                 selectedtable: '',
                 waiterName:''
+
             },
+            waiterName:'',
 
         }
 
     }
 
     componentDidMount() {
-        ProductService.getCategory().then((res) => {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+
+        else {
+            this.state.token=localStorage.getItem("token")
+
+
+        }
+
+        const{waiter}=this.context
+        this.state.waiterName=waiter;
+
+        ProductService.getCategory(this.state.token).then((res) => {
             this.setState({productslist: res.data});
         });
         axios.get("http://localhost:8080/category/product/id/" + 1, {
@@ -72,7 +99,7 @@ class ResponsiveProduct extends Component {
 
         axios.get("http://localhost:8080/category/product/id/" + category.id, {
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: this.state.token
 
             }
         }).then((res) => {
@@ -100,7 +127,7 @@ class ResponsiveProduct extends Component {
                     piece: 1,
                     total: Number(product.price),
                     selectedtable: localStorage.getItem("product"),
-                    waiterName:localStorage.getItem("waiter")
+                    waiterName:this.state.waiterName
                 }
             }, () => this.setState({salelist: [...this.state.salelist, this.state.cart]}))
         }
@@ -130,15 +157,16 @@ class ResponsiveProduct extends Component {
 
     pay() {
 
-            ProductService.pay(this.state.salelist).then(res => {
+            ProductService.pay(this.state.salelist,this.state.token).then(res => {
                 this.props.history.push('/homepage')
             });
 
 
 
            localStorage.setItem("product", "Secili Masa Yok");
-           localStorage.setItem("waiter","Seçili Garson Yok");
 
+         const{waiter,setWaiter}=this.context
+         setWaiter("Seçili Garson Yok")
 
 
 
@@ -154,7 +182,8 @@ class ResponsiveProduct extends Component {
         }
 
         localStorage.setItem("product", "Secili Masa Yok");
-        localStorage.setItem("waiter","Seçili Garson Yok");
+        const{waiter,setWaiter}=this.context
+        setWaiter("Seçili Garson Yok")
 
         this.props.history.push('/homepage')
 

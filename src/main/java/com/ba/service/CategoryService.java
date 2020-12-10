@@ -1,5 +1,6 @@
 package com.ba.service;
 
+import com.ba.converter.BackofficeDtoConverter;
 import com.ba.converter.CategoryDtoConventer;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
@@ -21,7 +22,7 @@ public class CategoryService {
 
     public List<CategoryDTO> getAllCategory() {
         List<Category> categoryList= categoryRepository.findAll();
-        return CategoryDtoConventer.categoryDTOListToCategory(categoryList);
+        return CategoryDtoConventer.convertListToDTOList(categoryList);
 
     }
 
@@ -37,7 +38,10 @@ public class CategoryService {
 
     public CategoryDTO updateCategory (CategoryDTO categoryDTO){
 
-        categoryRepository.saveAndFlush(CategoryDtoConventer.categoryDTOaddCategory(categoryDTO));
+        Optional<Category> category = categoryRepository.findById(categoryDTO.getId());
+
+
+        categoryRepository.saveAndFlush(CategoryDtoConventer.categoryDTOUpdateCategory(categoryDTO,category));
         return categoryDTO;
     }
     public CategoryDTO getCategoryById(Long id) {

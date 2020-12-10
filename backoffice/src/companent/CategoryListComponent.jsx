@@ -5,30 +5,47 @@ import HeaderComponent from "./HeaderComponent";
 import Table from "react-bootstrap/Table";
 import FooterComponent from "./FooterComponent";
 import {Link} from "react-router-dom";
+import createBrowserHistory from 'history/createBrowserHistory';
+
 import ProductService from "../services/ProductService";
 import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class CategoryListComponent extends Component {
     static contextType = BackofficeContext;
     constructor(props) {
         super(props)
         this.state = {
-            categorylist: []
+            categorylist: [],
+            token:''
         }
 
     }
     componentDidMount() {
-        const token = this.context;
-        console.log(token.token)
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
 
-        CategoryService.getCategory(token.token).then((res) => {
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+
+        CategoryService.getCategory(this.state.token).then((res) => {
             this.setState({categorylist: res.data});
         });
     }
     deleteCategory(id) {
 
         console.log(id)
-        CategoryService.deleteCategory(id).then(res => {
+        CategoryService.deleteCategory(id,this.state.token).then(res => {
             this.setState({categorylist: this.state.categorylist.filter(product => product.id !== id)})
 
         })

@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import HeaderComponent from "./HeaderComponent";
 import WaiterService from "../services/WaiterService";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class UpdateWaiterComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -13,6 +17,7 @@ class UpdateWaiterComponent extends Component {
             address: '',
             urlToImage: '',
             salary: '',
+            token:''
 
         }
         this.chargeNameHandler=this.chargeNameHandler.bind();
@@ -43,11 +48,29 @@ class UpdateWaiterComponent extends Component {
     cancel(){
         this.props.history.push('/waiter-table');
     }
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+
+    }
     updateWaiter=(e)=>{
         let waiter={id:this.state.id,name:this.state.name,phoneNumber:this.state.phoneNumber
             ,mail: this.state.mail,address: this.state.address,
             urlToImage: this.state.urlToImage,salary: this.state.salary}
-        WaiterService.addWaiter(waiter).then(res=>{
+        WaiterService.addWaiter(waiter,this.state.token).then(res=>{
             this.props.history.push('/waiter-table');
         })
 

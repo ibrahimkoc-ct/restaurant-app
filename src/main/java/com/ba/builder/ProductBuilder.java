@@ -3,6 +3,7 @@ package com.ba.builder;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
 
+import java.util.List;
 import java.util.Set;
 
 public class ProductBuilder extends IdBuilder{
@@ -11,9 +12,9 @@ public class ProductBuilder extends IdBuilder{
     private String price;
     private String category;
     private String urlToImage;
-    private Set<Category> categories;
+    private List<Category> categories;
 
-    public ProductBuilder categories(Set<Category> categories) {
+    public ProductBuilder categories(List<Category> categories) {
         this.categories = categories;
         return this;
     }

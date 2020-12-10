@@ -3,8 +3,11 @@ import UserService from '../services/UserService';
 import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import {BrowserRouter as Router} from "react-router-dom";
-
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 class CreateUserComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state ={
@@ -14,6 +17,7 @@ class CreateUserComponent extends Component {
             authority:'',
             role_message:'Rol Seciniz',
             enabled_message:'Atkiflik Seciniz',
+            token:''
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
         this.chargePasswordHandler=this.chargePasswordHandler.bind(this);
@@ -21,17 +25,33 @@ class CreateUserComponent extends Component {
 
 
     }
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+    }
     saveUser = (e) =>{
         e.preventDefault()
         let user={username: this.state.username,password:"{noop}"+ this.state.password,enabled: this.state.enabled};
         let auth={username: this.state.username,authority: this.state.authority};
         console.log(user);
         console.log(auth)
-        UserService.createAuth(auth).then(res =>{
+        UserService.createAuth(auth,this.state.token).then(res =>{
 
         })
 
-        UserService.createUser(user).then(res =>{
+        UserService.createUser(user,this.state.token).then(res =>{
             this.props.history.push('/user-table');
         })
     }

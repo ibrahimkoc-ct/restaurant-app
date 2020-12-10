@@ -5,7 +5,12 @@ import HeaderComponent from "./HeaderComponent";
 import FooterComponent from "./FooterComponent";
 import {BrowserRouter as Router} from "react-router-dom";
 import CategoryService from "../services/CategoryService";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
+
 class CreateProductComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state ={
@@ -17,7 +22,9 @@ class CreateProductComponent extends Component {
             urlToImage:'',
             categoryid:'',
             categorylist:[],
-            categoryName:"Kategori Seçiniz"
+            categoryName:"",
+            token:'',
+            selectedCategory:[]
         }
 
         this.chargeTitleHandler=this.chargeTitleHandler.bind(this);
@@ -27,13 +34,39 @@ class CreateProductComponent extends Component {
         this.saveProduct=this.saveProduct.bind(this);
         this.chargeUrlToImageHandler=this.chargeUrlToImageHandler.bind(this);
     }
+    componentDidMount() {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+        CategoryService.getCategory(this.state.token).then((res) => {
+            this.setState({categorylist: res.data});
+        });
+
+    }
+
+
+
     saveProduct = (e) =>{
-        e.preventDefault()
-        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.categoryName,price: this.state.price,urlToImage: this.state.urlToImage};
+        console.log(this.state.categorylist)
+
+        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.categoryName,price: this.state.price,urlToImage: this.state.urlToImage,categories:this.state.selectedCategory};
         console.log('product=>'+JSON.stringify(product));
-        ProductService.addProductId(product,this.state.categoryid).then(res =>{
+        ProductService.addProductId(product,1,this.state.token).then(res =>{
             this.props.history.push('/products');
         })
+        e.preventDefault()
     }
     chargeTitleHandler =(event) =>{
         this.setState({title:event.target.value});
@@ -54,15 +87,11 @@ class CreateProductComponent extends Component {
         this.props.history.push('/products');
     }
 
-    componentDidMount() { CategoryService.getCategory().then((res)=>{
-        this.setState({categorylist:res.data});
-    });
-    }
-    onClickItem(e){
-        this.setState({categoryid:e.id,
-            categoryName:e.name
-        })
 
+    changeMultiSelect=(category)=>{
+        this.state.selectedCategory.push(category);
+        console.log(this.state.selectedCategory)
+        this.state.categoryName+=(category.name+' ,')
     }
 
     render() {
@@ -99,22 +128,17 @@ class CreateProductComponent extends Component {
                                         <input placeholder="Urun fiyatı" name="price" className="form-control"
                                                value={this.state.price} onChange={this.chargePriceHandler}/>
                                     </div>
-                                    <div className="dropdown show">
-                                        <a className="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            {this.state.categoryName}
-                                        </a>
-
-                                        <div className="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink">
-                                            {
-                                                this.state.categorylist.map(
-                                                    category =>
-                                                        <a className="dropdown-item" onClick={this.onClickItem.bind(this,category)}>{category.name}</a>
-                                                )
-                                            }
-
-                                        </div>
+                                    <div className="checkbox" style={{height:"4rem",overflow:"auto"}}>
+                                        {
+                                            this.state.categorylist.map(
+                                                category=>
+                                                    <div className="row col-md -12">
+                                                        <label><input type="checkbox" value="" onClick={()=>this.changeMultiSelect(category)}/>{category.name}</label>
+                                                    </div>
+                                            )
+                                        }
                                     </div>
+
                                     <hr/>
                                     <button className="btn btn-success" onClick={this.saveProduct}>Kaydet</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>

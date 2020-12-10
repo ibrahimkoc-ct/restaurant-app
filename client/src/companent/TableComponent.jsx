@@ -8,8 +8,11 @@ import axios from "axios";
 import {Modal} from "react-bootstrap";
 import WaiterService from "../services/WaiterService";
 import ResponsiveProduct from "./ResponsiveProduct";
-
+import ClientContext from "../ClientContext";
+import createBrowserHistory from 'history/createBrowserHistory';
+const history = createBrowserHistory({forceRefresh:true});
 class TableComponent extends Component {
+    static contextType=ClientContext;
     constructor(props) {
         super(props)
         this.state = {
@@ -25,18 +28,33 @@ class TableComponent extends Component {
             selectedTableComp:'',
             category:{},
             selectedTableDetail:[],
-            ViewTableDetail:[]
+            ViewTableDetail:[],
+            token:'',
         }
 
 
     }
 
     componentDidMount() {
-        TableService.getCategory().then((res) => {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+        TableService.getCategory(this.state.token).then((res) => {
             this.setState({categorylist: res.data});
 
         });
-        WaiterService.getWaiter().then((res)=>{
+        WaiterService.getWaiter(this.state.token).then((res)=>{
             this.setState({waiterList:res.data})
         })
 
@@ -95,11 +113,12 @@ class TableComponent extends Component {
         this.setState({showDetailTable:false ,show:true})
 
     }
-    onClickWaiter=(waiter)=>{
-        console.log("Seçili garson: "+waiter.name)
+    onClickWaiter=(waiter1)=>{
+
         this.setState({show:false})
         this.props.history.push('/products')
-        localStorage.setItem("waiter",waiter.name)
+        const{waiter,setWaiter}=this.context
+        setWaiter(waiter1.name)
     }
     DetailTable=(category,i)=>{
         const{selectedTableDetail}=this.state;
@@ -138,11 +157,12 @@ class TableComponent extends Component {
     }
 
     pay(){
-        ProductService.pay(this.state.ViewTableDetail).then(res => {
+        ProductService.pay(this.state.ViewTableDetail,this.state.token).then(res => {
             this.props.history.push('/homepage')
         });
         localStorage.setItem("product", "Secili Masa Yok");
-        localStorage.setItem("waiter","Seçili Garson Yok");
+        const{waiter,setWaiter}=this.context
+        setWaiter("Seçili Garson Yok")
         let orders = ResponsiveProduct.getOrderFromStorage();
         const{selectedTableDetail}=this.state;
 

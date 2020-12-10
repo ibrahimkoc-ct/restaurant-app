@@ -7,39 +7,39 @@ const Waiter_Api_View_URL="http://localhost:8080/waiter/id";
 const Waiter_Api_Update_URL="http://localhost:8080/waiter/update";
 
 class WaiterService{
-    getWaiter() {
+    getWaiter(token) {
         return axios.get(Waiter_Api_Base_URL,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
 
     }
-    addWaiter(waiter) {
+    addWaiter(waiter,token) {
         return axios.post(Waiter_Api_Add_URL,waiter,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    deleteWaiter(id) {
+    deleteWaiter(id,token) {
         return axios.delete(Waiter_Api_Delete_URL+ '/' + id,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    viewWaiter(id) {
+    viewWaiter(id,token) {
         return axios.get(Waiter_Api_View_URL+'/'+id,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    updateWiew(waiter) {
+    updateWiew(waiter,token) {
         return axios.put(Waiter_Api_Update_URL,waiter,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }

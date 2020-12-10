@@ -2,8 +2,12 @@ import React, {Component} from 'react';
 import UserService from "../services/UserService";
 import CategoryService from "../services/CategoryService";
 import HeaderComponent from "./HeaderComponent";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class ViewCategoryComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
         super(props);
         this.state= {
@@ -12,19 +16,31 @@ class ViewCategoryComponent extends Component {
             description: "",
             imageToUrl: "",
 
-            category: []
+            category: [],
+            token:''
 
 
         }
     }
     componentDidMount() {
-        CategoryService.viewCategory(sessionStorage.getItem("view-category")).then(res =>{
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+        CategoryService.viewCategory(sessionStorage.getItem("view-category"),this.state.token).then(res =>{
             this.setState({
-                category:res.data,
-
-
-            })
-
+                category:res.data,})
         })
 
     }

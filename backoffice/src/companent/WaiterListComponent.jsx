@@ -3,25 +3,45 @@ import WaiterService from "../services/WaiterService";
 import HeaderComponent from "./HeaderComponent";
 import Table from "react-bootstrap/Table";
 import {Link} from "react-router-dom";
+import createBrowserHistory from 'history/createBrowserHistory';
+import BackofficeContext from "../BackofficeContext";
+const history = createBrowserHistory({forceRefresh:true});
 
 class WaiterListComponent extends Component {
+    static contextType = BackofficeContext;
     constructor(props) {
 
         super(props);
         this.state = {
-            waiterList: []
+            waiterList: [],
+            token:''
         }
     }
 
     componentDidMount() {
-        WaiterService.getWaiter().then((res) => {
+        const userToken = this.context;
+        if(localStorage.getItem("token")==null){
+            if(userToken.token.length>0){
+                this.state.token=userToken.token;
+
+                console.log(this.state.token)
+            }
+            else{
+                history.push('/');
+            }
+        }
+        else {
+            this.state.token=localStorage.getItem("token")
+        }
+
+        WaiterService.getWaiter(this.state.token).then((res) => {
             this.setState({waiterList: res.data})
 
         });
         console.log(this.state.waiterList)
     }
     deleteWaiter=(waiter)=>{
-        WaiterService.deleteWaiter(waiter.id).then(res=>{
+        WaiterService.deleteWaiter(waiter.id,this.state.token).then(res=>{
             this.setState({waiterList: this.state.waiterList.filter(a => a.id !== waiter.id)})
 
         })

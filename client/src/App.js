@@ -4,15 +4,16 @@ import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import HomePageCompanent from "./companent/HomePageCompanent";
 import TableComponent from "./companent/TableComponent";
 import ResponsiveProduct from "./companent/ResponsiveProduct";
+import {ClientContextProvider} from "./ClientContext";
 
+
+const client={token:'',username:''}
 function App()  {
-
-
-
 
 
         return (
             <div>
+                <ClientContextProvider value={client}>
                 <Router>
 
 
@@ -28,6 +29,7 @@ function App()  {
 
 
                 </Router>
+                </ClientContextProvider>
             </div>
 
         );

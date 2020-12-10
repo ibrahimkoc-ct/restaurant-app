@@ -9,53 +9,53 @@ const Product_Api_Addid_URL="http://localhost:8080/backoffice/product/category/a
 
 class ProductService{
 
-   getProduct(){
+   getProduct(token){
 
    return  axios.get('http://localhost:8080/backoffice/product/list/', {
         headers: {
-            Authorization:sessionStorage.getItem("token")
+            Authorization:token
         }
     })
     }
 
-   createProduct(product){
+   createProduct(product,token){
        return axios.post(Product_Api_Add_URL,product,{
            headers: {
-               Authorization:sessionStorage.getItem("token")
+               Authorization:token
            }});
 
    }
-   updateProduct(product,productId){
+   updateProduct(product,productId,token){
        return axios.put(Product_Api_Update_URL+'/'+productId,product,{
            headers: {
-               Authorization:sessionStorage.getItem("token")
+               Authorization:token
            }});
 
    }
-    deleteProduct(productId){
+    deleteProduct(productId,token){
         return axios.delete(Product_Api_Delete_URL+'/'+productId,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }
-    getProductSales(){
+    getProductSales(token){
        return axios.get(Product_Api_ProductSales,{
            headers: {
-               Authorization:sessionStorage.getItem("token")
+               Authorization:token
            }});
     }
-    getProductById(productId){
+    getProductById(productId,token){
         return axios.get(Product_Api_View_URL+'/'+productId,{
             headers: {
-                Authorization: sessionStorage.getItem("token")
+                Authorization: token
             }});
 
     }
-    addProductId(product,id){
+    addProductId(product,id,token){
         return axios.post(Product_Api_Addid_URL+'/'+id,product,{
             headers: {
-                Authorization:sessionStorage.getItem("token")
+                Authorization:token
             }});
 
     }

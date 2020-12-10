@@ -1,6 +1,8 @@
 package com.ba.service;
 
 import com.ba.converter.BackofficeDtoConverter;
+import com.ba.converter.CategoryDtoConventer;
+import com.ba.converter.ProductSalesDtoConverter;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
@@ -24,15 +26,27 @@ public class BackofficeService {
     CategoryRepository categoryRepository;
 
     public List<ProductDTO> getAllProduct() {
-    List<Product> productList=repository.findAll();
-
+        List<Product> productList=repository.findAll();
     return BackofficeDtoConverter.productListTOProductList(productList);
     }
 
     public String deleteProduct(Long id) {
-        repository.deleteById(BackofficeDtoConverter.deleteProductDTOToProduct(id));
-        return "kisi silindi";
+//        Optional<Product> product2 =
 
+        Product product=repository.findById(id).get();
+        List<Category> categoryList=product.getCategories();
+        for(int i=0; i<categoryList.size(); i++){
+            categoryList.get(i).getProducts().remove(product);
+            categoryRepository.save(categoryList.get(i));
+        }
+        repository.deleteById(id);
+
+
+
+
+
+
+        return "kisi silindi";
     }
 
 
@@ -52,9 +66,17 @@ public class BackofficeService {
 
 
     public String  addProductId(ProductDTO product, Long id){
-        Category category =categoryRepository.findById(id).get();
+            Product product1=new Product();
+            List<Category> categoryList= new ArrayList<>();
+            for(int i=0; i<product.getCategories().size(); i++){
+                Category category=categoryRepository.findById(product.getCategories().get(i).getId()).get();
+                categoryList.add(category);
+            }
 
-        repository.save(BackofficeDtoConverter.addProductIDtoDto(category,product));
+        product1=BackofficeDtoConverter.addProductIDtoDto(categoryList,product);
+//        Category category =categoryRepository.findById(id).get();
+
+        repository.save(product1);
 
         return "kisi eklendi";
     }

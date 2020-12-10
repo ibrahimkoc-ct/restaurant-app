@@ -60,15 +60,15 @@ public class BackofficeServiceTest {
     }
 
 
-    @Test(expected =RuntimeException.class)
-    public void shouldDeleteProductById(){
-        Long id=1L;
-        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
-        String result=service.deleteProduct(id);
-        assertEquals(result,"kisi silindi");
-        verify(repository,times(1)).deleteById(id);
-
-    }
+//    @Test(expected =RuntimeException.class)
+//    public void shouldDeleteProductById(){
+//        Long id=1L;
+//        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
+//        String result=service.deleteProduct(id);
+//        assertEquals(result,"kisi silindi");
+//        verify(repository,times(1)).deleteById(id);
+//
+//    }
     @Test
     public void shouldBackOfficeProductList() {
         list.add(product);
