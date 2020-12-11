@@ -73,6 +73,7 @@ class WaiterListComponent extends Component {
                                 <th>Garson Adi</th>
                                 <th>Garson Maili</th>
                                 <th>Garson Telefon Numarası</th>
+                                <th>Garson Resmi</th>
                                 <th>Garson Maaşı</th>
                                 <th className="actions123">Actions</th>
                             </tr>
@@ -85,6 +86,8 @@ class WaiterListComponent extends Component {
                                             <td>{waiter.name}</td>
                                             <td>{waiter.mail}</td>
                                             <td>{waiter.phoneNumber}</td>
+                                            <td align="center"><img src={'data:image/png;base64,' + waiter.mediaDTO.fileContent} width="100"/></td>
+
                                             <td>{waiter.salary}</td>
                                             <td>
                                                 <button  onClick={()=>this.editWaiter(waiter)} className=" btn btn-info  ">Güncelle</button>

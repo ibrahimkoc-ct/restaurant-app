@@ -1,6 +1,7 @@
 package com.ba.converter;
 
 import com.ba.dto.WaiterDTO;
+import com.ba.entity.Media;
 import com.ba.entity.Waiter;
 
 import java.util.ArrayList;
@@ -23,6 +24,26 @@ public class WaiterDtoConverter {
         waiter.setPhoneNumber(waiterDTO.getPhoneNumber());
         waiter.setSalary(waiterDTO.getSalary());
         waiter.setUrlToImage(waiterDTO.getUrlToImage());
+        Media media = new Media();
+        media.setFileContent(waiterDTO.getMediaDTO().getFileContent());
+        media.setName(waiterDTO.getMediaDTO().getName());
+        waiter.setMedia(media);
+        return waiter;
+    }
+    public static Waiter waiterDTOupdateWaiter(WaiterDTO waiterDTO){
+        Waiter waiter= new Waiter();
+        waiter.setId(waiterDTO.getId());
+        waiter.setAddress(waiterDTO.getAddress());
+        waiter.setMail(waiterDTO.getMail());
+        waiter.setName(waiterDTO.getName());
+        waiter.setPhoneNumber(waiterDTO.getPhoneNumber());
+        waiter.setSalary(waiterDTO.getSalary());
+        waiter.setUrlToImage(waiterDTO.getUrlToImage());
+        Media media = new Media();
+        media.setId(waiterDTO.getMediaDTO().getId());
+        media.setFileContent(waiterDTO.getMediaDTO().getFileContent());
+        media.setName(waiterDTO.getMediaDTO().getName());
+        waiter.setMedia(media);
         return waiter;
     }
     public static WaiterDTO waiterDTOgetById(Optional<Waiter> optionalWaiter) {
@@ -34,6 +55,8 @@ public class WaiterDtoConverter {
         waiterDTO.setPhoneNumber(optionalWaiter.get().getPhoneNumber());
         waiterDTO.setUrlToImage(optionalWaiter.get().getUrlToImage());
         waiterDTO.setSalary(optionalWaiter.get().getSalary());
+        waiterDTO.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(optionalWaiter.get().getMedia()));
+
 
         return waiterDTO;
 
@@ -49,6 +72,9 @@ public class WaiterDtoConverter {
             dto.setAddress(waiter.getAddress());
             dto.setUrlToImage(waiter.getUrlToImage());
            dto.setName(waiter.getName());
+           dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(waiter.getMedia()));
+
+
 
             waiterDTOList.add(dto);
         }

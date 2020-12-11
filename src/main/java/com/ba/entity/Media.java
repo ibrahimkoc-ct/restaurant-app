@@ -14,6 +14,10 @@ public class Media {
     private Long id;
     private String name;
 
+    @OneToOne(mappedBy = "media")
+    private Waiter waiter;
+
+
     @Column(length = 1000000)
     private byte[] fileContent;
 

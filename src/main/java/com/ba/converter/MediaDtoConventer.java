@@ -27,8 +27,8 @@ public class MediaDtoConventer {
     public static Media mediaDTOtoMedia(MediaDTO mediaDTO){
         Media media= new Media();
         media.setId(mediaDTO.getId());
-        media.setName(media.getName());
-        media.setFileContent(media.getFileContent());
+        media.setName(mediaDTO.getName());
+        media.setFileContent(mediaDTO.getFileContent());
         return media;
     }
 

@@ -1,5 +1,7 @@
 package com.ba.dto;
 
+import com.ba.entity.Media;
+
 public class WaiterDTO {
     private Long id;
     private String name;
@@ -9,6 +11,7 @@ public class WaiterDTO {
     private String urlToImage;
     private Long salary;
     private MediaDTO mediaDTO;
+
 
     public MediaDTO getMediaDTO() {
         return mediaDTO;

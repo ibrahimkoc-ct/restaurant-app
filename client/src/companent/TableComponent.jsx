@@ -248,7 +248,14 @@ class TableComponent extends Component {
                                waiter => {
                                    return (
                                        <button className="btn btn-outline-success btn-block "onClick={() =>
-                                           this.onClickWaiter(waiter)}>{waiter.name}</button>
+                                           this.onClickWaiter(waiter)}>
+                                           <div className="row">
+                                               <div className="col-xl-8" align="left" style={{marginTop:10}}>{waiter.name}</div>
+                                               <div className="col-xl-4"><img src={'data:image/png;base64,' + waiter.mediaDTO.fileContent} height="40" width="40" style={{margin:10}}/></div>
+
+                                           </div>
+
+                                          </button>
 
 
                                    )

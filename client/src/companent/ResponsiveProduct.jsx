@@ -236,7 +236,7 @@ class ResponsiveProduct extends Component {
                                                         this.onClickSidebar(category)}>
 
                                                         {category.name} <br/>
-                                                        <img src={'data:image/png;base64,' + category.mediaDTO.fileContent} width="150" style={{margin:1}}/>
+                                                        <img src={'data:image/png;base64,' + category.mediaDTO.fileContent} width="120" style={{margin:1}}/>
 
                                             </button>
                                         </div>

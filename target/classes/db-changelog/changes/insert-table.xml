@@ -8,6 +8,34 @@
         <column name="name" value="balkon resmi"/>
         <column name ="file_Content" valueBlobFile="./balkon.jpg"/>
     </insert>
+    <insert tableName="media">
+        <column name="name" value="hamburger resmi"/>
+        <column name ="file_Content" valueBlobFile="./burger.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="et resmi"/>
+        <column name ="file_Content" valueBlobFile="./meat.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="pizza resmi"/>
+        <column name ="file_Content" valueBlobFile="./pizza.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="corba resmi"/>
+        <column name ="file_Content" valueBlobFile="./soup.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="garson 1 resmi"/>
+        <column name ="file_Content" valueBlobFile="./waiter.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="garson 2 resmi"/>
+        <column name ="file_Content" valueBlobFile="./waiter (1).png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="garson 3 resmi"/>
+        <column name ="file_Content" valueBlobFile="./waiter (2).png"/>
+    </insert>
 
     <insert tableName="users">
         <column name="username" value="admin"/>
@@ -32,28 +60,28 @@
         <column name="name" value="Pizza"/>
         <column name="description" value="pizza"/>
         <column name="image_To_Url" value="no image"/>
-        <column name="media_id" valueNumeric="1"/>
+        <column name="media_id" valueNumeric="4"/>
     </insert>
     <insert tableName="category">
         <column name="id" valueNumeric="2"/>
         <column name="name" value="Çorba"/>
         <column name="description" value="çorba"/>
         <column name="image_To_Url" value="no image"/>
-        <column name="media_id" valueNumeric="1"/>
+        <column name="media_id" valueNumeric="5"/>
     </insert>
     <insert tableName="category">
         <column name="id" valueNumeric="3"/>
         <column name="name" value="Atıştırmalık"/>
         <column name="description" value="atıştırmalık"/>
         <column name="image_To_Url" value="no image"/>
-        <column name="media_id" valueNumeric="1"/>
+        <column name="media_id" valueNumeric="2"/>
     </insert>
     <insert tableName="category">
         <column name="id" valueNumeric="4"/>
         <column name="name" value="Et yemekleri"/>
         <column name="description" value="et"/>
         <column name="image_To_Url" value="no image"/>
-        <column name="media_id" valueNumeric="1"/>
+        <column name="media_id" valueNumeric="3"/>
 
     </insert>
     <insert tableName="Product">
@@ -200,6 +228,7 @@
         <column name="address" value="123"/>
         <column name="url_To_Image" value="no image"/>
         <column name="salary" valueNumeric="2500"/>
+        <column name="media_id" valueNumeric="6"/>
     </insert>
     <insert tableName="waiter">
         <column name="id" valueNumeric="3"/>
@@ -209,6 +238,7 @@
         <column name="address" value="123"/>
         <column name="url_To_Image" value="no image"/>
         <column name="salary" valueNumeric="2500"/>
+        <column name="media_id" valueNumeric="7"/>
     </insert>
     <insert tableName="waiter">
         <column name="id" valueNumeric="2"/>
@@ -218,6 +248,7 @@
         <column name="address" value="123"/>
         <column name="url_To_Image" value="no image"/>
         <column name="salary" valueNumeric="2500"/>
+        <column name="media_id" valueNumeric="8"/>
     </insert>
     <insert tableName="TBL_CATEGORY_PRODUCT">
         <column name="Category_id" valueNumeric="1"/>

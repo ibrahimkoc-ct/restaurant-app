@@ -10,16 +10,18 @@ class UpdateWaiterComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id:this.props.match.params.id,
+            id: this.props.match.params.id,
             name: '',
             phoneNumber: '',
             mail: '',
             address: '',
             urlToImage: '',
             salary: '',
-            token:''
-
+            token: '',
+            waiter: []
         }
+
+
         this.chargeNameHandler=this.chargeNameHandler.bind();
         this.chargePhoneHandler=this.chargePhoneHandler.bind();
         this.chargeMailHandler=this.chargeMailHandler.bind();
@@ -63,14 +65,18 @@ class UpdateWaiterComponent extends Component {
         else {
             this.state.token=localStorage.getItem("token")
         }
+        WaiterService.viewWaiter(this.state.id,this.state.token).then((res)=>{
+            this.setState({waiter:res.data})
 
+        })
 
     }
     updateWaiter=(e)=>{
         let waiter={id:this.state.id,name:this.state.name,phoneNumber:this.state.phoneNumber
             ,mail: this.state.mail,address: this.state.address,
-            urlToImage: this.state.urlToImage,salary: this.state.salary}
-        WaiterService.addWaiter(waiter,this.state.token).then(res=>{
+            urlToImage: this.state.urlToImage,salary: this.state.salary,
+        mediaDTO:this.state.waiter.mediaDTO}
+        WaiterService.updateWiew(waiter,this.state.token).then(res=>{
             this.props.history.push('/waiter-table');
         })
 

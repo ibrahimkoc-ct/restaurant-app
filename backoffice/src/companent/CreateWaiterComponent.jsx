@@ -3,6 +3,7 @@ import HeaderComponent from "./HeaderComponent";
 import WaiterService from "../services/WaiterService";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../BackofficeContext";
+import axios from "axios";
 const history = createBrowserHistory({forceRefresh:true});
 
 class CreateWaiterComponent extends Component {
@@ -16,7 +17,9 @@ class CreateWaiterComponent extends Component {
             address: '',
             urlToImage: '',
             salary: '',
-            token:''
+            token:'',
+            media:[],
+            mediaSelect:{}
 
         }
         this.chargeNameHandler=this.chargeNameHandler.bind();
@@ -41,12 +44,21 @@ class CreateWaiterComponent extends Component {
         else {
             this.state.token=localStorage.getItem("token")
         }
-
-
+        axios.get("http://localhost:8080/file/list").then((res)=>{
+            this.setState({media:res.data});
+        });
     }
+
+
+
     chargeNameHandler=(event)=>{
         this.setState({name:event.target.value});
     }
+    debugBase64(base64URL){
+        var win = window.open();
+        win.document.write('<iframe src="' + base64URL  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
+    }
+
     chargePhoneHandler=(event)=>{
         this.setState({phoneNumber:event.target.value});
     }
@@ -65,10 +77,16 @@ class CreateWaiterComponent extends Component {
     cancel(){
         this.props.history.push('/waiter-table');
     }
+    changeSelect=(media)=>{
+        this.state.mediaSelect=media;
+    }
+
     saveWaiter =(e)=>{
         let waiter={name:this.state.name,phoneNumber:this.state.phoneNumber
         ,mail: this.state.mail,address: this.state.address,
-        urlToImage: this.state.urlToImage,salary: this.state.salary}
+        urlToImage: this.state.urlToImage,salary: this.state.salary,
+        mediaDTO:this.state.mediaSelect
+        }
         WaiterService.addWaiter(waiter,this.state.token).then(res=>{
             this.props.history.push('/waiter-table');
         })
@@ -107,9 +125,21 @@ class CreateWaiterComponent extends Component {
                                                value={this.state.address} onChange={this.chargeAddressHandler}/>
                                     </div>
                                     <div className="form-group">
-                                        <label>Resim Url</label>
-                                        <input placeholder="Resim" name="resim" className="form-control"
-                                               value={this.state.urlToImage} onChange={this.urlToImageHandler}/>
+                                        <label>Resim</label>
+                                        <div className="form-group">
+                                            <div className="form-check" style={{height:"4rem",overflow:"auto"}}>
+                                                {
+                                                    this.state.media.map(
+                                                        media=>
+                                                            <div className="row col-md -12 custom-control custom-radio">
+                                                                <input className="form-check-input" name="customRadio" type="radio" onClick={()=>this.changeSelect(media)} />
+                                                                <label className="form-check-label">
+                                                                    <a onClick={()=>this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
+                                                            </div>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="form-group">
                                         <label>Maas</label>

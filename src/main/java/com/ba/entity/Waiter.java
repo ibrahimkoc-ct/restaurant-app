@@ -17,8 +17,8 @@ public class Waiter {
     private String urlToImage;
     private Long salary;
 
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "media_id")
     private Media media;
 
