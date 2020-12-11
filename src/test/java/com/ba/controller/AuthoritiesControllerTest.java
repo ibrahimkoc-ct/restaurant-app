@@ -3,12 +3,12 @@ package com.ba.controller;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.ba.builder.AuthoritiesBuilder;
-import com.ba.builder.AuthoritiesDTOBuilder;
-import com.ba.dto.AuthoritiesDTO;
-import com.ba.entity.Authorities;
-import com.ba.service.AuthoritiesService;
-import org.junit.Before;
+import Temp.AuthoritiesController;
+import Temp.AuthoritiesBuilder;
+import Temp.AuthoritiesDTOBuilder;
+import Temp.AuthoritiesDTO;
+import Temp.Authorities;
+import Temp.AuthoritiesService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

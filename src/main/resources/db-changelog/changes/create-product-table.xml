@@ -13,9 +13,9 @@
             <column name="price" type="VARCHAR(255)"/>
             <column name="category" type="VARCHAR(255)"/>
             <column name="url_To_Image" type="VARCHAR(255)"/>
-
-
-
+            <column name="media_id" type="int(10)">
+                <constraints nullable="true" foreignKeyName="media_id_p" references="media(id)"></constraints>
+            </column>
         </createTable>
         <rollback>
             <dropTable tableName="Product"/>

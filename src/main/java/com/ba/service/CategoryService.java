@@ -1,13 +1,9 @@
 package com.ba.service;
 
-import com.ba.converter.BackofficeDtoConverter;
 import com.ba.converter.CategoryDtoConventer;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
-import com.ba.entity.Media;
-import com.ba.entity.Product;
-import com.ba.entity.Users;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

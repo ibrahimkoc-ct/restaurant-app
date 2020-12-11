@@ -3,6 +3,8 @@ import UserService from "../services/UserService";
 import LoginHeaderComponent from "./LoginHeaderComponent";
 
 import BackofficeContext from '../BackofficeContext';
+import ProductService from "../services/ProductService";
+import CategoryService from "../services/CategoryService";
 class LoginComponent extends Component {
     static contextType = BackofficeContext;
     constructor(props) {
@@ -14,7 +16,9 @@ class LoginComponent extends Component {
             password: '',
             userslist: [],
             label:'',
-            checkTrue: false
+            loginCheck:"false",
+            checkTrue: false,
+            token:''
 
         }
 
@@ -41,48 +45,43 @@ class LoginComponent extends Component {
 
         if(localStorage.getItem("token")!==null){
             this.props.history.push('/user-table');
+
         }
 
     }
 
 
     signIn = (e) => {
-
-
-      if(this.state.userslist.filter(name => (name.username === this.state.username)&& (name.password.substring(6,name.password.size) === this.state.password)).length>0) {
-
-
+        this.state.token = 'Basic ' + btoa(this.state.username + ':' + this.state.password)
+        UserService.getLogin(this.state.token).then(() => {
             if(this.state.checkTrue===true){
                 localStorage.setItem("token", 'Basic ' + btoa(this.state.username + ':' + this.state.password))
                 localStorage.setItem("username", this.state.username);
-
             }
+            const{token,setToken}=this.context
+            setToken('Basic ' + btoa(this.state.username + ':' + this.state.password))
+            const{username,setUsername}=this.context
+            setUsername(this.state.username)
 
-          const{token,setToken}=this.context
-          setToken('Basic ' + btoa(this.state.username + ':' + this.state.password))
-          const{username,setUsername}=this.context
-          setUsername(this.state.username)
+            let us = {username: this.state.username, password: +this.state.password};
 
-          let us = {username: this.state.username, password: +this.state.password};
+            this.props.history.push('/user-table');
 
-          this.props.history.push('/user-table');
+        }).catch(()=> {
+            this.state.username='';
+            this.state.password='';
+            this.setState({label: "Kullanıcı adı veya şifre yanlış"})
 
-       }
-
-           else{
-           this.props.history.push('/');
-               this.setState({label:"Kullanıcı adı veya şifre yanlış"})
-       }
+        })
 
         e.preventDefault();
-        }
 
+    }
 
 
     render() {
 
         return (
-
                         <div>
                             <LoginHeaderComponent/>
 

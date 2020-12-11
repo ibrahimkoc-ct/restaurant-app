@@ -21,6 +21,19 @@ public class Product {
     private String category;
     private String urlToImage;
 
+    @ManyToOne
+    @JoinColumn(name = "media_id")
+    private Media media;
+
+    public Media getMedia() {
+        return media;
+    }
+
+    public Product setMedia(Media media) {
+        this.media = media;
+        return this;
+    }
+
     @JsonIgnore
     @ManyToMany(mappedBy = "products")
     private List<Category> categories= new ArrayList<>();

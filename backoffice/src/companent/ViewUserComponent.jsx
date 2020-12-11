@@ -10,10 +10,7 @@ class ViewUserComponent extends Component {
     constructor(props) {
         super(props);
         this.state= {
-
-            username: "",
-            enabled: "",
-            password: "",
+            id:this.props.match.params.id,
 
             user: [],
             token:''
@@ -38,16 +35,13 @@ class ViewUserComponent extends Component {
         }
 
         const {enabled }=this.state
-        UserService.getUsersById(sessionStorage.getItem("wiew"),this.state.token).then(res =>{
-
-
+        UserService.getUsersById(this.state.id).then(res =>{
 
             this.setState({
                 user:res.data,
                 enabled:res.data.enabled.toString()
 
             })
-            console.log(enabled)
 
         })
 
@@ -65,15 +59,19 @@ class ViewUserComponent extends Component {
                         <div className="row">
                             <h3>Kullanıcı Adı: {this.state.user.username}</h3>
                         </div>
-                        <hr></hr>
+                        <hr/>
 
                         <div className="row">
 
                             <h3>Parola:  {this.state.user.password}</h3>
                         </div>
-                        <hr></hr>
+                        <hr/>
                         <div className="row">
                             <h3>Aktiflik: {this.state.enabled}</h3>
+                        </div>
+                        <hr/>
+                        <div className="row">
+                            <h3>Mail: {this.state.user.email}</h3>
                         </div>
 
 

@@ -2,27 +2,39 @@ import axios from 'axios';
 
 import {Component} from "react";
 import LoginComponent from "../companent/LoginComponent";
-const User_Api_Add_URL="http://localhost:8080/users/add";
-const Auth_Api_Add_URL="http://localhost:8080/auth/add";
 
-const User_Api_Viwe_URL="http://localhost:8080/user/id";
+const User_Api_List_URL="http://localhost:8080/user/list";
+const AutOne_Base_URL="http://localhost:8080/role/list";
+const Auth_Api_Delete_URL="http://localhost:8080/role/delete";
 
-const User_Api_List_URL="http://localhost:8080/users/listall";
-const UserOne_URL="http://localhost:8080/users/loadadminusers/";
-const AutOne_URL="http://localhost:8080/auth/loadadminauth/";
-const AutOne_Base_URL="http://localhost:8080/auth/listall/";
-const Auth_Api_Delete_URL="http://localhost:8080/auth/delete";
-const User_Api_Delete_URL="http://localhost:8080/users/delete";
-const Users_Api_Update_URL="http://localhost:8080/users/update";
-const Auth_Api_Update_URL="http://localhost:8080/auth/update";
-const Users_Api_Viwe_URL="http://localhost:8080/users/id";
-const Auth_Api_Viwe_URL="http://localhost:8080/auth/id";
+
+
+
+const User_Api_Delete_URL="http://localhost:8080/user/delete";
+const Users_Api_Update_URL="http://localhost:8080/user/update";
+const Auth_Api_Update_URL="http://localhost:8080/role/update/";
+const Users_Api_Viwe_URL="http://localhost:8080/user/id";
+const Auth_Api_Viwe_URL="http://localhost:8080/role/id";
 const ServerInfo_Api_Viwe_URL="http://localhost:8080/server-info";
+const User_Api_Add_URL="http://localhost:8080/user/add";
+const Auth_Api_Add_URL="http://localhost:8080/role/add";
+const Login_Api_List_URL="http://localhost:8080/user/admin-login";
+
+
+
 
 
 
 
 class UserService {
+    getLogin(token){
+        return axios.get(Login_Api_List_URL, {
+            headers: {
+                Authorization: token
+
+            }
+        });
+    }
 
      getUser(token) {
 
@@ -92,8 +104,8 @@ class UserService {
 
     }
 
-     deleteUser(username,token) {
-        return axios.delete(User_Api_Delete_URL + '/' + username, {
+     deleteUser(id,token) {
+        return axios.delete(User_Api_Delete_URL + '/' + id, {
             headers: {
                 Authorization: token
             }
@@ -111,14 +123,7 @@ class UserService {
     }
 
 
-     getUserById(userId,token) {
-        return axios.get(User_Api_Viwe_URL + '/' + userId, {
-            headers: {
-                Authorization: token
-            }
-        });
 
-    }
 
      getUsersById(userId,token) {
         return axios.get(Users_Api_Viwe_URL + '/' + userId, {
@@ -135,15 +140,6 @@ class UserService {
                 Authorization: token
             }
         });
-
-    }
-
-     oneUser() {
-        return axios.get(UserOne_URL)
-    }
-
-     oneAuth() {
-        return axios.get(AutOne_URL)
 
     }
 

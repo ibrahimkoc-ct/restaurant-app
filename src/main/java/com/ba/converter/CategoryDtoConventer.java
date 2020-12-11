@@ -97,6 +97,7 @@ public class CategoryDtoConventer {
             productDTO.setUrlToImage(prod.getUrlToImage());
             productDTO.setTitle(prod.getTitle());
             productDTO.setPrice(prod.getPrice());
+            productDTO.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(prod.getMedia()));
             dto.add(productDTO);
 
         }

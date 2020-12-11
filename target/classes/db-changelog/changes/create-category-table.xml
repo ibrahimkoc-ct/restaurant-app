@@ -15,9 +15,6 @@
                 <constraints nullable="false" foreignKeyName="media_id_fk" references="media(id)"></constraints>
             </column>
 
-
-
-
         </createTable>
         <rollback>
             <dropTable tableName="category"/>

@@ -36,6 +36,7 @@ import UpdateWaiterComponent from "./companent/UpdateWaiterComponent";
 import CreateMediaComponent from "./companent/CreateMediaComponent";
 import {BackofficeProvider} from "./BackofficeContext";
 import UserService from "./services/UserService";
+import CreateRoleComponent from "./companent/CreateRoleComponent";
 
 
 const backoffice={token:'',username:''}
@@ -77,6 +78,7 @@ function App() {
               <Route path="/view-categorytable/:id" component={ViewCategoryTable}></Route>
               <Route path="/waiter-table" component={WaiterListComponent}></Route>
               <Route path="/add-waiter-table" component={CreateWaiterComponent}></Route>
+              <Route path="/add-role" component={CreateRoleComponent}></Route>
               <Route path="/add-media" component={CreateMediaComponent}></Route>
               <Route path="/view-waiter-table/:id" component={ViewWaiterComponent}></Route>
               <Route path="/update-waiter-table/:id" component={UpdateWaiterComponent}></Route>

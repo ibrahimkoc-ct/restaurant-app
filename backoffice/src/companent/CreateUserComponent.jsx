@@ -15,12 +15,15 @@ class CreateUserComponent extends Component {
             password:'',
             enabled:'',
             authority:'',
-            role_message:'Rol Seciniz',
+            email:'',
             enabled_message:'Atkiflik Seciniz',
-            token:''
+            token:'',
+            role:[],
+            selectedRole:[],
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
         this.chargePasswordHandler=this.chargePasswordHandler.bind(this);
+        this.chargeEmailHandler=this.chargeEmailHandler.bind(this);
         this.saveUser=this.saveUser.bind(this);
 
 
@@ -40,16 +43,16 @@ class CreateUserComponent extends Component {
         else {
             this.state.token=localStorage.getItem("token")
         }
+        UserService.getAuth(this.state.token).then((res)=>{
+           this.setState({role:res.data})
+
+        })
     }
     saveUser = (e) =>{
         e.preventDefault()
-        let user={username: this.state.username,password:"{noop}"+ this.state.password,enabled: this.state.enabled};
-        let auth={username: this.state.username,authority: this.state.authority};
-        console.log(user);
-        console.log(auth)
-        UserService.createAuth(auth,this.state.token).then(res =>{
+        let user={username: this.state.username,password:this.state.password,enabled: this.state.enabled,email:this.state.email
+            ,roles:this.state.selectedRole};
 
-        })
 
         UserService.createUser(user,this.state.token).then(res =>{
             this.props.history.push('/user-table');
@@ -65,15 +68,11 @@ class CreateUserComponent extends Component {
     chargePasswordHandler =(event) =>{
         this.setState({password:event.target.value});
     }
+    chargeEmailHandler=(event)=>[
+        this.setState({email:event.target.value})
+    ]
 
-    onClickAdminItem =()=>{
-        this.setState({authority:"ROLE_ADMIN",
-            role_message:"ROLE_ADMIN",});
-    }
-    onClickUserItem =()=>{
-        this.setState({authority:"ROLE_USER",
-            role_message:"ROLE_USER",});
-    }
+
     onClickTrueItem=()=>{
         this.setState({enabled_message:"TRUE",
             enabled:"true"});
@@ -82,7 +81,16 @@ class CreateUserComponent extends Component {
     onClickFalseItem=()=>{
         this.setState({enabled_message:"FALSE",
             enabled:"false"});
+    }
+    changeMultiSelect=(role)=>{
+        if(this.state.selectedRole.filter(select=>select.id===role.id).length>0){
+            this.state.selectedRole.pop(role)
+        }
+        else {
+            this.state.selectedRole.push(role);
+        }
 
+        console.log(this.state.selectedRole)
     }
 
     render() {
@@ -107,17 +115,11 @@ class CreateUserComponent extends Component {
                                                value={this.state.password} onChange={this.chargePasswordHandler}/>
 
                                     </div>
-                                    <div className="dropdown show">
-                                        <a className="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            {this.state.role_message}
-                                        </a>
+                                    <div className="form-group">
+                                        <label>E mail</label>
+                                        <input placeholder="E mail" name="e-mail" className="form-control"
+                                               value={this.state.email} onChange={this.chargeEmailHandler}/>
 
-                                        <div className="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink">
-                                            <a className="dropdown-item" onClick={this.onClickAdminItem.bind(this)}>ROLE_ADMIN</a>
-                                            <a className="dropdown-item" onClick={this.onClickUserItem.bind(this)}>ROLE_USER</a>
-
-                                        </div>
                                     </div>
                                     <hr/>
                                     <div className="dropdown show">
@@ -131,6 +133,17 @@ class CreateUserComponent extends Component {
                                             <a className="dropdown-item" onClick={this.onClickFalseItem.bind(this)}>FALSE</a>
 
                                         </div>
+                                    </div>
+                                    <hr/>
+                                    <div className="checkbox" style={{height:"4rem",overflow:"auto"}}>
+                                        {
+                                            this.state.role.map(
+                                                role=>
+                                                    <div className="row col-md -12">
+                                                        <label><input type="checkbox" value="" onClick={()=>this.changeMultiSelect(role)}/>{role.name}</label>
+                                                    </div>
+                                            )
+                                        }
                                     </div>
                                     <hr/>
 

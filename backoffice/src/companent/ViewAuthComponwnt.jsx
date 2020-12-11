@@ -10,7 +10,7 @@ class ViewUserComponent extends Component {
     constructor(props) {
         super(props);
         this.state={
-
+            id:this.props.match.params.id,
 
             user:{
 
@@ -35,9 +35,9 @@ class ViewUserComponent extends Component {
             this.state.token=localStorage.getItem("token")
         }
 
-        UserService.getAuthById(sessionStorage.getItem("view-auth"),this.state.token).then(res =>{
-            this.setState({user:res.data})
 
+        UserService.getAuthById(this.state.id,this.state.token).then(res =>{
+            this.setState({user:res.data})
 
         })
     }
@@ -51,12 +51,12 @@ class ViewUserComponent extends Component {
                     <h2 className="text-center">Yetkinlik Detayları</h2>
                     <div className="card-body">
                         <div className="row">
-                            <h3>Kullanıcı Adı: {this.state.user.username}</h3>
+                            <h3>Rol id: {this.state.user.id}</h3>
                         </div>
                         <hr></hr>
                         <div className="row">
 
-                            <h3>Rol:  {this.state.user.authority}</h3>
+                            <h3>Rol Adı:  {this.state.user.name}</h3>
                         </div>
 
                     </div>

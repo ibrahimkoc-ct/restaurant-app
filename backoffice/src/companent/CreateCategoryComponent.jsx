@@ -17,9 +17,9 @@ class CreateCategoryComponent extends Component {
             description: '',
             imageToUrl: '',
             media:[],
-
+            mediaSelect:{},
             products:[],
-            mediaSelect:{}
+
         }
         this.chargeDescriptionHandler=this.chargeDescriptionHandler.bind(this);
         this.chargeNameHandler=this.chargeNameHandler.bind(this);

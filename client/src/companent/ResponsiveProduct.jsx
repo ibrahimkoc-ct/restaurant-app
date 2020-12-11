@@ -255,7 +255,7 @@ class ResponsiveProduct extends Component {
                                                 <div className="col-md-5 mb-4 ml-5">
                                                     <div className="card cardbodytable">
                                                         <div className="card-header">
-                                                            <img src={productl.urlToImage} className="card-img-top" alt="..."/>
+                                                            <img src={'data:image/png;base64,' + productl.mediaDTO.fileContent} width="100"/>
                                                         </div>
                                                         <div className="card-body">
                                                             <h5 className="d-inline">{productl.title}</h5>

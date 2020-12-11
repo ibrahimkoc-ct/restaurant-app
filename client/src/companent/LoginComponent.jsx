@@ -15,7 +15,8 @@ class LoginComponent extends Component {
             userslist: [],
             label:'',
             checkTrue: false,
-            waiter:'Secili Garson Yok'
+            waiter:'Secili Garson Yok',
+            loginCheck:"false",
 
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
@@ -48,8 +49,8 @@ class LoginComponent extends Component {
 
     signIn = (e) => {
 
-        if(this.state.userslist.filter(name => (name.username === this.state.username)&& (name.password.substring(6,name.password.size) === this.state.password)).length>0){
-
+        this.state.token = 'Basic ' + btoa(this.state.username + ':' + this.state.password)
+        UserService.getLogin(this.state.token).then(()=>{
             if(this.state.checkTrue===true) {
                 localStorage.setItem("token", 'Basic ' + btoa(this.state.username + ':' + this.state.password))
 
@@ -62,10 +63,11 @@ class LoginComponent extends Component {
 
 
             this.props.history.push('/homepage');
-    }
-        else{
-            this.setState({label:"Kullanıcı adı veya şifre yanlış"})
-        }
+        }).catch(()=> {
+            this.state.username = '';
+            this.state.password = '';
+            this.setState({label: "Kullanıcı adı veya şifre yanlış"})
+        })
         e.preventDefault()
     }
 

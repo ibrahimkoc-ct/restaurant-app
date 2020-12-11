@@ -7,6 +7,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import CategoryService from "../services/CategoryService";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../BackofficeContext";
+import axios from "axios";
 const history = createBrowserHistory({forceRefresh:true});
 
 class CreateProductComponent extends Component {
@@ -24,7 +25,9 @@ class CreateProductComponent extends Component {
             categorylist:[],
             categoryName:"",
             token:'',
-            selectedCategory:[]
+            selectedCategory:[],
+            media:[],
+            mediaSelect:{},
         }
 
         this.chargeTitleHandler=this.chargeTitleHandler.bind(this);
@@ -53,7 +56,13 @@ class CreateProductComponent extends Component {
         CategoryService.getCategory(this.state.token).then((res) => {
             this.setState({categorylist: res.data});
         });
+        axios.get("http://localhost:8080/file/list").then((res)=>{
+            this.setState({media:res.data});
+        });
 
+    }
+    changeSelect=(media)=>{
+        this.state.mediaSelect=media;
     }
 
 
@@ -61,7 +70,8 @@ class CreateProductComponent extends Component {
     saveProduct = (e) =>{
         console.log(this.state.categorylist)
 
-        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.categoryName,price: this.state.price,urlToImage: this.state.urlToImage,categories:this.state.selectedCategory};
+        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.categoryName,price: this.state.price,
+            urlToImage: this.state.urlToImage,categories:this.state.selectedCategory,mediaDTO:this.state.mediaSelect};
         console.log('product=>'+JSON.stringify(product));
         ProductService.addProductId(product,1,this.state.token).then(res =>{
             this.props.history.push('/products');
@@ -117,12 +127,23 @@ class CreateProductComponent extends Component {
 
                                     </div>
                                     <div className="form-group">
-                                        <label>Urun Resmi</label>
-                                        <input placeholder="Urun resmi" name="description" className="form-control"
-                                               value={this.state.urlToImage} onChange={this.chargeUrlToImageHandler}/>
+                                        <label>Kategori Resmi</label>
+                                        <div className="form-group">
+                                            <div className="form-check" style={{height:"4rem",overflow:"auto"}}>
+                                                {
+                                                    this.state.media.map(
+                                                        media=>
+                                                            <div className="row col-md -12 custom-control custom-radio">
+                                                                <input className="form-check-input" name="customRadio" type="radio" onClick={()=>this.changeSelect(media)} />
+                                                                <label className="form-check-label">
+                                                                    <a onClick={()=>this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
+                                                            </div>
+                                                    )
+                                                }
+                                            </div>
 
+                                        </div>
                                     </div>
-
                                     <div className="form-group">
                                         <label>Urun Fiyatı</label>
                                         <input placeholder="Urun fiyatı" name="price" className="form-control"

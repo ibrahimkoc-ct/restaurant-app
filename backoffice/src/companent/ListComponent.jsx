@@ -98,7 +98,7 @@ class ListComponent extends Component {
 
 
                 </div>
-                <div className="row">
+                <div className="row tbody-heigth">
                     <Table striped bordered hover >
                         <thead>
                         <tr>
@@ -114,6 +114,7 @@ class ListComponent extends Component {
                         {
                             this.state.productslist.map(
                                 product =>
+
                                     <tr key={product.id}>
                                         <td>{product.title}</td>
                                         <td>{product.description}</td>
@@ -121,7 +122,7 @@ class ListComponent extends Component {
 
                                             <button className="btn btn-link" onClick={()=>this.ViewCategory(product.category)}>{product.category}</button>
                                         </td>
-                                        <td>{product.urlToImage}</td>
+                                        <td align="center"><img src={'data:image/png;base64,' + product.mediaDTO.fileContent} width="100"/></td>
                                         <td>{product.price}</td>
                                         <td>
 
@@ -130,6 +131,7 @@ class ListComponent extends Component {
                                             <button style={{marginLeft: "10px"}} onClick={()=>this.viewProduct(product.id)} className="btn btn-success">Görüntüle</button>
                                         </td>
                                     </tr>
+
                             )
                         }
                         </tbody>

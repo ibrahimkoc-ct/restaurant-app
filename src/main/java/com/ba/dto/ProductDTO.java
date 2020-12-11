@@ -16,6 +16,7 @@ public class ProductDTO {
     private String category;
 
     private String urlToImage;
+    private MediaDTO mediaDTO;
     private List<CategoryDTO> categories= new ArrayList<>();
 
     public List<CategoryDTO> getCategories() {
@@ -73,5 +74,14 @@ public class ProductDTO {
 
     public void setUrlToImage(String urlToImage) {
         this.urlToImage = urlToImage;
+    }
+
+    public MediaDTO getMediaDTO() {
+        return mediaDTO;
+    }
+
+    public ProductDTO setMediaDTO(MediaDTO mediaDTO) {
+        this.mediaDTO = mediaDTO;
+        return this;
     }
 }

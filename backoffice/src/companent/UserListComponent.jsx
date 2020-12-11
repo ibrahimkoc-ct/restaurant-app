@@ -43,10 +43,9 @@ class UserListComponent extends Component {
         });
 
     }
-    deleteUser(username){
-        UserService.deleteAuth(username,this.state.token);
-        UserService.deleteUser(username,this.state.token).then(res =>{
-            this.setState({userlist:this.state.userlist.filter(product => product.username !==username)})
+    deleteUser(id){
+        UserService.deleteUser(id,this.state.token).then(res =>{
+            this.setState({userlist:this.state.userlist.filter(user => user.id !==id)})
         })
 
 
@@ -93,9 +92,9 @@ class UserListComponent extends Component {
                                         <td className="pass">{user.password}</td>
                                         <td>{user.enabled.toString()}</td>
                                         <td>
-                                            <button  onClick={()=>this.editUser(user.username)} className=" btn btn-info  ">Güncelle</button>
-                                            <button style={{marginLeft: "10px"}} onClick={()=>this.viewUser(user.username)} className="btn btn-success">Görüntüle</button>
-                                            <button style={{marginLeft: "10px"}} onClick={()=>this.deleteUser(user.username)} className="btn btn-danger ">Sil</button>
+                                            <button  onClick={()=>this.editUser(user.id)} className=" btn btn-info  ">Güncelle</button>
+                                            <button style={{marginLeft: "10px"}} onClick={()=>this.viewUser(user.id)} className="btn btn-success">Görüntüle</button>
+                                            <button style={{marginLeft: "10px"}} onClick={()=>this.deleteUser(user.id)} className="btn btn-danger ">Sil</button>
                                         </td>
                                     </tr>
                             )

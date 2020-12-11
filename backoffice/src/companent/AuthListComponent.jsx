@@ -5,6 +5,7 @@ import Table from "react-bootstrap/Table";
 import FooterComponent from "./FooterComponent";
 import BackofficeContext from "../BackofficeContext";
 import createBrowserHistory from 'history/createBrowserHistory';
+import {Link} from "react-router-dom";
 const history = createBrowserHistory({forceRefresh:true});
 class AuthListComponent extends Component {
     static contextType = BackofficeContext;
@@ -40,18 +41,25 @@ class AuthListComponent extends Component {
     }
     editAuth(id){
         this.props.history.push('/update-auth/'+id);
-        console.log(id)
+
 
     }
     viewAuth(id){
         this.props.history.push('/view-auth/'+id);
-        sessionStorage.setItem("view-auth",id)
 
+    }
+    deleteRole(id){
+        UserService.deleteAuth(id,this.state.token)
+        this.setState({authlist:this.state.authlist.filter(auth => auth.id !==id)})
+        console.log("id "+id)
     }
     render() {
         return (
             <div>
                 <HeaderComponent/>
+                <Link to="/add-role">
+                    <button className="btn btn-info addbutton">Yetki Ekle</button>
+                </Link>
                 <div className="container productlist">
                     <h2 className="text-center">Yetkiler</h2>
                     <div className="row">
@@ -61,23 +69,26 @@ class AuthListComponent extends Component {
                             <thead>
                             <tr>
 
-                                <th>Kullanıcı Adı</th>
-                                <th >Rol</th>
+
+                                <th >Rol Id</th>
+                                <th>Rol Adı</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             {
                                 this.state.authlist.map(
-                                    user =>
+                                    role =>
                                         <tr >
-                                            <td>{user.username}</td>
-                                            <td>{user.authority}</td>
-
+                                            <td>{role.id}</td>
+                                            <td>{role.name}</td>
                                             <td>
-                                                <button  onClick={()=>this.editAuth(user.username)} className=" btn btn-info  ">Güncelle</button>
-                                                <button style={{marginLeft: "10px"}}  onClick={()=>this.viewAuth(user.username)} className="btn btn-success">Görüntüle</button>
-                                            </td>
+
+                                                <button  onClick={()=>this.editAuth(role.id)} className=" btn btn-info  ">Güncelle</button>
+                                                <button style={{marginLeft: "10px"}}  onClick={()=>this.viewAuth(role.id)} className="btn btn-success">Görüntüle</button>
+                                                <button className="btn btn-danger" style={{marginLeft:"10px"}} onClick={()=>this.deleteRole(role.id)}>Sil</button>
+
+                                                </td>
                                         </tr>
                                 )
                             }

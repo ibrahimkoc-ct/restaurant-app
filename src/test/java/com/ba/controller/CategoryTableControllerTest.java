@@ -1,31 +1,23 @@
 package com.ba.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 
 import com.ba.builder.*;
-import com.ba.converter.CategoryTableDtoConverter;
 import com.ba.dto.CategoryTableDTO;
-import com.ba.dto.UsersDTO;
-import com.ba.entity.Category;
 import com.ba.entity.CategoryTable;
-import com.ba.repository.CategoryTableRepository;
 import com.ba.service.CategoryTableService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryTableControllerTest {

@@ -36,25 +36,36 @@
         <column name="name" value="garson 3 resmi"/>
         <column name ="file_Content" valueBlobFile="./waiter (2).png"/>
     </insert>
+    <insert tableName="media">
+        <column name="name" value="burger-urun resmi"/>
+        <column name ="file_Content" valueBlobFile="./burger-urun.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="hot-dog resmi"/>
+        <column name ="file_Content" valueBlobFile="./hot-dog-urun.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="iskender"/>
+        <column name ="file_Content" valueBlobFile="./iskender-urun.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="pizza-urun"/>
+        <column name ="file_Content" valueBlobFile="./pizza-urun.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="corba urun resmi"/>
+        <column name ="file_Content" valueBlobFile="./soup-urun.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="kebap resmi"/>
+        <column name ="file_Content" valueBlobFile="./kebap-png.png"/>
+    </insert>
 
-    <insert tableName="users">
-        <column name="username" value="admin"/>
-        <column name="password" value="{noop}pass1"/>
-        <column name="enabled" value="true"/>
-    </insert>
-    <insert tableName="authorities">
-        <column name="username" value="admin"/>
-        <column name="authority" value="ROLE_ADMIN"/>
-    </insert>
-    <insert tableName="users">
-        <column name="username" value="user"/>
-        <column name="password" value="{noop}user1"/>
-        <column name="enabled" value="true"/>
-    </insert>
-    <insert tableName="authorities">
-        <column name="username" value="user"/>
-        <column name="authority" value="ROLE_USER"/>
-    </insert>
+
+
+
+
+
     <insert tableName="category">
         <column name="id" valueNumeric="1"/>
         <column name="name" value="Pizza"/>
@@ -91,6 +102,7 @@
         <column name="price" value="25"/>
         <column name="category" value="Pizza"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="12"/>
 
     </insert>
     <insert tableName="Product">
@@ -100,6 +112,7 @@
         <column name="price" value="25"/>
         <column name="category" value="Pizza"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="12"/>
 
     </insert>
     <insert tableName="Product">
@@ -109,6 +122,7 @@
         <column name="price" value="25"/>
         <column name="category" value="Pizza"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="12"/>
 
     </insert>
     <insert tableName="Product">
@@ -118,6 +132,7 @@
         <column name="price" value="25"/>
         <column name="category" value="Pizza"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="12"/>
 
     </insert>
     <insert tableName="Product">
@@ -127,6 +142,7 @@
         <column name="price" value="10"/>
         <column name="category" value="Çorba"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="13"/>
 
     </insert>
     <insert tableName="Product">
@@ -136,6 +152,8 @@
         <column name="price" value="10"/>
         <column name="category" value="Çorba"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="13"/>
+
 
     </insert>
     <insert tableName="Product">
@@ -145,6 +163,7 @@
         <column name="price" value="10"/>
         <column name="category" value="Çorba"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="13"/>
 
     </insert>
     <insert tableName="Product">
@@ -154,6 +173,7 @@
         <column name="price" value="10"/>
         <column name="category" value="Çorba"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="13"/>
 
     </insert>
     <insert tableName="Product">
@@ -163,6 +183,7 @@
         <column name="price" value="10"/>
         <column name="category" value="Atıştırmalık"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="10"/>
 
     </insert>
     <insert tableName="Product">
@@ -172,6 +193,7 @@
         <column name="price" value="30"/>
         <column name="category" value="Atıştırmalık"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="9"/>
 
     </insert>
     <insert tableName="Product">
@@ -181,7 +203,25 @@
         <column name="price" value="20"/>
         <column name="category" value="Et yemekleri"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="14"/>
 
+
+    </insert>
+    <insert tableName="users">
+        <column name="email" value="aa@bb.cc"></column>
+        <column name="username" value="admin"></column>
+        <column name="password" value="$2a$10$vHHefi/cbCMUfn1xKNPwUurS3YaHz9p5STTYnROeX3xHNDHl/DSWe"></column>
+        <column name="enabled" value="1"></column>
+    </insert>
+    <insert tableName="roles">
+        <column name="name" value="ROLE_ADMIN"></column>
+    </insert>
+    <insert tableName="roles">
+        <column name="name" value="ROLE_USER"></column>
+    </insert>
+    <insert tableName="USER_ROLES">
+        <column name="user_id" valueNumeric="1"/>
+        <column name="role_id" valueNumeric="1"/>
     </insert>
     <insert tableName="Product">
         <column name="id" valueNumeric="12"/>
@@ -190,6 +230,7 @@
         <column name="price" value="30"/>
         <column name="category" value="Et yemekleri"/>
         <column name="url_To_Image" value="no image"/>
+        <column name="media_id" valueNumeric="11"/>
 
     </insert>
     <insert tableName="category_table">

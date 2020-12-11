@@ -12,6 +12,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.listcomponentTbody{
+  height: 200px;
+}
 .Header{
   width: 100%;
   height: 50px;

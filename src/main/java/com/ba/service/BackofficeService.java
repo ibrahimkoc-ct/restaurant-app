@@ -41,11 +41,6 @@ public class BackofficeService {
         }
         repository.deleteById(id);
 
-
-
-
-
-
         return "kisi silindi";
     }
 

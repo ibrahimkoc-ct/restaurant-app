@@ -4,10 +4,20 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="07-12-2020_09_15:10" author="ibrahim.koc">
+<!--        <createTable tableName="users">-->
+<!--            <column name="username" type="VARCHAR(255)">-->
+<!--                <constraints primaryKey="true"/>-->
+<!--            </column>-->
+<!--            <column name="password" type="VARCHAR(255)"/>-->
+<!--            <column name="enabled" type="BOOLEAN"/>-->
+<!--        </createTable>-->
+
         <createTable tableName="users">
-            <column name="username" type="VARCHAR(255)">
-                <constraints primaryKey="true"/>
+            <column autoIncrement="true" name="id" type="int(10)">
+            <constraints primaryKey="true"/>
             </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)"/>
             <column name="password" type="VARCHAR(255)"/>
             <column name="enabled" type="BOOLEAN"/>
         </createTable>

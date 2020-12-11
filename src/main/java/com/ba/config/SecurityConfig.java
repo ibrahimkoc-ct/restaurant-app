@@ -1,13 +1,18 @@
 package com.ba.config;
 
 
+import com.ba.auth.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -19,20 +24,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return new UserDetailsServiceImpl();
+    }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authProvider= new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("h2-console/**").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
-       http.authorizeRequests().antMatchers("/auth/listall").access("hasRole('ADMIN')");
-      http.authorizeRequests().antMatchers("/auth/add").access("hasRole('ADMIN')");
-       http.authorizeRequests().antMatchers("/auth/delete").access("hasRole('ADMIN')");
-      http.authorizeRequests().antMatchers("/auth/update").access("hasRole('ADMIN')");
-       http.authorizeRequests().antMatchers("/users/listall").access("hasRole('ADMIN')");
-      http.authorizeRequests().antMatchers("/users/add").access("hasRole('ADMIN')");
-       http.authorizeRequests().antMatchers("/users/delete").access("hasRole('ADMIN')");
-       http.authorizeRequests().antMatchers("/users/update").access("hasRole('ADMIN')");
-       http.authorizeRequests().antMatchers("/user/**").access("hasRole('ADMIN')");
+       http.authorizeRequests().antMatchers("/auth/list").access("hasRole('ADMIN')");
+      http.authorizeRequests().antMatchers("/role/add").access("hasRole('ADMIN')");
+       http.authorizeRequests().antMatchers("/role/delete").access("hasRole('ADMIN')");
+      http.authorizeRequests().antMatchers("/role/update").access("hasRole('ADMIN')");
+       http.authorizeRequests().antMatchers("/user/admin-login").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/user/user-login").access("hasAnyRole('ADMIN','USER')");
+      http.authorizeRequests().antMatchers("/user/add").access("hasRole('ADMIN')");
+       http.authorizeRequests().antMatchers("/user/delete").access("hasRole('ADMIN')");
+       http.authorizeRequests().antMatchers("/user/update").access("hasRole('ADMIN')");
        http.authorizeRequests().antMatchers("/backoffice/**").access("hasRole('ADMIN')");
       http.authorizeRequests().antMatchers("/client/**").access("hasAnyRole('ADMIN','USER')");
         http.authorizeRequests().antMatchers("/productsales/add").access("hasAnyRole('ADMIN','USER')");
@@ -50,18 +72,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/categorytable/update").access("hasRole('ADMIN')");
         http.authorizeRequests().antMatchers("/server-info").access("hasRole('ADMIN')");
 
-
-
-
-
         http.httpBasic();
         http.cors();
     }
 
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.jdbcAuthentication().dataSource(dataSource);
+//    }
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource);
+        auth.authenticationProvider(authenticationProvider());
     }
-
-
 }

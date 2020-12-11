@@ -11,11 +11,15 @@ class UpdateUserComponent extends Component {
     constructor(props) {
         super(props);
         this.state ={
+            id:this.props.match.params.id,
             username:'',
             password:'',
             enabled:'',
+            email:'',
             enabled_message:'Atkiflik Seciniz',
-            token:''
+            token:'',
+            role:[],
+            selectedRole:[],
 
         }
         this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
@@ -38,12 +42,27 @@ class UpdateUserComponent extends Component {
         else {
             this.state.token=localStorage.getItem("token")
         }
+        UserService.getAuth(this.state.token).then((res)=>{
+            this.setState({role:res.data})
 
+        })
 
+    }
+
+    changeMultiSelect=(role)=>{
+        if(this.state.selectedRole.filter(select=>select.id===role.id).length>0){
+            this.state.selectedRole.pop(role)
+        }
+        else {
+            this.state.selectedRole.push(role);
+        }
+
+        console.log(this.state.selectedRole)
     }
     updateUser = (e) =>{
         e.preventDefault()
-        let user={username: this.state.username,password: this.state.password,enabled: this.state.enabled};
+        let user={id:this.state.id,username: this.state.username,password: this.state.password,enabled: this.state.enabled,email:this.state.email,
+            roles:this.state.selectedRole};
         UserService.updateUser(user,this.state.token).then(res =>{
 
             console.log('user=>'+JSON.stringify(user));
@@ -60,7 +79,9 @@ class UpdateUserComponent extends Component {
     chargePasswordHandler =(event) =>{
         this.setState({password:event.target.value});
     }
-
+    chargeMailHandler=(event)=>{
+        this.setState({email:event.target.value});
+}
     onClickTrueItem=()=>{
         this.setState({enabled_message:"TRUE",
             enabled:"true"});
@@ -72,6 +93,7 @@ class UpdateUserComponent extends Component {
 
     }
 
+
     render() {
         return (
             <div>
@@ -79,7 +101,7 @@ class UpdateUserComponent extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
-                            <h3 className="text-center">Kullanıcı Ekle</h3>
+                            <h3 className="text-center">Kullanıcı Güncelle</h3>
                             <div className="card-body">
                                 <form>
                                     <div className="form-group">
@@ -93,6 +115,12 @@ class UpdateUserComponent extends Component {
                                         <input type ="password" placeholder="Parola" name="password" className="form-control"
                                                value={this.state.password} onChange={this.chargePasswordHandler}/>
                                     </div>
+                                    <div className="form-group">
+                                        <label>Email</label>
+                                        <input placeholder="E mail" name="mail" className="form-control"
+                                               value={this.state.email} onChange={this.chargeMailHandler.bind(this)}/>
+
+                                    </div>
                                         <div className="dropdown show">
                                             <a className="btn btn-secondary btn-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -105,6 +133,17 @@ class UpdateUserComponent extends Component {
 
                                             </div>
                                         </div>
+                                    <hr/>
+                                    <div className="checkbox" style={{height:"4rem",overflow:"auto"}}>
+                                        {
+                                            this.state.role.map(
+                                                role=>
+                                                    <div className="row col-md -12">
+                                                        <label><input type="checkbox" value="" onClick={()=>this.changeMultiSelect(role)}/>{role.name}</label>
+                                                    </div>
+                                            )
+                                        }
+                                    </div>
                                         <hr/>
                                     <button className="btn btn-success" onClick={this.updateUser}>Guncelle</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>

@@ -9,16 +9,13 @@ import com.ba.builder.CategoryTableBuilder;
 import com.ba.builder.CategoryTableDTOBuilder;
 import com.ba.converter.CategoryTableDtoConverter;
 import com.ba.dto.CategoryTableDTO;
-import com.ba.dto.UsersDTO;
 import com.ba.entity.CategoryTable;
 import com.ba.repository.CategoryTableRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
