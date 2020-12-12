@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import {Component} from "react";
-import LoginComponent from "../companent/LoginComponent";
+import LoginComponent from "../companent/homepage/LoginComponent";
 
 const User_Api_List_URL="http://localhost:8080/user/list";
 const AutOne_Base_URL="http://localhost:8080/role/list";

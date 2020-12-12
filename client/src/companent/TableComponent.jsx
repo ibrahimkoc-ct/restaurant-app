@@ -10,6 +10,7 @@ import WaiterService from "../services/WaiterService";
 import ResponsiveProduct from "./ResponsiveProduct";
 import ClientContext from "../ClientContext";
 import createBrowserHistory from 'history/createBrowserHistory';
+import FullPageLoading from'./FullPageLoading'
 const history = createBrowserHistory({forceRefresh:true});
 class TableComponent extends Component {
     static contextType=ClientContext;
@@ -30,81 +31,83 @@ class TableComponent extends Component {
             selectedTableDetail:[],
             ViewTableDetail:[],
             token:'',
+            loading:false
         }
 
 
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        this.setState({loading: false})
         const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
+        if (localStorage.getItem("token") == null) {
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
 
                 console.log(this.state.token)
-            }
-            else{
+            } else {
                 history.push('/');
             }
-        }
-        else {
-            this.state.token=localStorage.getItem("token")
-            const{waiter,setWaiter}=this.context
+        } else {
+            this.state.token = localStorage.getItem("token")
+            const {waiter, setWaiter} = this.context
             setWaiter("Seçili Garson Yok")
         }
-        TableService.getCategory(this.state.token).then((res) => {
+        await TableService.getCategory(this.state.token).then((res) => {
             this.setState({categorylist: res.data});
 
         });
-        WaiterService.getWaiter(this.state.token).then((res)=>{
-            this.setState({waiterList:res.data})
+      await  WaiterService.getWaiter(this.state.token).then((res) => {
+            this.setState({waiterList: res.data,loading:false})
         })
 
 
     }
 
-    onClickSidebar = (category) => {
-        this.state.items=[];
-       this.setState({tableNumber:category.tableAmount ,category:category})
+    onClickSidebar = async (category) => {
+        this.setState({loading: true})
+        this.state.items = [];
+        await this.setState({tableNumber: category.tableAmount, category: category})
         let orders = ResponsiveProduct.getOrderFromStorage();
-        let table= [];
-        let piece=0;
-            for(let i=0; i<orders.length; i++){
-                const text=category.name;
-                if(orders[i][0].selectedtable.indexOf(text)!==-1){
+        let table = [];
+        let piece = 0;
+        for (let i = 0; i < orders.length; i++) {
+            const text = category.name;
+            if (orders[i][0].selectedtable.indexOf(text) !== -1) {
 
-                     for(let j=0; j<orders[i].length; j++){
-                         piece+=orders[i][j].piece
-                     }
-                     table.push(orders[i][0].selectedtable+" "+piece+"  $");
-                    piece=0;
+                for (let j = 0; j < orders[i].length; j++) {
+                    piece += orders[i][j].piece
                 }
+                table.push(orders[i][0].selectedtable + " " + piece + "  $");
+                piece = 0;
             }
+        }
 
-            let tableString=JSON.stringify(table);
+        let tableString = JSON.stringify(table);
 
 
-        for (let i=1; i<=category.tableAmount; i++)  {
-            let searchTest=`Masa ${i}# `
-            if(tableString.indexOf(searchTest)!==-1) {
-                let startIndex=tableString.indexOf(`Masa ${i}`)+searchTest.length;
-                let endIndex=tableString.indexOf("$");
-                let tmp=tableString.substr(startIndex,3);
+       for (let i = 1; i <= category.tableAmount; i++) {
+            let searchTest = `Masa ${i}# `
+            if (tableString.indexOf(searchTest) !== -1) {
+                let startIndex = tableString.indexOf(`Masa ${i}`) + searchTest.length;
+                let endIndex = tableString.indexOf("$");
+                let tmp = tableString.substr(startIndex, 3);
 
-                this.state.items.push(
-                   <button className="btn btn-warning cardbutton "
-                                 onClick={() =>
-                                     this.DetailTable(category, i)}><h4>Masa {i}</h4>{tmp} Adet Ürün</button>
+                await this.state.items.push(
+                    <button className="btn btn-warning cardbutton "
+                            onClick={() =>
+                                this.DetailTable(category, i)}><h4>Masa {i}</h4>{tmp} Adet Ürün</button>
                 )
 
 
-            }
-            else {
-                this.state.items.push(<button className="btn btn-secondary cardbutton "
+            } else {
+                await  this.state.items.push(<button className="btn btn-secondary cardbutton "
                                               onClick={() =>
                                                   this.addProduct(category, i)}>Masa {i}</button>)
             }
+
         }
+        this.setState({loading: false})
         return this.state.items;
 
     }
@@ -158,24 +161,25 @@ class TableComponent extends Component {
         this.setState({showDetailTable:false })
     }
 
-    pay(){
-        ProductService.pay(this.state.ViewTableDetail,this.state.token).then(res => {
+    async pay() {
+        this.setState({loading: true})
+        ProductService.pay(this.state.ViewTableDetail, this.state.token).then(res => {
             this.props.history.push('/homepage')
         });
         localStorage.setItem("product", "Secili Masa Yok");
-        const{waiter,setWaiter}=this.context
+        const {waiter, setWaiter} = this.context
         setWaiter("Seçili Garson Yok")
         let orders = ResponsiveProduct.getOrderFromStorage();
-        const{selectedTableDetail}=this.state;
+        const {selectedTableDetail} = this.state;
 
-        orders.forEach(function(orderTable, index){
-            if(JSON.stringify(orderTable).indexOf(JSON.stringify(selectedTableDetail[0]))!==-1){
+        orders.forEach(function (orderTable, index) {
+            if (JSON.stringify(orderTable).indexOf(JSON.stringify(selectedTableDetail[0])) !== -1) {
                 console.log(JSON.stringify(orderTable))
                 orders.splice(index, 1);
             }
         });
         localStorage.setItem("orders", JSON.stringify(orders));
-        this.setState({showDetailTable:false })
+        await this.setState({showDetailTable: false,loading:false})
         this.props.history.push('/homepage')
 
     }
@@ -306,6 +310,7 @@ class TableComponent extends Component {
                    <button className="btn btn-success" onClick={() => this.pay()}>Öde</button>
                </Modal.Footer>
                </Modal>
+               { this.state.loading ? <FullPageLoading/> : null}
             </div>
 
 

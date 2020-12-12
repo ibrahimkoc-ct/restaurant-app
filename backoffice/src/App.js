@@ -1,52 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
 
-import ListComponent from "./companent/ListComponent";
-import HeaderComponent from "./companent/HeaderComponent";
-import FooterComponent from "./companent/FooterComponent";
+import './App.css';
+import React from 'react';
+import ListComponent from "./companent/product/ListComponent";
+
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
-import CreateProductComponent from "./companent/CreateProductComponent";
-import UpdateProductComponent from "./companent/UpdateProductComponent";
-import ProductSalesTable from "./companent/ProductSalesTable";
-import UserListComponent from "./companent/UserListComponent"
-import CreateUserComponent from "./companent/CreateUserComponent";
-import UpdateUserComponent from "./companent/UpdateUserComponent";
-import LoginComponent from "./companent/LoginComponent"
-import React from "react";
-import LoginHeaderComponent from "./companent/LoginHeaderComponent";
-import ViewUserComponent from "./companent/ViewUserComponent";
-import ViewProductComponent from "./companent/ViewProductComponent"
-import AuthListComponent from "./companent/AuthListComponent";
-import UpdateAuthComponent from "./companent/UpdateAuthComponent";
-import ViewAuthComponwnt from "./companent/ViewAuthComponwnt";
-import CategoryListComponent from "./companent/CategoryListComponent";
-import CreateCategoryComponent from "./companent/CreateCategoryComponent";
-import ViewCategoryComponent from "./companent/ViewCategoryComponent";
-import UpdateCategoryComponent from "./companent/UpdateCategoryComponent";
-import CategoryProductList from "./companent/CategoryProductList";
-import ServerListInfoComponent from "./companent/ServerListInfoComponent";
-import CategoryTableListComponent from "./companent/CategoryTableListComponent";
-import CreateCategoryTableComponent from "./companent/CreateCategoryTableComponent";
-import UpdateCategoryTableComponent from "./companent/UpdateCategoryTableComponent";
-import ViewCategoryTable from "./companent/ViewCategoryTable";
-import WaiterListComponent from "./companent/WaiterListComponent";
-import CreateWaiterComponent from "./companent/CreateWaiterComponent";
-import ViewWaiterComponent from "./companent/ViewWaiterComponent";
-import UpdateWaiterComponent from "./companent/UpdateWaiterComponent";
-import CreateMediaComponent from "./companent/CreateMediaComponent";
+import CreateProductComponent from "./companent/product/CreateProductComponent";
+import UpdateProductComponent from "./companent/product/UpdateProductComponent";
+import ProductSalesTable from "./companent/orders/ProductSalesTable";
+import UserListComponent from "./companent/user/UserListComponent"
+import CreateUserComponent from "./companent/user/CreateUserComponent";
+import UpdateUserComponent from "./companent/user/UpdateUserComponent";
+import LoginComponent from "./companent/homepage/LoginComponent"
+import ViewUserComponent from "./companent/user/ViewUserComponent";
+import ViewProductComponent from "./companent/product/ViewProductComponent"
+import AuthListComponent from "./companent/role/AuthListComponent";
+import UpdateAuthComponent from "./companent/role/UpdateAuthComponent";
+import ViewAuthComponwnt from "./companent/role/ViewAuthComponwnt";
+import CategoryListComponent from "./companent/category/CategoryListComponent";
+import CreateCategoryComponent from "./companent/category/CreateCategoryComponent";
+import ViewCategoryComponent from "./companent/category/ViewCategoryComponent";
+import UpdateCategoryComponent from "./companent/category/UpdateCategoryComponent";
+import CategoryProductList from "./companent/category/CategoryProductList";
+import ServerListInfoComponent from "./companent/homepage/ServerListInfoComponent";
+import CategoryTableListComponent from "./companent/categoryTable/CategoryTableListComponent";
+import CreateCategoryTableComponent from "./companent/categoryTable/CreateCategoryTableComponent";
+import UpdateCategoryTableComponent from "./companent/categoryTable/UpdateCategoryTableComponent";
+import ViewCategoryTable from "./companent/categoryTable/ViewCategoryTable";
+import WaiterListComponent from "./companent/waiter/WaiterListComponent";
+import CreateWaiterComponent from "./companent/waiter/CreateWaiterComponent";
+import ViewWaiterComponent from "./companent/waiter/ViewWaiterComponent";
+import UpdateWaiterComponent from "./companent/waiter/UpdateWaiterComponent";
+import CreateMediaComponent from "./companent/hookComponent/media/CreateMediaComponent";
 import {BackofficeProvider} from "./BackofficeContext";
-import UserService from "./services/UserService";
-import CreateRoleComponent from "./companent/CreateRoleComponent";
+import CreateRoleComponentHook from "./companent/hookComponent/role/CreateRoleComponentHook"
+import {useState} from 'react';
+import UpdateRoleComponentHook from "./companent/hookComponent/role/UpdateRoleComponentHook";
+import ListRoleComponentHook from "./companent/hookComponent/role/ListRoleComponentHook";
+import ViewRoleComponent from "./companent/hookComponent/role/ViewRoleComponent";
+import OrdersTable from "./companent/hookComponent/orders/OrdersTable";
 
 
 const backoffice={token:'',username:''}
+export const AppContext=React.createContext();
 
 
 function App() {
+    const[appState,setAppState]=useState({
+        username:'admin',
+        password:'password',
+        token:'Basic YWRtaW46cGFzczE='
+    })
+
 
   return (
 
       <div>
+          <AppContext.Provider value={{appState:appState,setAppState:setAppState}}>
           <BackofficeProvider value={backoffice}>
           <Router>
 
@@ -78,17 +87,21 @@ function App() {
               <Route path="/view-categorytable/:id" component={ViewCategoryTable}></Route>
               <Route path="/waiter-table" component={WaiterListComponent}></Route>
               <Route path="/add-waiter-table" component={CreateWaiterComponent}></Route>
-              <Route path="/add-role" component={CreateRoleComponent}></Route>
               <Route path="/add-media" component={CreateMediaComponent}></Route>
+              <Route path="/role-add" component={CreateRoleComponentHook}></Route>
               <Route path="/view-waiter-table/:id" component={ViewWaiterComponent}></Route>
               <Route path="/update-waiter-table/:id" component={UpdateWaiterComponent}></Route>
-
+              <Route path="/update-role/:id" component={UpdateRoleComponentHook}></Route>
+              <Route path="/list-role" component={ListRoleComponentHook}></Route>
+              <Route path="/view-role/:id" component={ViewRoleComponent}></Route>
+              <Route path="/orders-table" component={OrdersTable}></Route>
 
           </Switch>
       </div>
           </Router>
 
           </BackofficeProvider>
+          </AppContext.Provider>
       </div>
 
   );

@@ -7,6 +7,7 @@ import "./App2.css";
 import WaiterService from "../services/WaiterService";
 import ClientContext from "../ClientContext";
 import createBrowserHistory from 'history/createBrowserHistory';
+import FullPageLoading from'./FullPageLoading'
 const history = createBrowserHistory({forceRefresh:true});
 class HomePageCompanent extends Component {
     static contextType=ClientContext;
@@ -16,12 +17,13 @@ class HomePageCompanent extends Component {
             token:'',
             waiterList:[],
             show:false,
+            loading:false
 
 
         }
     }
      componentDidMount() {
-
+            this.setState({loading:true})
 
          const userToken = this.context;
          if (localStorage.getItem("token") == null) {
@@ -39,13 +41,9 @@ class HomePageCompanent extends Component {
          }
 
          WaiterService.getWaiter("this.state.token").then((res) => {
-             this.setState({waiterList: res.data})
+             this.setState({waiterList: res.data,loading:false})
          })
      }
-
-
-
-
 
     signOut = (e) => {
 
@@ -56,7 +54,8 @@ class HomePageCompanent extends Component {
     }
 
     onClickWaiter=(waiter1)=>{
-        this.setState({show:false})
+        this.setState({loading:true})
+        this.setState({show:false,loading:false})
         this.props.history.push('/products')
         const{waiter,setWaiter}=this.context
        setWaiter(waiter1.name)
@@ -126,7 +125,7 @@ class HomePageCompanent extends Component {
 
                 </Modal>
 
-
+                { this.state.loading ? <FullPageLoading/> : null}
             </div>
         );
     }
