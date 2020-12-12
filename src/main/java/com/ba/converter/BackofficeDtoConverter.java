@@ -1,22 +1,15 @@
 package com.ba.converter;
 
-import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
-import com.ba.entity.Media;
 import com.ba.entity.Product;
-import liquibase.pro.packaged.C;
-
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BackofficeDtoConverter {
-
     public static List<ProductDTO> convertListtoDTOList(List<Product> products){
         List<ProductDTO> dtoList = new ArrayList<>();
-
         for(Product product:products){
             ProductDTO dto = new ProductDTO();
             dto.setPrice(product.getPrice());
@@ -27,7 +20,6 @@ public class BackofficeDtoConverter {
             dto.setUrlToImage(product.getUrlToImage());
             dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(product.getMedia()));
             dto.setCategories(CategoryDtoConventer.convertListToDTOList(product.getCategories()));
-
             dtoList.add(dto);
         }
         return dtoList;
@@ -37,7 +29,6 @@ public class BackofficeDtoConverter {
 
         for(ProductDTO dto:productDTOList){
             Product product = new Product();
-
             product.setPrice(dto.getPrice());
             product.setCategory(dto.getCategory());
             product.setDescription(dto.getDescription());
@@ -46,13 +37,10 @@ public class BackofficeDtoConverter {
             product.setUrlToImage(dto.getUrlToImage());
             product.setMedia(MediaDtoConventer.mediaDTOtoMedia(dto.getMediaDTO()));
             product.setCategories(CategoryDtoConventer.convertDTOListToList(dto.getCategories()));
-
             list.add(product);
         }
         return list;
     }
-
-
     public static List<ProductDTO> productListTOProductList(List<Product> productList){
         List<ProductDTO> productDTO = new ArrayList<>();
         for(Product product:productList){
@@ -64,15 +52,12 @@ public class BackofficeDtoConverter {
             dto.setDescription(product.getDescription());
             dto.setCategory(product.getCategory());
             dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(product.getMedia()));
-
-//          dto.setCategories(CategoryDtoConventer.convertListToDTOList(product.getCategories()));
             productDTO.add(dto);
         }
         return productDTO;
     }
     public static Long deleteProductDTOToProduct(Long id){
         Product product1 = new Product();
-
         product1.setId(id);
         return product1.getId();
     }
@@ -86,7 +71,6 @@ public class BackofficeDtoConverter {
         dto.setTitle(dtoList.get().getTitle());
         dto.setPrice(dtoList.get().getPrice());
         dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(dtoList.get().getMedia()));
-
         return  dto;
     }
     public static Product updateProductDto(ProductDTO product){
@@ -102,8 +86,6 @@ public class BackofficeDtoConverter {
         return product1;
     }
     public static Product addProductIDtoDto(List<Category> categoryList, ProductDTO product){
-
-
         Product product1 = new Product();
         product1.setId(product.getId());
         product1.setDescription(product.getDescription());
@@ -112,17 +94,13 @@ public class BackofficeDtoConverter {
         product1.setUrlToImage(product.getUrlToImage());
         product1.setCategory(product.getCategory());
         product1.setMedia(MediaDtoConventer.mediaDTOtoMedia(product.getMediaDTO()));
-
-
       for(int i=0; i<categoryList.size(); i++){
          categoryList.get(i).getProducts().add(product1);
           product1.setCategories(Stream.of(categoryList.get(i)).collect(Collectors.toList()));
       }
-
        return product1;
     }
     public static Product convertProductDtoToProduct(Product entity ,ProductDTO dto, Optional<Category> productcategory){
-
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setTitle(dto.getTitle());

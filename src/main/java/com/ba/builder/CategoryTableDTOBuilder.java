@@ -1,7 +1,7 @@
 package com.ba.builder;
 
 import com.ba.dto.CategoryTableDTO;
-import com.ba.entity.CategoryTable;
+
 
 public class CategoryTableDTOBuilder extends IdBuilder {
     private String name;

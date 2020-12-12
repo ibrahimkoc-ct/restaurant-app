@@ -2,7 +2,6 @@ package com.ba.converter;
 
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Product;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +31,7 @@ public class ClientDtoConverter {
         dto.setDescription(dtoList.get().getDescription());
         dto.setId(dtoList.get().getId());
         dto.setCategory(dtoList.get().getCategory());
-        dto.setCategories(CategoryDtoConventer.convertListToDTOList(dtoList.get().getCategories()));
-
+//        dto.setCategories(CategoryDtoConventer.convertListToDTOList(dtoList.get().getCategories()));
         return dto;
     }
     public static String clientDTOdeleteProduct(String categoryName){

@@ -1,7 +1,6 @@
 package com.ba.builder;
 
 import com.ba.entity.ProductSales;
-
 import java.util.Date;
 
 public class ProductSalesBuilder extends IdBuilder {

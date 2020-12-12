@@ -61,13 +61,13 @@ public class BackofficeControllerTest {
         List<ProductDTO> result =controller.getAllProduct();
         assertEquals(result,dtoList);
     }
-//    @Test
-//    public void deleteProductBackofficeControllerTest(){
-//        Long id=1L;
-//        when(service.deleteProduct(id)).thenReturn("ürün silindi");
-//        String result=controller.deleteProduct(id);
-//        assertEquals(result,"ürün silindi");
-//    }
+    @Test
+    public void deleteProductBackofficeControllerTest(){
+        Long id=1L;
+        when(service.deleteProduct(id)).thenReturn("ürün silindi");
+        String result=controller.deleteProduct(id);
+        assertEquals(result,"ürün silindi");
+    }
     @Test
     public void updateProductBackofficeControllerTest(){
         Long id=1L;
@@ -83,11 +83,11 @@ public class BackofficeControllerTest {
         assertEquals(result,productDTO);
 
     }
-//    @Test
-//    public void addProductIdBackofficeContollerTest(){
-//        Long id=1L;
-//        Mockito.when(service.addProductId(productDTO,categoriesDto)).thenReturn("kisi eklendi");
-//        ProductDTO result=controller.addProductId(productDTO,categoriesDto);
-//        assertEquals(result,productDTO);
-//    }
+    @Test
+    public void addProductIdBackofficeContollerTest(){
+        Long id=1L;
+        Mockito.when(service.addProductId(productDTO,id)).thenReturn("kisi eklendi");
+        String result=controller.addProductId(productDTO,id);
+        assertEquals(result,"product");
+    }
 }

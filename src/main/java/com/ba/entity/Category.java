@@ -1,14 +1,9 @@
 package com.ba.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
-
 @Entity
 
 public class Category implements Serializable {

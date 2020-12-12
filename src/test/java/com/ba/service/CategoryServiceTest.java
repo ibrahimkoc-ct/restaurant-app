@@ -1,15 +1,14 @@
 package com.ba.service;
 
 
-import com.ba.builder.CategoryBuilder;
-import com.ba.builder.CategoryDTOBuilder;
-import com.ba.builder.ProductBuilder;
-import com.ba.builder.ProductDTOBuilder;
+import com.ba.builder.*;
 import com.ba.converter.BackofficeDtoConverter;
 import com.ba.converter.CategoryDtoConventer;
 import com.ba.dto.CategoryDTO;
+import com.ba.dto.MediaDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
+import com.ba.entity.Media;
 import com.ba.entity.Product;
 import com.ba.repository.CategoryRepository;
 import org.junit.Before;
@@ -47,12 +46,23 @@ public class CategoryServiceTest {
     List<Product> setProduct= new ArrayList<>();
     CategoryBuilder categoryBuilder= new CategoryBuilder();
     CategoryDTOBuilder categoryDTOBuilder= new CategoryDTOBuilder();
-    Category category = categoryBuilder.name("Pizza").imageToUrl("no image").description("pizza").id(1L).build();
-    CategoryDTO categoryDTO = categoryDTOBuilder.name("Pizza").imageToUrl("no image").description("pizza").id(1L).build();
+    MediaBuilder mediaBuilder=new MediaBuilder();
+    Media media=mediaBuilder.name("name").id(1L).build();
+    MediaDTOBuilder mediaDTOBuilder= new MediaDTOBuilder();
+    MediaDTO mediaDTO= mediaDTOBuilder.id(1L).name("name").build();
+
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").media(media).build();
     ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").mediaDTO(mediaDTO).build();
+    Category category = categoryBuilder.name("Pizza").imageToUrl("no image").description("pizza").id(1L).products(setProduct).media(media).build();
+    CategoryDTO categoryDTO = categoryDTOBuilder.name("Pizza").imageToUrl("no image").description("pizza").products(dtos).mediaDTO(mediaDTO).id(1L).build();
+
+
+    @Before
+    public void setUp() throws Exception {
+
+    }
 
     @Test
     public void shouldCategoryList(){
@@ -82,6 +92,10 @@ public class CategoryServiceTest {
     }
     @Test
     public void shouldUpdateCategory(){
+        list.add(category);
+        dtoList.add(categoryDTO);
+        Optional<Category> categoryList =Optional.of(category);
+        Mockito.when(repository.findById(1L)).thenReturn(categoryList);
         Mockito.when(repository.saveAndFlush(category)).thenReturn(category);
         CategoryDTO result =service.updateCategory(categoryDTO);
         assertEquals(result,categoryDTO);
@@ -96,18 +110,18 @@ public class CategoryServiceTest {
     assertEquals(result.getId(),id);
     }
 
-//    @Test
-//    public void shouldgetProductCategory(){
-//        setProduct.add(product);
-//        category.setProducts(setProduct);
-//        dtos.add(productDTO);
-//        Long id=1L;
-//
-//        Optional<Category> categoryList =Optional.of(category);
-//        Mockito.when(repository.findById(id)).thenReturn(categoryList);
-//        List<ProductDTO> result= BackofficeDtoConverter.productListTOProductList(categoryList);
-//
-//        List<ProductDTO> dtoset= service.getProductCategory(id);
-//        assertEquals(result.iterator().next().getId(),dtoset.iterator().next().getId());
-//     }
+    @Test
+    public void shouldgetProductCategory(){
+        setProduct.add(product);
+        category.setProducts(setProduct);
+        dtos.add(productDTO);
+        Long id=1L;
+
+        Optional<Category> categoryList =Optional.of(category);
+        Mockito.when(repository.findById(id)).thenReturn(categoryList);
+        List<ProductDTO> result= BackofficeDtoConverter.productListTOProductList(setProduct);
+
+        Set<ProductDTO> dtoset= service.getProductCategory(id);
+        assertEquals(result.iterator().next().getId(),dtoset.iterator().next().getId());
+     }
 }

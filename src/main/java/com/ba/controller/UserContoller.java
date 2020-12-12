@@ -1,12 +1,8 @@
 package com.ba.controller;
 
 import com.ba.dto.UserDTO;
-import com.ba.entity.User;
-import com.ba.repository.RoleRepository;
-import com.ba.repository.UserRepository;
 import com.ba.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,10 +1,8 @@
 package com.ba.controller;
 
 import com.ba.dto.MediaDTO;
-import com.ba.repository.MediaRepository;
 import com.ba.service.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

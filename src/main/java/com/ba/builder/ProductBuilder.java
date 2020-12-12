@@ -1,10 +1,10 @@
 package com.ba.builder;
 
 import com.ba.entity.Category;
+import com.ba.entity.Media;
 import com.ba.entity.Product;
-
 import java.util.List;
-import java.util.Set;
+
 
 public class ProductBuilder extends IdBuilder{
     private String title;
@@ -13,12 +13,17 @@ public class ProductBuilder extends IdBuilder{
     private String category;
     private String urlToImage;
     private List<Category> categories;
+    private Media media;
 
     public ProductBuilder categories(List<Category> categories) {
         this.categories = categories;
         return this;
     }
 
+    public ProductBuilder media(Media media) {
+        this.media = media;
+        return this;
+    }
 
     public ProductBuilder description(String description) {
         this.description = description;
@@ -57,6 +62,7 @@ public class ProductBuilder extends IdBuilder{
         product.setCategory(this.category);
         product.setUrlToImage(this.urlToImage);
         product.setCategories(this.categories);
+        product.setMedia(this.media);
         return product;
     }
 

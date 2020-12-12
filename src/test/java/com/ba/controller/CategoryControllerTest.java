@@ -6,30 +6,18 @@ import com.ba.builder.CategoryBuilder;
 import com.ba.builder.CategoryDTOBuilder;
 import com.ba.builder.ProductBuilder;
 import com.ba.builder.ProductDTOBuilder;
-import com.ba.converter.CategoryDtoConventer;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
-import com.ba.repository.CategoryRepository;
 import com.ba.service.CategoryService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.core.parameters.P;
-
 import java.util.*;
-import java.util.function.Supplier;
-
-import static org.mockito.Matchers.any;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 
 @RunWith(MockitoJUnitRunner.class)

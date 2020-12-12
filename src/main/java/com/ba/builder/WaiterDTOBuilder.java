@@ -2,7 +2,6 @@ package com.ba.builder;
 
 import com.ba.dto.MediaDTO;
 import com.ba.dto.WaiterDTO;
-import com.ba.entity.Waiter;
 
 public class WaiterDTOBuilder extends IdBuilder {
     private String name;

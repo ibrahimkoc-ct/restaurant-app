@@ -4,8 +4,6 @@ import com.ba.dto.MediaDTO;
 import com.ba.entity.Media;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.Column;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ public class MediaDtoConventer {
     private static final String JPG_EXTENSION=".jpg";
     private static final String PNG_EXTENSION=".png";
     private static final String BMP_EXTENSION=".bmp";
-
     private static final String BMP_CONTENT=".image/bmp";
     private static final String PNG_CONTENT=".image/png";
 
@@ -31,7 +28,6 @@ public class MediaDtoConventer {
         media.setFileContent(mediaDTO.getFileContent());
         return media;
     }
-
     public static MediaDTO meidaTMediaDTO(Media media){
         MediaDTO mediaDTO= new MediaDTO();
         mediaDTO.setName(media.getName());
@@ -39,7 +35,6 @@ public class MediaDtoConventer {
         mediaDTO.setFileContent(media.getFileContent());
         return mediaDTO;
     }
-
 
     public static List<MediaDTO> mediaListToMediaDTOList(List<Media> mediaList){
         List<MediaDTO> mediaDTOList= new ArrayList<>();

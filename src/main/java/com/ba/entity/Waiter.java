@@ -1,7 +1,4 @@
 package com.ba.entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -29,15 +26,6 @@ public class Waiter {
     public Waiter setMedia(Media media) {
         this.media = media;
         return this;
-    }
-
-    public Waiter(String name, String phoneNumber, String mail, String address, String urlToImage, Long salary) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.mail = mail;
-        this.address = address;
-        this.urlToImage = urlToImage;
-        this.salary = salary;
     }
 
     public Waiter() {

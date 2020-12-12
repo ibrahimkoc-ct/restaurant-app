@@ -2,10 +2,6 @@ package com.ba.entity;
 
 
 import javax.persistence.*;
-import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Set;
-
 @Entity
 
 public class CategoryTable {

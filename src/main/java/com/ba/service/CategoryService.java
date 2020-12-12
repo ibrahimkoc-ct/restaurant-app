@@ -8,12 +8,10 @@ import com.ba.repository.CategoryRepository;
 import com.ba.repository.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
 public class CategoryService {
-
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -24,9 +22,7 @@ public class CategoryService {
     public List<CategoryDTO> getAllCategory() {
         List<Category> categoryList= categoryRepository.findAll();
         return CategoryDtoConventer.convertListToDTOList(categoryList);
-
     }
-
     public String deleteCategory(Long id) {
         categoryRepository.deleteById(CategoryDtoConventer.categoryDTOdeleteToCategory(id));
         return "kisi silindi";
@@ -54,8 +50,5 @@ public class CategoryService {
     public Set<ProductDTO> getProductCategory(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
         return CategoryDtoConventer.categoryDTOgetProductCategory(category);
-
     }
-
-
 }

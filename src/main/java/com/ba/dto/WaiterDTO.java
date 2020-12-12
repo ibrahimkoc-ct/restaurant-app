@@ -1,7 +1,5 @@
 package com.ba.dto;
 
-import com.ba.entity.Media;
-
 public class WaiterDTO {
     private Long id;
     private String name;

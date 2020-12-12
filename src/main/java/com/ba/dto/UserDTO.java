@@ -1,7 +1,5 @@
 package com.ba.dto;
 
-import com.ba.entity.Role;
-
 import java.util.ArrayList;
 import java.util.List;
 

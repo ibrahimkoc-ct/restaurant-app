@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class WaiterDtoConverter {
-
     public static Long waiterDTOdeleteToWaiter(Long id){
         Waiter waiter= new Waiter();
         waiter.setId(id);
@@ -56,10 +55,7 @@ public class WaiterDtoConverter {
         waiterDTO.setUrlToImage(optionalWaiter.get().getUrlToImage());
         waiterDTO.setSalary(optionalWaiter.get().getSalary());
         waiterDTO.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(optionalWaiter.get().getMedia()));
-
-
         return waiterDTO;
-
     }
     public static List<WaiterDTO> waiterDTOListToWaiter(List<Waiter> waiterList){
         List<WaiterDTO> waiterDTOList = new ArrayList<>();
@@ -73,9 +69,6 @@ public class WaiterDtoConverter {
             dto.setUrlToImage(waiter.getUrlToImage());
            dto.setName(waiter.getName());
            dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(waiter.getMedia()));
-
-
-
             waiterDTOList.add(dto);
         }
         return waiterDTOList;

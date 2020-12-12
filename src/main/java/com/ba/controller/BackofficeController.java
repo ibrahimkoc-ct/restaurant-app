@@ -1,20 +1,10 @@
 package com.ba.controller;
 
-import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
-import com.ba.entity.Product;
-import com.ba.repository.ProductRepository;
 import com.ba.service.BackofficeService;
-import liquibase.pro.packaged.L;
-import liquibase.pro.packaged.S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
-
 @CrossOrigin(origins = "*")
 
 @RestController
@@ -52,8 +42,5 @@ public class BackofficeController {
 
         return "product";
     }
-
-
-
 
 }

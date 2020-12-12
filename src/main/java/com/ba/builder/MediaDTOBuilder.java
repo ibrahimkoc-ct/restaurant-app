@@ -1,7 +1,6 @@
 package com.ba.builder;
 
 import com.ba.dto.MediaDTO;
-import com.ba.entity.Media;
 
 public class MediaDTOBuilder extends IdBuilder {
     private String name;

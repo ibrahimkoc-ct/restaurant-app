@@ -4,7 +4,6 @@ import com.ba.dto.RoleDTO;
 import com.ba.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -32,12 +31,10 @@ public class RoleController {
     @PutMapping("/update/")
     public RoleDTO updateRole(@RequestBody RoleDTO dto){
       return service.updateRole(dto);
-
     }
     @GetMapping("/id/{id}")
     public RoleDTO getRoleById(@PathVariable Long id){
        return service.getRoleById(id);
-
     }
 
 }

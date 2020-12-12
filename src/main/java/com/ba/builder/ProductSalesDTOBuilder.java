@@ -1,7 +1,6 @@
 package com.ba.builder;
 
 import com.ba.dto.ProductSalesDTO;
-import com.ba.entity.ProductSales;
 
 import java.util.Date;
 

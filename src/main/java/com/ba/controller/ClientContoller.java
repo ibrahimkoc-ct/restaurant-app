@@ -1,15 +1,11 @@
 package com.ba.controller;
 
 import com.ba.dto.ProductDTO;
-import com.ba.entity.Product;
-import com.ba.repository.ProductRepository;
-import com.ba.service.BackofficeService;
 import com.ba.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @CrossOrigin(origins = "*")
 

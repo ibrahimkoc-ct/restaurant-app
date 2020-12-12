@@ -1,11 +1,10 @@
 package com.ba.controller;
 
-import com.ba.model.ServerInfo;
+import com.ba.entity.ServerInfo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,37 +15,22 @@ public class InfoController {
 
     @Value("${spring.profiles.active}")
     private String profile;
-
     @Value("${server.port}")
     private String serverPort;
-
-
-
     @Value("${spring.datasource.url}")
     private String  databaseUrl;
-
-
-
     @Value("${logging.level.org.hibernate.type}")
     private String  hiberbateType;
-
-
     @Value("${spring.jpa.show-sql}")
     private String  showSql;
-
-
     @Value("${spring.jpa.properties.hibernate.format_sql}")
     private String  hibernateFormat;
-
     @Value("${spring.datasource.driverClassName}")
     private String  driverClass;
-
-
     @Value("${spring.datasource.username}")
     private String  username;
     @Value("${spring.datasource.password}")
     private String  password;
-
     @Value("${app.message}")
     private String appmessage;
 
@@ -74,11 +58,6 @@ public class InfoController {
         server_info.add(info6);
         ServerInfo info7 = new ServerInfo("spring.jpa.properties.hibernate.format_sql",hibernateFormat);
         server_info.add(info7);
-
-
-
-
-
         return server_info;
 
     }}

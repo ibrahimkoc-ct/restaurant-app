@@ -1,10 +1,7 @@
 package com.ba.controller;
 
 
-import com.ba.dto.CategoryDTO;
 import com.ba.dto.WaiterDTO;
-import com.ba.entity.Waiter;
-import com.ba.repository.WaiterRepository;
 import com.ba.service.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

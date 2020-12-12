@@ -2,13 +2,13 @@ package com.ba.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.ba.builder.CategoryBuilder;
-import com.ba.builder.ProductBuilder;
-import com.ba.builder.ProductDTOBuilder;
+import com.ba.builder.*;
 import com.ba.converter.BackofficeDtoConverter;
 import com.ba.dto.CategoryDTO;
+import com.ba.dto.MediaDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
+import com.ba.entity.Media;
 import com.ba.entity.Product;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.ProductRepository;
@@ -46,29 +46,34 @@ public class BackofficeServiceTest {
     List<Product> list = new ArrayList<>();
     List<ProductDTO> dtoList =new ArrayList<>();
     List<CategoryDTO> categoryDTO =new ArrayList<>();
+    List<Category> categoryList =new ArrayList<>();
     Set<Product> productSet = new HashSet<>();
+    MediaBuilder mediaBuilder=new MediaBuilder();
+    Media media=mediaBuilder.name("name").id(1L).build();
+    MediaDTOBuilder mediaDTOBuilder= new MediaDTOBuilder();
+    MediaDTO mediaDTO= mediaDTOBuilder.id(1L).name("name").build();
     CategoryBuilder categoryBuilder = new CategoryBuilder();
-    Category category=categoryBuilder.id(1L).description("pizza").imageToUrl("no image").name("Pizza").build();
+    CategoryDTOBuilder categoryDTOBuilder= new CategoryDTOBuilder();
+    Category category=categoryBuilder.id(1L).description("pizza").imageToUrl("no image").name("Pizza").media(media).build();
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    Product product=productBuilder.category("Pizza").description("pizza").id(1L).media(media).price("15").title("Pizza").categories(categoryList).urlToImage("no image").build();
     ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    ProductDTO productDTO = productDTOBuilder.category("Pizza").mediaDTO(mediaDTO).description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    CategoryDTO dto=categoryDTOBuilder.id(1L).description("pizza").imageToUrl("no image").name("Pizza").mediaDTO(mediaDTO).build();
 
 
 
-    public BackofficeServiceTest() {
+
+
+    @Test(expected =RuntimeException.class)
+    public void shouldDeleteProductById(){
+        Long id=1L;
+        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
+        String result=service.deleteProduct(id);
+        assertEquals(result,"kisi silindi");
+        verify(repository,times(1)).deleteById(id);
+
     }
-
-
-//    @Test(expected =RuntimeException.class)
-//    public void shouldDeleteProductById(){
-//        Long id=1L;
-//        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
-//        String result=service.deleteProduct(id);
-//        assertEquals(result,"kisi silindi");
-//        verify(repository,times(1)).deleteById(id);
-//
-//    }
     @Test
     public void shouldBackOfficeProductList() {
         list.add(product);
@@ -83,6 +88,12 @@ public class BackofficeServiceTest {
 
     @Test
     public void shouldUpdateBackofficeProductBy(){
+        categoryList.add(category);
+        product.setCategories(categoryList);
+        categoryDTO.add(dto);
+        productDTO.setCategories(categoryDTO);
+        dto.setProducts(dtoList);
+        category.setProducts(list);
         Mockito.when(repository.saveAndFlush(product)).thenReturn(product);
         ProductDTO result=service.updateProduct(1L,productDTO);
         assertEquals(result,productDTO);
@@ -97,17 +108,18 @@ public class BackofficeServiceTest {
         assertEquals(dto.getId(),list.get().getId());
     }
 
-//    @Test
-//    public void shouldAddNewBackOfficeProduct(){
-//        Long id=1L;
-//        productSet.add(product);
-//        category.setProducts(productSet);
-//        Optional<Category> list =Optional.of(category);
-//        Mockito.when(categoryRepository.findById(id)).thenReturn(list);
-//        Mockito.when(categoryRepository.save(any())).thenReturn(category);
-//        Category category1=BackofficeDtoConverter.addProductIDtoDto(list,productDTO);
-//        String result=service.addProductId(productDTO,categoryDTO);
-//        assertEquals(result,"kisi eklendi");
-//
-//    }
+    @Test
+    public void shouldAddNewBackOfficeProduct(){
+        Long id=1L;
+        productSet.add(product);
+        category.setProducts(list);
+        productDTO.setCategories(categoryDTO);
+        Optional<Category> optionalCategory =Optional.of(category);
+        Mockito.when(categoryRepository.findById(id)).thenReturn(optionalCategory);
+        Mockito.when(categoryRepository.save(any())).thenReturn(category);
+        Product product=BackofficeDtoConverter.addProductIDtoDto(categoryList,productDTO);
+        String result=service.addProductId(productDTO,id);
+        assertEquals(result,"kisi eklendi");
+
+    }
 }

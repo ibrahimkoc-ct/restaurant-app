@@ -1,6 +1,6 @@
 package com.ba.controller;
 
-import com.ba.model.ServerInfo;
+import com.ba.entity.ServerInfo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

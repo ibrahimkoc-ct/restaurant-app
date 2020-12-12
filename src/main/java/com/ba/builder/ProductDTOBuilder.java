@@ -1,12 +1,10 @@
 package com.ba.builder;
 
 import com.ba.dto.CategoryDTO;
+import com.ba.dto.MediaDTO;
 import com.ba.dto.ProductDTO;
-import com.ba.entity.Category;
-import com.ba.entity.Product;
-
 import java.util.List;
-import java.util.Set;
+
 
 public class ProductDTOBuilder extends IdBuilder{
     private String title;
@@ -15,9 +13,14 @@ public class ProductDTOBuilder extends IdBuilder{
     private String category;
     private String urlToImage;
     private List<CategoryDTO> categories;
+    private MediaDTO mediaDTO;
 
     public ProductDTOBuilder categories(List<CategoryDTO> categories) {
         this.categories = categories;
+        return this;
+    }
+    public ProductDTOBuilder mediaDTO(MediaDTO mediaDTO) {
+        this.mediaDTO = mediaDTO;
         return this;
     }
 
@@ -58,6 +61,7 @@ public class ProductDTOBuilder extends IdBuilder{
         productDTO.setCategory(this.category);
         productDTO.setUrlToImage(this.urlToImage);
         productDTO.setCategories(this.categories);
+        productDTO.setMediaDTO(this.mediaDTO);
 
         return productDTO;
     }

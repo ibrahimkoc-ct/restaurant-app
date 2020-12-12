@@ -1,6 +1,5 @@
 package com.ba.builder;
 
-import com.ba.entity.Category;
 import com.ba.entity.CategoryTable;
 
 public class CategoryTableBuilder extends IdBuilder{

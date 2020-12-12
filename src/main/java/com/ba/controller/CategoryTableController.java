@@ -2,17 +2,11 @@ package com.ba.controller;
 
 
 import com.ba.dto.CategoryTableDTO;
-import com.ba.entity.Category;
-import com.ba.entity.CategoryTable;
-import com.ba.entity.Product;
-
 import com.ba.service.CategoryTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+
 
 @CrossOrigin(origins = "*")
 @RestController

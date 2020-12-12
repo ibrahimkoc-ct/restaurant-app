@@ -1,10 +1,6 @@
 package com.ba.dto;
 
-import com.ba.entity.Media;
-import com.ba.entity.Product;
-
 import java.util.List;
-import java.util.Set;
 
 public class CategoryDTO {
     private Long id;

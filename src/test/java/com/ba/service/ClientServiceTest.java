@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.ba.builder.ProductBuilder;
 import com.ba.builder.ProductDTOBuilder;
 import com.ba.converter.ClientDtoConverter;
+import com.ba.dto.MediaDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
+import com.ba.entity.Media;
 import com.ba.entity.Product;
 import com.ba.repository.ProductRepository;
 import org.junit.Before;
@@ -33,11 +35,13 @@ public class ClientServiceTest {
     private ProductRepository repository;
     List<Product> list = new ArrayList<>();
     List<ProductDTO> dtoList =new ArrayList<>();
+    Media media= new Media();
+    MediaDTO mediaDTO= new MediaDTO();
 
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").media(media).build();
     ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
-    ProductDTO dto = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    ProductDTO dto = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").mediaDTO(mediaDTO).urlToImage("no image").build();
 
 
 

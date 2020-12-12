@@ -8,22 +8,23 @@ import java.util.List;
 import java.util.Optional;
 
 public class RoleDTOConverter {
-
-    public static Role roleDTOtoRole(RoleDTO dto){
-        Role role= new Role();
+    public static Role roleDTOtoRole(RoleDTO dto) {
+        Role role = new Role();
         role.setId(dto.getId());
         role.setName(dto.getName());
-    return role;
+        return role;
     }
-    public static RoleDTO roleToRoleDTO(Role role){
-        RoleDTO dto= new RoleDTO();
+
+    public static RoleDTO roleToRoleDTO(Role role) {
+        RoleDTO dto = new RoleDTO();
         dto.setId(role.getId());
         dto.setName(role.getName());
         return dto;
     }
-    public static List<Role> roleDTOListToRoleList(List<RoleDTO> dtoList){
-        List<Role> list =new ArrayList<>();
-        for(int i=0; i<dtoList.size(); i++){
+
+    public static List<Role> roleDTOListToRoleList(List<RoleDTO> dtoList) {
+        List<Role> list = new ArrayList<>();
+        for (int i = 0; i < dtoList.size(); i++) {
             Role role = new Role();
             role.setName(dtoList.get(i).getName());
             role.setId(dtoList.get(i).getId());
@@ -32,9 +33,9 @@ public class RoleDTOConverter {
         return list;
 
     }
-    public static List<RoleDTO> roleListToRoleDTOList(List<Role> roleList){
-        List<RoleDTO>  dtoList= new ArrayList<>();
-        for(int i=0; i<roleList.size(); i++){
+    public static List<RoleDTO> roleListToRoleDTOList(List<Role> roleList) {
+        List<RoleDTO> dtoList = new ArrayList<>();
+        for (int i = 0; i < roleList.size(); i++) {
             RoleDTO dto = new RoleDTO();
             dto.setName(roleList.get(i).getName());
             dto.setId(roleList.get(i).getId());
@@ -42,12 +43,10 @@ public class RoleDTOConverter {
         }
         return dtoList;
     }
-    public static RoleDTO getRoleById(Optional<Role> list){
-        RoleDTO dto= new RoleDTO();
+    public static RoleDTO getRoleById(Optional<Role> list) {
+        RoleDTO dto = new RoleDTO();
         dto.setId(list.get().getId());
         dto.setName(list.get().getName());
         return dto;
     }
-
-
 }

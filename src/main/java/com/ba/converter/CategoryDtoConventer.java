@@ -3,19 +3,12 @@ package com.ba.converter;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
-import com.ba.entity.Media;
 import com.ba.entity.Product;
-import liquibase.pro.packaged.C;
-
 import java.util.*;
-import java.util.stream.Stream;
-
 public class CategoryDtoConventer {
-
 
     public static List<Category> convertDTOListToList(List<CategoryDTO> categoryDTOList){
         List<Category> list = new ArrayList<>();
-
         for(CategoryDTO dto: categoryDTOList){
             Category category = new Category();
             category.setId(dto.getId());
@@ -32,20 +25,15 @@ public class CategoryDtoConventer {
 
         for(Category category: categoryList){
             CategoryDTO dto = new CategoryDTO();
-
             dto.setId(category.getId());
             dto.setName(category.getName());
             dto.setDescription(category.getDescription());
             dto.setImageToUrl(category.getImageToUrl());
             dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(category.getMedia()));
-//            dto.setProducts(BackofficeDtoConverter.convertListtoDTOList(category.getProducts()));
-
             dtoList.add(dto);
         }
         return dtoList;
     }
-
-
 
     public static Long categoryDTOdeleteToCategory(Long id){
         Category category= new Category();
@@ -63,7 +51,6 @@ public class CategoryDtoConventer {
         return category;
     }
     public static Category categoryDTOUpdateCategory(CategoryDTO categoryDTO,Optional<Category> category2 ){
-
         Category category= new Category();
         category.setId(categoryDTO.getId());
         category.setDescription(categoryDTO.getDescription());
@@ -71,10 +58,8 @@ public class CategoryDtoConventer {
         category.setName(categoryDTO.getName());
         category.setMedia(MediaDtoConventer.mediaDTOtoMedia(categoryDTO.getMediaDTO()));
         category.setProducts(category2.get().getProducts());
-
         return category;
     }
-
     public static CategoryDTO categoryDTOgetByID(Optional<Category> dtoList){
         CategoryDTO dto = new CategoryDTO();
         dto.setName(dtoList.get().getName());
@@ -83,11 +68,9 @@ public class CategoryDtoConventer {
         dto.setId(dtoList.get().getId());
         dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(dtoList.get().getMedia()));
       dto.setDescription(dtoList.get().getDescription());
-
         return dto;
     }
     public static Set<ProductDTO> categoryDTOgetProductCategory(Optional<Category> category){
-
         Set<ProductDTO> dto = new HashSet<>();
         for(Product prod: category.get().getProducts() ){
             ProductDTO productDTO = new ProductDTO();
@@ -99,11 +82,7 @@ public class CategoryDtoConventer {
             productDTO.setPrice(prod.getPrice());
             productDTO.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(prod.getMedia()));
             dto.add(productDTO);
-
         }
-
         return dto;
-
     }
-
 }

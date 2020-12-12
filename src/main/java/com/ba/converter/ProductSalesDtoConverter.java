@@ -2,14 +2,12 @@ package com.ba.converter;
 
 import com.ba.dto.ProductSalesDTO;
 import com.ba.entity.ProductSales;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductSalesDtoConverter {
     public static List<ProductSalesDTO> orderListTOOrderDTOList(List<ProductSales> productlist){
         List<ProductSalesDTO> orderListDTO = new ArrayList<>();
-
         for (ProductSales productSalesListItem : productlist) {
             ProductSalesDTO salesDTO = new ProductSalesDTO();
             salesDTO.setId(productSalesListItem.getId());
