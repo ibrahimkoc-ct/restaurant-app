@@ -34,8 +34,19 @@ public class BackofficeService {
         return "kisi silindi";
     }
     public ProductDTO updateProduct(long id, ProductDTO product) {
+        Product product1=repository.findById(id).get();
 
-        repository.saveAndFlush(BackofficeDtoConverter.updateProductDto(product));
+        List<Category> categoryList=product1.getCategories();
+        for(int i=0; i<categoryList.size(); i++){
+            categoryList.get(i).getProducts().remove(product1);
+            categoryRepository.save(categoryList.get(i));
+        }
+        List<Category> categoryList1= new ArrayList<>();
+        for(int i=0; i<product.getCategories().size(); i++){
+            Category category=categoryRepository.findById(product.getCategories().get(i).getId()).get();
+            categoryList1.add(category);
+        }
+        repository.save(BackofficeDtoConverter.addProductIDtoDto(categoryList1,product));
         return product;
     }
     public ProductDTO getProductById(Long id) {

@@ -52,6 +52,7 @@ class TableComponent extends Component {
             this.state.token = localStorage.getItem("token")
             const {waiter, setWaiter} = this.context
             setWaiter("Seçili Garson Yok")
+            localStorage.setItem("waiter","Seçili Garson Yok")
         }
         await TableService.getCategory(this.state.token).then((res) => {
             this.setState({categorylist: res.data});
@@ -124,6 +125,7 @@ class TableComponent extends Component {
         this.props.history.push('/products')
         const{waiter,setWaiter}=this.context
         setWaiter(waiter1.name)
+        localStorage.setItem("waiter",waiter1.name)
     }
     DetailTable=(category,i)=>{
         const{selectedTableDetail}=this.state;
@@ -169,6 +171,7 @@ class TableComponent extends Component {
         localStorage.setItem("product", "Secili Masa Yok");
         const {waiter, setWaiter} = this.context
         setWaiter("Seçili Garson Yok")
+        localStorage.setItem("waiter","Seçili Garson Yok")
         let orders = ResponsiveProduct.getOrderFromStorage();
         const {selectedTableDetail} = this.state;
 
@@ -254,7 +257,7 @@ class TableComponent extends Component {
                                        <button className="btn btn-outline-success btn-block "onClick={() =>
                                            this.onClickWaiter(waiter)}>
                                            <div className="row">
-                                               <div className="col-xl-8" align="left" style={{marginTop:10}}>{waiter.name}</div>
+                                               <div className="col-xl-8 my-auto" align="left" >{waiter.name}</div>
                                                <div className="col-xl-4"><img src={'data:image/png;base64,' + waiter.mediaDTO.fileContent} height="40" width="40" style={{margin:10}}/></div>
 
                                            </div>

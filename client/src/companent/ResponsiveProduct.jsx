@@ -53,7 +53,6 @@ class ResponsiveProduct extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
             const {waiter, setWaiter} = this.context
-            setWaiter("Seçili Garson Yok")
 
 
         }
@@ -128,7 +127,7 @@ class ResponsiveProduct extends Component {
                     piece: 1,
                     total: Number(product.price),
                     selectedtable: localStorage.getItem("product"),
-                    waiterName:this.state.waiterName
+                    waiterName:localStorage.getItem("waiter")
                 }
             }, () => this.setState({salelist: [...this.state.salelist, this.state.cart],loading:false}))
         }
@@ -170,6 +169,7 @@ class ResponsiveProduct extends Component {
 
          const{waiter,setWaiter}=this.context
          setWaiter("Seçili Garson Yok")
+        localStorage.setItem("waiter","Seçili Garson Yok")
 
 
 
@@ -187,6 +187,7 @@ class ResponsiveProduct extends Component {
         localStorage.setItem("product", "Secili Masa Yok");
         const{waiter,setWaiter}=this.context
         setWaiter("Seçili Garson Yok")
+        localStorage.setItem("waiter","Seçili Garson Yok")
 
         this.props.history.push('/homepage')
 

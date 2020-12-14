@@ -1,15 +1,8 @@
 import axios from 'axios';
 
-import {Component} from "react";
-import LoginComponent from "../companent/homepage/LoginComponent";
-
 const User_Api_List_URL="http://localhost:8080/user/list";
 const AutOne_Base_URL="http://localhost:8080/role/list";
 const Auth_Api_Delete_URL="http://localhost:8080/role/delete";
-
-
-
-
 const User_Api_Delete_URL="http://localhost:8080/user/delete";
 const Users_Api_Update_URL="http://localhost:8080/user/update";
 const Auth_Api_Update_URL="http://localhost:8080/role/update/";
@@ -19,11 +12,6 @@ const ServerInfo_Api_Viwe_URL="http://localhost:8080/server-info";
 const User_Api_Add_URL="http://localhost:8080/user/add";
 const Auth_Api_Add_URL="http://localhost:8080/role/add";
 const Login_Api_List_URL="http://localhost:8080/user/admin-login";
-
-
-
-
-
 
 
 class UserService {

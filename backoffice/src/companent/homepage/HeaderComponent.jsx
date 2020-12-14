@@ -19,7 +19,6 @@ class HeaderComponent extends Component {
             if(userToken.token.length>0){
                 this.state.username=userToken.username;
 
-                
             }
             else{
                 history.push('/');

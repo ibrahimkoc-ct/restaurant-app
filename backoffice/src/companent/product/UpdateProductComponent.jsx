@@ -5,6 +5,8 @@ import FooterComponent from "../homepage/FooterComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
+import CategoryService from "../../services/CategoryService";
+import axios from "axios";
 const history = createBrowserHistory({forceRefresh:true});
 
 class UpdateProductComponent extends Component {
@@ -19,7 +21,11 @@ class UpdateProductComponent extends Component {
             urlToImage:'',
             price:'',
             token:'',
-            loading:false
+            loading:false,
+            categorylist:[],
+            selectedCategory:[],
+            media:[],
+            mediaSelect:{},
         }
 
         this.chargeTitleHandler=this.chargeTitleHandler.bind(this);
@@ -29,29 +35,43 @@ class UpdateProductComponent extends Component {
         this.updateProduct=this.updateProduct.bind(this);
         this.chargeUrlToImageHandler=this.chargeUrlToImageHandler.bind(this);
     }
-    componentDidMount() {
+    async componentDidMount() {
 
         const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
+        if (localStorage.getItem("token") == null) {
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
 
                 console.log(this.state.token)
-            }
-            else{
+            } else {
                 history.push('/');
             }
+        } else {
+            this.state.token = localStorage.getItem("token")
         }
-        else {
-            this.state.token=localStorage.getItem("token")
-        }
+        await CategoryService.getCategory(this.state.token).then((res) => {
+            this.setState({categorylist: res.data});
+        });
+        axios.get("http://localhost:8080/file/list").then((res) => {
+            this.setState({media: res.data});
+        });
+    }
+    changeSelect=(media)=>{
+        this.state.mediaSelect=media;
+    }
 
+
+    changeMultiSelect=(category)=>{
+        this.state.selectedCategory.push(category);
+        console.log(this.state.selectedCategory)
+        this.state.category+=(category.name+' ,')
     }
 
     updateProduct = (e) =>{
 
         this.setState({loading: true})
-        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.category,price: this.state.price,urlToImage: this.state.urlToImage};
+        let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.categoryName,price: this.state.price,
+            urlToImage: this.state.urlToImage,categories:this.state.selectedCategory,mediaDTO:this.state.mediaSelect};
         console.log('product=>'+JSON.stringify(product));
         ProductService.updateProduct(product,this.state.id,this.state.token).then(res =>{
             this.props.history.push('/products');
@@ -100,20 +120,34 @@ class UpdateProductComponent extends Component {
 
                                     </div>
                                     <div className="form-group">
-                                        <label>Urun Kategorisi</label>
-                                        <input placeholder="Urun kategorisi" name="category" className="form-control"
-                                               value={this.state.category} onChange={this.chargeCategoryHandler}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Urun Resmi</label>
-                                        <input placeholder="Urun resmi" name="urltoImage" className="form-control"
-                                               value={this.state.urlToImage} onChange={this.chargeUrlToImageHandler}/>
+                                        <div className="form-check" style={{height:"4rem",overflow:"auto"}}>
+                                            {
+                                                this.state.media.map(
+                                                    media=>
+                                                        <div className="row col-md -12 custom-control custom-radio">
+                                                            <input className="form-check-input" name="customRadio" type="radio" onClick={()=>this.changeSelect(media)} />
+                                                            <label className="form-check-label">
+                                                                <a onClick={()=>this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
+                                                        </div>
+                                                )
+                                            }
+                                        </div>
 
                                     </div>
                                     <div className="form-group">
                                         <label>Urun Fiyatı</label>
                                         <input placeholder="Urun fiyatı" name="price" className="form-control"
                                                value={this.state.price} onChange={this.chargePriceHandler}/>
+                                    </div>
+                                    <div className="checkbox" style={{height:"4rem",overflow:"auto"}}>
+                                        {
+                                            this.state.categorylist.map(
+                                                category=>
+                                                    <div className="row col-md -12">
+                                                        <label><input type="checkbox" value="" onClick={()=>this.changeMultiSelect(category)}/>{category.name}</label>
+                                                    </div>
+                                            )
+                                        }
                                     </div>
                                     <button className="btn btn-success" onClick={this.updateProduct}>Kaydet</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>

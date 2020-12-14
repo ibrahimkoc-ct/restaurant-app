@@ -4,7 +4,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import {AppContext} from "../../../App";
 import Table from "react-bootstrap/Table";
 import ProductService from "../../../services/ProductService";
-
+import createBrowserHistory from 'history/createBrowserHistory';
 const history = createBrowserHistory({forceRefresh:true});
 
 const OrdersTable =()=>{

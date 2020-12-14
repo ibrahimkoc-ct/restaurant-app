@@ -42,15 +42,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("h2-console/**").permitAll();
         http.csrf().disable();
         http.headers().frameOptions().disable();
-       http.authorizeRequests().antMatchers("/auth/list").access("hasRole('ADMIN')");
+       http.authorizeRequests().antMatchers("/role/list").access("hasRole('ADMIN')");
       http.authorizeRequests().antMatchers("/role/add").access("hasRole('ADMIN')");
        http.authorizeRequests().antMatchers("/role/delete").access("hasRole('ADMIN')");
       http.authorizeRequests().antMatchers("/role/update").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/role/id").access("hasRole('ADMIN')");
        http.authorizeRequests().antMatchers("/user/admin-login").access("hasRole('ADMIN')");
         http.authorizeRequests().antMatchers("/user/user-login").access("hasAnyRole('ADMIN','USER')");
       http.authorizeRequests().antMatchers("/user/add").access("hasRole('ADMIN')");
        http.authorizeRequests().antMatchers("/user/delete").access("hasRole('ADMIN')");
        http.authorizeRequests().antMatchers("/user/update").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/user/id").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/user/list").access("hasRole('ADMIN')");
        http.authorizeRequests().antMatchers("/backoffice/**").access("hasRole('ADMIN')");
       http.authorizeRequests().antMatchers("/client/**").access("hasAnyRole('ADMIN','USER')");
         http.authorizeRequests().antMatchers("/productsales/add").access("hasAnyRole('ADMIN','USER')");
@@ -67,6 +70,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/categorytable/id").access("hasRole('ADMIN')");
         http.authorizeRequests().antMatchers("/categorytable/update").access("hasRole('ADMIN')");
         http.authorizeRequests().antMatchers("/server-info").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/waiter/add").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/waiter/list").access("hasAnyRole('ADMIN','USER')");
+        http.authorizeRequests().antMatchers("/waiter/delete").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/waiter/id").access("hasRole('ADMIN')");
+        http.authorizeRequests().antMatchers("/waiter/update").access("hasRole('ADMIN')");
+
 
         http.httpBasic();
         http.cors();

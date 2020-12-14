@@ -2,7 +2,8 @@ import React, { useState,useContext,useEffect } from 'react';
 import HeaderComponent from "../../homepage/HeaderComponent";
 import FooterComponent from "../../homepage/FooterComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
-import {AppContext} from "../../../App";
+
+
 import UserService from "../../../services/UserService";
 
 const history = createBrowserHistory({forceRefresh:true});

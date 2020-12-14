@@ -67,9 +67,6 @@ class UserListComponent extends Component {
                 <div className="container productlist">
                 <h2 className="text-center">Kullanıcılar</h2>
                 <div className="row">
-
-
-
                 </div>
                 <div className="row">
                     <Table striped bordered hover >

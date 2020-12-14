@@ -39,8 +39,7 @@ class HomePageCompanent extends Component {
              this.state.token = localStorage.getItem("token")
 
          }
-
-         WaiterService.getWaiter("this.state.token").then((res) => {
+         WaiterService.getWaiter(this.state.token).then((res) => {
              this.setState({waiterList: res.data,loading:false})
          })
      }
@@ -56,10 +55,8 @@ class HomePageCompanent extends Component {
     onClickWaiter=(waiter1)=>{
         this.setState({loading:true})
         this.setState({show:false,loading:false})
+        localStorage.setItem("waiter",waiter1.name)
         this.props.history.push('/products')
-        const{waiter,setWaiter}=this.context
-       setWaiter(waiter1.name)
-        // localStorage.setItem("waiter",waiter.name)
     }
     onClickProduct(){
         this.setState({show:true})
@@ -111,7 +108,13 @@ class HomePageCompanent extends Component {
                                 waiter => {
                                     return (
                                         <button className="btn btn-outline-success btn-block "onClick={() =>
-                                            this.onClickWaiter(waiter)}>{waiter.name}</button>
+                                            this.onClickWaiter(waiter)}>
+                                            <div className="row">
+                                                <div className="col-xl-8 my-auto" align="left" >{waiter.name}</div>
+                                                <div className="col-xl-4"><img src={'data:image/png;base64,' + waiter.mediaDTO.fileContent} height="40" width="40" style={{margin:10}}/></div>
+
+                                            </div>
+                                        </button>
 
 
                                     )

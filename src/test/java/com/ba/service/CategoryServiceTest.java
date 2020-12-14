@@ -112,6 +112,8 @@ public class CategoryServiceTest {
 
     @Test
     public void shouldgetProductCategory(){
+        product.setCategories(list);
+        setProduct.add(product);
         setProduct.add(product);
         category.setProducts(setProduct);
         dtos.add(productDTO);

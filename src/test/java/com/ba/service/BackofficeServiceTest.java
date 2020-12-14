@@ -88,13 +88,18 @@ public class BackofficeServiceTest {
 
     @Test
     public void shouldUpdateBackofficeProductBy(){
+        Long id=1L;
         categoryList.add(category);
         product.setCategories(categoryList);
         categoryDTO.add(dto);
         productDTO.setCategories(categoryDTO);
         dto.setProducts(dtoList);
         category.setProducts(list);
-        Mockito.when(repository.saveAndFlush(product)).thenReturn(product);
+        Optional<Category> optionalCategory =Optional.of(category);
+        Mockito.when(categoryRepository.findById(id)).thenReturn(optionalCategory);
+        Optional<Product> optionalProduct =Optional.of(product);
+        Mockito.when(repository.findById(id)).thenReturn(optionalProduct);
+        Mockito.when(repository.save(product)).thenReturn(product);
         ProductDTO result=service.updateProduct(1L,productDTO);
         assertEquals(result,productDTO);
     }

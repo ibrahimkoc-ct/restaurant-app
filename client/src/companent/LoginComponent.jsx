@@ -45,6 +45,7 @@ class LoginComponent extends Component {
         if (localStorage.getItem("token") !== null) {
             const {waiter, setWaiter} = this.context
             setWaiter("Seçili Garson Yok")
+            localStorage.setItem("waiter","Seçili Garson Yok")
             this.props.history.push('/homepage');
         }
     }
@@ -67,6 +68,7 @@ class LoginComponent extends Component {
             setToken('Basic ' + btoa(this.state.username + ':' + this.state.password))
             const {waiter, setWaiter} = this.context
             setWaiter("Seçili Garson Yok")
+            localStorage.setItem("waiter","Seçili Garson Yok")
             this.setState({loading:false})
 
             this.props.history.push('/homepage');

@@ -1,5 +1,6 @@
 package com.ba.converter;
 
+import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
@@ -52,6 +53,7 @@ public class BackofficeDtoConverter {
             dto.setDescription(product.getDescription());
             dto.setCategory(product.getCategory());
             dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(product.getMedia()));
+            dto.setCategories(CategoryDtoConventer.convertListToDTOList(product.getCategories()));
             productDTO.add(dto);
         }
         return productDTO;
@@ -72,18 +74,6 @@ public class BackofficeDtoConverter {
         dto.setPrice(dtoList.get().getPrice());
         dto.setMediaDTO(MediaDtoConventer.meidaTMediaDTO(dtoList.get().getMedia()));
         return  dto;
-    }
-    public static Product updateProductDto(ProductDTO product){
-        Product product1= new Product();
-        product1.setId(product.getId());
-        product1.setCategory(product.getCategory());
-        product1.setUrlToImage(product.getUrlToImage());
-        product1.setPrice(product.getPrice());
-        product1.setCategories(CategoryDtoConventer.convertDTOListToList(product.getCategories()));
-        product1.setTitle(product.getTitle());
-        product1.setDescription(product.getDescription());
-        product1.setMedia(MediaDtoConventer.mediaDTOtoMedia(product.getMediaDTO()));
-        return product1;
     }
     public static Product addProductIDtoDto(List<Category> categoryList, ProductDTO product){
         Product product1 = new Product();

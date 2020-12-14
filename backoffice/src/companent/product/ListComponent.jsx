@@ -72,6 +72,7 @@ class ListComponent extends Component {
         this.props.history.push('/view-product/'+id);
     }
     ViewCategory=(category)=> {
+
         this.setState({loading: true})
         this.setState({
             productslist:this.state.productslist.filter(product => product.category==category),
@@ -124,7 +125,18 @@ class ListComponent extends Component {
                                         <td>{product.description}</td>
                                         <td>
 
-                                            <button className="btn btn-link" onClick={()=>this.ViewCategory(product.category)}>{product.category}</button>
+                                            <button className="btn btn-link">
+                                                {
+                                                    product.categories.map(
+                                                        category=>
+                                                        <ul className="text-left">
+                                                           <li onClick={()=>this.ViewCategory(category.name)}>{category.name}</li>
+                                                        </ul>
+                                                    )
+
+                                                }
+
+                                            </button>
                                         </td>
                                         <td align="center"><img src={'data:image/png;base64,' + product.mediaDTO.fileContent} width="100"/></td>
                                         <td>{product.price}</td>

@@ -32,12 +32,8 @@ import ViewWaiterComponent from "./companent/waiter/ViewWaiterComponent";
 import UpdateWaiterComponent from "./companent/waiter/UpdateWaiterComponent";
 import CreateMediaComponent from "./companent/hookComponent/media/CreateMediaComponent";
 import {BackofficeProvider} from "./BackofficeContext";
-import CreateRoleComponentHook from "./companent/hookComponent/role/CreateRoleComponentHook"
 import {useState} from 'react';
-import UpdateRoleComponentHook from "./companent/hookComponent/role/UpdateRoleComponentHook";
-import ListRoleComponentHook from "./companent/hookComponent/role/ListRoleComponentHook";
-import ViewRoleComponent from "./companent/hookComponent/role/ViewRoleComponent";
-import OrdersTable from "./companent/hookComponent/orders/OrdersTable";
+import CreateRoleComponent from "./companent/role/CreateRoleComponent";
 
 
 const backoffice={token:'',username:''}
@@ -88,14 +84,9 @@ function App() {
               <Route path="/waiter-table" component={WaiterListComponent}></Route>
               <Route path="/add-waiter-table" component={CreateWaiterComponent}></Route>
               <Route path="/add-media" component={CreateMediaComponent}></Route>
-              <Route path="/role-add" component={CreateRoleComponentHook}></Route>
+              <Route path="/role-add" component={CreateRoleComponent}></Route>
               <Route path="/view-waiter-table/:id" component={ViewWaiterComponent}></Route>
               <Route path="/update-waiter-table/:id" component={UpdateWaiterComponent}></Route>
-              <Route path="/update-role/:id" component={UpdateRoleComponentHook}></Route>
-              <Route path="/list-role" component={ListRoleComponentHook}></Route>
-              <Route path="/view-role/:id" component={ViewRoleComponent}></Route>
-              <Route path="/orders-table" component={OrdersTable}></Route>
-
           </Switch>
       </div>
           </Router>

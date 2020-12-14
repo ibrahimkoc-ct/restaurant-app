@@ -70,7 +70,7 @@ class CreateProductComponent extends Component {
 
 
     saveProduct = (e) =>{
-        console.log(this.state.categorylist)
+
 
         let product={id:this.state.id,title: this.state.title,description: this.state.description,category: this.state.categoryName,price: this.state.price,
             urlToImage: this.state.urlToImage,categories:this.state.selectedCategory,mediaDTO:this.state.mediaSelect};
