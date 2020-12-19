@@ -75,7 +75,7 @@
     </insert>
     <insert tableName="category">
         <column name="id" valueNumeric="2"/>
-        <column name="name" value="Çorba"/>
+        <column name="name" value="Corba"/>
         <column name="description" value="çorba"/>
         <column name="image_To_Url" value="no image"/>
         <column name="media_id" valueNumeric="5"/>
