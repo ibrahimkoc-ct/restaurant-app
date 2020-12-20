@@ -38,8 +38,6 @@ public class InfoControllerTest {
         Mockito.when(controller.getInfo()).thenReturn(server_info);
         List<ServerInfo> result=controller.getInfo();
         assertEquals(result,server_info);
-
-
     }
 
 }

@@ -6,54 +6,55 @@ import {Link} from "react-router-dom";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
-const history = createBrowserHistory({forceRefresh:true});
+
+const history = createBrowserHistory({forceRefresh: true});
 
 class WaiterListComponent extends Component {
     static contextType = BackofficeContext;
+
     constructor(props) {
 
         super(props);
         this.state = {
             waiterList: [],
-            token:'',
-            loading:false
+            token: '',
+            loading: false
         }
     }
 
     componentDidMount() {
         this.setState({loading: true})
         const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
-
-                console.log(this.state.token)
-            }
-            else{
+        if (localStorage.getItem("token") == null) {
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
+            } else {
                 history.push('/');
             }
-        }
-        else {
-            this.state.token=localStorage.getItem("token")
+        } else {
+            this.state.token = localStorage.getItem("token")
         }
 
         WaiterService.getWaiter(this.state.token).then((res) => {
-            this.setState({waiterList: res.data,loading:false})
+            this.setState({waiterList: res.data, loading: false})
 
         });
     }
-    deleteWaiter=(waiter)=>{
+
+    deleteWaiter = (waiter) => {
         this.setState({loading: true})
-        WaiterService.deleteWaiter(waiter.id,this.state.token).then(res=>{
-            this.setState({waiterList: this.state.waiterList.filter(a => a.id !== waiter.id),loading:false})
+        WaiterService.deleteWaiter(waiter.id, this.state.token).then(res => {
+            this.setState({waiterList: this.state.waiterList.filter(a => a.id !== waiter.id), loading: false})
 
         })
     }
+
     editWaiter(waiter) {
-        this.props.history.push('/update-waiter-table/'+waiter.id);
+        this.props.history.push('/update-waiter-table/' + waiter.id);
     }
+
     viewWaiter(waiter) {
-        this.props.history.push('/view-waiter-table/'+waiter.id);
+        this.props.history.push('/view-waiter-table/' + waiter.id);
     }
 
 
@@ -89,13 +90,23 @@ class WaiterListComponent extends Component {
                                             <td>{waiter.name}</td>
                                             <td>{waiter.mail}</td>
                                             <td>{waiter.phoneNumber}</td>
-                                            <td align="center"><img src={'data:image/png;base64,' + waiter.mediaDTO.fileContent} width="100"/></td>
+                                            <td align="center"><img
+                                                src={'data:image/png;base64,' + waiter.mediaDTO.fileContent}
+                                                width="100"/></td>
 
                                             <td>{waiter.salary}</td>
                                             <td>
-                                                <button  onClick={()=>this.editWaiter(waiter)} className=" btn btn-info  ">Güncelle</button>
-                                                <button style={{marginLeft: "10px"}} onClick={()=>this.deleteWaiter(waiter)} className="btn btn-danger">Sil</button>
-                                                <button style={{marginLeft: "10px"}}  onClick={()=>this.viewWaiter(waiter)} className="btn btn-success">Görüntüle</button>
+                                                <button onClick={() => this.editWaiter(waiter)}
+                                                        className=" btn btn-info  ">Güncelle
+                                                </button>
+                                                <button style={{marginLeft: "10px"}}
+                                                        onClick={() => this.deleteWaiter(waiter)}
+                                                        className="btn btn-danger">Sil
+                                                </button>
+                                                <button style={{marginLeft: "10px"}}
+                                                        onClick={() => this.viewWaiter(waiter)}
+                                                        className="btn btn-success">Görüntüle
+                                                </button>
                                             </td>
 
                                         </tr>
@@ -105,11 +116,11 @@ class WaiterListComponent extends Component {
                         </Table>
                     </div>
                 </div>
-                { this.state.loading ? <FullPageLoading/> : null}
+                {this.state.loading ? <FullPageLoading/> : null}
             </div>
 
-                       );
-                    }
-                }
+        );
+    }
+}
 
-       export default WaiterListComponent;
+export default WaiterListComponent;

@@ -4,10 +4,12 @@ import WaiterService from "../../services/WaiterService";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
-const history = createBrowserHistory({forceRefresh:true});
+
+const history = createBrowserHistory({forceRefresh: true});
 
 class UpdateWaiterComponent extends Component {
     static contextType = BackofficeContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -20,71 +22,74 @@ class UpdateWaiterComponent extends Component {
             salary: '',
             token: '',
             waiter: [],
-            loading:false
+            loading: false
         }
 
 
-        this.chargeNameHandler=this.chargeNameHandler.bind();
-        this.chargePhoneHandler=this.chargePhoneHandler.bind();
-        this.chargeMailHandler=this.chargeMailHandler.bind();
-        this.chargeAddressHandler=this.chargeAddressHandler.bind();
-        this.urlToImageHandler=this.urlToImageHandler.bind();
-        this.salaryHandler=this.salaryHandler.bind();
+        this.chargeNameHandler = this.chargeNameHandler.bind();
+        this.chargePhoneHandler = this.chargePhoneHandler.bind();
+        this.chargeMailHandler = this.chargeMailHandler.bind();
+        this.chargeAddressHandler = this.chargeAddressHandler.bind();
+        this.urlToImageHandler = this.urlToImageHandler.bind();
+        this.salaryHandler = this.salaryHandler.bind();
     }
-    chargeNameHandler=(event)=>{
-        this.setState({name:event.target.value});
+
+    chargeNameHandler = (event) => {
+        this.setState({name: event.target.value});
     }
-    chargePhoneHandler=(event)=>{
-        this.setState({phoneNumber:event.target.value});
+    chargePhoneHandler = (event) => {
+        this.setState({phoneNumber: event.target.value});
     }
-    chargeMailHandler=(event)=>{
-        this.setState({mail:event.target.value});
+    chargeMailHandler = (event) => {
+        this.setState({mail: event.target.value});
     }
-    chargeAddressHandler=(event)=>{
-        this.setState({address:event.target.value});
+    chargeAddressHandler = (event) => {
+        this.setState({address: event.target.value});
     }
-    urlToImageHandler=(event)=>{
-        this.setState({urlToImage:event.target.value});
+    urlToImageHandler = (event) => {
+        this.setState({urlToImage: event.target.value});
     }
-    salaryHandler=(event)=>{
-        this.setState({salary:event.target.value});
+    salaryHandler = (event) => {
+        this.setState({salary: event.target.value});
     }
-    cancel(){
+
+    cancel() {
         this.props.history.push('/waiter-table');
     }
+
     componentDidMount() {
         this.setState({loading: true})
         const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
-
-                console.log(this.state.token)
-            }
-            else{
+        if (localStorage.getItem("token") == null) {
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
+            } else {
                 history.push('/');
             }
+        } else {
+            this.state.token = localStorage.getItem("token")
         }
-        else {
-            this.state.token=localStorage.getItem("token")
-        }
-        WaiterService.viewWaiter(this.state.id,this.state.token).then((res)=>{
-            this.setState({waiter:res.data,loading:false})
+        WaiterService.viewWaiter(this.state.id, this.state.token).then((res) => {
+            this.setState({waiter: res.data, loading: false})
 
         })
 
     }
-    updateWaiter=(e)=>{
-        let waiter={id:this.state.id,name:this.state.name,phoneNumber:this.state.phoneNumber
-            ,mail: this.state.mail,address: this.state.address,
-            urlToImage: this.state.urlToImage,salary: this.state.salary,
-        mediaDTO:this.state.waiter.mediaDTO}
-        WaiterService.updateWiew(waiter,this.state.token).then(res=>{
+
+    updateWaiter = (e) => {
+        let waiter = {
+            id: this.state.id, name: this.state.name, phoneNumber: this.state.phoneNumber
+            , mail: this.state.mail, address: this.state.address,
+            urlToImage: this.state.urlToImage, salary: this.state.salary,
+            mediaDTO: this.state.waiter.mediaDTO
+        }
+        WaiterService.updateWiew(waiter, this.state.token).then(res => {
             this.props.history.push('/waiter-table');
         })
 
         e.preventDefault();
     }
+
     render() {
         return (
             <div>
@@ -102,7 +107,8 @@ class UpdateWaiterComponent extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Telefon Numarası</label>
-                                        <input placeholder="Telefon Numarası" name="phoneNumber" type="Number" className="form-control"
+                                        <input placeholder="Telefon Numarası" name="phoneNumber" type="Number"
+                                               className="form-control"
                                                value={this.state.phoneNumber} onChange={this.chargePhoneHandler}/>
                                     </div>
                                     <div className="form-group">
@@ -112,7 +118,7 @@ class UpdateWaiterComponent extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Adres</label>
-                                        <input placeholder="Adres" name="adres"  className="form-control"
+                                        <input placeholder="Adres" name="adres" className="form-control"
                                                value={this.state.address} onChange={this.chargeAddressHandler}/>
                                     </div>
                                     <div className="form-group">
@@ -125,15 +131,18 @@ class UpdateWaiterComponent extends Component {
                                         <input placeholder="Mass" name="salary" className="form-control" type="Number"
                                                value={this.state.salary} onChange={this.salaryHandler}/>
                                     </div>
-                                    <button className="btn btn-success" onClick={this.updateWaiter.bind(this)}>Kaydet</button>
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>
+                                    <button className="btn btn-success" onClick={this.updateWaiter.bind(this)}>Kaydet
+                                    </button>
+                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
+                                            style={{marginLeft: "10px"}}>Iptal
+                                    </button>
                                 </form>
 
                             </div>
                         </div>
                     </div>
                 </div>
-                { this.state.loading ? <FullPageLoading/> : null}
+                {this.state.loading ? <FullPageLoading/> : null}
             </div>
         );
     }

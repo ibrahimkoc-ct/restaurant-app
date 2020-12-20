@@ -29,7 +29,6 @@ class ProductSalesTable extends Component {
             if (userToken.token.length > 0) {
                 this.state.token = userToken.token;
 
-                console.log(this.state.token)
             } else {
                 history.push('/');
             }
@@ -38,7 +37,7 @@ class ProductSalesTable extends Component {
         }
 
         ProductService.getProductSales(this.state.token).then((res) => {
-            this.setState({ProductSales: res.data,loading:false});
+            this.setState({ProductSales: res.data, loading: false});
         });
     }
 

@@ -6,9 +6,9 @@ import BackofficeContext from '../../BackofficeContext';
 import FullPageLoading from "../loading/FullPageLoading";
 
 
-
 class LoginComponent extends Component {
     static contextType = BackofficeContext;
+
     constructor(props) {
         super(props);
 
@@ -17,55 +17,54 @@ class LoginComponent extends Component {
             username: '',
             password: '',
             userslist: [],
-            label:'',
-            loginCheck:"false",
+            label: '',
+            loginCheck: "false",
             checkTrue: false,
-            token:'',
-            loading:false
+            token: '',
+            loading: false
 
         }
 
-        this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
-        this.chargePasswordHandler=this.chargePasswordHandler.bind(this);
-    }
-    chargeUsernameHandler =(event) =>{
-        this.setState({username:event.target.value});
-
-    }
-    chargePasswordHandler =(event) =>{
-        this.setState({password:event.target.value});
-    }
-    chargeCheckHandler=(event)=>{
-        this.setState({checkTrue:!this.state.checkTrue})
-        console.log(this.state.checkTrue)
-
+        this.chargeUsernameHandler = this.chargeUsernameHandler.bind(this);
+        this.chargePasswordHandler = this.chargePasswordHandler.bind(this);
     }
 
+    chargeUsernameHandler = (event) => {
+        this.setState({username: event.target.value});
 
-      componentDidMount() {
-          this.setState({loading: true})
-          UserService.getList().then((res) => {
-             this.setState({userslist: res.data,loading:false});
+    }
+    chargePasswordHandler = (event) => {
+        this.setState({password: event.target.value});
+    }
+    chargeCheckHandler = (event) => {
+        this.setState({checkTrue: !this.state.checkTrue})
 
-         }).catch(
-
-         );
-
-         if (localStorage.getItem("token") !== null) {
-             this.props.history.push('/user-table');
-
-         }
-         this.setState({loading:false})
-
-     }
+    }
 
 
+    componentDidMount() {
+        this.setState({loading: true})
+        UserService.getList().then((res) => {
+            this.setState({userslist: res.data, loading: false});
 
-    signIn  =  (e) => {
+        }).catch(
+
+        );
+
+        if (localStorage.getItem("token") !== null) {
+            this.props.history.push('/user-table');
+
+        }
+        this.setState({loading: false})
+
+    }
+
+
+    signIn = (e) => {
 
         this.state.token = 'Basic ' + btoa(this.state.username + ':' + this.state.password)
         this.setState({loading: true})
-         UserService.getLogin(this.state.token).then(() => {
+        UserService.getLogin(this.state.token).then(() => {
 
             if (this.state.checkTrue === true) {
                 localStorage.setItem("token", 'Basic ' + btoa(this.state.username + ':' + this.state.password))
@@ -97,58 +96,56 @@ class LoginComponent extends Component {
     }
 
 
-
     render() {
 
         return (
-                        <div>
-                            <LoginHeaderComponent/>
+            <div>
+                <LoginHeaderComponent/>
 
-                            <div className="login">
-                                <div className="card col-md-4 offset-md-4 offset-md-4  ">
-                                    <h3 className="text-center kullanicigiris">Kullanıcı Girişi</h3>
-                                    <div className="card-body">
+                <div className="login">
+                    <div className="card col-md-4 offset-md-4 offset-md-4  ">
+                        <h3 className="text-center kullanicigiris">Kullanıcı Girişi</h3>
+                        <div className="card-body">
 
-                                        <form>
-                                            <div className="form-group">
-                                                <label>Kullanıcı Adı</label>
-                                                <input placeholder="Kullanıcı Adı" name="username"
-                                                       className="form-control"
-                                                       value={this.state.username}
-                                                       onChange={this.chargeUsernameHandler}/>
-                                            </div>
-
-                                            <div className="form-group">
-                                                <label>Parola</label>
-                                                <input type="password" placeholder="Parola" name="password"
-                                                       className="form-control"
-                                                       value={this.state.password}
-                                                       onChange={this.chargePasswordHandler}/>
-                                                <div className="form-group form-check ">
-                                                    <input type="checkbox" className="form-check-input" id="exampleCheck1"
-                                                           onChange={this.chargeCheckHandler}/>
-                                                    <p>Beni Hatırla</p>
-                                            </div>
-                                                <button className="btn btn-success btn-girisyap"
-                                                        onClick={this.signIn}>Giriş Yap
-                                                </button>
-                                            </div>
-
-
-
-                                        </form>
-                                        <div className="card-body text-center">
-                                            <h3>{this.state.label}</h3>
-                                        </div>
-                                    </div>
+                            <form>
+                                <div className="form-group">
+                                    <label>Kullanıcı Adı</label>
+                                    <input placeholder="Kullanıcı Adı" name="username"
+                                           className="form-control"
+                                           value={this.state.username}
+                                           onChange={this.chargeUsernameHandler}/>
                                 </div>
 
-                            </div>
-                            {
-                                this.state.loading ? <FullPageLoading/> : null
-                            }
+                                <div className="form-group">
+                                    <label>Parola</label>
+                                    <input type="password" placeholder="Parola" name="password"
+                                           className="form-control"
+                                           value={this.state.password}
+                                           onChange={this.chargePasswordHandler}/>
+                                    <div className="form-group form-check ">
+                                        <input type="checkbox" className="form-check-input" id="exampleCheck1"
+                                               onChange={this.chargeCheckHandler}/>
+                                        <p>Beni Hatırla</p>
+                                    </div>
+                                    <button className="btn btn-success btn-girisyap"
+                                            onClick={this.signIn}>Giriş Yap
+                                    </button>
+                                </div>
 
+
+                            </form>
+                            <div className="card-body text-center">
+                                <h3>{this.state.label}</h3>
+                            </div>
                         </div>
+                    </div>
+
+                </div>
+                {
+                    this.state.loading ? <FullPageLoading/> : null
+                }
+
+            </div>
 
 
         );

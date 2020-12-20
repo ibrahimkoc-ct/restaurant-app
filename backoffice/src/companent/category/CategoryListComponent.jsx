@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import UserService from "../../services/UserService";
 import CategoryService from "../../services/CategoryService";
 import HeaderComponent from "../homepage/HeaderComponent";
 import Table from "react-bootstrap/Table";
-import FooterComponent from "../homepage/FooterComponent";
 import {Link} from "react-router-dom";
 import createBrowserHistory from 'history/createBrowserHistory';
-
-import ProductService from "../../services/ProductService";
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
+
 const history = createBrowserHistory({forceRefresh:true});
 
 class CategoryListComponent extends Component {
@@ -29,8 +26,6 @@ class CategoryListComponent extends Component {
         if(localStorage.getItem("token")==null){
             if(userToken.token.length>0){
                 this.state.token=userToken.token;
-
-                console.log(this.state.token)
             }
             else{
                 history.push('/');
@@ -92,7 +87,7 @@ class CategoryListComponent extends Component {
                             {
                                 this.state.categorylist.map(
                                     user =>
-                                        <tr  >
+                                        <tr key={user.id} >
                                             <td>{user.id}</td>
                                             <td>{user.name}</td>
                                             <td>{user.description}</td>

@@ -46,12 +46,6 @@ class CategoryTable  {
             }});
 
     }
-    getCategoryTableId(id,token){
-        return axios.get(CategoryTable_Api_getProductByCategort_URL+'/'+id,{
-            headers: {
-                Authorization:token
-            }});
-    }
 
 }
 

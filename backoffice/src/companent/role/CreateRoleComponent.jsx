@@ -25,8 +25,6 @@ class CreateRoleComponent extends Component {
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
                 this.state.token = userToken.token;
-
-                console.log(this.state.token)
             } else {
                 history.push('/');
             }

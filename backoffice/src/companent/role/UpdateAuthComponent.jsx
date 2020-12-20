@@ -5,56 +5,57 @@ import FooterComponent from "../homepage/FooterComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
-const history = createBrowserHistory({forceRefresh:true});
+
+const history = createBrowserHistory({forceRefresh: true});
 
 
 class UpdateAuthComponent extends Component {
     static contextType = BackofficeContext;
+
     constructor(props) {
         super(props);
         this.state = {
             id: this.props.match.params.id,
-            name:'',
-            token:'',
-            loading:false,
+            name: '',
+            token: '',
+            loading: false,
         }
-        this.chargeUsernameHandler=this.chargeUsernameHandler.bind(this);
-        this.updateAuth=this.updateAuth.bind(this);
+        this.chargeUsernameHandler = this.chargeUsernameHandler.bind(this);
+        this.updateAuth = this.updateAuth.bind(this);
     }
+
     componentDidMount() {
         const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
+        if (localStorage.getItem("token") == null) {
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
 
-                console.log(this.state.token)
-            }
-            else{
+            } else {
                 history.push('/');
             }
-        }
-        else {
-            this.state.token=localStorage.getItem("token")
+        } else {
+            this.state.token = localStorage.getItem("token")
         }
 
     }
-    updateAuth = (e) =>{
-        this.setState({loading: true})
-        let auth={id:this.state.id,name: this.state.name};
-        UserService.updateAuth(auth,this.state.token).then(res =>{
 
-            console.log('user=>'+JSON.stringify(auth));
+    updateAuth = (e) => {
+        this.setState({loading: true})
+        let auth = {id: this.state.id, name: this.state.name};
+        UserService.updateAuth(auth, this.state.token).then(res => {
             this.props.history.push('/auth-table');
             this.setState({loading: false})
         })
         e.preventDefault()
 
     }
-    cancel(){
+
+    cancel() {
         this.props.history.push('/auth-table');
     }
-    chargeUsernameHandler =(event) =>{
-        this.setState({name:event.target.value});
+
+    chargeUsernameHandler = (event) => {
+        this.setState({name: event.target.value});
     }
 
 
@@ -77,14 +78,16 @@ class UpdateAuthComponent extends Component {
                                     </div>
                                     <hr/>
                                     <button className="btn btn-success" onClick={this.updateAuth}>Guncelle</button>
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>
+                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
+                                            style={{marginLeft: "10px"}}>Iptal
+                                    </button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
                 <FooterComponent/>
-                { this.state.loading ? <FullPageLoading/> : null}
+                {this.state.loading ? <FullPageLoading/> : null}
             </div>
         );
     }

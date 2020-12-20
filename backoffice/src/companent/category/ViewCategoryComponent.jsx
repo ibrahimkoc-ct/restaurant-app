@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import UserService from "../../services/UserService";
 import CategoryService from "../../services/CategoryService";
 import HeaderComponent from "../homepage/HeaderComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
+
 const history = createBrowserHistory({forceRefresh:true});
 
 class ViewCategoryComponent extends Component {
@@ -32,7 +32,6 @@ class ViewCategoryComponent extends Component {
             if(userToken.token.length>0){
                 this.state.token=userToken.token;
 
-                console.log(this.state.token)
             }
             else{
                 history.push('/');

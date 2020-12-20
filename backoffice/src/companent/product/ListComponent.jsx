@@ -2,16 +2,13 @@ import React, {Component} from 'react';
 import ProductService from "../../services/ProductService";
 import Table from "react-bootstrap/Table";
 
-import {BrowserRouter as Router, Link} from 'react-router-dom';
-import axios from 'axios';
+import {Link} from 'react-router-dom';
 import HeaderComponent from "../homepage/HeaderComponent";
-import FooterComponent from "../homepage/FooterComponent";
-import UserService from "../../services/UserService";
-import DropdownButton from 'react-bootstrap/DropdownButton'
 import CategoryService from "../../services/CategoryService";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
+
 const history = createBrowserHistory({forceRefresh:true});
 
 class ListComponent extends Component {
@@ -129,7 +126,7 @@ class ListComponent extends Component {
                                                 {
                                                     product.categories.map(
                                                         category=>
-                                                        <ul className="text-left">
+                                                        <ul className="text-left" key={category.name}>
                                                            <li onClick={()=>this.ViewCategory(category.name)}>{category.name}</li>
                                                         </ul>
                                                     )
@@ -157,7 +154,7 @@ class ListComponent extends Component {
                 </div>
 
                 { this.state.loading ? <FullPageLoading/> : null}
-                
+
             </div>
         );
 

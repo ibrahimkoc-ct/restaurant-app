@@ -11,7 +11,7 @@ class ProductService{
 
    getProduct(token){
 
-   return  axios.get('http://localhost:8080/backoffice/product/list/', {
+   return  axios.get(Product_Api_Base_URL, {
         headers: {
             Authorization:token
         }

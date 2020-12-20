@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import CategoryService from "../../services/CategoryService";
 import CategoryTable from "../../services/CategoryTable";
 import HeaderComponent from "../homepage/HeaderComponent";
 import {Link} from "react-router-dom";
@@ -27,8 +26,6 @@ class CategoryTableListComponent extends Component {
         if(localStorage.getItem("token")==null){
             if(userToken.token.length>0){
                 this.state.token=userToken.token;
-
-                console.log(this.state.token)
             }
             else{
                 history.push('/');
@@ -46,7 +43,6 @@ class CategoryTableListComponent extends Component {
         this.setState({loading: true})
         CategoryTable.deleteCategory(id,this.state.token).then(res => {
             this.setState({categorylist: this.state.categorylist.filter(product => product.id !== id),loading:false})
-
         })
 
     }
@@ -87,15 +83,13 @@ class CategoryTableListComponent extends Component {
                                 {
                                     this.state.categorylist.map(
                                         user =>
-                                            <tr >
+                                            <tr key={user.id} >
                                                 <td>{user.id}</td>
                                                 <td>{user.name}</td>
                                                 <td>{user.description}</td>
                                                 <td>{user.tableAmount}</td>
                                                 <td>{user.imageToUrl}</td>
-
                                                 <td>
-
                                                     <button  onClick={()=>this.editCategory(user)} className=" btn btn-info  ">Güncelle</button>
                                                     <button style={{marginLeft: "10px"}} onClick={()=>this.deleteCategory(user.id)} className="btn btn-danger">Sil</button>
                                                     <button style={{marginLeft: "10px"}}  onClick={()=>this.viewCategory(user.id)} className="btn btn-success">Görüntüle</button>

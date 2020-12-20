@@ -1,25 +1,23 @@
-import React, { useState,useContext,useEffect } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HeaderComponent from "../../homepage/HeaderComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
 import {AppContext} from "../../../App";
 import Table from "react-bootstrap/Table";
 import ProductService from "../../../services/ProductService";
-import createBrowserHistory from 'history/createBrowserHistory';
-const history = createBrowserHistory({forceRefresh:true});
 
-const OrdersTable =()=>{
-    const context=useContext(AppContext);
-    const [token,setToken]=useState();
-    const [listOrders,setListOrders]=useState([]);
+const OrdersTable = () => {
+    const context = useContext(AppContext);
+    const [token, setToken] = useState();
+    const [listOrders, setListOrders] = useState([]);
 
-    useEffect  (()=>{
-        let appState=Object.assign({},context.appState);
-         setToken(appState.token)
+    useEffect(() => {
+        let appState = Object.assign({}, context.appState);
+        setToken(appState.token)
 
-      ProductService.getProductSales("Basic YWRtaW46cGFzczE=").then((res)=>{
-           setListOrders(res.data)
-       })
-    },[]);
+        ProductService.getProductSales("Basic YWRtaW46cGFzczE=").then((res) => {
+            setListOrders(res.data)
+        })
+    }, []);
 
     return (
         <div>
@@ -43,22 +41,22 @@ const OrdersTable =()=>{
                             <th>Toplam Fiyat</th>
                         </tr>
                         </thead>
-                        <tbody >
+                        <tbody>
                         {
 
-                            listOrders.map((order,key)=>(
-                                    <tr>
-                                        <td key={key}>{order.orderId}</td>
-                                        <td key={key}>{order.createDate}</td>
-                                        <td key={key}>{order.waiterName}</td>
-                                        <td key={key}>{order.selectedtable}</td>
-                                        <td key={key}>{order.title}</td>
-                                        <td key={key}>{order.id}</td>
-                                        <td key={key}>{order.piece}</td>
-                                        <td key={key}>{order.price}</td>
-                                        <td key={key}>{order.price*order.piece}</td>
+                            listOrders.map((order, key) => (
+                                <tr key={order.orderId}>
+                                    <td>{order.orderId}</td>
+                                    <td>{order.createDate}</td>
+                                    <td>{order.waiterName}</td>
+                                    <td>{order.selectedtable}</td>
+                                    <td>{order.title}</td>
+                                    <td>{order.id}</td>
+                                    <td>{order.piece}</td>
+                                    <td>{order.price}</td>
+                                    <td>{order.price * order.piece}</td>
 
-                                    </tr>
+                                </tr>
                             ))
                         }
                         </tbody>

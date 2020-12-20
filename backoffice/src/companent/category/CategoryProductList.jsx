@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import UserService from "../../services/UserService";
 import CategoryService from "../../services/CategoryService";
 import HeaderComponent from "../homepage/HeaderComponent";
-import {Link} from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import FooterComponent from "../homepage/FooterComponent";
 import BackofficeContext from "../../BackofficeContext";
 import createBrowserHistory from 'history/createBrowserHistory';
+
 const history = createBrowserHistory({forceRefresh:true});
 
 class CategoryProductList extends Component {
@@ -28,8 +27,6 @@ class CategoryProductList extends Component {
         if(localStorage.getItem("token")==null){
             if(userToken.token.length>0){
                 this.state.token=userToken.token;
-
-                console.log(this.state.token)
             }
             else{
                 history.push('/');

@@ -1,33 +1,33 @@
-import React, { useState,useContext,useEffect } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HeaderComponent from "../../homepage/HeaderComponent";
 import FooterComponent from "../../homepage/FooterComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
 import {AppContext} from "../../../App";
 import UserService from "../../../services/UserService";
-const history = createBrowserHistory({forceRefresh:true});
-const UpdateRoleComponentHook=(props)=>{
-    const context=useContext(AppContext);
-    const [token,setToken]=useState();
-    const [id,setId]=useState(this.props.params.id);
-    const [role,setRole]=useState();
 
-    useEffect(()=>{
-        let appState=Object.assign({},context.appState);
+const history = createBrowserHistory({forceRefresh: true});
+const UpdateRoleComponentHook = (props) => {
+    const context = useContext(AppContext);
+    const [token, setToken] = useState();
+    const [id, setId] = useState(this.props.params.id);
+    const [role, setRole] = useState();
+
+    useEffect(() => {
+        let appState = Object.assign({}, context.appState);
         setToken(appState.token)
     });
-    const cancelButton =()=>{
-        console.log("butuna basıldı")
+    const cancelButton = () => {
         history.push('/auth-table');
     }
-    const onRoleChange =event=>{
+    const onRoleChange = event => {
         setRole(event.target.value)
     }
-    const saveRole =(e)=>{
-        if(!role){
+    const saveRole = (e) => {
+        if (!role) {
             window.alert("Rol seçili değil!")
         }
-        let selectedRole={name:role,id:id};
-        UserService.updateAuth(selectedRole,token)
+        let selectedRole = {name: role, id: id};
+        UserService.updateAuth(selectedRole, token)
         history.push('/auth-table');
     }
     return (
@@ -42,14 +42,16 @@ const UpdateRoleComponentHook=(props)=>{
                                 <div className="form-group">
                                     <label>Rol Adı</label>
                                     <input id="button" placeholder="Rol Adı" name="title" className="form-control"
-                                           onChange={(e)=> onRoleChange(e)}  />
+                                           onChange={(e) => onRoleChange(e)}/>
 
                                 </div>
                                 <hr/>
 
                             </form>
-                            <button className="btn btn-success" onClick={()=>saveRole()}  >Kaydet</button>
-                            <button className="btn btn-danger" onClick={()=> cancelButton()} style={{marginLeft:"10px"}}>Iptal</button>
+                            <button className="btn btn-success" onClick={() => saveRole()}>Kaydet</button>
+                            <button className="btn btn-danger" onClick={() => cancelButton()}
+                                    style={{marginLeft: "10px"}}>Iptal
+                            </button>
                         </div>
                     </div>
 
@@ -60,7 +62,6 @@ const UpdateRoleComponentHook=(props)=>{
         </div>
 
     );
-
 
 
 }

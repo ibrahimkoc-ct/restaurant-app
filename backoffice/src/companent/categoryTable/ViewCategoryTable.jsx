@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import CategoryService from "../../services/CategoryService";
 import CategoryTable from "../../services/CategoryTable";
 import HeaderComponent from "../homepage/HeaderComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
@@ -16,11 +15,9 @@ class ViewCategoryTable extends Component {
             name: "",
             description: "",
             imageToUrl: "",
-
             category: [],
             token:'',
             loading:false
-
 
         }
     }
@@ -30,8 +27,6 @@ class ViewCategoryTable extends Component {
         if(localStorage.getItem("token")==null){
             if(userToken.token.length>0){
                 this.state.token=userToken.token;
-
-                console.log(this.state.token)
             }
             else{
                 history.push('/');

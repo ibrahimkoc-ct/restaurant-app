@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import BackofficeContext from "../../BackofficeContext";
 import createBrowserHistory from 'history/createBrowserHistory';
+
 const history = createBrowserHistory({forceRefresh:true});
 
 class HeaderComponent extends Component {

@@ -6,43 +6,43 @@ import FooterComponent from "./FooterComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
-const history = createBrowserHistory({forceRefresh:true});
 
+const history = createBrowserHistory({forceRefresh: true});
 
 
 class ServerListInfoComponent extends Component {
     static contextType = BackofficeContext;
+
     constructor(props) {
         super(props)
         this.state = {
             infolist: [],
-            token:'',
-            loading:false,
+            token: '',
+            loading: false,
         }
 
     }
-    componentDidMount(){
+
+    componentDidMount() {
         this.setState({loading: true})
         const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
+        if (localStorage.getItem("token") == null) {
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
 
-                console.log(this.state.token)
-            }
-            else{
+            } else {
                 history.push('/');
             }
-        }
-        else {
-            this.state.token=localStorage.getItem("token")
+        } else {
+            this.state.token = localStorage.getItem("token")
         }
 
-        UserService.getServerInfo(this.state.token).then((res)=>{
-            this.setState({ infolist:res.data,loading:false});
+        UserService.getServerInfo(this.state.token).then((res) => {
+            this.setState({infolist: res.data, loading: false});
         });
 
     }
+
     render() {
         return (
             <div>
@@ -52,12 +52,12 @@ class ServerListInfoComponent extends Component {
                     <div className="row">
                     </div>
                     <div className="row">
-                        <Table striped bordered hover >
+                        <Table striped bordered hover>
                             <thead>
                             <tr>
 
                                 <th>Bilgi</th>
-                                <th >Degeri</th>
+                                <th>Degeri</th>
 
                             </tr>
                             </thead>
@@ -65,7 +65,7 @@ class ServerListInfoComponent extends Component {
                             {
                                 this.state.infolist.map(
                                     user =>
-                                        <tr >
+                                        <tr key={user.value}>
                                             <td>{user.value}</td>
                                             <td>{user.key}</td>
 
@@ -78,7 +78,7 @@ class ServerListInfoComponent extends Component {
 
                 </div>
                 <FooterComponent/>
-                { this.state.loading ? <FullPageLoading/> : null}
+                {this.state.loading ? <FullPageLoading/> : null}
             </div>
         );
     }

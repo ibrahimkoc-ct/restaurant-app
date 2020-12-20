@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import CategoryService from "../../services/CategoryService";
 import HeaderComponent from "../homepage/HeaderComponent";
 import FooterComponent from "../homepage/FooterComponent";
 import CategoryTable from "../../services/CategoryTable";
 import BackofficeContext from "../../BackofficeContext";
 import createBrowserHistory from 'history/createBrowserHistory';
 import FullPageLoading from "../loading/FullPageLoading";
+
 const history = createBrowserHistory({forceRefresh:true});
 
 class CreateCategoryTableComponent extends Component {
@@ -33,8 +33,6 @@ class CreateCategoryTableComponent extends Component {
         if(localStorage.getItem("token")==null){
             if(userToken.token.length>0){
                 this.state.token=userToken.token;
-
-                console.log(this.state.token)
             }
             else{
                 history.push('/');
@@ -60,9 +58,7 @@ class CreateCategoryTableComponent extends Component {
     }
     saveCategory = (e) =>{
         this.setState({loading: true})
-
         let category={name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products,tableAmount:this.state.tableAmount};
-        console.log('category=>'+JSON.stringify(category));
         CategoryTable.addCategory(category,this.state.token).then(res =>{
             this.props.history.push('/categorytable-table');
             this.setState({loading: false})

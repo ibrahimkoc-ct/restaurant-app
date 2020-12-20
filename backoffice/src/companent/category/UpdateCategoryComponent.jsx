@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import HeaderComponent from "../homepage/HeaderComponent";
 import FooterComponent from "../homepage/FooterComponent";
-import ProductService from "../../services/ProductService";
 import CategoryService from "../../services/CategoryService";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
+
 const history = createBrowserHistory({forceRefresh:true});
 
 
@@ -38,8 +38,6 @@ class UpdateCategoryComponent extends Component {
         if(localStorage.getItem("token")==null){
             if(userToken.token.length>0){
                 this.state.token=userToken.token;
-
-                console.log(this.state.token)
             }
             else{
                 history.push('/');
@@ -78,10 +76,8 @@ class UpdateCategoryComponent extends Component {
     updateCategory= (e) =>{
         this.setState({loading: true})
 
-        console.log(this.state.category)
         e.preventDefault()
         let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products,mediaDTO:this.state.category.mediaDTO};
-        console.log('category=>'+JSON.stringify(category));
         CategoryService.updateCategory(category,this.state.token).then(res =>{
             this.props.history.push('/category-table');
             this.setState({loading:false})
