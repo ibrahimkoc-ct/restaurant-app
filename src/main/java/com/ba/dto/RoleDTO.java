@@ -1,24 +1,14 @@
 package com.ba.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RoleDTO {
     private Long id;
     private String name;
 
-    public Long getId() {
-        return id;
-    }
-
-    public RoleDTO setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public RoleDTO setName(String name) {
-        this.name = name;
-        return this;
-    }
 }

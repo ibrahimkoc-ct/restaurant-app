@@ -60,6 +60,14 @@
         <column name="name" value="kebap resmi"/>
         <column name ="file_Content" valueBlobFile="./kebap-png.png"/>
     </insert>
+    <insert tableName="media">
+        <column name="name" value="kebap resmi"/>
+        <column name ="file_Content" valueBlobFile="./kebap-png.png"/>
+    </insert>
+    <insert tableName="media">
+        <column name="name" value="product resmi"/>
+        <column name ="file_Content" valueBlobFile="./healthy-food.png"/>
+    </insert>
 
 
 

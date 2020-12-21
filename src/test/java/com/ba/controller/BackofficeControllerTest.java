@@ -1,21 +1,14 @@
 package com.ba.controller;
 
 
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.ba.builder.CategoryBuilder;
 import com.ba.builder.ProductBuilder;
 import com.ba.builder.ProductDTOBuilder;
-import com.ba.converter.BackofficeDtoConverter;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
-import com.ba.repository.CategoryRepository;
-import com.ba.repository.ProductRepository;
 import com.ba.service.BackofficeService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,14 +16,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static org.mockito.Matchers.any;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BackofficeControllerTest {

@@ -13,6 +13,8 @@
     <include file="/db-changelog/changes/create-category-table.xml"/>
     <include file="/db-changelog/changes/create-categoryProduct-table.xml"/>
     <include file="/db-changelog/changes/insert-table.xml"/>
+    <include file="/db-changelog/changes/products.sql"/>
+    <include file="/db-changelog/changes/tbl-category-produc.sql"/>
 
 
 </databaseChangeLog>

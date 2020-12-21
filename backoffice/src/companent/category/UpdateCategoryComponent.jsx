@@ -5,6 +5,7 @@ import CategoryService from "../../services/CategoryService";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
+import axios from "axios";
 
 const history = createBrowserHistory({forceRefresh:true});
 
@@ -21,6 +22,8 @@ class UpdateCategoryComponent extends Component {
             token: '',
             products: [],
             category:[],
+            media:[],
+            mediaSelect:{},
             loading:false
         }
 
@@ -30,6 +33,10 @@ class UpdateCategoryComponent extends Component {
         this.updateCategory=this.updateCategory.bind(this);
 
 
+    }
+    debugBase64(base64URL){
+        var win = window.open();
+        win.document.write('<iframe src="' + base64URL  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
     }
     componentDidMount() {
         this.setState({loading: true})
@@ -50,6 +57,9 @@ class UpdateCategoryComponent extends Component {
             this.setState({category:res.data,loading:false})
 
         })
+        axios.get("http://localhost:8080/file/list").then((res)=>{
+            this.setState({media:res.data, loading: false});
+        });
 
 
     }
@@ -77,13 +87,16 @@ class UpdateCategoryComponent extends Component {
         this.setState({loading: true})
 
         e.preventDefault()
-        let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products,mediaDTO:this.state.category.mediaDTO};
+        let category={id:this.state.id,name: this.state.name,description: this.state.description,imageToUrl: this.state.imageToUrl,products:this.state.products,mediaDTO:this.state.mediaSelect};
         CategoryService.updateCategory(category,this.state.token).then(res =>{
             this.props.history.push('/category-table');
             this.setState({loading:false})
 
         })
 
+    }
+    changeSelect=(media)=>{
+        this.state.mediaSelect=media;
     }
 
 
@@ -112,12 +125,23 @@ class UpdateCategoryComponent extends Component {
 
                                     </div>
                                     <div className="form-group">
-                                        <label>Kategori Resim Url</label>
-                                        <input placeholder="Kategori Resim" name="imageToUrl" className="form-control"
-                                               value={this.state.imageToUrl} onChange={this.chargeurlToImageHandler}/>
+                                        <label>Kategori Resmi</label>
+                                        <div className="form-group">
+                                            <div className="form-check" style={{height:"4rem",overflow:"auto"}}>
+                                                {
+                                                    this.state.media.map(
+                                                        media=>
+                                                            <div  key={media.name} className="row col-md -12 custom-control custom-radio">
+                                                                <input  className="form-check-input" name="customRadio" type="radio" onClick={()=>this.changeSelect(media)} />
+                                                                <label className="form-check-label">
+                                                                    <a onClick={()=>this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
+                                                            </div>
+                                                    )
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <button className="btn btn-success" onClick={this.updateCategory}>Kaydet</button>
+                                            <button className="btn btn-success" onClick={this.updateCategory}>Kaydet</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft:"10px"}}>Iptal</button>
                                 </form>
                             </div>

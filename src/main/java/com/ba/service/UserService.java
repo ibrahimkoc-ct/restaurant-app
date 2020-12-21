@@ -1,12 +1,13 @@
 package com.ba.service;
 
-import com.ba.converter.UserDTOConverter;
 import com.ba.dto.UserDTO;
 import com.ba.entity.Role;
 import com.ba.entity.User;
+import com.ba.mapper.UserMapper;
 import com.ba.repository.RoleRepository;
 import com.ba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public String addUser(UserDTO userDTO){
         List<Role> roleList= new ArrayList<>();
@@ -29,7 +31,11 @@ public class UserService {
             Role role=roleRepository.findById(userDTO.getRoles().get(i).getId()).get();
             roleList.add(role);
         }
-        userRepository.save(UserDTOConverter.addUserIdtoDto(roleList,userDTO));
+        userDTO.getRoles().removeAll(userDTO.getRoles());
+        User user = UserMapper.INSTANCE.toEntity(userDTO);
+        user.setPassword(encoder.encode(userDTO.getPassword()));
+        user.getRoles().addAll(roleList);
+        userRepository.save(user);
         return "kisi eklendi";
     }
     public String deleteUser(Long id){
@@ -45,16 +51,17 @@ public class UserService {
         return "kisi silindi";
     }
     public UserDTO updateUser(UserDTO dto){
-        userRepository.saveAndFlush(UserDTOConverter.userDTOtoUser(dto));
+//        userRepository.saveAndFlush(UserDTOConverter.userDTOtoUser(dto));
+        userRepository.saveAndFlush(UserMapper.INSTANCE.toEntity(dto));
         return dto;
     }
     public UserDTO getUserById(Long id){
        User user= userRepository.findById(id).get();
-       return UserDTOConverter.userToUserDTO(user);
+       return UserMapper.INSTANCE.toDTO(user);
     }
     public List<UserDTO> getAllUser(){
         List<User> user=userRepository.findAll();
-        return UserDTOConverter.userListToUserDTOList(user);
+        return UserMapper.INSTANCE.toDTOList(user);
     }
 
 }

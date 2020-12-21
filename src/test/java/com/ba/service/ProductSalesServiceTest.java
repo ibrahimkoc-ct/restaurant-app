@@ -2,11 +2,8 @@ package com.ba.service;
 
 
 import com.ba.builder.ProductSalesBuilder;
-import com.ba.builder.ProductSalesDTOBuilder;
 import com.ba.dto.ProductSalesDTO;
-import com.ba.entity.Product;
 import com.ba.entity.ProductSales;
-import com.ba.repository.ProductRepository;
 import com.ba.repository.ProductSalesRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,15 +12,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.security.core.parameters.P;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
-import static org.junit.jupiter.api.Assertions.*;
+
 @RunWith(MockitoJUnitRunner.class)
 public class ProductSalesServiceTest {
 
@@ -34,31 +30,31 @@ public class ProductSalesServiceTest {
     private ProductSalesRepository repository;
     List<ProductSales> sales = new ArrayList<>();
     List<ProductSalesDTO> dto = new ArrayList<>();
-    ProductSalesBuilder productBuilder= new ProductSalesBuilder();
-    ProductSales s =productBuilder.id(15L).OrderId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
+    ProductSalesBuilder productBuilder = new ProductSalesBuilder();
+    ProductSales s = productBuilder.id(15L).OrderId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
 
     @Before
     public void setUp() throws Exception {
         sales.add(s);
 
     }
+
     @Test
-    public void shouldAddNewProductSales(){
+    public void shouldAddNewProductSales() {
         Mockito.when(repository.saveAll(any())).thenReturn(sales);
-        String res=salesService.addProductSales(dto);
+        String res = salesService.addProductSales(dto);
         assertNotNull(res);
-        assertEquals(res,"kullanıcı eklendi");
+        assertEquals(res, "kullanıcı eklendi");
 
     }
+
     @Test
-    public void shouldProductSalesList(){
+    public void shouldProductSalesList() {
         Mockito.when(repository.findAll()).thenReturn(sales);
         List<ProductSalesDTO> list = salesService.getAllProductSales();
         assertNotNull(list);
         assertNotNull(sales);
     }
-
-
 
 
 }

@@ -49,7 +49,7 @@ class CreateRoleComponent extends Component {
         UserService.createAuth(us, this.state.token).then((res) => {
             this.setState({loading: false})
         });
-        this.props.history.push('/auth-table');
+        this.props.history.push('/user-table');
 
         e.preventDefault();
     }

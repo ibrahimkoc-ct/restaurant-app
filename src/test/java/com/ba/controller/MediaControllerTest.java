@@ -19,7 +19,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RunWith(MockitoJUnitRunner.class)
 public class MediaControllerTest {
     @InjectMocks
@@ -27,25 +28,26 @@ public class MediaControllerTest {
 
     @Mock
     private MediaService service;
-    MediaBuilder mediaBuilder= new MediaBuilder();
-    MediaDTOBuilder mediaDTOBuilder=new MediaDTOBuilder();
-    byte [] b ={ (byte)0xe0, 0x4f, (byte)0xd0,
-            0x20, (byte)0xea, 0x3a, 0x69, 0x10, (byte)0xa2, (byte)0xd8, 0x08, 0x00, 0x2b,
-            0x30, 0x30, (byte)0x9d };
-    Media media=mediaBuilder.id(1L).name("image").fileContent(b).build();
-    MediaDTO mediaDTO=mediaDTOBuilder.id(1L).name("image").fileContent(b).build();
+    MediaBuilder mediaBuilder = new MediaBuilder();
+    MediaDTOBuilder mediaDTOBuilder = new MediaDTOBuilder();
+    byte[] b = {(byte) 0xe0, 0x4f, (byte) 0xd0,
+            0x20, (byte) 0xea, 0x3a, 0x69, 0x10, (byte) 0xa2, (byte) 0xd8, 0x08, 0x00, 0x2b,
+            0x30, 0x30, (byte) 0x9d};
+    Media media = mediaBuilder.id(1L).name("image").fileContent(b).build();
+    MediaDTO mediaDTO = mediaDTOBuilder.id(1L).name("image").fileContent(b).build();
 
     @Test
-    public void getMediaListControllerTest(){
-        List<MediaDTO> mediaDTOList= new ArrayList<>();
+    public void getMediaListControllerTest() {
+        List<MediaDTO> mediaDTOList = new ArrayList<>();
         mediaDTOList.add(mediaDTO);
         Mockito.when(service.getAllMedia()).thenReturn(mediaDTOList);
-        List<MediaDTO> result= controller.getAllMedia();
-        assertEquals(result,mediaDTOList);
+        List<MediaDTO> result = controller.getAllMedia();
+        assertEquals(result, mediaDTOList);
     }
+
     @Test
     public void addMediaListControllerTest() throws IOException {
-        MultipartFile file= new MultipartFile() {
+        MultipartFile file = new MultipartFile() {
             @Override
             public String getName() {
                 return null;
@@ -87,9 +89,9 @@ public class MediaControllerTest {
             }
         };
 
-        Mockito.when(service.addMedia(file,"image")).thenReturn("Media eklendi");
-        String result=controller.addFile(file,"image");
-        assertEquals(result,"Media eklendi");
+        Mockito.when(service.addMedia(file, "image")).thenReturn("Media eklendi");
+        String result = controller.addFile(file, "image");
+        assertEquals(result, "Media eklendi");
 
 
     }

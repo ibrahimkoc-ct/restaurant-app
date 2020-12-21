@@ -109,8 +109,12 @@ class CreateProductComponent extends Component {
 
 
     changeMultiSelect = (category) => {
-        this.state.selectedCategory.push(category);
-        this.state.categoryName += (category.name + ' ,')
+        if (this.state.selectedCategory.filter(select => select.id === category.id).length > 0) {
+            this.state.selectedCategory.splice(category)
+        } else {
+            this.state.selectedCategory.push(category);
+        }
+        this.state.category += (category.name + ' ,')
     }
     debugBase64 = (base64URL) => {
         var win = window.open();

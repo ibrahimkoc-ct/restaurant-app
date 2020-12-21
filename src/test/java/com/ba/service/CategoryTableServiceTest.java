@@ -1,15 +1,10 @@
 package com.ba.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
-
-
 import com.ba.builder.CategoryTableBuilder;
 import com.ba.builder.CategoryTableDTOBuilder;
-import com.ba.converter.CategoryTableDtoConverter;
 import com.ba.dto.CategoryTableDTO;
 import com.ba.entity.CategoryTable;
+import com.ba.mapper.CategoryTableMapper;
 import com.ba.repository.CategoryTableRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
+
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryTableServiceTest {
 
@@ -33,8 +32,8 @@ public class CategoryTableServiceTest {
     List<CategoryTable> list = new ArrayList<>();
     List<CategoryTableDTO> dtoList = new ArrayList<>();
     CategoryTableDTOBuilder categoryDTOBuilder = new CategoryTableDTOBuilder();
-    CategoryTableBuilder categoryBuilder=new CategoryTableBuilder();
-    CategoryTable categoryTable =categoryBuilder.tableAmount(15).description("balkon").id(1L).imageToUrl("no image").name("balkon").build();
+    CategoryTableBuilder categoryBuilder = new CategoryTableBuilder();
+    CategoryTable categoryTable = categoryBuilder.tableAmount(15).description("balkon").id(1L).imageToUrl("no image").name("balkon").build();
     CategoryTableDTO categoryTableDTO = categoryDTOBuilder.description("balkon").id(1L).imageToUrl("no image").name("balkon").build();
 
 
@@ -59,7 +58,7 @@ public class CategoryTableServiceTest {
     public void shouldCategoryTableList() {
         list.add(categoryTable);
         Mockito.when(repository.findAll()).thenReturn(list);
-        List<CategoryTableDTO> dtoList = CategoryTableDtoConverter.categoryListToCategoryDTOList(list);
+        List<CategoryTableDTO> dtoList = CategoryTableMapper.INSTANCE.toDTOList(list);
         List<CategoryTableDTO> dtoList1 = service.getAllCategory();
         assertEquals(dtoList1.get(0).getId(), dtoList.get(0).getId());
     }

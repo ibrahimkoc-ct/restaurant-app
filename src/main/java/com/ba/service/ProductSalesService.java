@@ -1,11 +1,12 @@
 package com.ba.service;
 
-import com.ba.converter.ProductSalesDtoConverter;
 import com.ba.dto.ProductSalesDTO;
 import com.ba.entity.ProductSales;
+import com.ba.mapper.ProductSalesMapper;
 import com.ba.repository.ProductSalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -14,13 +15,12 @@ public class ProductSalesService {
     ProductSalesRepository productSalesrepository;
 
     public String addProductSales(List<ProductSalesDTO> productSalesDTO) {
-        productSalesrepository.saveAll(ProductSalesDtoConverter.addProductSalesDTOlist(productSalesDTO));
+        productSalesrepository.saveAll(ProductSalesMapper.INSTANCE.toEntityList(productSalesDTO));
         return "kullanıcı eklendi";
     }
     public List<ProductSalesDTO> getAllProductSales() {
         List<ProductSales> productlist = productSalesrepository.findAll();
-        return ProductSalesDtoConverter.orderListTOOrderDTOList(productlist);
-
+        return ProductSalesMapper.INSTANCE.toDTOList(productlist);
 
 
     }

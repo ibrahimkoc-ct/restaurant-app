@@ -79,7 +79,7 @@ public class CategoryControllerTest {
     public void getProductByCategoryCategoryControllerTest(){
          Long id=1L;
         when(service.getCategoryById(id)).thenReturn(categoryDTO);
-        Set<ProductDTO> result= controller.getProductByCategort(id);
+        List<ProductDTO> result= controller.getProductByCategort(id);
         assertNotNull(result);
      }
 

@@ -1,31 +1,20 @@
 package com.ba.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ROLES")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Role {
 @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public Role setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Role setName(String name) {
-        this.name = name;
-        return this;
-    }
 }

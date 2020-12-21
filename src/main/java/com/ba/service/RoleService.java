@@ -1,13 +1,13 @@
 package com.ba.service;
 
-import com.ba.converter.RoleDTOConverter;
 import com.ba.dto.RoleDTO;
 import com.ba.entity.Role;
+import com.ba.mapper.RoleMapper;
 import com.ba.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RoleService {
@@ -17,7 +17,7 @@ public class RoleService {
 
     public List<RoleDTO> getAllRole(){
         List<Role> roleList=repository.findAll();
-        return RoleDTOConverter.roleListToRoleDTOList(roleList);
+        return RoleMapper.INSTANCE.toDTOList(roleList);
     }
     public String deleteById(Long id){
         Role role= repository.findById(id).get();
@@ -25,15 +25,16 @@ public class RoleService {
         return "kisi silindi";
     }
     public RoleDTO updateRole(RoleDTO role){
-       repository.saveAndFlush(RoleDTOConverter.roleDTOtoRole(role));
+        repository.saveAndFlush(RoleMapper.INSTANCE.toEntity(role));
         return role;
     }
     public RoleDTO getRoleById(Long id){
-        Optional<Role> list=repository.findById(id);
-        return RoleDTOConverter.getRoleById(list);
+        Role role =repository.findById(id).get();
+        return RoleMapper.INSTANCE.toDTO(role);
+
     }
     public RoleDTO addRole(RoleDTO dto){
-        repository.save(RoleDTOConverter.roleDTOtoRole(dto));
+        repository.save(RoleMapper.INSTANCE.toEntity(dto));
         return dto;
     }
 

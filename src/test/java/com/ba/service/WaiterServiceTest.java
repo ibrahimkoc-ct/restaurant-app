@@ -4,14 +4,12 @@ import com.ba.builder.MediaBuilder;
 import com.ba.builder.MediaDTOBuilder;
 import com.ba.builder.WaiterBuilder;
 import com.ba.builder.WaiterDTOBuilder;
-import com.ba.converter.WaiterDtoConverter;
 import com.ba.dto.MediaDTO;
 import com.ba.dto.WaiterDTO;
 import com.ba.entity.Media;
 import com.ba.entity.Waiter;
 import com.ba.repository.MediaRepository;
 import com.ba.repository.WaiterRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 

@@ -89,7 +89,7 @@ class HomePageCompanent extends Component {
                 </Link>
                     <button className="btn btn-secondary homebutton"></button>
                     <button className="btn btn-secondary homebutton"></button>
-
+                    <button className="btn btn-secondary homebutton"></button>
                     <button className="btn btn-secondary homebutton" onClick={this.signOut}>ÇIKIŞ</button>
                 <Modal show={this.state.show}>
                     <Modal.Header>Garson Seçimi</Modal.Header>
