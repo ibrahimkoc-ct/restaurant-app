@@ -3,12 +3,10 @@ import CategoryService from "../../services/CategoryService";
 import HeaderComponent from "../homepage/HeaderComponent";
 import Table from "react-bootstrap/Table";
 import {Link} from "react-router-dom";
-import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
-
-const history = createBrowserHistory({forceRefresh:true});
-
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
 class CategoryListComponent extends Component {
     static contextType = BackofficeContext;
     constructor(props) {

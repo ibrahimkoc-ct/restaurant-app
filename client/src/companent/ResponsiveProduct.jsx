@@ -1,7 +1,5 @@
-import React, {useState, useEffect, Component} from 'react';
-import FooterComponent from "./FooterCompanent";
+import React, {Component} from 'react';
 import HeaderComponent from "./HeaderComponent";
-import Table from 'react-bootstrap/Table'
 import axios from 'axios';
 import ProductService from "../services/ProductService";
 import nextId from "react-id-generator";
@@ -9,11 +7,13 @@ import {Link} from "react-router-dom";
 import "./App2.css";
 import ClientContext from "../ClientContext";
 import createBrowserHistory from 'history/createBrowserHistory';
-import FullPageLoading from'./FullPageLoading'
-const history = createBrowserHistory({forceRefresh:true});
+import FullPageLoading from './FullPageLoading'
+
+const history = createBrowserHistory({forceRefresh: true});
 
 class ResponsiveProduct extends Component {
-    static contextType=ClientContext;
+    static contextType = ClientContext;
+
     constructor(props) {
         super(props)
         this.state = {
@@ -21,7 +21,7 @@ class ResponsiveProduct extends Component {
             categorylist: [],
             salelist: [],
             shoppinglistprice: 0,
-            paymentText:'',
+            paymentText: '',
             cart: {
                 cartId: 0,
                 piece: 1,
@@ -30,12 +30,12 @@ class ResponsiveProduct extends Component {
                 total: 0,
                 id: 0,
                 selectedtable: '',
-                waiterName:''
+                waiterName: ''
 
             },
-            waiterName:'',
-            token:'',
-            loading:false
+            waiterName: '',
+            token: '',
+            loading: false
 
         }
 
@@ -57,7 +57,7 @@ class ResponsiveProduct extends Component {
 
         }
 
-        await  ProductService.getCategory(this.state.token).then((res) => {
+        await ProductService.getCategory(this.state.token).then((res) => {
             this.setState({productslist: res.data});
         });
 
@@ -67,7 +67,7 @@ class ResponsiveProduct extends Component {
 
             }
         }).then((res) => {
-             this.setState({categorylist: res.data})
+            this.setState({categorylist: res.data})
 
 
         });
@@ -87,7 +87,7 @@ class ResponsiveProduct extends Component {
             }
 
         }
-        await this.setState({salelist: table,loading:false});
+        await this.setState({salelist: table, loading: false});
         localStorage.setItem("orders", JSON.stringify(orders));
 
 
@@ -102,7 +102,7 @@ class ResponsiveProduct extends Component {
 
             }
         }).then((res) => {
-            this.setState({categorylist: res.data,loading:false});
+            this.setState({categorylist: res.data, loading: false});
 
         });
 
@@ -116,7 +116,8 @@ class ResponsiveProduct extends Component {
             cart[0].piece += 1;
 
             cart[0].total = cart[0].total + cart[0].price;
-            this.setState([{...this.state.salelist, [cart[0].id]: cart[0],loading:false}])
+            this.setState([{...this.state.salelist, [cart[0].id]: cart[0]}])
+            this.setState({ loading: false})
         } else {
             this.setState({
                 cart: {
@@ -127,9 +128,9 @@ class ResponsiveProduct extends Component {
                     piece: 1,
                     total: Number(product.price),
                     selectedtable: localStorage.getItem("product"),
-                    waiterName:localStorage.getItem("waiter")
+                    waiterName: localStorage.getItem("waiter")
                 }
-            }, () => this.setState({salelist: [...this.state.salelist, this.state.cart],loading:false}))
+            }, () => this.setState({salelist: [...this.state.salelist, this.state.cart], loading: false}))
         }
 
     }
@@ -158,46 +159,45 @@ class ResponsiveProduct extends Component {
     pay() {
         this.setState({loading: true})
 
-        ProductService.pay(this.state.salelist,this.state.token).then(res => {
+        ProductService.pay(this.state.salelist, this.state.token).then(res => {
             this.setState({loading: false})
             this.props.history.push('/homepage')
-            });
+        });
 
 
+        localStorage.setItem("product", "Secili Masa Yok");
 
-           localStorage.setItem("product", "Secili Masa Yok");
-
-         const{waiter,setWaiter}=this.context
-         setWaiter("Seçili Garson Yok")
-        localStorage.setItem("waiter","Seçili Garson Yok")
-
+        const {waiter, setWaiter} = this.context
+        setWaiter("Seçili Garson Yok")
+        localStorage.setItem("waiter", "Seçili Garson Yok")
 
 
     }
 
-    onClickExit(){
+    onClickExit() {
 
 
-        if(this.state.salelist.length>0){
-            let orders=ResponsiveProduct.getOrderFromStorage();
+        if (this.state.salelist.length > 0) {
+            let orders = ResponsiveProduct.getOrderFromStorage();
             orders.push(this.state.salelist);
-            localStorage.setItem("orders",JSON.stringify(orders));
+            localStorage.setItem("orders", JSON.stringify(orders));
         }
 
         localStorage.setItem("product", "Secili Masa Yok");
-        const{waiter,setWaiter}=this.context
+        const {waiter, setWaiter} = this.context
         setWaiter("Seçili Garson Yok")
-        localStorage.setItem("waiter","Seçili Garson Yok")
+        localStorage.setItem("waiter", "Seçili Garson Yok")
 
         this.props.history.push('/homepage')
 
     }
-    static getOrderFromStorage(){
+
+    static getOrderFromStorage() {
         let orders;
 
-        if(localStorage.getItem("orders") === null){
+        if (localStorage.getItem("orders") === null) {
             orders = [];
-        }else{
+        } else {
             orders = JSON.parse(localStorage.getItem("orders"));
         }
 
@@ -210,7 +210,7 @@ class ResponsiveProduct extends Component {
             <div>
                 <HeaderComponent/>
                 <Link to="/homepage">
-                    <button className="btn btn-info backbutton fas fa-edit buttonhome" onClick={()=>
+                    <button className="btn btn-info backbutton fas fa-edit buttonhome" onClick={() =>
                         this.onClickExit()}></button>
                 </Link>
                 <h3 className="tablelable2">{localStorage.getItem("product")}</h3>
@@ -233,20 +233,21 @@ class ResponsiveProduct extends Component {
                                 category => {
                                     return (
 
-                                        <div>
+                                        <div key={category.name}>
                                             <button className="btn btn-secondary buttoncategory"
                                                     onClick={() =>
                                                         this.onClickSidebar(category)}>
 
-                                                        {category.name} <br/>
-                                                        <img src={'data:image/png;base64,' + category.mediaDTO.fileContent} width="120" style={{margin:1}}/>
+                                                {category.name} <br/>
+                                                <img src={'data:image/png;base64,' + category.mediaDTO.fileContent}
+                                                     width="120" style={{margin: 1}}/>
 
                                             </button>
                                         </div>
 
                                     )
                                 })}
-                            </div>
+                        </div>
 
                         <div className="col-xl-7 col-lg-7 text-center newproduct ">
                             <div className="row">
@@ -255,10 +256,12 @@ class ResponsiveProduct extends Component {
                                     this.state.categorylist.map(
                                         productl => {
                                             return (
-                                                <div className="col-md-5 mb-4 ml-5">
+                                                <div key={productl.id} className="col-md-5 mb-4 ml-5">
                                                     <div className="card cardbodytable">
                                                         <div className="card-header">
-                                                            <img src={'data:image/png;base64,' + productl.mediaDTO.fileContent} width="100"/>
+                                                            <img
+                                                                src={'data:image/png;base64,' + productl.mediaDTO.fileContent}
+                                                                width="100"/>
                                                         </div>
                                                         <div className="card-body">
                                                             <h5 className="d-inline">{productl.title}</h5>
@@ -290,28 +293,27 @@ class ResponsiveProduct extends Component {
                                         return (
                                             <div className="row  mt-3" key={v.cartId}>
 
-                                                    <div className="col-xl-2 col-lg-2">
-                                                        <button className=" btn btn-info btn-sm "
-                                                                onClick={() => this.addPrice(v)}>+
-                                                        </button>
-                                                    </div>
-                                                    <div className="col-xl-1 col-lg-1">
-                                                        <h5 htmlFor="name">x{v.piece}</h5>
-                                                    </div>
-                                                    <div className="col-xl-5 col-lg-5 text-left">
-                                                        <h5 htmlFor="name">{v.title}</h5>
-                                                    </div>
-                                                    <div className="col-xl-2 col-lg-2">
-                                                        <h6 htmlFor="name">{v.total} TL</h6>
+                                                <div className="col-xl-2 col-lg-2">
+                                                    <button className=" btn btn-info btn-sm "
+                                                            onClick={() => this.addPrice(v)}>+
+                                                    </button>
+                                                </div>
+                                                <div className="col-xl-1 col-lg-1">
+                                                    <h5 htmlFor="name">x{v.piece}</h5>
+                                                </div>
+                                                <div className="col-xl-5 col-lg-5 text-left">
+                                                    <h5 htmlFor="name">{v.title}</h5>
+                                                </div>
+                                                <div className="col-xl-2 col-lg-2">
+                                                    <h6 htmlFor="name">{v.total} TL</h6>
 
-                                                    </div>
-                                                    <div className="col-xl-2 col-lg-2" ><button
+                                                </div>
+                                                <div className="col-xl-2 col-lg-2">
+                                                    <button
                                                         className="btn btn-danger btn-sm"
                                                         onClick={() => this.minusPrice(v)}>-
-                                                    </button></div>
-
-
-
+                                                    </button>
+                                                </div>
 
 
                                             </div>
@@ -345,7 +347,7 @@ class ResponsiveProduct extends Component {
 
 
                 </div>
-                { this.state.loading ? <FullPageLoading/> : null}
+                {this.state.loading ? <FullPageLoading/> : null}
             </div>
         );
     }

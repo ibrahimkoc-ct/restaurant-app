@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import LoginHeaderComponent from "./LoginHeaderComponent";
-import FooterComponent from "./FooterCompanent";
 import UserService from "../services/UserService";
 import './App2.css';
 import ClientContext from "../ClientContext";
-import FullPageLoading from'./FullPageLoading'
+import FullPageLoading from './FullPageLoading'
 
 class LoginComponent extends Component {
     static contextType = ClientContext;
@@ -20,7 +19,7 @@ class LoginComponent extends Component {
             checkTrue: false,
             waiter: 'Secili Garson Yok',
             loginCheck: "false",
-            loading:false
+            loading: false
 
         }
         this.chargeUsernameHandler = this.chargeUsernameHandler.bind(this);
@@ -38,14 +37,13 @@ class LoginComponent extends Component {
     async componentDidMount() {
 
 
-
         await UserService.getList().then((res) => {
             this.setState({userslist: res.data});
         });
         if (localStorage.getItem("token") !== null) {
             const {waiter, setWaiter} = this.context
             setWaiter("Seçili Garson Yok")
-            localStorage.setItem("waiter","Seçili Garson Yok")
+            localStorage.setItem("waiter", "Seçili Garson Yok")
             this.props.history.push('/homepage');
         }
     }
@@ -56,7 +54,7 @@ class LoginComponent extends Component {
     }
 
     signIn = (e) => {
-        this.setState({loading:true})
+        this.setState({loading: true})
         this.state.token = 'Basic ' + btoa(this.state.username + ':' + this.state.password)
         UserService.getLogin(this.state.token).then(() => {
             if (this.state.checkTrue === true) {
@@ -68,14 +66,14 @@ class LoginComponent extends Component {
             setToken('Basic ' + btoa(this.state.username + ':' + this.state.password))
             const {waiter, setWaiter} = this.context
             setWaiter("Seçili Garson Yok")
-            localStorage.setItem("waiter","Seçili Garson Yok")
-            this.setState({loading:false})
+            localStorage.setItem("waiter", "Seçili Garson Yok")
+            this.setState({loading: false})
 
             this.props.history.push('/homepage');
         }).catch(() => {
             this.state.username = '';
             this.state.password = '';
-            this.setState({label: "Kullanıcı adı veya şifre yanlış",loading:false})
+            this.setState({label: "Kullanıcı adı veya şifre yanlış", loading: false})
         })
         e.preventDefault()
     }

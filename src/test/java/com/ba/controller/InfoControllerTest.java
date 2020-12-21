@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(MockitoJUnitRunner.class)
 public class InfoControllerTest {
 
-
     @InjectMocks
-    private ServerInfo info;
-    List<ServerInfo> server_info = new ArrayList<>();
+    private InfoController controller;
 
     @Mock
-    private InfoController controller;
+    private ServerInfo info;
+
+    List<ServerInfo> server_info = new ArrayList<>();
+
+
 
 
     @Before
@@ -32,12 +35,10 @@ public class InfoControllerTest {
 
     }
 
-
     @Test
     public void getInfoInfoControllerTest(){
-        Mockito.when(controller.getInfo()).thenReturn(server_info);
         List<ServerInfo> result=controller.getInfo();
-        assertEquals(result,server_info);
+        assertNotNull(result);
     }
 
 }

@@ -1,14 +1,17 @@
 import axios from "axios";
 
-const Waiter_Api_Base_URL="http://localhost:8080/waiter/list";
-class WaiterService{
+const Waiter_Api_Base_URL = "http://localhost:8080/waiter/list";
+
+class WaiterService {
     getWaiter(token) {
-        return axios.get(Waiter_Api_Base_URL,{
+        return axios.get(Waiter_Api_Base_URL, {
             headers: {
-                Authorization:token
-            }});
+                Authorization: token
+            }
+        });
 
 
     }
 }
+
 export default new WaiterService()
