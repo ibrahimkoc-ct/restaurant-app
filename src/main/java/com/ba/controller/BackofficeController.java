@@ -1,8 +1,11 @@
 package com.ba.controller;
 
 import com.ba.dto.ProductDTO;
+import com.ba.dto.ProductWrapperDTO;
+import com.ba.entity.Product;
 import com.ba.service.BackofficeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 @CrossOrigin(origins = "*")
@@ -41,6 +44,10 @@ public class BackofficeController {
        productService.addProductId(product,id);
 
         return "product";
+    }
+    @GetMapping("/product/search")
+    public ProductWrapperDTO searchProduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+      return  productService.getPageProduct(page,size);
     }
 
 }

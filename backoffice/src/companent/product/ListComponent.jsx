@@ -9,23 +9,28 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
 
-const history = createBrowserHistory({forceRefresh:true});
+const history = createBrowserHistory({forceRefresh: true});
 
 class ListComponent extends Component {
     static contextType = BackofficeContext;
+
     constructor(props) {
         super(props)
         this.state = {
             productslist: [],
             categorylist: [],
-            token:'',
-            loading:false
+            pageProductList: [],
+            pageNum: 0,
+            lastPage:0,
+            token: '',
+            loading: false
         }
 
-        this.editProduct=this.editProduct.bind(this);
-        this.deleteProduct=this.deleteProduct.bind(this);
-        this.ViewCategory=this.ViewCategory.bind(this);
+        this.editProduct = this.editProduct.bind(this);
+        this.deleteProduct = this.deleteProduct.bind(this);
+        this.ViewCategory = this.ViewCategory.bind(this);
     }
+
     async componentDidMount() {
         const userToken = this.context;
         this.setState({loading: true})
@@ -41,123 +46,158 @@ class ListComponent extends Component {
             this.state.token = localStorage.getItem("token")
         }
 
-        await ProductService.getProduct(this.state.token).then((res) => {
-            this.setState({productslist: res.data});
-        });
+        // await ProductService.getProduct(this.state.token).then((res) => {
+        //     this.setState({productslist: res.data});
+        // });
         CategoryService.getCategory(this.state.token).then((res) => {
             this.setState({categorylist: res.data, loading: false});
         });
+        await ProductService.getPageProduct(this.state.token, 0).then((res) => {
+            this.setState({productslist: res.data.listProductDto, pageNum: res.data.pageSize});
+            let selectedButton =document.getElementById(0)
+            selectedButton.className="btn btn-secondary";
+        })
 
+    }
+
+    editProduct(id) {
+        this.props.history.push('/update-product/' + id);
 
     }
 
-    editProduct(id){
-        this.props.history.push('/update-product/'+id);
-
-
-
-    }
-    deleteProduct(id){
+    deleteProduct(id) {
         this.setState({loading: true})
-            ProductService.deleteProduct(id,this.state.token).then(res =>{
-                this.setState({productslist:this.state.productslist.filter(product => product.id !==id),loading:false})
+        ProductService.deleteProduct(id, this.state.token).then(res => {
+            this.setState({productslist: this.state.productslist.filter(product => product.id !== id), loading: false})
 
-            })
+        })
 
     }
-    viewProduct(id){
-        this.props.history.push('/view-product/'+id);
+
+    viewProduct(id) {
+        this.props.history.push('/view-product/' + id);
     }
-    ViewCategory=(category)=> {
+
+    ViewCategory = (category) => {
 
         this.setState({loading: true})
         this.setState({
-            productslist:this.state.productslist.filter(product => product.category==category),
-            loading:false
+            productslist: this.state.productslist.filter(product => product.category == category),
+            loading: false
 
         })
     }
+    ViewPage =(page) =>{
+       let lastSelectedButton= document.getElementById(this.state.lastPage)
+        lastSelectedButton.className="btn btn-outline-secondary";
 
+             ProductService.getPageProduct(this.state.token, page).then((res) => {
+            this.setState({productslist: res.data.listProductDto,lastPage:page});
+
+            let selectedButton =document.getElementById(page)
+                 selectedButton.className="btn btn-secondary";
+
+        })
+
+    }
 
     render() {
+        let pageButtonArray = [];
+        for (let i = 0; i < this.state.pageNum; i++) {
+            pageButtonArray.push(
+
+                <button onClick={()=>this.ViewPage(i)} className="btn btn-outline-secondary" id={i} style={{marginLeft:"5px"}}>{i + 1}</button>
+            )
+        }
 
         return (
             <div>
                 <HeaderComponent/>
                 <Link to="/add-product">
                     <button className="btn btn-info addbutton">Ürün Ekle</button>
-
                 </Link>
-
                 <div className="container productlist">
+                    <h2 className="text-center ">Urun Listesi</h2>
+
+                    <div className="row">
 
 
+                    </div>
+                    <div className="row tbody-heigth">
+                        <Table striped bordered hover>
+                            <thead>
+                            <tr>
+                                <th>Urun Adi</th>
+                                <th>Urun Icerigi</th>
+                                <th style={{width: '200px'}}>Urun Kategorisi</th>
+                                <th>Urun Resmi</th>
+                                <th>Urun Fiyati</th>
+                                <th className="actions123">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                this.state.productslist.map(
+                                    product =>
 
-                <h2 className="text-center ">Urun Listesi</h2>
+                                        <tr key={product.id}>
+                                            <td>{product.title}</td>
+                                            <td>{product.description}</td>
+                                            <td>
 
-                <div className="row">
+                                                <button className="btn btn-link">
+                                                    {
+                                                        product.categories.map(
+                                                            category =>
+                                                                <ul className="text-left" key={category.name}>
+                                                                    <li onClick={() => this.ViewCategory(category.name)}>{category.name}</li>
+                                                                </ul>
+                                                        )
 
+                                                    }
+
+                                                </button>
+                                            </td>
+                                            <td align="center"><img
+                                                src={'data:image/png;base64,' + product.mediaDTO.fileContent}
+                                                width="100"/></td>
+                                            <td>{product.price}</td>
+                                            <td>
+                                                <button onClick={() => this.editProduct(product.id)}
+                                                        className=" btn btn-info">Güncelle
+                                                </button>
+                                                <button style={{marginLeft: "10px"}}
+                                                        onClick={() => this.deleteProduct(product.id)}
+                                                        className="btn btn-danger">Sil
+                                                </button>
+                                                <button style={{marginLeft: "10px"}}
+                                                        onClick={() => this.viewProduct(product.id)}
+                                                        className="btn btn-success">Görüntüle
+                                                </button>
+                                            </td>
+                                        </tr>
+                                )
+                            }
+
+                            </tbody>
+
+                        </Table>
+
+                    </div>
+                    <br/>
+                    <div align="center">
+                        {pageButtonArray}
+                    </div>
 
 
                 </div>
-                <div className="row tbody-heigth">
-                    <Table striped bordered hover >
-                        <thead>
-                        <tr>
-                            <th>Urun Adi</th>
-                            <th>Urun Icerigi</th>
-                            <th style={{width:'200px'}}>Urun Kategorisi</th>
-                            <th>Urun Resmi</th>
-                            <th>Urun Fiyati</th>
-                            <th className="actions123">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            this.state.productslist.map(
-                                product =>
 
-                                    <tr key={product.id}>
-                                        <td>{product.title}</td>
-                                        <td>{product.description}</td>
-                                        <td>
-
-                                            <button className="btn btn-link">
-                                                {
-                                                    product.categories.map(
-                                                        category=>
-                                                        <ul className="text-left" key={category.name}>
-                                                           <li onClick={()=>this.ViewCategory(category.name)}>{category.name}</li>
-                                                        </ul>
-                                                    )
-
-                                                }
-
-                                            </button>
-                                        </td>
-                                        <td align="center"><img src={'data:image/png;base64,' + product.mediaDTO.fileContent} width="100"/></td>
-                                        <td>{product.price}</td>
-                                        <td>
-
-                                            <button  onClick={()=>this.editProduct(product.id)} className=" btn btn-info">Güncelle</button>
-                                            <button style={{marginLeft: "10px"}} onClick={()=>this.deleteProduct(product.id)} className="btn btn-danger">Sil</button>
-                                            <button style={{marginLeft: "10px"}} onClick={()=>this.viewProduct(product.id)} className="btn btn-success">Görüntüle</button>
-                                        </td>
-                                    </tr>
-
-                            )
-                        }
-                        </tbody>
-                    </Table>
-                </div>
-
-                </div>
-
-                { this.state.loading ? <FullPageLoading/> : null}
+                {this.state.loading ? <FullPageLoading/> : null}
 
             </div>
         );
 
     }
 }
+
 export default ListComponent;

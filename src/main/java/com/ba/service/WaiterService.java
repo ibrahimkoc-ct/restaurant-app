@@ -37,7 +37,9 @@ public class WaiterService {
 
     public String addWaiterDTO(WaiterDTO waiterDTO) {
 
+
         mediaRepository.delete(MediaMapper.INSTANCE.toEntity(waiterDTO.getMediaDTO()));
+
         Waiter waiter =WaiterMapper.INSTANCE.toEntity(waiterDTO);
         Media media = MediaMapper.INSTANCE.toEntity(waiterDTO.getMediaDTO());
         media.setId(null);

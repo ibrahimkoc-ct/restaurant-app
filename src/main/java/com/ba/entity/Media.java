@@ -11,7 +11,11 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@SQLDelete(sql=
+        "UPDATE Media "+
+                "SET deleted =true "+
+                "Where id=?")
+@Where( clause = "deleted =false")
 public class Media {
 
 

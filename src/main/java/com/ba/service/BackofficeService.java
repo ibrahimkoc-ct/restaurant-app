@@ -1,6 +1,7 @@
 package com.ba.service;
 
 import com.ba.dto.ProductDTO;
+import com.ba.dto.ProductWrapperDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
 import com.ba.mapper.CategoryMapper;
@@ -9,10 +10,14 @@ import com.ba.mapper.ProductMapper;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,7 +32,7 @@ public class BackofficeService {
     public List<ProductDTO> getAllProduct() {
         List<Product> productList = repository.findAll();
         List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(productList);
-        for(int i = 0; i<productList.size(); i++){
+        for (int i = 0; i < productList.size(); i++) {
             productDTOList.get(i).setCategories(CategoryMapper.INSTANCE.toDTOList(productList.get(i).getCategories()));
         }
         return productDTOList;
@@ -57,7 +62,7 @@ public class BackofficeService {
             Category category = categoryRepository.findById(product.getCategories().get(i).getId()).get();
             categoryList1.add(category);
         }
-        Product product2=ProductMapper.INSTANCE.toEntity(product);
+        Product product2 = ProductMapper.INSTANCE.toEntity(product);
         product2.setMedia(MediaMapper.INSTANCE.toEntity(product.getMediaDTO()));
         for (int i = 0; i < categoryList1.size(); i++) {
             categoryList1.get(i).getProducts().add(product2);
@@ -72,6 +77,7 @@ public class BackofficeService {
         Product product = repository.findById(id).get();
         return ProductMapper.INSTANCE.toDTO(product);
     }
+
     public String addProductId(ProductDTO product, Long id) {
 
         List<Category> categoryList = new ArrayList<>();
@@ -89,4 +95,19 @@ public class BackofficeService {
         return "kisi eklendi";
     }
 
+    public ProductWrapperDTO getPageProduct(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> pageProductList = repository.findAll(pageable);
+        List<Product> dtoList = pageProductList.toList();
+        List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(dtoList);
+        for (int i = 0; i < dtoList.size(); i++) {
+            productDTOList.get(i).setCategories(CategoryMapper.INSTANCE.toDTOList(dtoList.get(i).getCategories()));
+        }
+        ProductWrapperDTO wrapperDTO = new ProductWrapperDTO();
+        wrapperDTO.setListProductDto(productDTOList);
+        wrapperDTO.setPageSize((long) pageable.getPageSize());
+
+        return wrapperDTO;
+
+    }
 }
