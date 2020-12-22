@@ -1,17 +1,23 @@
 package com.ba.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "ProductSales")
+@SQLDelete(sql=
+        "UPDATE ProductSales "+
+                "SET deleted =true "+
+                "Where OrderId=?")
+@Where( clause = "deleted =false")
 public class ProductSales {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +30,7 @@ public class ProductSales {
     private String waiterName;
     @Column
     private Date createDate = new Timestamp(System.currentTimeMillis());
+    private boolean deleted;
 
 
 }

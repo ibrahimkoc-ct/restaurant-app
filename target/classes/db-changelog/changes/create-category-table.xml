@@ -21,4 +21,11 @@
         </rollback>
 
     </changeSet>
+    <changeSet author="22-12-2020_12:23" id="ibrahim.koc">
+        <addColumn tableName="category" >
+            <column name="deleted"
+                    defaultValue="false"
+                    type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

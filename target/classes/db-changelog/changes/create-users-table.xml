@@ -26,4 +26,11 @@
         </rollback>
 
     </changeSet>
+    <changeSet author="22-12-2020_13:45" id="ibrahim.koc">
+        <addColumn tableName="users" >
+            <column name="deleted"
+                    defaultValue="false"
+                    type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

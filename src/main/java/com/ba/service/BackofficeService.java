@@ -3,6 +3,7 @@ package com.ba.service;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
+import com.ba.mapper.CategoryMapper;
 import com.ba.mapper.MediaMapper;
 import com.ba.mapper.ProductMapper;
 import com.ba.repository.CategoryRepository;
@@ -25,7 +26,11 @@ public class BackofficeService {
 
     public List<ProductDTO> getAllProduct() {
         List<Product> productList = repository.findAll();
-        return ProductMapper.INSTANCE.toDTOList(productList);
+        List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(productList);
+        for(int i = 0; i<productList.size(); i++){
+            productDTOList.get(i).setCategories(CategoryMapper.INSTANCE.toDTOList(productList.get(i).getCategories()));
+        }
+        return productDTOList;
     }
 
     public String deleteProduct(Long id) {

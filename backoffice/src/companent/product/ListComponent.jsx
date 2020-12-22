@@ -106,7 +106,7 @@ class ListComponent extends Component {
                         <tr>
                             <th>Urun Adi</th>
                             <th>Urun Icerigi</th>
-                            <th>Urun Kategorisi</th>
+                            <th style={{width:'200px'}}>Urun Kategorisi</th>
                             <th>Urun Resmi</th>
                             <th>Urun Fiyati</th>
                             <th className="actions123">Actions</th>

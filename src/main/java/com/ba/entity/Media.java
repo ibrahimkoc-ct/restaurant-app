@@ -1,15 +1,17 @@
 package com.ba.entity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Media {
 
 
@@ -17,10 +19,7 @@ public class Media {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-//    @OneToOne(mappedBy = "media")
-//    private Waiter waiter;
-
+    private boolean deleted;
 
     @Column(length = 1000000)
     private byte[] fileContent;

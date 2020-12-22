@@ -12,10 +12,10 @@ public interface ProductMapper {
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
     @Mapping(source ="media", target = "mediaDTO")
-    @Mapping(target ="categories", ignore = true)
+    @Mapping(ignore = true,target ="categories")
     ProductDTO toDTO(Product product);
 
-    @Mapping(target ="categories", ignore = true)
+    @Mapping(ignore = true,target ="categories")
     @Mapping(source = "mediaDTO",target = "media")
     Product toEntity(ProductDTO dto);
 

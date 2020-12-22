@@ -13,7 +13,8 @@
             </column>
         </createTable>
         <rollback>
-            <dropTable tableName="TBL_CATEGORY_PRODUCT"/>
+            <dropTable tableName="USER_ROLES"/>
         </rollback>
     </changeSet>
+
 </databaseChangeLog>

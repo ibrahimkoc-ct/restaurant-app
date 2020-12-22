@@ -1,8 +1,8 @@
 package com.ba.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,9 +10,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "USERS")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLDelete(sql=
+        "UPDATE USERS "+
+                "SET deleted =true "+
+                "Where id=?")
+@Where( clause = "deleted =false")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +27,7 @@ public class User {
     private String username;
     private String password;
     private boolean enabled;
+    private boolean deleted;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(

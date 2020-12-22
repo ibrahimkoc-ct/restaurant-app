@@ -21,4 +21,11 @@
         </rollback>
 
     </changeSet>
+    <changeSet author="22-12-2020_13:44" id="ibrahim.koc">
+        <addColumn tableName="product_sales" >
+            <column name="deleted"
+                    defaultValue="false"
+                    type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

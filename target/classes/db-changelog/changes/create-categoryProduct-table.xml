@@ -16,4 +16,11 @@
             <dropTable tableName="TBL_CATEGORY_PRODUCT"/>
         </rollback>
     </changeSet>
+    <changeSet author="22-12-2020_13:42" id="ibrahim.koc">
+        <addColumn tableName="TBL_CATEGORY_PRODUCT" >
+            <column name="deleted"
+                    defaultValue="false"
+                    type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

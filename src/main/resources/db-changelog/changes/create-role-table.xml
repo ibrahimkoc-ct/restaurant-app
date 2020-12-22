@@ -12,8 +12,15 @@
                         </column>
                     </createTable>
         <rollback>
-            <dropTable tableName="authorities"/>
+            <dropTable tableName="roles"/>
         </rollback>
 
+    </changeSet>
+    <changeSet author="22-12-2020_13:44" id="ibrahim.koc">
+        <addColumn tableName="roles" >
+            <column name="deleted"
+                    defaultValue="false"
+                    type="BOOLEAN"/>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

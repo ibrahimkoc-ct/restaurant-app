@@ -4,6 +4,7 @@ import com.ba.dto.CategoryTableDTO;
 import com.ba.entity.CategoryTable;
 import com.ba.mapper.CategoryTableMapper;
 import com.ba.repository.CategoryTableRepository;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

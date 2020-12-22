@@ -9,6 +9,7 @@ import com.ba.mapper.WaiterMapper;
 import com.ba.repository.MediaRepository;
 import com.ba.repository.WaiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class WaiterService {
     }
 
     public String addWaiterDTO(WaiterDTO waiterDTO) {
+
         mediaRepository.delete(MediaMapper.INSTANCE.toEntity(waiterDTO.getMediaDTO()));
         Waiter waiter =WaiterMapper.INSTANCE.toEntity(waiterDTO);
         Media media = MediaMapper.INSTANCE.toEntity(waiterDTO.getMediaDTO());
