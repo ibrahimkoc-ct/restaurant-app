@@ -9,6 +9,7 @@ import com.ba.mapper.ProductMapper;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -25,17 +26,17 @@ public class CategoryService {
     MediaRepository mediaRepository;
 
 
-    @Cacheable(value = "listAllCategory",key="'CATEGORY_LIST_ALL'")
+    @Cacheable(value = "CategoryCache",key="'CATEGORY_LIST_ALL'")
     public List<CategoryDTO> getAllCategory() {
         List<Category> categoryList= categoryRepository.findAll();
         return CategoryMapper.INSTANCE.toDTOList(categoryList);
     }
-
+    @CacheEvict(value = "CategoryCache",allEntries = true)
     public String deleteCategory(Long id) {
         categoryRepository.deleteById(id);
         return "kisi silindi";
     }
-
+    @CacheEvict(value = "CategoryCache",allEntries = true)
     public String addCategory(CategoryDTO categoryDTO) {
         Category category=CategoryMapper.INSTANCE.toEntity(categoryDTO);
         category.setMedia(MediaMapper.INSTANCE.toEntity(categoryDTO.getMediaDTO()));
@@ -43,7 +44,7 @@ public class CategoryService {
        categoryRepository.save(category);
         return "kisi eklendi";
     }
-
+    @CacheEvict(value = "CategoryCache",allEntries = true)
     public CategoryDTO updateCategory (CategoryDTO categoryDTO){
         Optional<Category> categoryList = categoryRepository.findById(categoryDTO.getId());
         Category category=CategoryMapper.INSTANCE.toEntity(categoryDTO);
@@ -53,12 +54,13 @@ public class CategoryService {
 
         return categoryDTO;
     }
+    @Cacheable(value = "CATEGORY_CACHE_BY",key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
     public CategoryDTO getCategoryById(Long id) {
         Category dto =categoryRepository.findById(id).get();
         return CategoryMapper.INSTANCE.toDTO(dto);
 
     }
-
+    @Cacheable(value = "CATEGORY_CACHE_BY",key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
     public List<ProductDTO> getProductCategory(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
         List<ProductDTO> dtoList=ProductMapper.INSTANCE.toDTOList(category.get().getProducts());
