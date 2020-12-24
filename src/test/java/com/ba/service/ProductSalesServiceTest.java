@@ -31,7 +31,7 @@ public class ProductSalesServiceTest {
     List<ProductSales> sales = new ArrayList<>();
     List<ProductSalesDTO> dto = new ArrayList<>();
     ProductSalesBuilder productBuilder = new ProductSalesBuilder();
-    ProductSales s = productBuilder.id(15L).OrderId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
+    ProductSales s = productBuilder.id(1L).productId(15L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
 
     @Before
     public void setUp() throws Exception {

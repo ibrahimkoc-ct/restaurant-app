@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import HeaderComponent from "./HeaderComponent";
-import axios from 'axios';
 import ProductService from "../services/ProductService";
 import nextId from "react-id-generator";
 import {Link} from "react-router-dom";
@@ -30,15 +29,42 @@ class ResponsiveProduct extends Component {
                 total: 0,
                 id: 0,
                 selectedtable: '',
-                waiterName: ''
+                waiterName: '',
+                productId:0
 
             },
+            hasNext: true,
             waiterName: '',
             token: '',
-            loading: false
+            loading: false,
+            scrollTop: 0,
+            CategoryId: 0,
+            pageNum: 0,
 
         }
+        this.myRef = React.createRef()
 
+    }
+
+    onScroll = () => {
+        const scrollTop = this.myRef.current.scrollTop
+        this.setState({
+            scrollTop: scrollTop
+        })
+
+        if (scrollTop > (this.state.pageNum+1)*700) {
+            if (this.state.hasNext.toString() === "true") {
+                this.state.pageNum+=1;
+                ProductService.getProduct(this.state.token, this.state.CategoryId, this.state.pageNum).then((res) => {
+                    this.setState({hasNext: res.data.hasNext,
+                        categorylist:[...this.state.categorylist,...res.data.listProductDto]})
+
+                })
+
+            }
+
+
+        }
     }
 
     async componentDidMount() {
@@ -53,25 +79,11 @@ class ResponsiveProduct extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
             const {waiter, setWaiter} = this.context
-
-
         }
-
         await ProductService.getCategory(this.state.token).then((res) => {
-            this.setState({productslist: res.data});
+            this.setState({productslist: res.data,CategoryId:1});
         });
-
-        await axios.get("http://localhost:8080/category/product/id/" + 1, {
-            headers: {
-                Authorization: this.state.token
-
-            }
-        }).then((res) => {
-            this.setState({categorylist: res.data})
-
-
-        });
-
+        this.onClickSidebar(1)
         let orders = ResponsiveProduct.getOrderFromStorage();
         let table = [];
         for (let i = 0; i < orders.length; i++) {
@@ -81,7 +93,6 @@ class ResponsiveProduct extends Component {
                     table.push(orders[i][j])
                     this.state.shoppinglistprice += (orders[i][j].piece * orders[i][j].price);
 
-
                 }
                 orders.splice(i, 1);
             }
@@ -89,21 +100,13 @@ class ResponsiveProduct extends Component {
         }
         await this.setState({salelist: table, loading: false});
         localStorage.setItem("orders", JSON.stringify(orders));
-
-
     }
 
-    onClickSidebar = (category) => {
-        this.setState({loading: true})
-
-        axios.get("http://localhost:8080/category/product/id/" + category.id, {
-            headers: {
-                Authorization: this.state.token
-
-            }
-        }).then((res) => {
-            this.setState({categorylist: res.data, loading: false});
-
+    onClickSidebar = (id) => {
+        this.setState({loading: true, hasNext: 0, CategoryId: id,pageNum:0})
+        ProductService.getProduct(this.state.token,id, 0).then((res) => {
+            this.setState({categorylist: res.data.listProductDto, hasNext: res.data.hasNext, loading: false})
+            this.myRef.current.scrollTop=0;
         });
 
     }
@@ -117,12 +120,13 @@ class ResponsiveProduct extends Component {
 
             cart[0].total = cart[0].total + cart[0].price;
             this.setState([{...this.state.salelist, [cart[0].id]: cart[0]}])
-            this.setState({ loading: false})
+            this.setState({loading: false})
         } else {
             this.setState({
                 cart: {
                     cartId: nextId(),
-                    id: product.id,
+                    id: Number(product.id),
+                    productId: Number(product.id),
                     title: product.title,
                     price: Number(product.price),
                     piece: 1,
@@ -164,18 +168,15 @@ class ResponsiveProduct extends Component {
             this.props.history.push('/homepage')
         });
 
-
         localStorage.setItem("product", "Secili Masa Yok");
-
         const {waiter, setWaiter} = this.context
         setWaiter("Seçili Garson Yok")
         localStorage.setItem("waiter", "Seçili Garson Yok")
 
-
     }
 
-    onClickExit() {
 
+    onClickExit() {
 
         if (this.state.salelist.length > 0) {
             let orders = ResponsiveProduct.getOrderFromStorage();
@@ -204,8 +205,10 @@ class ResponsiveProduct extends Component {
         return orders;
     }
 
-
     render() {
+        const {
+            scrollTop
+        } = this.state
         return (
             <div>
                 <HeaderComponent/>
@@ -236,7 +239,7 @@ class ResponsiveProduct extends Component {
                                         <div key={category.name}>
                                             <button className="btn btn-secondary buttoncategory"
                                                     onClick={() =>
-                                                        this.onClickSidebar(category)}>
+                                                        this.onClickSidebar(category.id)}>
 
                                                 {category.name} <br/>
                                                 <img src={'data:image/png;base64,' + category.mediaDTO.fileContent}
@@ -249,7 +252,8 @@ class ResponsiveProduct extends Component {
                                 })}
                         </div>
 
-                        <div className="col-xl-7 col-lg-7 text-center newproduct ">
+                        <div className="col-xl-7 col-lg-7 text-center newproduct" ref={this.myRef}
+                             onScroll={this.onScroll}>
                             <div className="row">
 
                                 {
@@ -259,8 +263,8 @@ class ResponsiveProduct extends Component {
                                                 <div key={productl.id} className="col-md-5 mb-4 ml-5">
                                                     <div className="card cardbodytable">
                                                         <div className="card-header">
-                                                            <img
-                                                                src={'data:image/png;base64,' + productl.mediaDTO.fileContent}
+
+                                                            <img src={'data:image/png;base64,' + productl.mediaDTO.fileContent}
                                                                 width="100"/>
                                                         </div>
                                                         <div className="card-body">

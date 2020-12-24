@@ -6,15 +6,17 @@
     <include file="/db-changelog/changes/create-role-table.xml"/>
     <include file="/db-changelog/changes/create-users-table.xml"/>
     <include file="/db-changelog/changes/create-userRoles-table.xml"/>
+    <include file="/db-changelog/changes/create-category-table.xml"/>
+    <include file="/db-changelog/changes/create-product-table.xml"/>
+    <include file="/db-changelog/changes/create-categoryProduct-table.xml"/>
+
+    <include file="/db-changelog/changes/create-waiter-table.xml"/>
     <include file="/db-changelog/changes/create-categorytable-table.xml"/>
     <include file="/db-changelog/changes/create-productsales-table.xml"/>
-    <include file="/db-changelog/changes/create-waiter-table.xml"/>
-    <include file="/db-changelog/changes/create-product-table.xml"/>
-    <include file="/db-changelog/changes/create-category-table.xml"/>
-    <include file="/db-changelog/changes/create-categoryProduct-table.xml"/>
     <include file="/db-changelog/changes/insert-table.xml"/>
     <include file="/db-changelog/changes/products.sql"/>
     <include file="/db-changelog/changes/tbl-category-produc.sql"/>
 
+        <include file="/db-changelog/changes/create-customer-table.xml"/>
 
 </databaseChangeLog>

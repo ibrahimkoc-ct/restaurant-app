@@ -5,6 +5,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "ROLES")
@@ -17,11 +18,7 @@ import javax.persistence.*;
                 "SET deleted =true "+
                 "Where id=?")
 @Where( clause = "deleted =false")
-public class Role {
-@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Role extends BaseEntity implements Serializable {
     private String name;
-    private boolean deleted;
 
 }

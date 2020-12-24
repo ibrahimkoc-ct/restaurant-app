@@ -5,13 +5,13 @@
 
     <changeSet id="07-12-2020_09_15:50" author="ibrahim.koc">
         <createTable tableName="product_sales">
-            <column autoIncrement="true" name="order_id" type="int(10)">
+            <column autoIncrement="true" name="id" type="int(10)">
                 <constraints primaryKey="true"/>
             </column>
             <column name="title" type="VARCHAR(255)"/>
             <column name="selectedtable" type="VARCHAR(255)"/>
             <column name="waiter_name" type="VARCHAR(255)"/>
-            <column name="id" type="int(10)"/>
+            <column name="product_Id" type="int(10)"/>
             <column name="price" type="int(10)"/>
             <column name="piece" type="int(10)"/>
             <column defaultValueComputed="CURRENT_TIMESTAMP" name="create_date" type="TIMESTAMP"/>

@@ -4,26 +4,25 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-@Entity
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @SQLDelete(sql=
         "UPDATE Product "+
                 "SET deleted =true "+
                 "Where id=?")
 @Where( clause = "deleted =false")
-public class Product implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class Product extends BaseEntity implements Serializable {
+
     private String title;
     private String description;
     private String price;
@@ -37,8 +36,8 @@ public class Product implements Serializable {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "products")
-    private List<Category> categories= new ArrayList<>();
-    private boolean deleted;
+    private List<Category> categories = new ArrayList<>();
+
 
 
 }

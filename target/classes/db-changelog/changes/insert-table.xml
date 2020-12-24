@@ -68,13 +68,38 @@
         <column name="name" value="product resmi"/>
         <column name ="file_Content" valueBlobFile="./healthy-food.png"/>
     </insert>
+    <insert tableName="waiter">
+        <column name="id" valueNumeric="1"/>
+        <column name="name" value="ibrahim"/>
+        <column name="phone_Number" value="123"/>
+        <column name="mail" value="123"/>
+        <column name="address" value="123"/>
+        <column name="url_To_Image" value="no image"/>
+        <column name="salary" valueNumeric="2500"/>
+        <column name="media_id" valueNumeric="6"/>
+    </insert>
+    <insert tableName="waiter">
+        <column name="id" valueNumeric="3"/>
+        <column name="name" value="ahmet"/>
+        <column name="phone_Number" value="123"/>
+        <column name="mail" value="123"/>
+        <column name="address" value="123"/>
+        <column name="url_To_Image" value="no image"/>
+        <column name="salary" valueNumeric="2500"/>
+        <column name="media_id" valueNumeric="7"/>
+    </insert>
+    <insert tableName="waiter">
+        <column name="id" valueNumeric="2"/>
+        <column name="name" value="mehmet"/>
+        <column name="phone_Number" value="123"/>
+        <column name="mail" value="123"/>
+        <column name="address" value="123"/>
+        <column name="url_To_Image" value="no image"/>
+        <column name="salary" valueNumeric="2500"/>
+        <column name="media_id" valueNumeric="8"/>
+    </insert>
 
-
-
-
-
-
-    <insert tableName="category">
+        <insert tableName="category">
         <column name="id" valueNumeric="1"/>
         <column name="name" value="Pizza"/>
         <column name="description" value="pizza"/>
@@ -219,7 +244,7 @@
         <column name="email" value="aa@bb.cc"></column>
         <column name="username" value="admin"></column>
         <column name="password" value="$2a$10$vHHefi/cbCMUfn1xKNPwUurS3YaHz9p5STTYnROeX3xHNDHl/DSWe"></column>
-        <column name="enabled" value="1"></column>
+        <column name="enabled" valueNumeric="1" ></column>
     </insert>
     <insert tableName="roles">
         <column name="name" value="ROLE_ADMIN"></column>
@@ -269,36 +294,7 @@
         <column name="image_To_Url" value="no image"/>
         <column name="table_Amount" valueNumeric="25"/>
     </insert>
-    <insert tableName="waiter">
-        <column name="id" valueNumeric="1"/>
-        <column name="name" value="ibrahim"/>
-        <column name="phone_Number" value="123"/>
-        <column name="mail" value="123"/>
-        <column name="address" value="123"/>
-        <column name="url_To_Image" value="no image"/>
-        <column name="salary" valueNumeric="2500"/>
-        <column name="media_id" valueNumeric="6"/>
-    </insert>
-    <insert tableName="waiter">
-        <column name="id" valueNumeric="3"/>
-        <column name="name" value="ahmet"/>
-        <column name="phone_Number" value="123"/>
-        <column name="mail" value="123"/>
-        <column name="address" value="123"/>
-        <column name="url_To_Image" value="no image"/>
-        <column name="salary" valueNumeric="2500"/>
-        <column name="media_id" valueNumeric="7"/>
-    </insert>
-    <insert tableName="waiter">
-        <column name="id" valueNumeric="2"/>
-        <column name="name" value="mehmet"/>
-        <column name="phone_Number" value="123"/>
-        <column name="mail" value="123"/>
-        <column name="address" value="123"/>
-        <column name="url_To_Image" value="no image"/>
-        <column name="salary" valueNumeric="2500"/>
-        <column name="media_id" valueNumeric="8"/>
-    </insert>
+
     <insert tableName="TBL_CATEGORY_PRODUCT">
         <column name="Category_id" valueNumeric="1"/>
         <column name="Product_id" valueNumeric="1"/>

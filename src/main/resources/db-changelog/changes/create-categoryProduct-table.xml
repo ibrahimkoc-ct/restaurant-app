@@ -5,22 +5,15 @@
 
     <changeSet id="09-12-2020_11:20" author="ibrahim.koc">
         <createTable tableName="TBL_CATEGORY_PRODUCT">
-            <column name="Category_id" type="int(10)">
-                <constraints foreignKeyName="category_id" references="category(id)" primaryKey="true" nullable="false"/>
+            <column name="category_id" type="int(10)">
+                <constraints foreignKeyName="category_id_fk" references="category(id)" primaryKey="true" nullable="false"/>
             </column>
-            <column name="Product_id" type="int(10)">
-                <constraints primaryKey="true" nullable="false" foreignKeyName="product_id" references="product(id)"/>
+            <column name="product_id" type="int(10)">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="product_id_fk" references="product(id)"/>
             </column>
-    </createTable>
+        </createTable>
         <rollback>
             <dropTable tableName="TBL_CATEGORY_PRODUCT"/>
         </rollback>
-    </changeSet>
-    <changeSet author="22-12-2020_13:42" id="ibrahim.koc">
-        <addColumn tableName="TBL_CATEGORY_PRODUCT" >
-            <column name="deleted"
-                    defaultValue="false"
-                    type="BOOLEAN"/>
-        </addColumn>
     </changeSet>
 </databaseChangeLog>

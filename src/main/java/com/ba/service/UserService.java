@@ -7,6 +7,7 @@ import com.ba.mapper.UserMapper;
 import com.ba.repository.RoleRepository;
 import com.ba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,6 @@ public class UserService {
         return "kisi silindi";
     }
     public UserDTO updateUser(UserDTO dto){
-//        userRepository.saveAndFlush(UserDTOConverter.userDTOtoUser(dto));
         userRepository.saveAndFlush(UserMapper.INSTANCE.toEntity(dto));
         return dto;
     }

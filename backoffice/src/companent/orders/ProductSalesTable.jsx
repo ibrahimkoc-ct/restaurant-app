@@ -70,13 +70,13 @@ class ProductSalesTable extends Component {
 
                                 this.state.ProductSales.map(
                                     product =>
-                                        <tr key={product.orderId}>
-                                            <td>{product.orderId}</td>
+                                        <tr key={product.id}>
+                                            <td>{product.id}</td>
                                             <td>{product.createDate}</td>
                                             <td>{product.waiterName}</td>
                                             <td>{product.selectedtable}</td>
                                             <td>{product.title}</td>
-                                            <td>{product.id}</td>
+                                            <td>{product.productId}</td>
                                             <td>{product.piece}</td>
                                             <td>{product.price}</td>
                                             <td>{product.price * product.piece}</td>

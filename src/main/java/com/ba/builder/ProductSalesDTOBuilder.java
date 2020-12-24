@@ -5,7 +5,7 @@ import com.ba.dto.ProductSalesDTO;
 import java.util.Date;
 
 public class ProductSalesDTOBuilder  extends IdBuilder {
-    private Long OrderId;
+        private Long productId;
     private Long price;
     private Long piece;
     private String title;
@@ -29,14 +29,15 @@ public class ProductSalesDTOBuilder  extends IdBuilder {
         this.setId(id);
         return this;
     }
+    public ProductSalesDTOBuilder productId(Long productId){
+        this.productId=productId;
+        return this;
+    }
     public ProductSalesDTOBuilder piece(Long piece) {
         this.piece = piece;
         return this;
     }
-    public ProductSalesDTOBuilder OrderId(Long OrderId) {
-        this.OrderId = OrderId;
-        return this;
-    }
+
     public ProductSalesDTOBuilder selectedtable(String selectedtable) {
         this.selectedtable = selectedtable;
         return this;
@@ -51,7 +52,7 @@ public class ProductSalesDTOBuilder  extends IdBuilder {
         productSalesDTO.setWaiterName(this.waiterName);
         productSalesDTO.setPiece(this.piece);
         productSalesDTO.setPrice(this.price);
-        productSalesDTO.setOrderId(this.OrderId);
+        productSalesDTO.setProductId(this.productId);
         productSalesDTO.setId(this.getId());
         productSalesDTO.setCreateDate(this.createDate);
         productSalesDTO.setTitle(this.title);

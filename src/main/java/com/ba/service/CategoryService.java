@@ -9,6 +9,7 @@ import com.ba.mapper.ProductMapper;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.MediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,11 +25,12 @@ public class CategoryService {
     MediaRepository mediaRepository;
 
 
-
+    @Cacheable(value = "listAllCategory",key="'CATEGORY_LIST_ALL'")
     public List<CategoryDTO> getAllCategory() {
         List<Category> categoryList= categoryRepository.findAll();
         return CategoryMapper.INSTANCE.toDTOList(categoryList);
     }
+
     public String deleteCategory(Long id) {
         categoryRepository.deleteById(id);
         return "kisi silindi";
@@ -39,7 +41,6 @@ public class CategoryService {
         category.setMedia(MediaMapper.INSTANCE.toEntity(categoryDTO.getMediaDTO()));
         category.setProducts(ProductMapper.INSTANCE.toEntity(categoryDTO.getProducts()));
        categoryRepository.save(category);
-//        categoryRepository.save(CategoryDtoConventer.categoryDTOaddCategory(categoryDTO));
         return "kisi eklendi";
     }
 
@@ -57,6 +58,7 @@ public class CategoryService {
         return CategoryMapper.INSTANCE.toDTO(dto);
 
     }
+
     public List<ProductDTO> getProductCategory(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
         List<ProductDTO> dtoList=ProductMapper.INSTANCE.toDTOList(category.get().getProducts());

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="23-12-2020_19:22" author="ibrahim.koc">
+        <createTable tableName="Customer">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="surname" type="VARCHAR(255)"/>
+            <column name="phoneNumber" type="VARCHAR(255)"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="deleted"  defaultValue="false" type="BOOLEAN"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="Customer"/>
+        </rollback>
+        <insert tableName="Customer">
+            <column name="name" value="Ibrahim"></column>
+            <column name="surname" value="Koc"></column>
+            <column name="phoneNumber" value="0531 505 4560"></column>
+            <column name="address" value="Istanbul"></column>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

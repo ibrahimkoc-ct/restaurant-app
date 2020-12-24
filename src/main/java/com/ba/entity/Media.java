@@ -1,9 +1,15 @@
 package com.ba.entity;
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import java.io.Serializable;
 
 
 @Entity
@@ -11,19 +17,16 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql=
-        "UPDATE Media "+
-                "SET deleted =true "+
+@SQLDelete(sql =
+        "UPDATE Media " +
+                "SET deleted =true " +
                 "Where id=?")
-@Where( clause = "deleted =false")
-public class Media {
+@Where(clause = "deleted =false")
+public class Media extends BaseEntity implements Serializable {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
-    private boolean deleted;
+
 
     @Column(length = 1000000)
     private byte[] fileContent;

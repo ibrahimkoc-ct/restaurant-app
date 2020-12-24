@@ -34,6 +34,10 @@ import CreateMediaComponent from "./companent/hookComponent/media/CreateMediaCom
 import {BackofficeProvider} from "./BackofficeContext";
 import {useState} from 'react';
 import CreateRoleComponent from "./companent/role/CreateRoleComponent";
+import CustomerListComponent from "./companent/customer/CustomerListComponent";
+import CreateCustomerComponent from "./companent/customer/CreateCustomerComponent";
+import ViewCustomerComponent from "./companent/customer/ViewCustomerComponent";
+import UpdateCustomerComponent from "./companent/customer/UpdateCustomerComponent";
 
 
 const backoffice={token:'',username:''}
@@ -54,7 +58,6 @@ function App() {
           <AppContext.Provider value={{appState:appState,setAppState:setAppState}}>
           <BackofficeProvider value={backoffice}>
           <Router>
-
 
       <div>
           <Switch>
@@ -87,6 +90,10 @@ function App() {
               <Route path="/role-add" component={CreateRoleComponent}></Route>
               <Route path="/view-waiter-table/:id" component={ViewWaiterComponent}></Route>
               <Route path="/update-waiter-table/:id" component={UpdateWaiterComponent}></Route>
+              <Route path="/customers" component={CustomerListComponent}></Route>
+              <Route path="/customers-add" component={CreateCustomerComponent}></Route>
+              <Route path="/view-customer/:id" component={ViewCustomerComponent}></Route>
+              <Route path="/update-customer/:id" component={UpdateCustomerComponent}></Route>
           </Switch>
       </div>
           </Router>

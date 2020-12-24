@@ -18,10 +18,8 @@ import java.util.List;
                 "SET deleted =true "+
                 "Where id=?")
 @Where( clause = "deleted =false")
-public class Category implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Category extends BaseEntity implements Serializable {
+
     private String name;
     private String description;
     private String imageToUrl;
@@ -33,7 +31,7 @@ public class Category implements Serializable {
     @ManyToOne
     @JoinColumn(name="media_id")
     private Media media;
-    private boolean deleted;
+
 
 
 }

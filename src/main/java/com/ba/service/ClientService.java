@@ -37,9 +37,9 @@ public class ClientService {
         Slice<Product> productSlice=repository.findProductByCategoriesId(id,pageable);
         List<Product> productList=productSlice.toList();
         List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(productList);
-        for (int i = 0; i < productList.size(); i++) {
-            productDTOList.get(i).setCategories(CategoryMapper.INSTANCE.toDTOList(productList.get(i).getCategories()));
-        }
+//        for (int i = 0; i < productList.size(); i++) {
+//            productDTOList.get(i).setCategories(CategoryMapper.INSTANCE.toDTOList(productList.get(i).getCategories()));
+//        }
         ProductSliceWrapperDTO sliceWrapperDTO= new ProductSliceWrapperDTO();
         sliceWrapperDTO.setListProductDto(productDTOList);
         sliceWrapperDTO.setHasNext(productSlice.hasNext());

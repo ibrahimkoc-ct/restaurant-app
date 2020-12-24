@@ -4,7 +4,7 @@ import com.ba.entity.ProductSales;
 import java.util.Date;
 
 public class ProductSalesBuilder extends IdBuilder {
-    private Long OrderId;
+        private Long productId;
     private Long price;
     private Long piece;
     private String title;
@@ -14,6 +14,10 @@ public class ProductSalesBuilder extends IdBuilder {
 
     public ProductSalesBuilder title(String title) {
         this.title = title;
+        return this;
+    }
+    public ProductSalesBuilder productId(Long productId) {
+        this.productId = productId;
         return this;
     }
     public ProductSalesBuilder createDate(Date createDate) {
@@ -32,10 +36,7 @@ public class ProductSalesBuilder extends IdBuilder {
         this.piece = piece;
         return this;
     }
-    public ProductSalesBuilder OrderId(Long OrderId) {
-        this.OrderId = OrderId;
-        return this;
-    }
+
     public ProductSalesBuilder selectedtable(String selectedtable) {
         this.selectedtable = selectedtable;
         return this;
@@ -50,7 +51,6 @@ public class ProductSalesBuilder extends IdBuilder {
         productSales.setWaiterName(this.waiterName);
         productSales.setPiece(this.piece);
         productSales.setPrice(this.price);
-        productSales.setOrderId(this.OrderId);
         productSales.setId(this.getId());
         productSales.setCreateDate(this.createDate);
         productSales.setTitle(this.title);

@@ -32,8 +32,8 @@ public class ProductSalesControllerTest {
     List<ProductSalesDTO> dto = new ArrayList<>();
     ProductSalesBuilder productBuilder = new ProductSalesBuilder();
     ProductSalesDTOBuilder productDTOBuilder = new ProductSalesDTOBuilder();
-    ProductSales s = productBuilder.id(15L).OrderId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
-    ProductSalesDTO productSalesDTO = productDTOBuilder.id(15L).OrderId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
+    ProductSales s = productBuilder.id(1L).productId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
+    ProductSalesDTO productSalesDTO = productDTOBuilder.id(1L).productId(1L).piece(15L).price(21L).selectedtable("15").title("asd").waiterName("ibrahim").build();
 
     @Before
     public void setUp() throws Exception {

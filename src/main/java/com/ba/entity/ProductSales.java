@@ -5,6 +5,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 @Getter
@@ -18,11 +19,9 @@ import java.util.Date;
                 "SET deleted =true "+
                 "Where OrderId=?")
 @Where( clause = "deleted =false")
-public class ProductSales {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long OrderId;
-    private Long id;
+public class ProductSales extends BaseEntity implements Serializable {
+
+    private Long productId;
     private Long price;
     private Long piece;
     private String title;
@@ -30,7 +29,6 @@ public class ProductSales {
     private String waiterName;
     @Column
     private Date createDate = new Timestamp(System.currentTimeMillis());
-    private boolean deleted;
 
 
 }

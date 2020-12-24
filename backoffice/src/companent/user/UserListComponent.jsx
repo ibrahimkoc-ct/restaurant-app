@@ -78,6 +78,7 @@ class UserListComponent extends Component {
                                 <th>Kullanıcı Adı</th>
                                 <th>Parola</th>
                                 <th>Aktif</th>
+                                <th>Roller</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -89,6 +90,12 @@ class UserListComponent extends Component {
                                             <td>{user.username}</td>
                                             <td className="pass">{user.password}</td>
                                             <td>{user.enabled.toString()}</td>
+                                            <td>{
+                                                user.roles.map(
+                                                    roles=>
+                                                    <li>{roles.name}</li>
+                                                )
+                                            }</td>
                                             <td>
                                                 <button onClick={() => this.editUser(user.id)}
                                                         className=" btn btn-info  ">Güncelle

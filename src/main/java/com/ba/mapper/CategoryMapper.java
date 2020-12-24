@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-
+@Mapper
 public interface CategoryMapper {
 
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
@@ -23,7 +23,6 @@ public interface CategoryMapper {
 
 
     List<CategoryDTO> toDTOList(List<Category> categoryList);
-
 
     List<Category> toEntityList (List<CategoryDTO> dtoList);
 

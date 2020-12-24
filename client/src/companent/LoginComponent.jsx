@@ -37,9 +37,7 @@ class LoginComponent extends Component {
     async componentDidMount() {
 
 
-        await UserService.getList().then((res) => {
-            this.setState({userslist: res.data});
-        });
+
         if (localStorage.getItem("token") !== null) {
             const {waiter, setWaiter} = this.context
             setWaiter("Seçili Garson Yok")

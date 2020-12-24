@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductSalesDTO {
-    private Long OrderId;
+    private Long productId;
     private Long id;
     private Long price;
     private Long piece;

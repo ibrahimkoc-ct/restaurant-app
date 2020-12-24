@@ -74,6 +74,9 @@ class HeaderComponent extends Component {
                         <Link to ='/add-media' >
                             <button style={{marginLeft: "10px"}} className="btn btn-info" >Medya</button>
                         </Link>
+                        <Link to ='/customers' >
+                            <button style={{marginLeft: "10px"}} className="btn btn-info" >Musteriler</button>
+                        </Link>
 
                         <Link to ='/' >
                             <button className="btn btn-danger usernamepage" onClick={()=>this.Exitbutton()}>Çıkıs: {this.state.username}</button>
