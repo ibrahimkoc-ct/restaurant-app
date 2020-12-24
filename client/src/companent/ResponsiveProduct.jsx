@@ -53,11 +53,11 @@ class ResponsiveProduct extends Component {
         })
 
         if (scrollTop > (this.state.pageNum+1)*700) {
-            if (this.state.hasNext.toString() === "true") {
+            if (this.state.hasNext.toString() === "false") {
                 this.state.pageNum+=1;
                 ProductService.getProduct(this.state.token, this.state.CategoryId, this.state.pageNum).then((res) => {
-                    this.setState({hasNext: res.data.hasNext,
-                        categorylist:[...this.state.categorylist,...res.data.listProductDto]})
+                    this.setState({hasNext: res.data.last,
+                        categorylist:[...this.state.categorylist,...res.data.content]})
 
                 })
 
@@ -105,7 +105,7 @@ class ResponsiveProduct extends Component {
     onClickSidebar = (id) => {
         this.setState({loading: true, hasNext: 0, CategoryId: id,pageNum:0})
         ProductService.getProduct(this.state.token,id, 0).then((res) => {
-            this.setState({categorylist: res.data.listProductDto, hasNext: res.data.hasNext, loading: false})
+            this.setState({categorylist: res.data.content, hasNext: res.data.last, loading: false})
             this.myRef.current.scrollTop=0;
         });
 

@@ -46,14 +46,12 @@ class ListComponent extends Component {
             this.state.token = localStorage.getItem("token")
         }
 
-        // await ProductService.getProduct(this.state.token).then((res) => {
-        //     this.setState({productslist: res.data});
-        // });
+
         CategoryService.getCategory(this.state.token).then((res) => {
             this.setState({categorylist: res.data, loading: false});
         });
         await ProductService.getPageProduct(this.state.token, 0).then((res) => {
-            this.setState({productslist: res.data.listProductDto, pageNum: res.data.pageSize});
+            this.setState({productslist: res.data.content, pageNum: res.data.totalPages});
             let selectedButton =document.getElementById(0)
             selectedButton.className="btn btn-secondary";
         })
@@ -92,7 +90,7 @@ class ListComponent extends Component {
         lastSelectedButton.className="btn btn-outline-secondary";
 
              ProductService.getPageProduct(this.state.token, page).then((res) => {
-            this.setState({productslist: res.data.listProductDto,lastPage:page});
+            this.setState({productslist: res.data.content,lastPage:page});
 
             let selectedButton =document.getElementById(page)
                  selectedButton.className="btn btn-secondary";

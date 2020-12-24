@@ -1,8 +1,6 @@
 package com.ba.controller;
 
 import com.ba.dto.ProductDTO;
-import com.ba.dto.ProductWrapperDTO;
-import com.ba.entity.Product;
 import com.ba.service.BackofficeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,7 +44,7 @@ public class BackofficeController {
         return "product";
     }
     @GetMapping("/product/search")
-    public ProductWrapperDTO searchProduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public Page<ProductDTO> searchProduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
       return  productService.getPageProduct(page,size);
     }
 

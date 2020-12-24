@@ -1,7 +1,6 @@
 package com.ba.service;
 
 import com.ba.dto.ProductDTO;
-import com.ba.dto.ProductWrapperDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
 import com.ba.mapper.CategoryMapper;
@@ -94,19 +93,12 @@ public class BackofficeService {
         return "kisi eklendi";
     }
 
-    public ProductWrapperDTO getPageProduct(int page, int size) {
+    public Page<ProductDTO> getPageProduct(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Product> pageProductList = repository.findAll(pageable);
-        List<Product> dtoList = pageProductList.toList();
-        List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(dtoList);
-        for (int i = 0; i < dtoList.size(); i++) {
-            productDTOList.get(i).setCategories(CategoryMapper.INSTANCE.toDTOList(dtoList.get(i).getCategories()));
+        if (pageable == null) {
+            return null;
         }
-        ProductWrapperDTO wrapperDTO = new ProductWrapperDTO();
-        wrapperDTO.setListProductDto(productDTOList);
-        wrapperDTO.setPageSize((long) pageable.getPageSize());
-
-        return wrapperDTO;
+        return repository.findAll(pageable).map(ProductMapper.INSTANCE::toDTO);
+    }
 
     }
-}
