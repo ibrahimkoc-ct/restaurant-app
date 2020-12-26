@@ -3,6 +3,7 @@ package com.ba.service;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
+import com.ba.exception.SystemException;
 import com.ba.mapper.CategoryMapper;
 import com.ba.mapper.MediaMapper;
 import com.ba.mapper.ProductMapper;
@@ -12,15 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class BackofficeService {
+public class ProductService {
     @Autowired
     ProductRepository repository;
 
@@ -67,16 +70,18 @@ public class BackofficeService {
             product2.setCategories(Stream.of(categoryList.get(i)).collect(Collectors.toList()));
         }
         repository.save(product2);
-//        repository.save(BackofficeDtoConverter.addProductIDtoDto(categoryList1, product));
         return product;
     }
 
     public ProductDTO getProductById(Long id) {
-        Product product = repository.findById(id).get();
-        return ProductMapper.INSTANCE.toDTO(product);
+        Optional<Product> product = repository.findById(id);
+        if (!product.isPresent()) {
+            throw new SystemException("Customer not found in database");
+        }
+        return ProductMapper.INSTANCE.toDTO(product.get());
     }
 
-    public String addProductId(ProductDTO product, Long id) {
+    public String addProductId(ProductDTO product) {
 
         List<Category> categoryList = new ArrayList<>();
         for (int i = 0; i < product.getCategories().size(); i++) {
@@ -95,10 +100,28 @@ public class BackofficeService {
 
     public Page<ProductDTO> getPageProduct(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        if (pageable == null) {
-            return null;
+        Page<ProductDTO> dtoPage = repository.findAll(pageable).map(ProductMapper.INSTANCE::toDTO);
+        if (dtoPage.isEmpty()) {
+            throw new SystemException("Product Not found");
         }
-        return repository.findAll(pageable).map(ProductMapper.INSTANCE::toDTO);
+        return dtoPage;
     }
 
+    public List<ProductDTO> listSelectedCategory(String categoryName) {
+        List<Product> productList = repository.findCategoryByName(categoryName);
+        if (productList.isEmpty()) {
+            throw new SystemException("Category Not found");
+        }
+        return ProductMapper.INSTANCE.toDTOList(productList);
     }
+
+    public Slice<ProductDTO> loadMoreProduct(Long id, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Slice<ProductDTO> sliceDto = repository.findProductByCategoriesId(id, pageable).map(ProductMapper.INSTANCE::toDTO);
+        if (sliceDto.isEmpty()) {
+            throw new SystemException("Product Not found");
+        }
+        return sliceDto;
+
+    }
+}

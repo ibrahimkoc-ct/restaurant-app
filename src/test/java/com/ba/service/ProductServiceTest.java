@@ -1,7 +1,6 @@
 package com.ba.service;
 
 import com.ba.builder.*;
-
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.MediaDTO;
 import com.ba.dto.ProductDTO;
@@ -20,25 +19,21 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BackofficeServiceTest {
-
+public class ProductServiceTest {
     @InjectMocks
-    private BackofficeService service;
-
+    private ProductService service;
+    @Mock
+    private ProductRepository repository;
 
     @Mock
     private CategoryRepository categoryRepository;
-
-    @Mock
-    private ProductRepository repository;
 
     List<Product> list = new ArrayList<>();
     List<ProductDTO> dtoList = new ArrayList<>();
@@ -57,7 +52,6 @@ public class BackofficeServiceTest {
     ProductDTOBuilder productDTOBuilder = new ProductDTOBuilder();
     ProductDTO productDTO = productDTOBuilder.category("Pizza").mediaDTO(mediaDTO).description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
     CategoryDTO dto = categoryDTOBuilder.id(1L).description("pizza").imageToUrl("no image").name("Pizza").mediaDTO(mediaDTO).build();
-
 
     @Test(expected = RuntimeException.class)
     public void shouldDeleteProductById() {
@@ -117,9 +111,18 @@ public class BackofficeServiceTest {
         Optional<Category> optionalCategory = Optional.of(category);
         Mockito.when(categoryRepository.findById(id)).thenReturn(optionalCategory);
         Mockito.when(categoryRepository.save(any())).thenReturn(category);
-        String result = service.addProductId(productDTO, id);
+        String result = service.addProductId(productDTO);
         assertEquals(result, "kisi eklendi");
         //burası patlayabilir
+
+    }
+    @Test
+    public void shouldListSelectedCategory() {
+        list.add(product);
+        String categoryName = "pizza";
+        Mockito.when(repository.findAll()).thenReturn(list);
+        List<ProductDTO> productsList = service.listSelectedCategory(categoryName);
+        assertEquals(list.get(0).getId(), productsList.get(0).getId());
 
     }
 }

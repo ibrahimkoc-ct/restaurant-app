@@ -1,6 +1,5 @@
 package com.ba.controller;
 
-
 import com.ba.builder.CategoryBuilder;
 import com.ba.builder.ProductBuilder;
 import com.ba.builder.ProductDTOBuilder;
@@ -8,7 +7,7 @@ import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
-import com.ba.service.BackofficeService;
+import com.ba.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,17 +20,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BackofficeControllerTest {
-
+public class ProductControllerTest {
     @InjectMocks
-    private BackofficeController controller;
+    private ProductController controller;
 
     @Mock
-    private BackofficeService service;
+    private ProductService service;
     CategoryBuilder categoryBuilder = new CategoryBuilder();
     Category category=categoryBuilder.id(1L).description("pizza").imageToUrl("no image").name("Pizza").build();
     Set<Category> categories= new HashSet<>();
@@ -45,14 +43,6 @@ public class BackofficeControllerTest {
     ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
 
 
-
-    @Test
-    public void getAllProductBackofficeControllerTest(){
-        list.add(product);
-        Mockito.when(service.getAllProduct()).thenReturn(dtoList);
-        List<ProductDTO> result =controller.getAllProduct();
-        assertEquals(result,dtoList);
-    }
     @Test
     public void deleteProductBackofficeControllerTest(){
         Long id=1L;
@@ -78,8 +68,17 @@ public class BackofficeControllerTest {
     @Test
     public void addProductIdBackofficeContollerTest(){
         Long id=1L;
-        Mockito.when(service.addProductId(productDTO,id)).thenReturn("kisi eklendi");
-        String result=controller.addProductId(productDTO,id);
+        Mockito.when(service.addProductId(productDTO)).thenReturn("kisi eklendi");
+        String result=controller.addProductId(productDTO);
         assertEquals(result,"product");
     }
+    @Test
+    public void findCategoryClientControllerTest(){
+        list.add(product);
+        String categoryName="pizza";
+        Mockito.when(service.listSelectedCategory(categoryName)).thenReturn(dtoList);
+        List<ProductDTO> result =controller.findCategory(categoryName);
+        assertEquals(result,dtoList);
+    }
+
 }

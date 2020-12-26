@@ -13,21 +13,13 @@ class ViewWaiterComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
-            name: '',
-            phoneNumber: '',
-            mail: '',
-            address: '',
-            urlToImage: '',
-            salary: '',
-            waiter: {},
+            waiter: this.props.history.location.state?.waiter,
             token: '',
             loading: false
         }
     }
 
     componentDidMount() {
-        this.setState({loading: true})
         const userToken = this.context;
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
@@ -38,12 +30,6 @@ class ViewWaiterComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
-        WaiterService.viewWaiter(this.state.id, this.state.token).then(res => {
-            this.setState({waiter: res.data, loading: false})
-
-        })
-
     }
 
     render() {
@@ -79,7 +65,9 @@ class ViewWaiterComponent extends Component {
                         </div>
                         <hr></hr>
                         <div className="row">
-                            <h3>Resim: <img src={this.state.waiter.urlToImage}/></h3>
+                            <h3>Resim: <img
+                                src={'data:image/png;base64,' + this.state.waiter.mediaDTO.fileContent}
+                                width="100"/></h3>
                         </div>
 
 

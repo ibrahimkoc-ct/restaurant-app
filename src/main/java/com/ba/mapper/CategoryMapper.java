@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = {MediaMapper.class})
 public interface CategoryMapper {
 
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
@@ -17,7 +17,7 @@ public interface CategoryMapper {
     @Mapping(target ="products", ignore = true)
     CategoryDTO toDTO(Category category);
 
-    @Mapping(ignore = true,source = "mediaDTO",target = "media")
+    @Mapping(source = "mediaDTO",target = "media")
     @Mapping(target ="products", ignore = true)
     Category toEntity(CategoryDTO dto);
 

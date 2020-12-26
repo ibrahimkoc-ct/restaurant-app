@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import UserService from "../../services/UserService";
 import HeaderComponent from "../homepage/HeaderComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
@@ -13,9 +12,7 @@ class ViewUserComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
-
-            user: {},
+            role: this.props.history.location.state?.role,
             token: '',
             loading: false
         }
@@ -23,7 +20,6 @@ class ViewUserComponent extends Component {
     }
 
     componentDidMount() {
-        this.setState({loading: true})
         const userToken = this.context;
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
@@ -34,12 +30,6 @@ class ViewUserComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
-
-        UserService.getAuthById(this.state.id, this.state.token).then(res => {
-            this.setState({user: res.data, loading: false})
-
-        })
     }
 
     render() {
@@ -51,14 +41,12 @@ class ViewUserComponent extends Component {
                     <h2 className="text-center">Yetkinlik Detayları</h2>
                     <div className="card-body">
                         <div className="row">
-                            <h3>Rol id: {this.state.user.id}</h3>
+                            <h3>Rol id: {this.state.role.id}</h3>
                         </div>
                         <hr></hr>
                         <div className="row">
-
-                            <h3>Rol Adı: {this.state.user.name}</h3>
+                            <h3>Rol Adı: {this.state.role.name}</h3>
                         </div>
-
                     </div>
                 </div>
                 {this.state.loading ? <FullPageLoading/> : null}

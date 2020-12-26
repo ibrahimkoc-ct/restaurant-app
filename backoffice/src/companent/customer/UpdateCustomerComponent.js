@@ -8,7 +8,6 @@ import {redirectWithId} from "../../RouterRedirect";
 
 class UpdateCustomerComponent extends Component {
     static contextType = BackofficeContext;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +27,7 @@ class UpdateCustomerComponent extends Component {
             if (userToken.token.length > 0) {
                 this.state.token = userToken.token;
             } else {
-                redirectWithId('/customers');
+                redirectWithId('/');
             }
         } else {
             this.state.token = localStorage.getItem("token")

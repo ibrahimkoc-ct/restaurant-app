@@ -21,15 +21,11 @@ class UpdateCategoryComponent extends Component {
             imageToUrl: '',
             token: '',
             products: [],
-            category:[],
             media:[],
             mediaSelect:{},
             loading:false
         }
 
-        this.chargeDescriptionHandler=this.chargeDescriptionHandler.bind(this);
-        this.chargeNameHandler=this.chargeNameHandler.bind(this);
-        this.chargeurlToImageHandler=this.chargeurlToImageHandler.bind(this);
         this.updateCategory=this.updateCategory.bind(this);
 
 
@@ -42,46 +38,32 @@ class UpdateCategoryComponent extends Component {
         this.setState({loading: true})
 
         const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
-            }
-            else{
+        if (localStorage.getItem("token") == null) {
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
+            } else {
                 history.push('/');
             }
+        } else {
+            this.state.token = localStorage.getItem("token")
         }
-        else {
-            this.state.token=localStorage.getItem("token")
-        }
-        CategoryService.viewCategory(this.state.id,this.state.token).then((res)=>{
-            this.setState({category:res.data,loading:false})
-
-        })
-        axios.get("http://localhost:8080/file/list").then((res)=>{
-            this.setState({media:res.data, loading: false});
+        axios.get("http://localhost:8080/file").then((res) => {
+            this.setState({media: res.data, loading: false});
         });
 
 
     }
-    chargeNameHandler =(event) =>{
-        this.setState({name:
-            event.target.value});
 
-    }
-    chargeDescriptionHandler =(event) =>{
-        this.setState({description:
-            event.target.value});
-
-    }
-    chargeurlToImageHandler =(event) =>{
-        this.setState({imageToUrl:
-            event.target.value});
-
-    }
     cancel(){
-        this.props.history.push('/categorytable-table');
+        this.props.history.push('/category-table');
 
     }
+    changeInput = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
 
     updateCategory= (e) =>{
         this.setState({loading: true})
@@ -98,8 +80,6 @@ class UpdateCategoryComponent extends Component {
     changeSelect=(media)=>{
         this.state.mediaSelect=media;
     }
-
-
     render() {
 
         return (
@@ -114,14 +94,14 @@ class UpdateCategoryComponent extends Component {
 
                                     <div className="form-group">
                                         <label>Kategori Adı</label>
-                                        <input placeholder="Kategori Adı" name="this.state.category.name" className="form-control"
-                                               value={this.state.name} onChange={this.chargeNameHandler}/>
+                                        <input placeholder="Kategori Adı" name="name" className="form-control"
+                                               value={this.state.name} onChange={this.changeInput}/>
 
                                     </div>
                                     <div className="form-group">
                                         <label>Kategori Acıklaması</label>
                                         <input placeholder={"Kategori acıklaması"} name="description" className="form-control"
-                                               value={this.state.description} onChange={this.chargeDescriptionHandler}/>
+                                               value={this.state.description} onChange={this.changeInput}/>
 
                                     </div>
                                     <div className="form-group">

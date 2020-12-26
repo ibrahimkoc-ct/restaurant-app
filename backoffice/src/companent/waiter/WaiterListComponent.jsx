@@ -54,7 +54,12 @@ class WaiterListComponent extends Component {
     }
 
     viewWaiter(waiter) {
-        this.props.history.push('/view-waiter-table/' + waiter.id);
+        this.props.history.push({
+            pathname:`view-waiter-table/{waiter.id}`,
+            state:{
+                waiter:waiter
+            }
+        });
     }
 
 

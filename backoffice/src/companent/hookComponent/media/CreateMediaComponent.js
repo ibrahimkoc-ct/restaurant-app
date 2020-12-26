@@ -28,7 +28,7 @@ function MediaListComponent() {
         const data = new FormData();
         data.append("file", selectedFile);
         data.append("imageName", selectedFile.name);
-        fetch("http://localhost:8080/file/add", {
+        fetch("http://localhost:8080/file", {
             method: 'POST',
             mode: 'no-cors',
             body: data
@@ -44,7 +44,7 @@ function MediaListComponent() {
         var requestOptions = {
             method: 'GET'
         };
-        fetch("http://localhost:8080/file/list", requestOptions)
+        fetch("http://localhost:8080/file", requestOptions)
             .then(respose => respose.text(), setLoading(false))
             .then(result => setImageList(JSON.parse(result)),
             )

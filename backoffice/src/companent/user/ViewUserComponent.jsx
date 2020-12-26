@@ -13,18 +13,13 @@ class ViewUserComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
-
-            user: [],
+            user:this.props.history.location.state?.user,
             token: '',
             loading: false
-
-
         }
     }
 
     componentDidMount() {
-        this.setState({loading: true})
         const userToken = this.context;
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
@@ -35,21 +30,7 @@ class ViewUserComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
-        const {enabled} = this.state
-        UserService.getUsersById(this.state.id).then(res => {
-
-            this.setState({
-                user: res.data,
-                enabled: res.data.enabled.toString(),
-                loading: false
-
-            })
-
-        })
-
     }
-
 
     render() {
         return (
@@ -65,19 +46,16 @@ class ViewUserComponent extends Component {
                         <hr/>
 
                         <div className="row">
-
                             <h3>Parola: {this.state.user.password}</h3>
                         </div>
                         <hr/>
                         <div className="row">
-                            <h3>Aktiflik: {this.state.enabled}</h3>
+                            <h3>Aktiflik: {this.state.enabled ? "false":"true"}</h3>
                         </div>
                         <hr/>
                         <div className="row">
                             <h3>Mail: {this.state.user.email}</h3>
                         </div>
-
-
                     </div>
                 </div>
                 {this.state.loading ? <FullPageLoading/> : null}

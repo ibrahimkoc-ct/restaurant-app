@@ -47,11 +47,8 @@ class ListComponent extends Component {
         }
 
 
-        CategoryService.getCategory(this.state.token).then((res) => {
-            this.setState({categorylist: res.data, loading: false});
-        });
         await ProductService.getPageProduct(this.state.token, 0).then((res) => {
-            this.setState({productslist: res.data.content, pageNum: res.data.totalPages});
+            this.setState({productslist: res.data.content, pageNum: res.data.totalPages,loading:false});
             let selectedButton =document.getElementById(0)
             selectedButton.className="btn btn-secondary";
         })
@@ -72,8 +69,13 @@ class ListComponent extends Component {
 
     }
 
-    viewProduct(id) {
-        this.props.history.push('/view-product/' + id);
+    viewProduct(product) {
+        this.props.history.push({
+            pathname: `view-product/{product.id}`,
+            state:{
+                product:product
+            }
+        });
     }
 
     ViewCategory = (category) => {
@@ -169,7 +171,7 @@ class ListComponent extends Component {
                                                         className="btn btn-danger">Sil
                                                 </button>
                                                 <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.viewProduct(product.id)}
+                                                        onClick={() => this.viewProduct(product)}
                                                         className="btn btn-success">Görüntüle
                                                 </button>
                                             </td>

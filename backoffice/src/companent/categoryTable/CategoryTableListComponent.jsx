@@ -46,13 +46,17 @@ class CategoryTableListComponent extends Component {
         })
 
     }
-    editCategory(user){
-        this.props.history.push('/update-categorytable/'+user.id);
+    editCategory(categoryList){
+        this.props.history.push('/update-categorytable/'+categoryList.id);
 
     }
-    viewCategory(id){
-        this.props.history.push('/view-categorytable/'+id);
-        sessionStorage.setItem("view-categorytable",id)
+    viewCategory(categoryList){
+        this.props.history.push({
+            pathname:`view-categorytable/{categoryList.id}`,
+            state:{
+                categoryList:categoryList
+            }
+        });
     }
 
     render() {
@@ -82,17 +86,17 @@ class CategoryTableListComponent extends Component {
                                 <tbody>
                                 {
                                     this.state.categorylist.map(
-                                        user =>
-                                            <tr key={user.id} >
-                                                <td>{user.id}</td>
-                                                <td>{user.name}</td>
-                                                <td>{user.description}</td>
-                                                <td>{user.tableAmount}</td>
-                                                <td>{user.imageToUrl}</td>
+                                        categoryList =>
+                                            <tr key={categoryList.id} >
+                                                <td>{categoryList.id}</td>
+                                                <td>{categoryList.name}</td>
+                                                <td>{categoryList.description}</td>
+                                                <td>{categoryList.tableAmount}</td>
+                                                <td>{categoryList.imageToUrl}</td>
                                                 <td>
-                                                    <button  onClick={()=>this.editCategory(user)} className=" btn btn-info  ">Güncelle</button>
-                                                    <button style={{marginLeft: "10px"}} onClick={()=>this.deleteCategory(user.id)} className="btn btn-danger">Sil</button>
-                                                    <button style={{marginLeft: "10px"}}  onClick={()=>this.viewCategory(user.id)} className="btn btn-success">Görüntüle</button>
+                                                    <button  onClick={()=>this.editCategory(categoryList)} className=" btn btn-info  ">Güncelle</button>
+                                                    <button style={{marginLeft: "10px"}} onClick={()=>this.deleteCategory(categoryList.id)} className="btn btn-danger">Sil</button>
+                                                    <button style={{marginLeft: "10px"}}  onClick={()=>this.viewCategory(categoryList)} className="btn btn-success">Görüntüle</button>
                                                 </td>
                                             </tr>
                                     )

@@ -4,15 +4,18 @@ package com.ba.service;
 import com.ba.dto.WaiterDTO;
 import com.ba.entity.Media;
 import com.ba.entity.Waiter;
+import com.ba.exception.BussinessRuleException;
+import com.ba.exception.SystemException;
+import com.ba.helper.UpdateHelper;
 import com.ba.mapper.MediaMapper;
 import com.ba.mapper.WaiterMapper;
 import com.ba.repository.MediaRepository;
 import com.ba.repository.WaiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WaiterService {
@@ -20,27 +23,20 @@ public class WaiterService {
     @Autowired
     private WaiterRepository repository;
 
-    @Autowired
-    private MediaRepository mediaRepository;
-
-
-
     public List<WaiterDTO> getAllWaiter() {
         List<Waiter> waiterList = repository.findAll();
+        if (waiterList.isEmpty()) {
+            throw new SystemException("Waiter not found");
+        }
         return WaiterMapper.INSTANCE.toDTOList(waiterList);
     }
-
     public String deleteWaiter(Long id) {
-        repository.deleteById(id);
-        return "garson silindi";
+            repository.deleteById(id);
+            return "garson silindi";
     }
 
     public String addWaiterDTO(WaiterDTO waiterDTO) {
-
-
-        mediaRepository.delete(MediaMapper.INSTANCE.toEntity(waiterDTO.getMediaDTO()));
-
-        Waiter waiter =WaiterMapper.INSTANCE.toEntity(waiterDTO);
+        Waiter waiter = WaiterMapper.INSTANCE.toEntity(waiterDTO);
         Media media = MediaMapper.INSTANCE.toEntity(waiterDTO.getMediaDTO());
         media.setId(null);
         waiter.setMedia(media);
@@ -49,12 +45,20 @@ public class WaiterService {
     }
 
     public WaiterDTO updateWaiter(WaiterDTO waiterDTO) {
-        repository.saveAndFlush(WaiterMapper.INSTANCE.toEntity(waiterDTO));
-        return waiterDTO;
+        Optional<Waiter> waiter = repository.findById(waiterDTO.getId());
+        if (waiter.isEmpty()) {
+            throw new BussinessRuleException("Waiter not found in database");
+        }
+        UpdateHelper.updateWaiterHelper(waiterDTO, waiter);
+        repository.saveAndFlush(waiter.get());
+        return WaiterMapper.INSTANCE.toDTO(waiter.get());
     }
 
     public WaiterDTO getWaiterById(Long id) {
-        Waiter waiter = repository.findById(id).get();
-        return WaiterMapper.INSTANCE.toDTO(waiter);
+        Optional<Waiter> waiter = repository.findById(id);
+        if (waiter.isEmpty()) {
+            throw new BussinessRuleException("Waiter not found in database");
+        }
+        return WaiterMapper.INSTANCE.toDTO(waiter.get());
     }
 }

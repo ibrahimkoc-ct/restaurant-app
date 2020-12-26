@@ -1,6 +1,7 @@
 package com.ba.controller;
 
 import com.ba.dto.ProductSalesDTO;
+import com.ba.exception.BussinessRuleException;
 import com.ba.service.ProductSalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +18,14 @@ public class ProductSalesController {
 
     @PostMapping("/add")
     public String addProductSales(@RequestBody List<ProductSalesDTO> productSalesdto) {
-
+        if (productSalesdto == null ) {
+            throw new BussinessRuleException("OrderList cannot be empty!");
+        }
         productsales.addProductSales(productSalesdto);
         return "Product Sales Eklendi";
 
     }
+
     @GetMapping("/list")
     public List<ProductSalesDTO> getAllProduct() {
         return productsales.getAllProductSales();

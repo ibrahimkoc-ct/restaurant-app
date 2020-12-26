@@ -5,59 +5,67 @@ import Table from "react-bootstrap/Table";
 import {Link} from "react-router-dom";
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
-import { createBrowserHistory } from 'history';
+import {createBrowserHistory} from 'history';
+
 const history = createBrowserHistory();
+
 class CategoryListComponent extends Component {
     static contextType = BackofficeContext;
+
     constructor(props) {
         super(props)
         this.state = {
             categorylist: [],
-            token:'',
-            loading:false
+            token: '',
+            loading: false
         }
 
     }
+
     componentDidMount() {
         this.setState({loading: true})
         const userToken = this.context;
-        if(localStorage.getItem("token")==null){
-            if(userToken.token.length>0){
-                this.state.token=userToken.token;
-            }
-            else{
+        if (localStorage.getItem("token") == null) {
+            if (userToken.token.length > 0) {
+                this.state.token = userToken.token;
+            } else {
                 history.push('/');
             }
-        }
-        else {
-            this.state.token=localStorage.getItem("token")
+        } else {
+            this.state.token = localStorage.getItem("token")
         }
 
 
         CategoryService.getCategory(this.state.token).then((res) => {
-            this.setState({categorylist: res.data,loading:false});
+            this.setState({categorylist: res.data, loading: false});
         });
     }
+
     deleteCategory(id) {
 
         this.setState({loading: true})
-        CategoryService.deleteCategory(id,this.state.token).then(res => {
-            this.setState({categorylist: this.state.categorylist.filter(product => product.id !== id),loading:false})
+        CategoryService.deleteCategory(id, this.state.token).then(res => {
+            this.setState({categorylist: this.state.categorylist.filter(product => product.id !== id), loading: false})
 
         })
     }
-    editCategory(user){
-        this.props.history.push('/update-category/'+user.id);
 
-    }
-    viewCategory(id){
-        this.props.history.push('/view-category/'+id);
-        sessionStorage.setItem("view-category",id)
+    editCategory(user) {
+        this.props.history.push('/update-category/' + user.id);
 
     }
 
+    viewCategory(category) {
+        this.props.history.push({
+            pathname: `view-category/{category.id}`,
+            state: {
+                category: category
+            }
+        });
+    }
 
-        render() {
+
+    render() {
         return (
             <div>
                 <HeaderComponent/>
@@ -69,7 +77,7 @@ class CategoryListComponent extends Component {
                     <div className="row">
                     </div>
                     <div className="row">
-                        <Table striped bordered hover >
+                        <Table striped bordered hover>
                             <thead>
                             <tr>
 
@@ -84,18 +92,28 @@ class CategoryListComponent extends Component {
 
                             {
                                 this.state.categorylist.map(
-                                    user =>
-                                        <tr key={user.id} >
-                                            <td>{user.id}</td>
-                                            <td>{user.name}</td>
-                                            <td>{user.description}</td>
-                                            <td align="center"><img src={'data:image/png;base64,' + user.mediaDTO.fileContent} width="100"/></td>
+                                    category =>
+                                        <tr key={category.id}>
+                                            <td>{category.id}</td>
+                                            <td>{category.name}</td>
+                                            <td>{category.description}</td>
+                                            <td align="center"><img
+                                                src={'data:image/png;base64,' + category.mediaDTO.fileContent}
+                                                width="100"/></td>
 
                                             <td>
 
-                                                <button  onClick={()=>this.editCategory(user)} className=" btn btn-info  ">Güncelle</button>
-                                                <button style={{marginLeft: "10px"}} onClick={()=>this.deleteCategory(user.id)} className="btn btn-danger">Sil</button>
-                                                <button style={{marginLeft: "10px"}}  onClick={()=>this.viewCategory(user.id)} className="btn btn-success">Görüntüle</button>
+                                                <button onClick={() => this.editCategory(category)}
+                                                        className=" btn btn-info  ">Güncelle
+                                                </button>
+                                                <button style={{marginLeft: "10px"}}
+                                                        onClick={() => this.deleteCategory(category.id)}
+                                                        className="btn btn-danger">Sil
+                                                </button>
+                                                <button style={{marginLeft: "10px"}}
+                                                        onClick={() => this.viewCategory(category)}
+                                                        className="btn btn-success">Görüntüle
+                                                </button>
                                             </td>
                                         </tr>
                                 )

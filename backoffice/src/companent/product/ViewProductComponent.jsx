@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import HeaderComponent from "../homepage/HeaderComponent";
-import ProductService from "../../services/ProductService";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
@@ -13,8 +12,7 @@ class ViewUserComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
-            product: {},
+            product: this.props.history.location.state?.product,
             token: '',
             loading: false
         }
@@ -22,7 +20,6 @@ class ViewUserComponent extends Component {
     }
 
     componentDidMount() {
-        this.setState({loading: true})
         const userToken = this.context;
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
@@ -34,9 +31,6 @@ class ViewUserComponent extends Component {
             this.state.token = localStorage.getItem("token")
         }
 
-        ProductService.getProductById(this.state.id, this.state.token).then(res => {
-            this.setState({product: res.data, loading: false})
-        })
 
     }
 
@@ -66,7 +60,10 @@ class ViewUserComponent extends Component {
                         </div>
                         <hr></hr>
                         <div className="row">
-                            <h3>Ürün Resmi: <img src={this.state.product.urlToImage}/></h3>
+                            <h3>Ürün Resmi:
+                                <img
+                                    src={'data:image/png;base64,' + this.state.product.mediaDTO.fileContent}
+                                    width="100"/></h3>
                         </div>
 
 

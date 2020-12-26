@@ -11,18 +11,12 @@ class ViewCategoryTable extends Component {
     constructor(props) {
         super(props);
         this.state= {
-
-            name: "",
-            description: "",
-            imageToUrl: "",
-            category: [],
+            categoryList:this.props.history.location.state?.categoryList,
             token:'',
-            loading:false
 
         }
     }
     componentDidMount() {
-        this.setState({loading: true})
         const userToken = this.context;
         if(localStorage.getItem("token")==null){
             if(userToken.token.length>0){
@@ -35,12 +29,6 @@ class ViewCategoryTable extends Component {
         else {
             this.state.token=localStorage.getItem("token")
         }
-
-
-        CategoryTable.viewCategory(sessionStorage.getItem("view-categorytable"),this.state.token).then(res =>{
-            this.setState({
-                category:res.data,loading:false})
-        })
     }
 
     render() {
@@ -52,21 +40,21 @@ class ViewCategoryTable extends Component {
                     <h2 className="text-center">Masa Kategori Detayları</h2>
                     <div className="card-body">
                         <div className="row">
-                            <h3>Kategori Adı: {this.state.category.name}</h3>
+                            <h3>Kategori Adı: {this.state.categoryList.name}</h3>
                         </div>
                         <hr></hr>
 
                         <div className="row">
 
-                            <h3>Kategori Bilgileri:  {this.state.category.description}</h3>
+                            <h3>Kategori Bilgileri:  {this.state.categoryList.description}</h3>
                         </div>
                         <hr></hr>
                         <div className="row">
-                            <h3>Fotograf: {this.state.category.imageToUrl}</h3>
+                            <h3>Fotograf: {this.state.categoryList.imageToUrl}</h3>
                         </div>
                         <hr></hr>
                         <div className="row">
-                            <h3>Masa Sayisi: {this.state.category.tableAmount}</h3>
+                            <h3>Masa Sayisi: {this.state.categoryList.tableAmount}</h3>
                         </div>
 
 

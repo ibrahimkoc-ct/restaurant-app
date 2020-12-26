@@ -55,11 +55,14 @@ class UserListComponent extends Component {
 
     }
 
-    viewUser(id) {
-        this.props.history.push('/view-user/' + id);
-        sessionStorage.setItem("wiew", id)
+    viewUser(user) {
+        this.props.history.push({
+            pathname: `view-user/{user.id}`,
+            state: {
+                user: user
+            }
+        });
     }
-
     render() {
         return (
             <div>
@@ -101,7 +104,7 @@ class UserListComponent extends Component {
                                                         className=" btn btn-info  ">Güncelle
                                                 </button>
                                                 <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.viewUser(user.id)}
+                                                        onClick={() => this.viewUser(user)}
                                                         className="btn btn-success">Görüntüle
                                                 </button>
                                                 <button style={{marginLeft: "10px"}}

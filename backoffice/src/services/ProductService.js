@@ -1,23 +1,14 @@
 import axios from 'axios';
-const Product_Api_Base_URL="http://localhost:8080/backoffice/product/list";
-const Product_Api_Add_URL="http://localhost:8080/backoffice/product/add";
-const Product_Api_Update_URL="http://localhost:8080/backoffice/product/update";
-const Product_Api_Delete_URL="http://localhost:8080/backoffice/product/delete";
+const Product_Api_Base_URL="http://localhost:8080/product";
+const Product_Api_Add_URL="http://localhost:8080/product/";
+const Product_Api_Update_URL="http://localhost:8080/product";
+const Product_Api_Delete_URL="http://localhost:8080/product";
 const Product_Api_ProductSales="http://localhost:8080/productsales/list";
-const Product_Api_View_URL="http://localhost:8080/backoffice/product/id";
-const Product_Api_PageList_URL="http://localhost:8080/backoffice/product/search?page=";
-const Product_Api_Addid_URL="http://localhost:8080/backoffice/product/category/add";
+const Product_Api_View_URL="http://localhost:8080/product/id";
+const Product_Api_PageList_URL="http://localhost:8080/product/page?page=";
+const Product_Api_Addid_URL="http://localhost:8080/product";
 
 class ProductService{
-
-   getProduct(token){
-
-   return  axios.get(Product_Api_Base_URL, {
-        headers: {
-            Authorization:token
-        }
-    })
-    }
 
    createProduct(product,token){
        return axios.post(Product_Api_Add_URL,product,{
@@ -54,7 +45,7 @@ class ProductService{
 
     }
     addProductId(product,id,token){
-        return axios.post(Product_Api_Addid_URL+'/'+id,product,{
+        return axios.post(Product_Api_Addid_URL,product,{
             headers: {
                 Authorization:token
             }});

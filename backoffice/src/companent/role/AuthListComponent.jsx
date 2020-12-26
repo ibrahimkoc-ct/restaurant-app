@@ -48,8 +48,13 @@ class AuthListComponent extends Component {
 
     }
 
-    viewAuth(id) {
-        this.props.history.push('/view-auth/' + id);
+    viewAuth(role) {
+        this.props.history.push({
+            pathname:`view-auth/{role.id}`,
+            state:{
+                role:role
+            }
+        });
 
     }
 
@@ -94,7 +99,7 @@ class AuthListComponent extends Component {
                                                         className=" btn btn-info  ">Güncelle
                                                 </button>
                                                 <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.viewAuth(role.id)}
+                                                        onClick={() => this.viewAuth(role)}
                                                         className="btn btn-success">Görüntüle
                                                 </button>
                                                 <button className="btn btn-danger" style={{marginLeft: "10px"}}

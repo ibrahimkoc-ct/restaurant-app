@@ -2,23 +2,20 @@ import React, {Component} from 'react';
 import HeaderComponent from "../homepage/HeaderComponent";
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
-import CustomerService from "../../services/CustomerService";
 import {redirectWithId} from '../../RouterRedirect';
+
 class ViewCustomerComponent extends Component {
     static contextType = BackofficeContext;
 
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
-            customer: {},
-            loading: false,
-            token: ''
-
+            customer: this.props.history.location.state?.customer
         }
     }
+
     componentDidMount() {
-        this.setState({loading: true})
+
         const userToken = this.context;
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
@@ -29,31 +26,28 @@ class ViewCustomerComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-        CustomerService.getCustomerById(this.state.id, this.state.token).then((res) => {
-            this.setState({customer: res.data, loading: false})
-        }).catch(
-            this.setState({customer:null, loading: false})
-        )
+
     }
-    viewCustomer =()=>{
-        if(!this.state.customer){
+
+    viewCustomer = () => {
+        if (!this.state.customer) {
             return <h3>Kulllanıcı Bulunamadı!</h3>
         }
         return (
             <div className="card-body">
-            <div className="row">
-                <h3>Musteri Adı: {this.state.customer.name}</h3>
+                <div className="row">
+                    <h3>Musteri Adı: {this.state.customer.name}</h3>
+                </div>
+                <div className="row">
+                    <h3>Musteri Soyadı: {this.state.customer.surname}</h3>
+                </div>
+                <div className="row">
+                    <h3>Musteri Numarası: {this.state.customer.phoneNumber}</h3>
+                </div>
+                <div className="row">
+                    <h3>Musteri Adresi: {this.state.customer.address}</h3>
+                </div>
             </div>
-        <div className="row">
-            <h3>Musteri Soyadı: {this.state.customer.surname}</h3>
-        </div>
-        <div className="row">
-            <h3>Musteri Numarası: {this.state.customer.phoneNumber}</h3>
-        </div>
-        <div className="row">
-            <h3>Musteri Adresi: {this.state.customer.address}</h3>
-        </div>
-    </div>
         )
     }
 

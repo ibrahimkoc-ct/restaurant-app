@@ -2,8 +2,9 @@ package com.ba.service;
 
 import com.ba.dto.CustomerDTO;
 import com.ba.entity.Customer;
+import com.ba.exception.SystemException;
+import com.ba.helper.UpdateHelper;
 import com.ba.mapper.CustomerMapper;
-import com.ba.mapper.MediaMapper;
 import com.ba.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,46 +26,50 @@ public class CustomerService {
     @Autowired
     CustomerMapper mapper;
 
-
     public String deleteCustomer(@PathVariable Long id) {
         repository.deleteById(id);
         return "müsteri silindi";
     }
 
     public CustomerDTO addCustomer(@RequestBody CustomerDTO dto) {
-        Customer customer=repository.save(mapper.toEntity(dto));
+        Customer customer = repository.save(mapper.toEntity(dto));
         dto.setId(customer.getId());
         return dto;
     }
 
     public CustomerDTO updateCustomer(CustomerDTO dto) {
-       Customer customer= repository.saveAndFlush(mapper.toEntity(dto));
-       //degisenleri sorgula
-       dto.setId(customer.getId());
-        return dto;
+        Optional<Customer> optionalCustomer = repository.findById(dto.getId());
+        if (optionalCustomer.isEmpty()) {
+            throw new SystemException("Customer not found in database");
+        }
+        UpdateHelper.updateCustomerHelper(dto, optionalCustomer);
+        repository.saveAndFlush(optionalCustomer.get());
+        return CustomerMapper.INSTANCE.toDTO(optionalCustomer.get());
     }
 
     public CustomerDTO customerDTOById(Long id) {
         Optional<Customer> customer = repository.findById(id);
         if (!customer.isPresent()) {
-            return null;
+            throw new SystemException("Customer not found in database");
         }
         return CustomerMapper.INSTANCE.toDTO(customer.get());
     }
 
     public Page<CustomerDTO> getPageCustomers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        if (pageable == null) {
-            return null;
+        Page<CustomerDTO> dtoPage = repository.findAll(pageable).map(mapper::toDTO);
+        if (dtoPage.isEmpty()) {
+            throw new SystemException("Customers Not found");
         }
-        return repository.findAll(pageable).map(mapper::toDTO);
+        return dtoPage;
     }
 
     public Slice<CustomerDTO> getSliceCustomers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        if (pageable == null) {
-            return null;
+        Slice<CustomerDTO> customerDTO = repository.findAllBy(pageable).map(mapper::toDTO);
+        if (customerDTO.isEmpty()) {
+            throw new SystemException("Customers Not found");
         }
-        return repository.findAllBy(pageable).map(mapper::toDTO);
+        return customerDTO;
     }
 }

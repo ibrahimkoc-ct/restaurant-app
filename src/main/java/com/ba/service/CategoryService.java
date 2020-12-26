@@ -3,8 +3,9 @@ package com.ba.service;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
+import com.ba.exception.SystemException;
+import com.ba.helper.UpdateHelper;
 import com.ba.mapper.CategoryMapper;
-import com.ba.mapper.MediaMapper;
 import com.ba.mapper.ProductMapper;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.MediaRepository;
@@ -26,44 +27,56 @@ public class CategoryService {
     MediaRepository mediaRepository;
 
 
-    @Cacheable(value = "CategoryCache",key="'CATEGORY_LIST_ALL'")
+    @Cacheable(value = "CategoryCache", key = "'CATEGORY_LIST_ALL'")
     public List<CategoryDTO> getAllCategory() {
-        List<Category> categoryList= categoryRepository.findAll();
+        List<Category> categoryList = categoryRepository.findAll();
+        if (categoryList.isEmpty()) {
+            throw new SystemException("Categories not found!");
+        }
         return CategoryMapper.INSTANCE.toDTOList(categoryList);
     }
-    @CacheEvict(value = "CategoryCache",allEntries = true)
+
+    @CacheEvict(value = "CategoryCache", allEntries = true)
     public String deleteCategory(Long id) {
         categoryRepository.deleteById(id);
         return "kisi silindi";
     }
-    @CacheEvict(value = "CategoryCache",allEntries = true)
+
+    @CacheEvict(value = "CategoryCache", allEntries = true)
     public String addCategory(CategoryDTO categoryDTO) {
-        Category category=CategoryMapper.INSTANCE.toEntity(categoryDTO);
-        category.setMedia(MediaMapper.INSTANCE.toEntity(categoryDTO.getMediaDTO()));
-        category.setProducts(ProductMapper.INSTANCE.toEntity(categoryDTO.getProducts()));
-       categoryRepository.save(category);
+        Category category = CategoryMapper.INSTANCE.toEntity(categoryDTO);
+        categoryRepository.save(category);
         return "kisi eklendi";
     }
-    @CacheEvict(value = "CategoryCache",allEntries = true)
-    public CategoryDTO updateCategory (CategoryDTO categoryDTO){
-        Optional<Category> categoryList = categoryRepository.findById(categoryDTO.getId());
-        Category category=CategoryMapper.INSTANCE.toEntity(categoryDTO);
-        category.setMedia(MediaMapper.INSTANCE.toEntity(categoryDTO.getMediaDTO()));
-        category.setProducts(categoryList.get().getProducts());
+
+    @CacheEvict(value = "CategoryCache", allEntries = true)
+    public CategoryDTO updateCategory(CategoryDTO categoryDTO) {
+        Optional<Category> optionalCategory = categoryRepository.findById(categoryDTO.getId());
+        if (optionalCategory.isEmpty()) {
+            throw new SystemException("Category Not found");
+        }
+        Category category = UpdateHelper.categoryUpdateHelper(optionalCategory.get(), categoryDTO);
         categoryRepository.saveAndFlush(category);
-
-        return categoryDTO;
+        return CategoryMapper.INSTANCE.toDTO(category);
     }
-    @Cacheable(value = "CATEGORY_CACHE_BY",key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
+
+    @Cacheable(value = "CATEGORY_CACHE_BY", key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
     public CategoryDTO getCategoryById(Long id) {
-        Category dto =categoryRepository.findById(id).get();
-        return CategoryMapper.INSTANCE.toDTO(dto);
+        Optional<Category> dto = categoryRepository.findById(id);
+        if (dto.isEmpty()) {
+            throw new SystemException("Category Not found");
+        }
+        return CategoryMapper.INSTANCE.toDTO(dto.get());
 
     }
-    @Cacheable(value = "CATEGORY_CACHE_BY",key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
+
+    @Cacheable(value = "CATEGORY_CACHE_BY", key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
     public List<ProductDTO> getProductCategory(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
-        List<ProductDTO> dtoList=ProductMapper.INSTANCE.toDTOList(category.get().getProducts());
+        if (category.isEmpty()) {
+            throw new SystemException("Category Not found");
+        }
+        List<ProductDTO> dtoList = ProductMapper.INSTANCE.toDTOList(category.get().getProducts());
         return dtoList;
     }
 }

@@ -65,6 +65,14 @@ class CustomerListComponent extends Component {
         this.getCustomerList(page, this.state.lastSelectedPage)
 
     }
+    viewCustomer =(customer)=>{
+        this.props.history.push({
+            pathname:`view-customer/{customer.id}`,
+            state:{
+                customer:customer
+            }
+        });
+    }
     deleteCustomer = (id) => {
         if (id == null) {
             return;
@@ -122,7 +130,7 @@ class CustomerListComponent extends Component {
                         <button onClick={() => this.deleteCustomer(customer.id)} style={{marginLeft: "10px"}}
                                 className="btn btn-danger">Sil
                         </button>
-                        <button onClick={() => redirectWithId('/view-customer/' + customer.id)}
+                        <button onClick={() => this.viewCustomer(customer)}
                                 style={{marginLeft: "10px"}} className="btn btn-success">Detay
                         </button>
                     </td>

@@ -46,7 +46,7 @@ class CreateWaiterComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-        axios.get("http://localhost:8080/file/list").then((res) => {
+        axios.get("http://localhost:8080/file").then((res) => {
             this.setState({media: res.data, loading: false});
         });
     }
