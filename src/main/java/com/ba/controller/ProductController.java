@@ -28,7 +28,7 @@ public class ProductController {
         return "ürün silindi";
     }
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@PathVariable long id, @RequestBody ProductDTO product) {
+    public ProductDTO updateProduct(@PathVariable Long id, @RequestBody ProductDTO product) {
         if (product==null || product.getId()==null){
             throw new BussinessRuleException("Product cannot be empty!");
         }

@@ -42,7 +42,7 @@ public class UserBuilder extends IdBuilder {
     public User build() {
         User user = new User();
         user.setId(this.getId());
-        user.setRoles(this.roles);
+//        user.setRoles(this.roles);
         user.setEmail(this.email);
         user.setUsername(this.username);
         user.setPassword(this.password);

@@ -38,13 +38,13 @@ public class UserContollerTest {
         assertEquals(result, "kisi eklendi");
     }
 
-    @Test
-    public void deleteDTOControllerTest() {
-        Long id = 1L;
-        Mockito.when(service.deleteUser(id)).thenReturn("kisi silindi");
-        String result = contoller.deleteUser(id);
-        assertEquals(result, "kisi silindi");
-    }
+//    @Test
+//    public void deleteDTOControllerTest() {
+//        Long id = 1L;
+//        Mockito.when(service.deleteUser(id)).thenReturn("kisi silindi");
+//        String result = contoller.deleteUser(id);
+//        assertEquals(result, "kisi silindi");
+//    }
 
     @Test
     public void getAllUserControllerTest() {

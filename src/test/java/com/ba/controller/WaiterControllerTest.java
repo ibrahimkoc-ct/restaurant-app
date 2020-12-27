@@ -26,8 +26,8 @@ public class WaiterControllerTest {
     private WaiterService service;
     WaiterBuilder waiterBuilder = new WaiterBuilder();
     WaiterDTOBuilder waiterDTOBuilder = new WaiterDTOBuilder();
-    Waiter waiter = waiterBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).urlToImage("no image").phoneNumber("132456").build();
-    WaiterDTO waiterDTO = waiterDTOBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).urlToImage("no image").phoneNumber("132456").build();
+    Waiter waiter = waiterBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).phoneNumber("132456").build();
+    WaiterDTO waiterDTO = waiterDTOBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).phoneNumber("132456").build();
     List<Waiter> waiterList = new ArrayList<>();
     List<WaiterDTO> waiterDTOList = new ArrayList<>();
 

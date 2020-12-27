@@ -215,9 +215,14 @@ class TableComponent extends Component {
                                         this.state.categorylist.map(
                                             category => {
                                                 return (
-                                                    <button key={category.name} className="btn btn-info btn-block " onClick={() =>
-                                                        this.onClickSidebar(category)}>{category.name}</button>
-
+                                                    <div>
+                                                        <button key={category.name} className="btn btn-info btn-block buttoncategory" onClick={() =>
+                                                            this.onClickSidebar(category)}>{category.name}
+                                                        <br/>
+                                                        <img src={'data:image/png;base64,' + category.mediaDTO.fileContent}
+                                                             width="120" style={{margin: 1}}/>
+                                                        </button>
+                                                    </div>
 
                                                 )
                                             })}

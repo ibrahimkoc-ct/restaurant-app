@@ -19,7 +19,6 @@ class CategoryListComponent extends Component {
             token: '',
             loading: false
         }
-
     }
 
     componentDidMount() {
@@ -34,25 +33,25 @@ class CategoryListComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
-
-        CategoryService.getCategory(this.state.token).then((res) => {
+        CategoryService.getCategory(this.context.token).then((res) => {
             this.setState({categorylist: res.data, loading: false});
-        });
+        }).catch(this.setState({loading:false}))
     }
 
     deleteCategory(id) {
-
         this.setState({loading: true})
         CategoryService.deleteCategory(id, this.state.token).then(res => {
             this.setState({categorylist: this.state.categorylist.filter(product => product.id !== id), loading: false})
-
         })
     }
 
-    editCategory(user) {
-        this.props.history.push('/update-category/' + user.id);
-
+    editCategory(category) {
+        this.props.history.push({
+            pathname: `update-category/{category.id}`,
+            state: {
+                category: category
+            }
+        });
     }
 
     viewCategory(category) {
@@ -63,65 +62,70 @@ class CategoryListComponent extends Component {
             }
         });
     }
-
+    categoryTable = () => {
+        if (!this.state.categorylist) {
+            return
+            <div>
+                <h2>Kayıtlı kategori bulunamadı</h2>
+            </div>
+        }
+        return (
+            <div className="row">
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>Kategori Id</th>
+                        <th>Kategori Adı</th>
+                        <th>Kategori Bilgileri</th>
+                        <th>Fotograf</th>
+                        <th>Butonlar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.categorylist.map(
+                            category =>
+                                <tr key={category.id}>
+                                    <td>{category.id}</td>
+                                    <td>{category.name}</td>
+                                    <td>{category.description}</td>
+                                    <td align="center"><img
+                                        src={'data:image/png;base64,' + category.mediaDTO.fileContent}
+                                        width="100"/></td>
+                                    <td>
+                                        <button onClick={() => this.editCategory(category)}
+                                                className=" btn btn-info  ">Güncelle
+                                        </button>
+                                        <button style={{marginLeft: "10px"}}
+                                                onClick={() => this.deleteCategory(category.id)}
+                                                className="btn btn-danger">Sil
+                                        </button>
+                                        <button style={{marginLeft: "10px"}}
+                                                onClick={() => this.viewCategory(category)}
+                                                className="btn btn-success">Görüntüle
+                                        </button>
+                                    </td>
+                                </tr>
+                        )
+                    }
+                    </tbody>
+                </Table>
+            </div>
+        )
+    }
 
     render() {
         return (
             <div>
                 <HeaderComponent/>
                 <Link to="/add-category">
-                    <button className="btn btn-info addbutton">Kategori Ekle</button>
+                    <button id="addbutton" className="btn btn-info addbutton">Kategori Ekle</button>
                 </Link>
                 <div className="container productlist">
                     <h2 className="text-center">Kategoriler</h2>
                     <div className="row">
                     </div>
-                    <div className="row">
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-
-                                <th>Kategori Id</th>
-                                <th>Kategori Adı</th>
-                                <th>Kategori Bilgileri</th>
-                                <th>Fotograf</th>
-                                <th>Butonlar</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            {
-                                this.state.categorylist.map(
-                                    category =>
-                                        <tr key={category.id}>
-                                            <td>{category.id}</td>
-                                            <td>{category.name}</td>
-                                            <td>{category.description}</td>
-                                            <td align="center"><img
-                                                src={'data:image/png;base64,' + category.mediaDTO.fileContent}
-                                                width="100"/></td>
-
-                                            <td>
-
-                                                <button onClick={() => this.editCategory(category)}
-                                                        className=" btn btn-info  ">Güncelle
-                                                </button>
-                                                <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.deleteCategory(category.id)}
-                                                        className="btn btn-danger">Sil
-                                                </button>
-                                                <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.viewCategory(category)}
-                                                        className="btn btn-success">Görüntüle
-                                                </button>
-                                            </td>
-                                        </tr>
-                                )
-                            }
-                            </tbody>
-                        </Table>
-                    </div>
-
+                    {this.categoryTable()}
                 </div>
                 {
                     this.state.loading ? <FullPageLoading/> : null

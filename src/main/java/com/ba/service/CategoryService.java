@@ -44,8 +44,7 @@ public class CategoryService {
 
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public String addCategory(CategoryDTO categoryDTO) {
-        Category category = CategoryMapper.INSTANCE.toEntity(categoryDTO);
-        categoryRepository.save(category);
+        categoryRepository.save(CategoryMapper.INSTANCE.toEntity(categoryDTO));
         return "kisi eklendi";
     }
 
@@ -67,9 +66,7 @@ public class CategoryService {
             throw new SystemException("Category Not found");
         }
         return CategoryMapper.INSTANCE.toDTO(dto.get());
-
     }
-
     @Cacheable(value = "CATEGORY_CACHE_BY", key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
     public List<ProductDTO> getProductCategory(Long id) {
         Optional<Category> category = categoryRepository.findById(id);

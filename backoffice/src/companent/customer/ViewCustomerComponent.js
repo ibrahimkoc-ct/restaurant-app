@@ -47,6 +47,11 @@ class ViewCustomerComponent extends Component {
                 <div className="row">
                     <h3>Musteri Adresi: {this.state.customer.address}</h3>
                 </div>
+                <div className="row">
+                    <h3>Resim: <img
+                        src={'data:image/png;base64,' + this.state.customer.mediaDTO.fileContent}
+                        width="100"/></h3>
+                </div>
             </div>
         )
     }

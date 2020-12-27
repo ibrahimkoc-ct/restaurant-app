@@ -20,9 +20,7 @@ class ServerListInfoComponent extends Component {
             token: '',
             loading: false,
         }
-
     }
-
     componentDidMount() {
         this.setState({loading: true})
         const userToken = this.context;
@@ -36,11 +34,37 @@ class ServerListInfoComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
         UserService.getServerInfo(this.state.token).then((res) => {
             this.setState({infolist: res.data, loading: false});
         });
-
+    }
+    serverInfoForm=()=>{
+        if(!this.state.infolist){
+            return <h2>Server bilgilerine erişilemedi</h2>
+        }
+        return (
+            <div className="row">
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>Bilgi</th>
+                        <th>Degeri</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.infolist.map(
+                            user =>
+                                <tr key={user.value}>
+                                    <td>{user.value}</td>
+                                    <td>{user.key}</td>
+                                </tr>
+                        )
+                    }
+                    </tbody>
+                </Table>
+            </div>
+        )
     }
 
     render() {
@@ -51,31 +75,7 @@ class ServerListInfoComponent extends Component {
                     <h2 className="text-center">Server Bilgileri</h2>
                     <div className="row">
                     </div>
-                    <div className="row">
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-
-                                <th>Bilgi</th>
-                                <th>Degeri</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                this.state.infolist.map(
-                                    user =>
-                                        <tr key={user.value}>
-                                            <td>{user.value}</td>
-                                            <td>{user.key}</td>
-
-                                        </tr>
-                                )
-                            }
-                            </tbody>
-                        </Table>
-                    </div>
-
+                    {this.serverInfoForm()}
                 </div>
                 <FooterComponent/>
                 {this.state.loading ? <FullPageLoading/> : null}

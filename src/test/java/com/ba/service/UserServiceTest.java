@@ -38,13 +38,13 @@ public class UserServiceTest {
         assertEquals(result, "kisi eklendi");
     }
 
-    @Test(expected = RuntimeException.class)
-    public void deleteUserTest() {
-        Long id = 1L;
-        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
-        String result = service.deleteUser(id);
-        assertEquals(result, "kisi silindi");
-    }
+//    @Test(expected = RuntimeException.class)
+//    public void deleteUserTest() {
+//        Long id = 1L;
+//        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
+//        String result = service.deleteUser(id);
+//        assertEquals(result, "kisi silindi");
+//    }
 
     @Test
     public void updateUserTest() {

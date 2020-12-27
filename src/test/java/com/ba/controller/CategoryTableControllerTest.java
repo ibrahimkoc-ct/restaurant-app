@@ -31,8 +31,8 @@ public class CategoryTableControllerTest {
     List<CategoryTableDTO> dtoList = new ArrayList<>();
     CategoryTableDTOBuilder categoryDTOBuilder = new CategoryTableDTOBuilder();
     CategoryTableBuilder categoryBuilder=new CategoryTableBuilder();
-    CategoryTable categoryTable =categoryBuilder.tableAmount(15).description("balkon").id(1L).imageToUrl("no image").name("balkon").build();
-    CategoryTableDTO categoryTableDTO = categoryDTOBuilder.description("balkon").id(1L).imageToUrl("no image").name("balkon").build();
+    CategoryTable categoryTable =categoryBuilder.tableAmount(15).description("balkon").id(1L).name("balkon").build();
+    CategoryTableDTO categoryTableDTO = categoryDTOBuilder.description("balkon").id(1L).name("balkon").build();
 
     @Test
     public void addCategoryCategoryTableControllerTest(){

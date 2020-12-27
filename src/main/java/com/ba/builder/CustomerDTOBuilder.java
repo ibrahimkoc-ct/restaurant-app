@@ -1,6 +1,7 @@
 package com.ba.builder;
 
 import com.ba.dto.CustomerDTO;
+import com.ba.dto.MediaDTO;
 import com.ba.entity.Customer;
 
 public class CustomerDTOBuilder extends IdBuilder {
@@ -8,6 +9,7 @@ public class CustomerDTOBuilder extends IdBuilder {
     private String surname;
     private String phoneNumber;
     private String address;
+    private MediaDTO mediaDTO;
 
     public CustomerDTOBuilder id(Long id){
         this.setId(id);
@@ -29,10 +31,14 @@ public class CustomerDTOBuilder extends IdBuilder {
         this.phoneNumber =phoneNumber;
         return this;
     }
+    public CustomerDTOBuilder mediaDTO(MediaDTO mediaDTO){
+        this.mediaDTO =mediaDTO;
+        return this;
+    }
 
     @Override
     public CustomerDTO build() {
-        CustomerDTO dto = new CustomerDTO(this.getId(),name,surname,phoneNumber,address);
+        CustomerDTO dto = new CustomerDTO(this.getId(),name,surname,phoneNumber,address,mediaDTO);
         return dto;
     }
 }

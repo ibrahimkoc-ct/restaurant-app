@@ -20,8 +20,6 @@ class UserListComponent extends Component {
             loading: false
         }
 
-        this.editUser = this.editUser.bind(this);
-        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount() {
@@ -39,7 +37,7 @@ class UserListComponent extends Component {
 
         UserService.getUser(this.state.token).then((res) => {
             this.setState({userlist: res.data, loading: false});
-        });
+        }).catch(this.setState({loading:false}));
 
     }
 
@@ -63,6 +61,57 @@ class UserListComponent extends Component {
             }
         });
     }
+    userListForm =()=>{
+        if(!this.state.userlist){
+            return <h2>Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz</h2>
+        }
+        return(
+            <div className="row">
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>Kullanıcı Adı</th>
+                        <th>Parola</th>
+                        <th>Aktif</th>
+                        <th>Roller</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.userlist.map(
+                            user =>
+                                <tr key={user.id}>
+                                    <td>{user.username}</td>
+                                    <td className="pass">{user.password}</td>
+                                    <td>{user.enabled.toString()}</td>
+                                    <td>{
+                                        user.roles.map(
+                                            roles=>
+                                                <li>{roles.name}</li>
+                                        )
+                                    }</td>
+                                    <td>
+                                        <button onClick={() => this.editUser(user.id)}
+                                                className=" btn btn-info  ">Güncelle
+                                        </button>
+                                        <button style={{marginLeft: "10px"}}
+                                                onClick={() => this.viewUser(user)}
+                                                className="btn btn-success">Görüntüle
+                                        </button>
+                                        <button style={{marginLeft: "10px"}}
+                                                onClick={() => this.deleteUser(user.id)}
+                                                className="btn btn-danger ">Sil
+                                        </button>
+                                    </td>
+                                </tr>
+                        )
+                    }
+                    </tbody>
+                </Table>
+            </div>
+        )
+    }
     render() {
         return (
             <div>
@@ -74,51 +123,7 @@ class UserListComponent extends Component {
                     <h2 className="text-center">Kullanıcılar</h2>
                     <div className="row">
                     </div>
-                    <div className="row">
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-                                <th>Kullanıcı Adı</th>
-                                <th>Parola</th>
-                                <th>Aktif</th>
-                                <th>Roller</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                this.state.userlist.map(
-                                    user =>
-                                        <tr key={user.id}>
-                                            <td>{user.username}</td>
-                                            <td className="pass">{user.password}</td>
-                                            <td>{user.enabled.toString()}</td>
-                                            <td>{
-                                                user.roles.map(
-                                                    roles=>
-                                                    <li>{roles.name}</li>
-                                                )
-                                            }</td>
-                                            <td>
-                                                <button onClick={() => this.editUser(user.id)}
-                                                        className=" btn btn-info  ">Güncelle
-                                                </button>
-                                                <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.viewUser(user)}
-                                                        className="btn btn-success">Görüntüle
-                                                </button>
-                                                <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.deleteUser(user.id)}
-                                                        className="btn btn-danger ">Sil
-                                                </button>
-                                            </td>
-                                        </tr>
-                                )
-                            }
-                            </tbody>
-                        </Table>
-                    </div>
-
+                    {this.userListForm()}
                 </div>
                 {this.state.loading ? <FullPageLoading/> : null}
             </div>

@@ -8,7 +8,6 @@ public class WaiterDTOBuilder extends IdBuilder {
     private String phoneNumber;
     private String mail;
     private String address;
-    private String urlToImage;
     private Long salary;
     private MediaDTO mediaDTO;
 
@@ -39,10 +38,7 @@ public class WaiterDTOBuilder extends IdBuilder {
         this.address = address;
         return this;
     }
-    public WaiterDTOBuilder urlToImage(String urlToImage) {
-        this.urlToImage = urlToImage;
-        return this;
-    }
+
     public WaiterDTOBuilder salary(Long salary) {
         this.salary = salary;
         return this;
@@ -51,7 +47,6 @@ public class WaiterDTOBuilder extends IdBuilder {
     @Override
     public WaiterDTO build(){
         WaiterDTO waiterDTO= new WaiterDTO();
-        waiterDTO.setUrlToImage(this.urlToImage);
         waiterDTO.setSalary(this.salary);
         waiterDTO.setPhoneNumber(this.phoneNumber);
         waiterDTO.setId(this.getId());

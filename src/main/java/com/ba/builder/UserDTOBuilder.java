@@ -3,7 +3,9 @@ package com.ba.builder;
 import com.ba.dto.RoleDTO;
 import com.ba.dto.UserDTO;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UserDTOBuilder extends IdBuilder {
     private String email;

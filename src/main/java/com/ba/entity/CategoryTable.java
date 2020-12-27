@@ -22,7 +22,9 @@ public class CategoryTable extends BaseEntity implements Serializable {
 
     private String name;
     private String description;
-    private String imageToUrl;
     private int tableAmount;
+    @ManyToOne
+    @JoinColumn(name = "media_id")
+    private Media media;
 
 }

@@ -15,4 +15,5 @@ public class CustomerDTO {
     private String surname;
     private String phoneNumber;
     private String address;
+    private MediaDTO mediaDTO;
 }

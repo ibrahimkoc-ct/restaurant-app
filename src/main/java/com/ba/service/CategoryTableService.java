@@ -2,9 +2,11 @@ package com.ba.service;
 
 import com.ba.dto.CategoryTableDTO;
 import com.ba.entity.CategoryTable;
+import com.ba.entity.Media;
 import com.ba.exception.SystemException;
 import com.ba.helper.UpdateHelper;
 import com.ba.mapper.CategoryTableMapper;
+import com.ba.mapper.MediaMapper;
 import com.ba.repository.CategoryTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,6 @@ public class CategoryTableService {
             throw new SystemException("CategoryTable Not Found");
         }
         return CategoryTableMapper.INSTANCE.toDTOList(categoryTableList);
-
     }
 
     public String deleteCategory(Long id) {
@@ -31,8 +32,9 @@ public class CategoryTableService {
         return "kisi silindi";
     }
 
-    public String addCategory(CategoryTableDTO category) {
-        repository.save(CategoryTableMapper.INSTANCE.toEntity(category));
+    public String addCategory(CategoryTableDTO categoryTableDTO) {
+        CategoryTable categoryTable =CategoryTableMapper.INSTANCE.toEntity(categoryTableDTO);
+        repository.save(categoryTable);
         return "kisi eklendi";
     }
 
@@ -44,9 +46,8 @@ public class CategoryTableService {
         UpdateHelper.updateCategoryTableHelper(category, categoryTableOptional);
         repository.saveAndFlush(categoryTableOptional.get());
         return CategoryTableMapper.INSTANCE.toDTO(categoryTableOptional.get());
+
     }
-
-
     public CategoryTableDTO getCategoryById(Long id) {
         Optional<CategoryTable> categoryTable = repository.findById(id);
         if (categoryTable.isEmpty()) {

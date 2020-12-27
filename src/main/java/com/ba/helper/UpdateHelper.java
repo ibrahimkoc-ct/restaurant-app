@@ -34,6 +34,9 @@ public class UpdateHelper {
         if (!optionalCustomer.get().getPhoneNumber().equals(dto.getPhoneNumber())) {
             optionalCustomer.get().setPhoneNumber(dto.getPhoneNumber());
         }
+        if(!optionalCustomer.get().getMedia().equals(MediaMapper.INSTANCE.toEntity(dto.getMediaDTO()))){
+            optionalCustomer.get().setMedia(MediaMapper.INSTANCE.toEntity(dto.getMediaDTO()));
+        }
     }
     public static void updateCategoryTableHelper(CategoryTableDTO category, Optional<CategoryTable> categoryTableOptional) {
         if(!categoryTableOptional.get().getName().equals(category.getName())){
@@ -44,6 +47,9 @@ public class UpdateHelper {
         }
         if(categoryTableOptional.get().getTableAmount()!= category.getTableAmount()){
             categoryTableOptional.get().setTableAmount(category.getTableAmount());
+        }
+        if(!categoryTableOptional.get().getMedia().equals(MediaMapper.INSTANCE.toEntity(category.getMediaDTO()))){
+            categoryTableOptional.get().setMedia(MediaMapper.INSTANCE.toEntity(category.getMediaDTO()));
         }
     }
     public static void updateWaiterHelper(WaiterDTO waiterDTO, Optional<Waiter> waiter) {

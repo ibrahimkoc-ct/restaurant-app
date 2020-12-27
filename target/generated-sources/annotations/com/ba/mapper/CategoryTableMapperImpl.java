@@ -5,13 +5,16 @@ import com.ba.entity.CategoryTable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
+import org.mapstruct.factory.Mappers;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-12-25T23:23:57+0300",
+    date = "2020-12-26T22:03:11+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class CategoryTableMapperImpl implements CategoryTableMapper {
+
+    private final MediaMapper mediaMapper = Mappers.getMapper( MediaMapper.class );
 
     @Override
     public CategoryTableDTO toDTO(CategoryTable categoryTable) {
@@ -21,10 +24,10 @@ public class CategoryTableMapperImpl implements CategoryTableMapper {
 
         CategoryTableDTO categoryTableDTO = new CategoryTableDTO();
 
+        categoryTableDTO.setMediaDTO( mediaMapper.toDTO( categoryTable.getMedia() ) );
         categoryTableDTO.setId( categoryTable.getId() );
         categoryTableDTO.setName( categoryTable.getName() );
         categoryTableDTO.setDescription( categoryTable.getDescription() );
-        categoryTableDTO.setImageToUrl( categoryTable.getImageToUrl() );
         categoryTableDTO.setTableAmount( categoryTable.getTableAmount() );
 
         return categoryTableDTO;
@@ -38,10 +41,10 @@ public class CategoryTableMapperImpl implements CategoryTableMapper {
 
         CategoryTable categoryTable = new CategoryTable();
 
+        categoryTable.setMedia( mediaMapper.toEntity( dto.getMediaDTO() ) );
         categoryTable.setId( dto.getId() );
         categoryTable.setName( dto.getName() );
         categoryTable.setDescription( dto.getDescription() );
-        categoryTable.setImageToUrl( dto.getImageToUrl() );
         categoryTable.setTableAmount( dto.getTableAmount() );
 
         return categoryTable;

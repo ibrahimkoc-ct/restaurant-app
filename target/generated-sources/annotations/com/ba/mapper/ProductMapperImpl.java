@@ -11,7 +11,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-12-25T23:23:57+0300",
+    date = "2020-12-26T22:03:11+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class ProductMapperImpl implements ProductMapper {
@@ -30,7 +30,6 @@ public class ProductMapperImpl implements ProductMapper {
         productDTO.setDescription( product.getDescription() );
         productDTO.setPrice( product.getPrice() );
         productDTO.setCategory( product.getCategory() );
-        productDTO.setUrlToImage( product.getUrlToImage() );
 
         return productDTO;
     }
@@ -49,7 +48,6 @@ public class ProductMapperImpl implements ProductMapper {
         product.setDescription( dto.getDescription() );
         product.setPrice( dto.getPrice() );
         product.setCategory( dto.getCategory() );
-        product.setUrlToImage( dto.getUrlToImage() );
 
         return product;
     }

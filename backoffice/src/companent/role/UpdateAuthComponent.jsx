@@ -20,8 +20,6 @@ class UpdateAuthComponent extends Component {
             token: '',
             loading: false,
         }
-        this.chargeUsernameHandler = this.chargeUsernameHandler.bind(this);
-        this.updateAuth = this.updateAuth.bind(this);
     }
 
     componentDidMount() {
@@ -29,14 +27,12 @@ class UpdateAuthComponent extends Component {
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
                 this.state.token = userToken.token;
-
             } else {
                 history.push('/');
             }
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
     }
 
     updateAuth = (e) => {
@@ -47,7 +43,6 @@ class UpdateAuthComponent extends Component {
             this.setState({loading: false})
         })
         e.preventDefault()
-
     }
 
     cancel() {
@@ -57,7 +52,24 @@ class UpdateAuthComponent extends Component {
     chargeUsernameHandler = (event) => {
         this.setState({name: event.target.value});
     }
-
+    updateRoleForm =()=>{
+        return(
+            <div className="card-body">
+                <form>
+                    <div className="form-group">
+                        <label>Kullanıcı Adı</label>
+                        <input placeholder="Degiştirilmez." name="username" className="form-control"
+                               value={this.state.username} onChange={this.chargeUsernameHandler.bind(this)}/>
+                    </div>
+                    <hr/>
+                    <button className="btn btn-success" onClick={this.updateAuth.bind(this)}>Guncelle</button>
+                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
+                            style={{marginLeft: "10px"}}>Iptal
+                    </button>
+                </form>
+            </div>
+        )
+    }
 
     render() {
         return (
@@ -67,22 +79,7 @@ class UpdateAuthComponent extends Component {
                     <div className="row">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
                             <h3 className="text-center">Yetkinlik Düzenle</h3>
-                            <div className="card-body">
-                                <form>
-                                    <div className="form-group">
-                                        <label>Kullanıcı Adı</label>
-                                        <input placeholder="Degiştirilmez." name="username" className="form-control"
-                                               value={this.state.username} onChange={this.chargeUsernameHandler}
-                                        />
-
-                                    </div>
-                                    <hr/>
-                                    <button className="btn btn-success" onClick={this.updateAuth}>Guncelle</button>
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
-                                            style={{marginLeft: "10px"}}>Iptal
-                                    </button>
-                                </form>
-                            </div>
+                            {this.updateRoleForm()}
                         </div>
                     </div>
                 </div>

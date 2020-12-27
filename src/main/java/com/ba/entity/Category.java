@@ -22,7 +22,6 @@ public class Category extends BaseEntity implements Serializable {
 
     private String name;
     private String description;
-    private String imageToUrl;
     @JsonIgnore
     @ManyToMany
     @JoinTable(name = "TBL_CATEGORY_PRODUCT",joinColumns = @JoinColumn(name ="category_id"),inverseJoinColumns = @JoinColumn(name = "product_id"))

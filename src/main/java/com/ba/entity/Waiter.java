@@ -19,12 +19,10 @@ import java.io.Serializable;
 @Where( clause = "deleted =false")
 public class Waiter extends BaseEntity implements Serializable {
 
-
     private String name;
     private String phoneNumber;
     private String mail;
     private String address;
-    private String urlToImage;
     private Long salary;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)

@@ -31,12 +31,10 @@ class CreateRoleComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
     }
 
     RoleHandler = (event) => {
         this.setState({role: event.target.value});
-
     }
 
     cancel() {
@@ -50,8 +48,26 @@ class CreateRoleComponent extends Component {
             this.setState({loading: false})
         });
         this.props.history.push('/user-table');
-
         e.preventDefault();
+    }
+    addRoleForm = () => {
+        return (
+            <div className="card-body">
+                <form>
+                    <div className="form-group">
+                        <label>Rol Adı</label>
+                        <input placeholder="Rol Adı" name="title" className="form-control"
+                               value={this.state.role} onChange={this.RoleHandler.bind(this)}/>
+                    </div>
+                    <hr/>
+                    <button className="btn btn-success" onClick={this.saveRole.bind(this)}>Kaydet
+                    </button>
+                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
+                            style={{marginLeft: "10px"}}>Iptal
+                    </button>
+                </form>
+            </div>
+        )
     }
 
     render() {
@@ -61,25 +77,10 @@ class CreateRoleComponent extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
-                            <h3 className="text-center">Role Ekle</h3>
-                            <div className="card-body">
-                                <form>
-                                    <div className="form-group">
-                                        <label>Rol Adı</label>
-                                        <input placeholder="Rol Adı" name="title" className="form-control"
-                                               value={this.state.role} onChange={this.RoleHandler.bind(this)}/>
+                            <h3 className="text-center">Rol Ekle</h3>
+                            {this.addRoleForm()}
 
-                                    </div>
-                                    <hr/>
-                                    <button className="btn btn-success" onClick={this.saveRole.bind(this)}>Kaydet
-                                    </button>
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
-                                            style={{marginLeft: "10px"}}>Iptal
-                                    </button>
-                                </form>
-                            </div>
                         </div>
-
                     </div>
                     <FooterComponent/>
                 </div>

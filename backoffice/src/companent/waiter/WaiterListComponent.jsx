@@ -13,7 +13,6 @@ class WaiterListComponent extends Component {
     static contextType = BackofficeContext;
 
     constructor(props) {
-
         super(props);
         this.state = {
             waiterList: [],
@@ -37,22 +36,22 @@ class WaiterListComponent extends Component {
 
         WaiterService.getWaiter(this.state.token).then((res) => {
             this.setState({waiterList: res.data, loading: false})
-
-        });
+        }).catch(this.setState({loading:false}));
     }
-
     deleteWaiter = (waiter) => {
         this.setState({loading: true})
         WaiterService.deleteWaiter(waiter.id, this.state.token).then(res => {
             this.setState({waiterList: this.state.waiterList.filter(a => a.id !== waiter.id), loading: false})
-
         })
     }
-
     editWaiter(waiter) {
-        this.props.history.push('/update-waiter-table/' + waiter.id);
+        this.props.history.push({
+            pathname:`update-waiter-table/{waiter.id}`,
+            state:{
+                waiter:waiter
+            }
+        });
     }
-
     viewWaiter(waiter) {
         this.props.history.push({
             pathname:`view-waiter-table/{waiter.id}`,
@@ -61,7 +60,59 @@ class WaiterListComponent extends Component {
             }
         });
     }
+    waiterListForm=()=>{
+        if(!this.state.waiterList){
+            return <h2>Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz</h2>
+        }
+        return (
 
+            <div className="row">
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>Garson Adi</th>
+                        <th>Garson Maili</th>
+                        <th>Garson Telefon Numarası</th>
+                        <th>Garson Resmi</th>
+                        <th>Garson Maaşı</th>
+                        <th className="actions123">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.waiterList.map(
+                            waiter =>
+                                <tr key={waiter.id}>
+                                    <td>{waiter.name}</td>
+                                    <td>{waiter.mail}</td>
+                                    <td>{waiter.phoneNumber}</td>
+                                    <td align="center"><img
+                                        src={'data:image/png;base64,' + waiter.mediaDTO.fileContent}
+                                        width="100"/></td>
+
+                                    <td>{waiter.salary}</td>
+                                    <td>
+                                        <button onClick={() => this.editWaiter(waiter)}
+                                                className=" btn btn-info  ">Güncelle
+                                        </button>
+                                        <button style={{marginLeft: "10px"}}
+                                                onClick={() => this.deleteWaiter(waiter)}
+                                                className="btn btn-danger">Sil
+                                        </button>
+                                        <button style={{marginLeft: "10px"}}
+                                                onClick={() => this.viewWaiter(waiter)}
+                                                className="btn btn-success">Görüntüle
+                                        </button>
+                                    </td>
+
+                                </tr>
+                        )
+                    }
+                    </tbody>
+                </Table>
+            </div>
+        )
+    }
 
     render() {
         return (
@@ -72,54 +123,7 @@ class WaiterListComponent extends Component {
                 </Link>
                 <div className="container productlist">
                     <h2 className="text-center ">Garson Listesi</h2>
-
-                    <div className="row">
-                    </div>
-                    <div className="row">
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-                                <th>Garson Adi</th>
-                                <th>Garson Maili</th>
-                                <th>Garson Telefon Numarası</th>
-                                <th>Garson Resmi</th>
-                                <th>Garson Maaşı</th>
-                                <th className="actions123">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                this.state.waiterList.map(
-                                    waiter =>
-                                        <tr key={waiter.id}>
-                                            <td>{waiter.name}</td>
-                                            <td>{waiter.mail}</td>
-                                            <td>{waiter.phoneNumber}</td>
-                                            <td align="center"><img
-                                                src={'data:image/png;base64,' + waiter.mediaDTO.fileContent}
-                                                width="100"/></td>
-
-                                            <td>{waiter.salary}</td>
-                                            <td>
-                                                <button onClick={() => this.editWaiter(waiter)}
-                                                        className=" btn btn-info  ">Güncelle
-                                                </button>
-                                                <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.deleteWaiter(waiter)}
-                                                        className="btn btn-danger">Sil
-                                                </button>
-                                                <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.viewWaiter(waiter)}
-                                                        className="btn btn-success">Görüntüle
-                                                </button>
-                                            </td>
-
-                                        </tr>
-                                )
-                            }
-                            </tbody>
-                        </Table>
-                    </div>
+                    {this.waiterListForm()}
                 </div>
                 {this.state.loading ? <FullPageLoading/> : null}
             </div>

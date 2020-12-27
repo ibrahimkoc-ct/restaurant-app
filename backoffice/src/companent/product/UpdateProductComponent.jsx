@@ -20,7 +20,6 @@ class UpdateProductComponent extends Component {
             title: '',
             description: '',
             category: '',
-            urlToImage: '',
             price: '',
             token: '',
             loading: false,
@@ -29,22 +28,14 @@ class UpdateProductComponent extends Component {
             media: [],
             mediaSelect: {},
         }
-
-        this.chargeTitleHandler = this.chargeTitleHandler.bind(this);
-        this.chargeDescriptionHandler = this.chargeDescriptionHandler.bind(this);
-        this.chargeCategoryHandler = this.chargeCategoryHandler.bind(this);
-        this.chargePriceHandler = this.chargePriceHandler.bind(this);
-        this.updateProduct = this.updateProduct.bind(this);
-        this.chargeUrlToImageHandler = this.chargeUrlToImageHandler.bind(this);
     }
 
     async componentDidMount() {
-
         const userToken = this.context;
+        this.setState({loading: true})
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
                 this.state.token = userToken.token;
-
             } else {
                 history.push('/');
             }
@@ -55,14 +46,13 @@ class UpdateProductComponent extends Component {
             this.setState({categorylist: res.data});
         });
         axios.get("http://localhost:8080/file").then((res) => {
-            this.setState({media: res.data});
-        });
+            this.setState({media: res.data})
+        }).catch(this.setState({loading: false}))
     }
 
     changeSelect = (media) => {
         this.state.mediaSelect = media;
     }
-
 
     changeMultiSelect = (category) => {
         if (this.state.selectedCategory.filter(select => select.id === category.id).length > 0) {
@@ -74,7 +64,6 @@ class UpdateProductComponent extends Component {
     }
 
     updateProduct = (e) => {
-
         this.setState({loading: true})
         let product = {
             id: this.state.id,
@@ -82,7 +71,6 @@ class UpdateProductComponent extends Component {
             description: this.state.description,
             category: this.state.categoryName,
             price: this.state.price,
-            urlToImage: this.state.urlToImage,
             categories: this.state.selectedCategory,
             mediaDTO: this.state.mediaSelect
         };
@@ -92,29 +80,80 @@ class UpdateProductComponent extends Component {
         })
         e.preventDefault()
     }
-    chargeTitleHandler = (event) => {
-        this.setState({title: event.target.value});
-    }
-    chargeDescriptionHandler = (event) => {
-        this.setState({description: event.target.value});
-    }
-    chargeCategoryHandler = (event) => {
-        this.setState({category: event.target.value});
-    }
-    chargePriceHandler = (event) => {
-        this.setState({price: event.target.value});
-    }
-    chargeUrlToImageHandler = (event) => {
-        this.setState({urlToImage: event.target.value})
+
+    changeInput = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     cancel() {
         this.props.history.push('/products');
     }
+
     debugBase64 = (base64URL) => {
         var win = window.open();
         win.document.write('<iframe src="' + base64URL + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
     }
+    updateProductForm = () => {
+        if (!this.state.categorylist || !this.state.media) {
+            return (<h2>Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.</h2>)
+        }
+        return (
+            <div className="card-body">
+                <form>
+                    <div className="form-group">
+                        <label>Urun Adı</label>
+                        <input placeholder="Urun Adı" name="title" className="form-control"
+                               value={this.state.title} onChange={this.changeInput}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Urun Acıklaması</label>
+                        <input placeholder="Urun acıklaması" name="description" className="form-control"
+                               value={this.state.description} onChange={this.changeInput}/>
+                    </div>
+                    <div className="form-group">
+                        <div className="form-check" style={{height: "4rem", overflow: "auto"}}>
+                            {
+                                this.state.media.map(
+                                    media =>
+                                        <div key={media.name} className="row col-md -12 custom-control custom-radio">
+                                            <input className="form-check-input"
+                                                   name="customRadio" type="radio"
+                                                   onClick={() => this.changeSelect(media)}/>
+                                            <label className="form-check-label">
+                                                <a onClick={() => this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
+                                        </div>
+                                )
+                            }
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label>Urun Fiyatı</label>
+                        <input placeholder="Urun fiyatı" name="price" className="form-control"
+                               value={this.state.price} onChange={this.changeInput}/>
+                    </div>
+                    <div className="checkbox" style={{height: "4rem", overflow: "auto"}}>
+                        {
+                            this.state.categorylist.map(
+                                category =>
+                                    <div key={category.name} className="row col-md -12">
+                                        <label><input type="checkbox" value=""
+                                                      onClick={() => this.changeMultiSelect(category)}/>{category.name}
+                                        </label>
+                                    </div>
+                            )
+                        }
+                    </div>
+                    <button className="btn btn-success" onClick={this.updateProduct.bind(this)}>Kaydet</button>
+                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
+                            style={{marginLeft: "10px"}}>Iptal
+                    </button>
+                </form>
+            </div>
+        )
+    }
+
     render() {
         return (
             <div>
@@ -123,60 +162,7 @@ class UpdateProductComponent extends Component {
                     <div className="row">
                         <div className="card col-md-6 offset-md-3 offset-md-3">
                             <h3 className="text-center">Urun Guncelle</h3>
-                            <div className="card-body">
-                                <form>
-                                    <div className="form-group">
-                                        <label>Urun Adı</label>
-                                        <input placeholder="Urun Adı" name="title" className="form-control"
-                                               value={this.state.title} onChange={this.chargeTitleHandler}/>
-
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Urun Acıklaması</label>
-                                        <input placeholder="Urun acıklaması" name="description" className="form-control"
-                                               value={this.state.description} onChange={this.chargeDescriptionHandler}/>
-
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="form-check" style={{height: "4rem", overflow: "auto"}}>
-                                            {
-                                                this.state.media.map(
-                                                    media =>
-                                                        <div key={media.name} className="row col-md -12 custom-control custom-radio">
-                                                            <input  className="form-check-input"
-                                                                   name="customRadio" type="radio"
-                                                                   onClick={() => this.changeSelect(media)}/>
-                                                            <label className="form-check-label">
-                                                                <a onClick={() => this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
-                                                        </div>
-                                                )
-                                            }
-                                        </div>
-
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Urun Fiyatı</label>
-                                        <input placeholder="Urun fiyatı" name="price" className="form-control"
-                                               value={this.state.price} onChange={this.chargePriceHandler}/>
-                                    </div>
-                                    <div className="checkbox" style={{height: "4rem", overflow: "auto"}}>
-                                        {
-                                            this.state.categorylist.map(
-                                                category =>
-                                                    <div key={category.name} className="row col-md -12">
-                                                        <label><input  type="checkbox" value=""
-                                                                                          onClick={() => this.changeMultiSelect(category)}/>{category.name}
-                                                        </label>
-                                                    </div>
-                                            )
-                                        }
-                                    </div>
-                                    <button className="btn btn-success" onClick={this.updateProduct}>Kaydet</button>
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}
-                                            style={{marginLeft: "10px"}}>Iptal
-                                    </button>
-                                </form>
-                            </div>
+                            {this.updateProductForm()}
                         </div>
                     </div>
                 </div>

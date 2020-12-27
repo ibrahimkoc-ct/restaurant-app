@@ -11,7 +11,6 @@ public class ProductDTOBuilder extends IdBuilder{
     private String description;
     private String price;
     private String category;
-    private String urlToImage;
     private List<CategoryDTO> categories;
     private MediaDTO mediaDTO;
 
@@ -40,10 +39,6 @@ public class ProductDTOBuilder extends IdBuilder{
         this.category = category;
         return this;
     }
-    public ProductDTOBuilder urlToImage(String urlToImage) {
-        this.urlToImage = urlToImage;
-        return this;
-    }
     public ProductDTOBuilder id(Long id){
         this.setId(id);
         return this;
@@ -59,7 +54,6 @@ public class ProductDTOBuilder extends IdBuilder{
         productDTO.setId(this.getId());
         productDTO.setPrice(this.price);
         productDTO.setCategory(this.category);
-        productDTO.setUrlToImage(this.urlToImage);
         productDTO.setCategories(this.categories);
         productDTO.setMediaDTO(this.mediaDTO);
 

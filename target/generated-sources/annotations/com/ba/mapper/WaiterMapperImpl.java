@@ -11,7 +11,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-12-25T23:23:57+0300",
+    date = "2020-12-26T22:03:11+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class WaiterMapperImpl implements WaiterMapper {
@@ -30,7 +30,6 @@ public class WaiterMapperImpl implements WaiterMapper {
         waiterDTO.setPhoneNumber( waiter.getPhoneNumber() );
         waiterDTO.setMail( waiter.getMail() );
         waiterDTO.setAddress( waiter.getAddress() );
-        waiterDTO.setUrlToImage( waiter.getUrlToImage() );
         waiterDTO.setSalary( waiter.getSalary() );
 
         return waiterDTO;
@@ -50,7 +49,6 @@ public class WaiterMapperImpl implements WaiterMapper {
         waiter.setPhoneNumber( dto.getPhoneNumber() );
         waiter.setMail( dto.getMail() );
         waiter.setAddress( dto.getAddress() );
-        waiter.setUrlToImage( dto.getUrlToImage() );
         waiter.setSalary( dto.getSalary() );
 
         return waiter;

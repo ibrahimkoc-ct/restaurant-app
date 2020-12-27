@@ -8,7 +8,6 @@ public class WaiterBuilder extends IdBuilder {
     private String phoneNumber;
     private String mail;
     private String address;
-    private String urlToImage;
     private Long salary;
     private Media media;
 
@@ -32,10 +31,7 @@ public class WaiterBuilder extends IdBuilder {
         this.address = address;
         return this;
     }
-    public WaiterBuilder urlToImage(String urlToImage) {
-        this.urlToImage = urlToImage;
-        return this;
-    }
+
     public WaiterBuilder salary(Long salary) {
         this.salary = salary;
         return this;
@@ -47,7 +43,6 @@ public class WaiterBuilder extends IdBuilder {
     @Override
     public Waiter build(){
         Waiter waiter= new Waiter();
-        waiter.setUrlToImage(this.urlToImage);
         waiter.setSalary(this.salary);
         waiter.setPhoneNumber(this.phoneNumber);
         waiter.setId(this.getId());

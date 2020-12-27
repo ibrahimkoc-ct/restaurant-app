@@ -31,16 +31,16 @@ public class ProductControllerTest {
     @Mock
     private ProductService service;
     CategoryBuilder categoryBuilder = new CategoryBuilder();
-    Category category=categoryBuilder.id(1L).description("pizza").imageToUrl("no image").name("Pizza").build();
+    Category category=categoryBuilder.id(1L).description("pizza").name("Pizza").build();
     Set<Category> categories= new HashSet<>();
     List<CategoryDTO> categoriesDto= new ArrayList<>();
     List<Product> list = new ArrayList<>();
     List<ProductDTO> dtoList =new ArrayList<>();
     Set<Product> productSet = new HashSet<>();
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").build();
     ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").build();
 
 
     @Test

@@ -2,9 +2,11 @@ package com.ba.service;
 
 import com.ba.dto.CustomerDTO;
 import com.ba.entity.Customer;
+import com.ba.entity.Media;
 import com.ba.exception.SystemException;
 import com.ba.helper.UpdateHelper;
 import com.ba.mapper.CustomerMapper;
+import com.ba.mapper.MediaMapper;
 import com.ba.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,8 +34,9 @@ public class CustomerService {
     }
 
     public CustomerDTO addCustomer(@RequestBody CustomerDTO dto) {
-        Customer customer = repository.save(mapper.toEntity(dto));
+        Customer customer = mapper.toEntity(dto);
         dto.setId(customer.getId());
+        repository.save(customer);
         return dto;
     }
 
@@ -44,7 +47,7 @@ public class CustomerService {
         }
         UpdateHelper.updateCustomerHelper(dto, optionalCustomer);
         repository.saveAndFlush(optionalCustomer.get());
-        return CustomerMapper.INSTANCE.toDTO(optionalCustomer.get());
+        return mapper.toDTO(optionalCustomer.get());
     }
 
     public CustomerDTO customerDTOById(Long id) {
@@ -52,7 +55,7 @@ public class CustomerService {
         if (!customer.isPresent()) {
             throw new SystemException("Customer not found in database");
         }
-        return CustomerMapper.INSTANCE.toDTO(customer.get());
+        return mapper.toDTO(customer.get());
     }
 
     public Page<CustomerDTO> getPageCustomers(int page, int size) {

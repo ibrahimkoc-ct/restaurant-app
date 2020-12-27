@@ -5,7 +5,6 @@ import com.ba.entity.CategoryTable;
 public class CategoryTableBuilder extends IdBuilder{
     private String name;
     private String description;
-    private String imageToUrl;
     private int tableAmount;
 
     public CategoryTableBuilder name(String name) {
@@ -21,10 +20,7 @@ public class CategoryTableBuilder extends IdBuilder{
         this.description = description;
         return this;
     }
-    public CategoryTableBuilder imageToUrl(String imageToUrl) {
-        this.imageToUrl = imageToUrl;
-        return this;
-    }
+
     public CategoryTableBuilder tableAmount(int tableAmount){
         this.tableAmount=tableAmount;
         return this;
@@ -33,7 +29,7 @@ public class CategoryTableBuilder extends IdBuilder{
     @Override
     public CategoryTable build(){
         CategoryTable categoryTable = new CategoryTable();
-        categoryTable.setImageToUrl(this.imageToUrl);
+        categoryTable.setDescription(this.description);
         categoryTable.setTableAmount(this.tableAmount);
         categoryTable.setId(this.getId());
         categoryTable.setName(this.name);

@@ -19,7 +19,6 @@ class AuthListComponent extends Component {
             token: '',
             loading: false
         }
-
     }
 
     componentDidMount() {
@@ -35,17 +34,13 @@ class AuthListComponent extends Component {
             this.state.token = localStorage.getItem("token")
         }
 
-
         UserService.getAuth(this.state.token).then((res) => {
-            this.setState({authlist: res.data, loading: false});
-        });
-
+            this.setState({authlist: res.data, loading: false})
+        }).catch(this.setState({loading:false}));
     }
 
     editAuth(id) {
         this.props.history.push('/update-auth/' + id);
-
-
     }
 
     viewAuth(role) {
@@ -55,13 +50,53 @@ class AuthListComponent extends Component {
                 role:role
             }
         });
-
     }
 
     deleteRole(id) {
         this.setState({loading: true})
         UserService.deleteAuth(id, this.state.token)
         this.setState({authlist: this.state.authlist.filter(auth => auth.id !== id), loading: false})
+    }
+    roleListForm =()=>{
+        if(!this.state.authlist){
+            return <h2>Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.</h2>
+        }
+        return (
+            <div className="row">
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>Rol Id</th>
+                        <th>Rol Adı</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.authlist.map(
+                            role =>
+                                <tr key={role.id}>
+                                    <td>{role.id}</td>
+                                    <td>{role.name}</td>
+                                    <td>
+                                        <button onClick={() => this.editAuth(role.id)}
+                                                className=" btn btn-info  ">Güncelle
+                                        </button>
+                                        <button style={{marginLeft: "10px"}}
+                                                onClick={() => this.viewAuth(role)}
+                                                className="btn btn-success">Görüntüle
+                                        </button>
+                                        <button className="btn btn-danger" style={{marginLeft: "10px"}}
+                                                onClick={() => this.deleteRole(role.id)}>Sil
+                                        </button>
+                                    </td>
+                                </tr>
+                        )
+                    }
+                    </tbody>
+                </Table>
+            </div>
+        )
     }
 
     render() {
@@ -75,45 +110,7 @@ class AuthListComponent extends Component {
                     <h2 className="text-center">Yetkiler</h2>
                     <div className="row">
                     </div>
-                    <div className="row">
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-
-
-                                <th>Rol Id</th>
-                                <th>Rol Adı</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                this.state.authlist.map(
-                                    role =>
-                                        <tr key={role.id}>
-                                            <td>{role.id}</td>
-                                            <td>{role.name}</td>
-                                            <td>
-
-                                                <button onClick={() => this.editAuth(role.id)}
-                                                        className=" btn btn-info  ">Güncelle
-                                                </button>
-                                                <button style={{marginLeft: "10px"}}
-                                                        onClick={() => this.viewAuth(role)}
-                                                        className="btn btn-success">Görüntüle
-                                                </button>
-                                                <button className="btn btn-danger" style={{marginLeft: "10px"}}
-                                                        onClick={() => this.deleteRole(role.id)}>Sil
-                                                </button>
-
-                                            </td>
-                                        </tr>
-                                )
-                            }
-                            </tbody>
-                        </Table>
-                    </div>
-
+                    {this.roleListForm()}
                 </div>
                 {this.state.loading ? <FullPageLoading/> : null}
             </div>

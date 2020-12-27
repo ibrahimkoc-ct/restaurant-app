@@ -16,7 +16,6 @@ class ViewUserComponent extends Component {
             token: '',
             loading: false
         }
-
     }
 
     componentDidMount() {
@@ -31,6 +30,19 @@ class ViewUserComponent extends Component {
             this.state.token = localStorage.getItem("token")
         }
     }
+    viewAuthForm=()=>{
+        return(
+            <div className="card-body">
+                <div className="row">
+                    <h3>Rol id: {this.state.role.id}</h3>
+                </div>
+                <hr></hr>
+                <div className="row">
+                    <h3>Rol Adı: {this.state.role.name}</h3>
+                </div>
+            </div>
+        )
+    }
 
     render() {
         return (
@@ -39,15 +51,7 @@ class ViewUserComponent extends Component {
                 <br></br>
                 <div className="card col-md-6 offset-md-3">
                     <h2 className="text-center">Yetkinlik Detayları</h2>
-                    <div className="card-body">
-                        <div className="row">
-                            <h3>Rol id: {this.state.role.id}</h3>
-                        </div>
-                        <hr></hr>
-                        <div className="row">
-                            <h3>Rol Adı: {this.state.role.name}</h3>
-                        </div>
-                    </div>
+                    {this.viewAuthForm()}
                 </div>
                 {this.state.loading ? <FullPageLoading/> : null}
             </div>

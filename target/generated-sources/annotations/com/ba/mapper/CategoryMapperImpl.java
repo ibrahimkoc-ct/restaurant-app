@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-12-25T23:25:22+0300",
+    date = "2020-12-26T22:03:11+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class CategoryMapperImpl implements CategoryMapper {
@@ -28,7 +28,6 @@ public class CategoryMapperImpl implements CategoryMapper {
         categoryDTO.setId( category.getId() );
         categoryDTO.setName( category.getName() );
         categoryDTO.setDescription( category.getDescription() );
-        categoryDTO.setImageToUrl( category.getImageToUrl() );
 
         return categoryDTO;
     }
@@ -45,7 +44,6 @@ public class CategoryMapperImpl implements CategoryMapper {
         category.setId( dto.getId() );
         category.setName( dto.getName() );
         category.setDescription( dto.getDescription() );
-        category.setImageToUrl( dto.getImageToUrl() );
 
         return category;
     }

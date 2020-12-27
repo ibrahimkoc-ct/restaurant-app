@@ -43,7 +43,7 @@ class CustomerListComponent extends Component {
             let selectedButton = document.getElementById(page)
             selectedButton.className = "btn btn-secondary";
         }).catch(
-            this.setState({customerList: null, loading: false})
+            this.setState({ loading: false})
         )
     }
     getTokenFromDb = () => {
@@ -73,6 +73,15 @@ class CustomerListComponent extends Component {
             }
         });
     }
+
+    updateCustomer =(customer)=>{
+        this.props.history.push({
+            pathname:`update-customer/{customer.id}`,
+            state:{
+                customer:customer
+            }
+        });
+    }
     deleteCustomer = (id) => {
         if (id == null) {
             return;
@@ -88,10 +97,7 @@ class CustomerListComponent extends Component {
                 loading: false
             })
 
-        }).catch(
-            alert("silme islemi tamamlanamadı!"),
-            this.setState({loading: false})
-        )
+        })
     }
 
 
@@ -109,6 +115,7 @@ class CustomerListComponent extends Component {
                     <th>Musteri Adı</th>
                     <th>Musteri Soyadı</th>
                     <th>Telefon Numarası</th>
+                    <th>Musteri Fotografı</th>
                     <th>Musteri Adresi</th>
                     <th>Butonlar</th>
                 </tr>
@@ -122,9 +129,12 @@ class CustomerListComponent extends Component {
                     <td>{customer.name}</td>
                     <td>{customer.surname}</td>
                     <td>{customer.phoneNumber}</td>
+                    <td align="center"><img
+                        src={'data:image/png;base64,' + customer.mediaDTO.fileContent}
+                        width="100"/></td>
                     <td>{customer.address}</td>
                     <td>
-                        <button onClick={() => redirectWithId('/update-customer/' + customer.id)}
+                        <button onClick={() => this.updateCustomer(customer)}
                                 className="btn btn-info">Guncelle
                         </button>
                         <button onClick={() => this.deleteCustomer(customer.id)} style={{marginLeft: "10px"}}

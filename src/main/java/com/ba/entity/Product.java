@@ -27,12 +27,10 @@ public class Product extends BaseEntity implements Serializable {
     private String description;
     private String price;
     private String category;
-    private String urlToImage;
 
     @ManyToOne
     @JoinColumn(name = "media_id")
     private Media media;
-
 
     @JsonIgnore
     @ManyToMany(mappedBy = "products")

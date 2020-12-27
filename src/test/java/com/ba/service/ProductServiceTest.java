@@ -46,12 +46,12 @@ public class ProductServiceTest {
     MediaDTO mediaDTO = mediaDTOBuilder.id(1L).name("name").build();
     CategoryBuilder categoryBuilder = new CategoryBuilder();
     CategoryDTOBuilder categoryDTOBuilder = new CategoryDTOBuilder();
-    Category category = categoryBuilder.id(1L).description("pizza").imageToUrl("no image").name("Pizza").media(media).build();
+    Category category = categoryBuilder.id(1L).description("pizza").name("Pizza").media(media).build();
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product = productBuilder.category("Pizza").description("pizza").id(1L).media(media).price("15").title("Pizza").categories(categoryList).urlToImage("no image").build();
+    Product product = productBuilder.category("Pizza").description("pizza").id(1L).media(media).price("15").title("Pizza").categories(categoryList).build();
     ProductDTOBuilder productDTOBuilder = new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").mediaDTO(mediaDTO).description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
-    CategoryDTO dto = categoryDTOBuilder.id(1L).description("pizza").imageToUrl("no image").name("Pizza").mediaDTO(mediaDTO).build();
+    ProductDTO productDTO = productDTOBuilder.category("Pizza").mediaDTO(mediaDTO).description("pizza").id(1L).price("15").title("Pizza").build();
+    CategoryDTO dto = categoryDTOBuilder.id(1L).description("pizza").name("Pizza").mediaDTO(mediaDTO).build();
 
     @Test(expected = RuntimeException.class)
     public void shouldDeleteProductById() {

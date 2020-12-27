@@ -12,7 +12,6 @@ const history = createBrowserHistory({forceRefresh: true});
 
 class ProductSalesTable extends Component {
     static contextType = BackofficeContext;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -35,12 +34,56 @@ class ProductSalesTable extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
         ProductService.getProductSales(this.state.token).then((res) => {
             this.setState({ProductSales: res.data, loading: false});
-        });
+        }).catch(
+            this.setState({loading:false})
+        )
     }
+    orderTable =()=>{
+        if(!this.state.ProductSales){
+            return <h2>Satış bilgisi bulunamadı!</h2>
+        }
+        return (
+            <div className="row">
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>Siparis Numarası</th>
+                        <th>Siparis Tarihi</th>
+                        <th>Garson Adı</th>
+                        <th>Masa Numarası</th>
+                        <th>Urun Adi</th>
+                        <th>Urun ID</th>
+                        <th>Urun Adeti</th>
+                        <th>Urun Fiyatı</th>
+                        <th>Toplam Fiyat</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
 
+                        this.state.ProductSales.map(
+                            product =>
+                                <tr key={product.id}>
+                                    <td>{product.id}</td>
+                                    <td>{product.createDate}</td>
+                                    <td>{product.waiterName}</td>
+                                    <td>{product.selectedtable}</td>
+                                    <td>{product.title}</td>
+                                    <td>{product.productId}</td>
+                                    <td>{product.piece}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.price * product.piece}</td>
+
+                                </tr>
+                        )
+                    }
+                    </tbody>
+                </Table>
+            </div>
+        )
+    }
 
     render() {
         return (
@@ -50,44 +93,7 @@ class ProductSalesTable extends Component {
                     <h2 className="text-center">Urun Satış Tablosu</h2>
                     <div className="row">
                     </div>
-                    <div className="row">
-                        <Table striped bordered hover>
-                            <thead>
-                            <tr>
-                                <th>Siparis Numarası</th>
-                                <th>Siparis Tarihi</th>
-                                <th>Garson Adı</th>
-                                <th>Masa Numarası</th>
-                                <th>Urun Adi</th>
-                                <th>Urun ID</th>
-                                <th>Urun Adeti</th>
-                                <th>Urun Fiyatı</th>
-                                <th>Toplam Fiyat</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-
-                                this.state.ProductSales.map(
-                                    product =>
-                                        <tr key={product.id}>
-                                            <td>{product.id}</td>
-                                            <td>{product.createDate}</td>
-                                            <td>{product.waiterName}</td>
-                                            <td>{product.selectedtable}</td>
-                                            <td>{product.title}</td>
-                                            <td>{product.productId}</td>
-                                            <td>{product.piece}</td>
-                                            <td>{product.price}</td>
-                                            <td>{product.price * product.piece}</td>
-
-                                        </tr>
-                                )
-                            }
-                            </tbody>
-                        </Table>
-                    </div>
-
+                    {this.orderTable()}
                 </div>
                 {this.state.loading ? <FullPageLoading/> : null}
             </div>

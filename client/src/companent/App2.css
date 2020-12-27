@@ -21,6 +21,10 @@
     height: 100px;
 
 }
+.selectCustomerButton{
+    width: 460px;
+    margin-top: 4px;
+}
 .viewCustomer{
     height:300px;
     overflow-y: auto;

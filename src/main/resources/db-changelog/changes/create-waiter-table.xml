@@ -12,7 +12,6 @@
             <column name="phone_Number" type="VARCHAR(255)"/>
             <column name="mail" type="VARCHAR(255)"/>
             <column name="address" type="VARCHAR(255)"/>
-            <column name="url_To_Image" type="VARCHAR(255)"/>
             <column name="salary" type="int(10)"/>
             <column name="media_id" type="int(10)">
                 <constraints nullable="true" foreignKeyName="media_id_fk_into_waiter" references="media(id)"></constraints>

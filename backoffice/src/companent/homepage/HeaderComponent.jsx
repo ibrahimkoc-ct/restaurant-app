@@ -12,7 +12,6 @@ class HeaderComponent extends Component {
         this.state = {
             username:''
         }
-        this.Exitbutton=this.Exitbutton.bind(this);
     }
     componentDidMount() {
         const userToken = this.context;
@@ -29,16 +28,11 @@ class HeaderComponent extends Component {
             this.state.token=localStorage.getItem("token")
             this.state.username=localStorage.getItem("username")
         }
-
-
     }
 
     Exitbutton(){
         localStorage.removeItem("token");
         localStorage.removeItem("username")
-
-
-
     }
     render() {
         return (
@@ -54,8 +48,6 @@ class HeaderComponent extends Component {
                         <Link to='/products'>
                         <button style={{marginLeft: "10px"}} className="btn btn-info" >Urunler</button>
                     </Link>
-
-
                         <Link to ='/salestable' >
                             <button style={{marginLeft: "10px"}} className="btn btn-info" >Raporlar</button>
                         </Link>
@@ -77,12 +69,11 @@ class HeaderComponent extends Component {
                         <Link to ='/customers' >
                             <button style={{marginLeft: "10px"}} className="btn btn-info" >Musteriler</button>
                         </Link>
-
                         <Link to ='/' >
                             <button className="btn btn-danger usernamepage" onClick={()=>this.Exitbutton()}>Çıkıs: {this.state.username}</button>
                         </Link>
                         <Link to ='/server-info' >
-                            <button style={{marginLeft: "10px"}} className="btn btn-info serverinfo">Server Bilgileri </button>
+                            <button style={{marginLeft: "10px"}} className="btn btn-info serverinfo">Server Bilgileri</button>
                         </Link>
 
                     </nav>

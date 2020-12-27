@@ -16,7 +16,6 @@ public class ProductDTO {
     private String description;
     private String price;
     private String category;
-    private String urlToImage;
     private MediaDTO mediaDTO;
     private List<CategoryDTO> categories= new ArrayList<>();
 

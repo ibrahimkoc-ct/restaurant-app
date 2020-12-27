@@ -55,11 +55,11 @@ public class CategoryServiceTest {
     MediaDTO mediaDTO = mediaDTOBuilder.id(1L).name("name").build();
 
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product = productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").media(media).build();
+    Product product = productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").media(media).build();
     ProductDTOBuilder productDTOBuilder = new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").mediaDTO(mediaDTO).build();
-    Category category = categoryBuilder.name("Pizza").imageToUrl("no image").description("pizza").id(1L).products(setProduct).media(media).build();
-    CategoryDTO categoryDTO = categoryDTOBuilder.name("Pizza").imageToUrl("no image").description("pizza").products(dtos).mediaDTO(mediaDTO).id(1L).build();
+    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").mediaDTO(mediaDTO).build();
+    Category category = categoryBuilder.name("Pizza").description("pizza").id(1L).products(setProduct).media(media).build();
+    CategoryDTO categoryDTO = categoryDTOBuilder.name("Pizza").description("pizza").products(dtos).mediaDTO(mediaDTO).id(1L).build();
 
 
     @Before

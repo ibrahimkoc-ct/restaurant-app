@@ -29,12 +29,12 @@ public class CategoryControllerTest {
     private CategoryService service;
     CategoryBuilder categoryBuilder= new CategoryBuilder();
     CategoryDTOBuilder categoryDTOBuilder= new CategoryDTOBuilder();
-    Category category = categoryBuilder.name("Pizza").imageToUrl("no image").description("pizza").id(1L).build();
-    CategoryDTO categoryDTO = categoryDTOBuilder.name("Pizza").imageToUrl("no image").description("pizza").id(1L).build();
+    Category category = categoryBuilder.name("Pizza").description("pizza").id(1L).build();
+    CategoryDTO categoryDTO = categoryDTOBuilder.name("Pizza").description("pizza").id(1L).build();
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").build();
     ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").urlToImage("no image").build();
+    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").build();
 
     List<Category> list = new ArrayList<>();
     List<CategoryDTO> dtoList = new ArrayList<>();

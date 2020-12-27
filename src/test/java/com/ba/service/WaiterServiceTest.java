@@ -42,8 +42,8 @@ public class WaiterServiceTest {
     MediaDTOBuilder mediaDTOBuilder= new MediaDTOBuilder();
     MediaDTO mediaDTO=mediaDTOBuilder.id(1L).name("ibrahim").build();
     Media media=mediaBuilder.id(1L).name("ibrahim").build();
-    Waiter waiter= waiterBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).urlToImage("no image").phoneNumber("132456").id(1L).media(media).build();
-    WaiterDTO waiterDTO= waiterDTOBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).urlToImage("no image").id(1L).phoneNumber("132456").mediaDTO(mediaDTO).build();
+    Waiter waiter= waiterBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).phoneNumber("132456").id(1L).media(media).build();
+    WaiterDTO waiterDTO= waiterDTOBuilder.address("istanbul").mail("ibrahim@hot").name("ibrahim").salary(1500L).id(1L).phoneNumber("132456").mediaDTO(mediaDTO).build();
 
     List<Waiter> waiterList= new ArrayList<>();
     List<WaiterDTO> waiterDTOList = new ArrayList<>();

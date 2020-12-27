@@ -1,10 +1,9 @@
 package com.ba.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryTableDTO {
@@ -13,6 +12,7 @@ public class CategoryTableDTO {
     private String description;
     private String imageToUrl;
     private int tableAmount;
+    private MediaDTO mediaDTO;
 
 
 }

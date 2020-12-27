@@ -32,21 +32,17 @@ public class ProductService {
 
     public List<ProductDTO> getAllProduct() {
         List<Product> productList = repository.findAll();
-        List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(productList);
-        for (int i = 0; i < productList.size(); i++) {
-            productDTOList.get(i).setCategories(CategoryMapper.INSTANCE.toDTOList(productList.get(i).getCategories()));
+        if(productList.isEmpty()){
+            throw new SystemException("Product not found");
         }
+        List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(productList);
         return productDTOList;
     }
 
     public String deleteProduct(Long id) {
-        Product product = repository.findById(id).get();
-        List<Category> categoryList = product.getCategories();
-        for (int i = 0; i < categoryList.size(); i++) {
-            categoryList.get(i).getProducts().remove(product);
-            categoryRepository.save(categoryList.get(i));
-        }
-        repository.deleteById(id);
+        Optional<Product> optionalProduct = repository.findById(id);
+        optionalProduct.get().getCategories().forEach(category -> category.getProducts().remove(optionalProduct.get()));
+        repository.delete(optionalProduct.get());
         return "kisi silindi";
     }
 
@@ -64,12 +60,14 @@ public class ProductService {
             categoryList1.add(category);
         }
         Product product2 = ProductMapper.INSTANCE.toEntity(product);
-        product2.setMedia(MediaMapper.INSTANCE.toEntity(product.getMediaDTO()));
         for (int i = 0; i < categoryList1.size(); i++) {
             categoryList1.get(i).getProducts().add(product2);
-            product2.setCategories(Stream.of(categoryList.get(i)).collect(Collectors.toList()));
+
+            product2.setCategories(categoryList);
         }
-        repository.save(product2);
+            product2.getCategories().addAll(categoryList1);
+            repository.save(product2);
+
         return product;
     }
 
@@ -82,18 +80,15 @@ public class ProductService {
     }
 
     public String addProductId(ProductDTO product) {
-
         List<Category> categoryList = new ArrayList<>();
-        for (int i = 0; i < product.getCategories().size(); i++) {
-            Category category = categoryRepository.findById(product.getCategories().get(i).getId()).get();
-            categoryList.add(category);
-        }
         Product product1 = ProductMapper.INSTANCE.toEntity(product);
-        product1.setMedia(MediaMapper.INSTANCE.toEntity(product.getMediaDTO()));
-        for (int i = 0; i < categoryList.size(); i++) {
-            categoryList.get(i).getProducts().add(product1);
-            product1.setCategories(Stream.of(categoryList.get(i)).collect(Collectors.toList()));
-        }
+
+        product.getCategories().forEach(categoryDTO -> {
+            Category category = categoryRepository.findById(categoryDTO.getId()).get();
+            category.getProducts().add(product1);
+            categoryList.add(category);
+        });
+        product1.setCategories(categoryList);
         repository.save(product1);
         return "kisi eklendi";
     }

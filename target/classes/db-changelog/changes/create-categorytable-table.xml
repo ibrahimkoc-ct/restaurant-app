@@ -10,9 +10,10 @@
             </column>
             <column name="name" type="VARCHAR(255)"/>
             <column name="description" type="VARCHAR(255)"/>
-            <column name="image_To_Url" type="VARCHAR(255)"/>
             <column name="table_Amount" type="int(10)"/>
-
+            <column name="media_id" type="int(10)">
+                <constraints nullable="true" foreignKeyName="media_id_fk_into_category_table" references="media(id)"></constraints>
+            </column>
         </createTable>
         <rollback>
             <dropTable tableName="category_table"/>

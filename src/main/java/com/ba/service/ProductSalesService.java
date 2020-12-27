@@ -16,21 +16,17 @@ public class ProductSalesService {
     ProductSalesRepository productSalesrepository;
 
     public String addProductSales(List<ProductSalesDTO> productSalesDTO) {
-        try {
-            productSalesrepository.saveAll(ProductSalesMapper.INSTANCE.toEntityList(productSalesDTO));
-            return "kullanıcı eklendi";
-        } catch (Exception e) {
-            throw new SystemException("System Failed");
-        }
+        productSalesrepository.saveAll(ProductSalesMapper.INSTANCE.toEntityList(productSalesDTO));
+        return "kullanıcı eklendi";
     }
 
     public List<ProductSalesDTO> getAllProductSales() {
-        try {
-            List<ProductSales> productlist = productSalesrepository.findAll();
-            return ProductSalesMapper.INSTANCE.toDTOList(productlist);
-
-        } catch (Exception e) {
-            throw new SystemException("System Failed");
+        List<ProductSales> productlist = productSalesrepository.findAll();
+        if (productlist.isEmpty()) {
+            throw new SystemException("OrderList not found");
         }
+        return ProductSalesMapper.INSTANCE.toDTOList(productlist);
+
+
     }
 }

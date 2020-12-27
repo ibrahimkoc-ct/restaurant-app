@@ -8,10 +8,11 @@ import {redirectWithId} from "../../RouterRedirect";
 
 class UpdateCustomerComponent extends Component {
     static contextType = BackofficeContext;
+
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.match.params.id,
+            customer: this.props.history.location.state?.customer,
             name: '',
             surname: '',
             address: '',
@@ -34,19 +35,23 @@ class UpdateCustomerComponent extends Component {
         }
     }
 
+
     updateCustomer = (e) => {
         let customer = {
-            id: this.state.id,
+            id: this.state.customer.id,
             name: this.state.name,
             surname: this.state.surname,
             address: this.state.address,
-            phoneNumber: this.state.phoneNumber
+            phoneNumber: this.state.phoneNumber,
+            mediaDTO: this.state.customer.mediaDTO,
+
         };
         if (!customer) {
             return
         }
-        CustomerService.updateCustomer(customer, this.state.token);
-        redirectWithId('/customers');
+        CustomerService.updateCustomer(customer, this.state.token).then(
+            this.props.history.push('/customers')
+        )
         e.preventDefault();
     }
     changeInput = (e) => {
@@ -54,8 +59,9 @@ class UpdateCustomerComponent extends Component {
             [e.target.name]: e.target.value
         })
     }
-    updateCustomerForm=()=>{
-        return(
+
+    updateCustomerForm = () => {
+        return (
             <form>
                 <div className="form-group">
                     <label>Musteri Adı</label>
