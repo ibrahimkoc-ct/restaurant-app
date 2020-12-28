@@ -4,6 +4,8 @@ import com.ba.builder.UserBuilder;
 import com.ba.builder.UserDTOBuilder;
 import com.ba.dto.UserDTO;
 import com.ba.entity.User;
+import com.ba.exception.BussinessRuleException;
+import com.ba.exception.SystemException;
 import com.ba.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,18 +35,19 @@ public class UserContollerTest {
 
     @Test
     public void addUserDTOControllerTest() {
+        dto.setId(null);
         Mockito.when(service.addUser(dto)).thenReturn("kisi eklendi");
         String result = contoller.addUser(dto);
         assertEquals(result, "kisi eklendi");
     }
 
-//    @Test
-//    public void deleteDTOControllerTest() {
-//        Long id = 1L;
-//        Mockito.when(service.deleteUser(id)).thenReturn("kisi silindi");
-//        String result = contoller.deleteUser(id);
-//        assertEquals(result, "kisi silindi");
-//    }
+    @Test
+    public void deleteDTOControllerTest() {
+        Long id = 1L;
+        Mockito.when(service.deleteUser(id)).thenReturn("kisi silindi");
+        String result = contoller.deleteUser(id);
+        assertEquals(result, "kisi silindi");
+    }
 
     @Test
     public void getAllUserControllerTest() {
@@ -81,6 +84,42 @@ public class UserContollerTest {
         String result = contoller.loginUserCheck();
         assertEquals(result, "giris basarılı");
     }
+    @Test(expected = BussinessRuleException.class)
+    public void addUserIdNullTest() {
+        dto.setId(1L);
+        contoller.addUser(dto);
+    }
 
+    @Test(expected = BussinessRuleException.class)
+    public void addUserNullTest() {
+        contoller.addUser(null);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void deleteUserIdNullTest() {
+        contoller.deleteUser(null);
+    }
 
+    @Test(expected = BussinessRuleException.class)
+    public void deleteUserIdTest() {
+        contoller.deleteUser(-1L);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void updateUserNullTest() {
+        contoller.updateUser(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void updateUserIdNullTest() {
+        dto.setId(null);
+        contoller.updateUser(dto);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void getUserIdNullTest() {
+        contoller.getUserById(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void getUsereIdTest() {
+        contoller.getUserById(-1L);
+    }
 }

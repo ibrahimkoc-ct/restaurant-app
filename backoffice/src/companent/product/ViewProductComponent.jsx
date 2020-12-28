@@ -42,11 +42,6 @@ class ViewUserComponent extends Component {
                 </div>
                 <hr></hr>
                 <div className="row">
-                    <h3>Ürün Kategorisi: {this.state.product.category}</h3>
-                </div>
-
-                <hr></hr>
-                <div className="row">
                     <h3>Ürün Fiyatı: {this.state.product.price}</h3>
                 </div>
                 <hr></hr>

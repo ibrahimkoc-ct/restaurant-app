@@ -101,7 +101,7 @@ class CreateWaiterComponent extends Component {
                     </div>
                     <div className="form-group">
                         <label>Adres</label>
-                        <input placeholder="Adres" name="adres" className="form-control"
+                        <input placeholder="Adres" name="address" className="form-control"
                                value={this.state.address} onChange={this.changeInput}/>
                     </div>
                     <div className="form-group">

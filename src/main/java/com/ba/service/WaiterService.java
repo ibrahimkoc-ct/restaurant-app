@@ -25,7 +25,7 @@ public class WaiterService {
 
     public List<WaiterDTO> getAllWaiter() {
         List<Waiter> waiterList = repository.findAll();
-        if (waiterList.isEmpty()) {
+        if (waiterList==null) {
             throw new SystemException("Waiter not found");
         }
         return WaiterMapper.INSTANCE.toDTOList(waiterList);
@@ -46,7 +46,7 @@ public class WaiterService {
 
     public WaiterDTO updateWaiter(WaiterDTO waiterDTO) {
         Optional<Waiter> waiter = repository.findById(waiterDTO.getId());
-        if (waiter.isEmpty()) {
+        if (waiter==null) {
             throw new BussinessRuleException("Waiter not found in database");
         }
         UpdateHelper.updateWaiterHelper(waiterDTO, waiter);
@@ -56,7 +56,7 @@ public class WaiterService {
 
     public WaiterDTO getWaiterById(Long id) {
         Optional<Waiter> waiter = repository.findById(id);
-        if (waiter.isEmpty()) {
+        if (waiter==null) {
             throw new BussinessRuleException("Waiter not found in database");
         }
         return WaiterMapper.INSTANCE.toDTO(waiter.get());

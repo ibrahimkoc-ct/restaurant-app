@@ -35,14 +35,13 @@ public class CustomerService {
 
     public CustomerDTO addCustomer(@RequestBody CustomerDTO dto) {
         Customer customer = mapper.toEntity(dto);
-        dto.setId(customer.getId());
         repository.save(customer);
         return dto;
     }
 
     public CustomerDTO updateCustomer(CustomerDTO dto) {
         Optional<Customer> optionalCustomer = repository.findById(dto.getId());
-        if (optionalCustomer.isEmpty()) {
+        if (optionalCustomer==null) {
             throw new SystemException("Customer not found in database");
         }
         UpdateHelper.updateCustomerHelper(dto, optionalCustomer);
@@ -52,7 +51,7 @@ public class CustomerService {
 
     public CustomerDTO customerDTOById(Long id) {
         Optional<Customer> customer = repository.findById(id);
-        if (!customer.isPresent()) {
+        if (customer==null) {
             throw new SystemException("Customer not found in database");
         }
         return mapper.toDTO(customer.get());
@@ -61,18 +60,12 @@ public class CustomerService {
     public Page<CustomerDTO> getPageCustomers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<CustomerDTO> dtoPage = repository.findAll(pageable).map(mapper::toDTO);
-        if (dtoPage.isEmpty()) {
-            throw new SystemException("Customers Not found");
-        }
         return dtoPage;
     }
 
     public Slice<CustomerDTO> getSliceCustomers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Slice<CustomerDTO> customerDTO = repository.findAllBy(pageable).map(mapper::toDTO);
-        if (customerDTO.isEmpty()) {
-            throw new SystemException("Customers Not found");
-        }
         return customerDTO;
     }
 }

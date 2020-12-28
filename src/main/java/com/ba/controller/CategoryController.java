@@ -1,25 +1,30 @@
 package com.ba.controller;
 
+import com.ba.config.InternationalizationConfig;
 import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.exception.BussinessRuleException;
 import com.ba.service.CategoryService;
+import liquibase.pro.packaged.L;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
+
+
     @Autowired
     private CategoryService categoryService;
 
 
     @PostMapping("/add")
     public CategoryDTO addCategory(@RequestBody CategoryDTO category) {
-        if (category == null || category.getId()!=null) {
+        if (category == null || category.getId() != null) {
             throw new BussinessRuleException("Category cannot be empty!");
         }
         categoryService.addCategory(category);
@@ -32,12 +37,12 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable Long id) {
+    public String deleteCategory(@PathVariable Long id, @RequestHeader("Accept-Language") String locale) {
         if (id == null || id < 0) {
-            throw new BussinessRuleException("id cannot be empty");
+            throw new BussinessRuleException(InternationalizationConfig.messageSource().getMessage("CategoryDeleteBussinessRuleException",null,new Locale(locale)));
         }
         categoryService.deleteCategory(id);
-        return "category silindi";
+        return InternationalizationConfig.messageSource().getMessage("CategoryDelete",null,new Locale(locale));
     }
 
     @GetMapping("/id/{id}")
@@ -50,7 +55,7 @@ public class CategoryController {
 
     @PutMapping("/update")
     public CategoryDTO updateCategory(@RequestBody CategoryDTO category) {
-        if (category == null ||category.getId()==null) {
+        if (category == null || category.getId() == null) {
             throw new BussinessRuleException("Category cannot be empty!");
         }
         categoryService.updateCategory(category);
@@ -64,6 +69,5 @@ public class CategoryController {
         }
         return categoryService.getProductCategory(id);
     }
+    }
 
-
-}

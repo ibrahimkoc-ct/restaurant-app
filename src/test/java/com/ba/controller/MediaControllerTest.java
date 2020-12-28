@@ -4,6 +4,7 @@ import com.ba.builder.MediaBuilder;
 import com.ba.builder.MediaDTOBuilder;
 import com.ba.dto.MediaDTO;
 import com.ba.entity.Media;
+import com.ba.exception.BussinessRuleException;
 import com.ba.service.MediaService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -92,10 +93,21 @@ public class MediaControllerTest {
         Mockito.when(service.addMedia(file, "image")).thenReturn("Media eklendi");
         String result = controller.addFile(file, "image");
         assertEquals(result, "Media eklendi");
-
-
     }
-
+    @Test
+    public void deleteMediaControllerTest(){
+        Mockito.when(service.deleteMedia(1L)).thenReturn("media silindi");
+        String result =controller.deleteMedia(1L);
+        assertEquals(result,"media silindi");
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void addMediaNullTest() throws IOException {
+        controller.addFile(null,"asd");
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void deleteMediaIdNullTest() {
+        controller.deleteMedia(null);
+    }
 }
 
 

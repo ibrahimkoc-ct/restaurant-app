@@ -49,7 +49,6 @@ public class CustomerController {
 
     @GetMapping("/page")
     public Page<CustomerDTO> getPageCustomers(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
-
         return service.getPageCustomers(page, size);
     }
 

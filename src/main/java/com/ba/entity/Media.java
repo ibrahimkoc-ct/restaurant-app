@@ -9,6 +9,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 
@@ -22,6 +23,7 @@ import java.io.Serializable;
                 "SET deleted =true " +
                 "Where id=?")
 @Where(clause = "deleted =false")
+@Table(name = "Media")
 public class Media extends BaseEntity implements Serializable {
 
 

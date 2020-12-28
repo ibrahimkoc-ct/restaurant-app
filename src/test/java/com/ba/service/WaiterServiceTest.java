@@ -8,6 +8,8 @@ import com.ba.dto.MediaDTO;
 import com.ba.dto.WaiterDTO;
 import com.ba.entity.Media;
 import com.ba.entity.Waiter;
+import com.ba.exception.BussinessRuleException;
+import com.ba.exception.SystemException;
 import com.ba.repository.MediaRepository;
 import com.ba.repository.WaiterRepository;
 import org.junit.Test;
@@ -23,7 +25,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WaiterServiceTest {
@@ -65,6 +69,7 @@ public class WaiterServiceTest {
     }
     @Test
     public void updateWaiterDTOServiceTest(){
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.of(waiter));
         Mockito.when(repository.saveAndFlush(waiter)).thenReturn(waiter);
         WaiterDTO result=service.updateWaiter(waiterDTO);
         assertEquals (result,waiterDTO);
@@ -83,5 +88,20 @@ public class WaiterServiceTest {
         Mockito.when(repository.findById(id)).thenReturn(optionalWaiter);
         WaiterDTO result=service.getWaiterById(id);
         assertEquals(result.getId(),id);
+    }
+    @Test(expected = SystemException.class)
+    public void getAllWaiterListNull(){
+        when(repository.findAll()).thenReturn(null);
+        service.getAllWaiter();
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void updateWaiterOptionalNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.updateWaiter(waiterDTO);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void getWaiterByIdOptionalNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.getWaiterById(1L);
     }
 }

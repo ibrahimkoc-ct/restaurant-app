@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ProductSales")
+@Table(name = "Product_Sales ")
 @SQLDelete(sql=
         "UPDATE ProductSales "+
                 "SET deleted =true "+

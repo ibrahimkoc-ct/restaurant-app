@@ -6,10 +6,10 @@
     <changeSet id="11-12-2020_11:20" author="ibrahim.koc">
         <createTable tableName="USER_ROLES">
             <column name="user_id" type="int(10)">
-                <constraints foreignKeyName="user_id_fk" references="users(id)" primaryKey="true" nullable="true"/>
+                <constraints foreignKeyName="user_id_fk" references="Users(id)" primaryKey="true" nullable="true"/>
             </column>
             <column name="role_id" type="int(10)">
-                <constraints primaryKey="true" nullable="true" foreignKeyName="role_id" references="roles(id)"/>
+                <constraints primaryKey="true" nullable="true" foreignKeyName="role_id" references="Roles(id)"/>
             </column>
         </createTable>
         <rollback>

@@ -7,6 +7,7 @@ import com.ba.dto.CategoryDTO;
 import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Product;
+import com.ba.exception.BussinessRuleException;
 import com.ba.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,9 +40,9 @@ public class ProductControllerTest {
     List<ProductDTO> dtoList =new ArrayList<>();
     Set<Product> productSet = new HashSet<>();
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product=productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").build();
+    Product product=productBuilder.description("pizza").id(1L).price("15").title("Pizza").build();
     ProductDTOBuilder productDTOBuilder= new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").build();
+    ProductDTO productDTO = productDTOBuilder.description("pizza").id(1L).price("15").title("Pizza").build();
 
 
     @Test
@@ -67,18 +69,64 @@ public class ProductControllerTest {
     }
     @Test
     public void addProductIdBackofficeContollerTest(){
-        Long id=1L;
+        productDTO.setId(null);
         Mockito.when(service.addProductId(productDTO)).thenReturn("kisi eklendi");
         String result=controller.addProductId(productDTO);
         assertEquals(result,"product");
     }
     @Test
-    public void findCategoryClientControllerTest(){
-        list.add(product);
-        String categoryName="pizza";
-        Mockito.when(service.listSelectedCategory(categoryName)).thenReturn(dtoList);
-        List<ProductDTO> result =controller.findCategory(categoryName);
-        assertEquals(result,dtoList);
+    public void getPageProductControllerTest(){
+        dtoList.add(productDTO);
+        Page<ProductDTO> page = new PageImpl<>(dtoList);
+        Mockito.when(service.getPageProduct(1,10)).thenReturn(page);
+        Page<ProductDTO> result =controller.searchProduct(1,10);
+        assertEquals(result,page);
+    }
+    @Test
+    public void getSliceProductControllerTest(){
+        dtoList.add(productDTO);
+        Slice<ProductDTO> slice = new SliceImpl<>(dtoList);
+        Mockito.when(service.loadMoreProduct(1L,1,10)).thenReturn(slice);
+        Slice<ProductDTO> result =controller.loadMoreProduct(1L,1,10);
+        assertEquals(result,slice);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void addProductIdNullTest() {
+        controller.addProductId(productDTO);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void addProductNullTest() {
+        controller.addProductId(null);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void updateProductIdNullTest() {
+        productDTO.setId(null);
+        controller.updateProduct(null,productDTO);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void updateProductNullTest() {
+        controller.updateProduct(null,null);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void getProductIdNullTest() {
+        controller.getProductById(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void getProductIdTest() {
+        controller.getProductById(-1L);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void deleteProductIdNullTest() {
+        controller.deleteProduct(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void deleteProductIdTest() {
+        controller.deleteProduct(-1L);
     }
 
 }

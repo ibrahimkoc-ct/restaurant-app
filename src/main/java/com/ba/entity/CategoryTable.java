@@ -14,10 +14,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @SQLDelete(sql=
-        "UPDATE CATEGORY_TABLE "+
+        "UPDATE Category_Table "+
                 "SET deleted =true "+
                 "Where id=?")
 @Where( clause = "deleted =false")
+@Table(name = "Category_Table")
 public class CategoryTable extends BaseEntity implements Serializable {
 
     private String name;

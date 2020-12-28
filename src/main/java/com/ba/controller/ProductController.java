@@ -54,13 +54,7 @@ public class ProductController {
     public Page<ProductDTO> searchProduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         return  productService.getPageProduct(page,size);
     }
-    @GetMapping("/category/{categoryName}")
-    public List<ProductDTO> findCategory(@PathVariable String categoryName){
-        if (categoryName == null) {
-            throw new BussinessRuleException("Category Name cannot be empty!");
-        }
-        return  productService.listSelectedCategory(categoryName);
-    }
+
     @GetMapping("/search/{id}/")
     public Slice<ProductDTO> loadMoreProduct(@PathVariable Long id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         return productService.loadMoreProduct(id,page,size);

@@ -20,14 +20,12 @@ import java.util.List;
         "UPDATE Product "+
                 "SET deleted =true "+
                 "Where id=?")
-@Where( clause = "deleted =false")
+@Where(clause = "deleted =false")
+@Table(name = "Product")
 public class Product extends BaseEntity implements Serializable {
-
     private String title;
     private String description;
     private String price;
-    private String category;
-
     @ManyToOne
     @JoinColumn(name = "media_id")
     private Media media;

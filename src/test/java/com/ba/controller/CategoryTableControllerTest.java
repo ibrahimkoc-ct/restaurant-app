@@ -7,7 +7,10 @@ import static org.mockito.Mockito.*;
 
 import com.ba.builder.*;
 import com.ba.dto.CategoryTableDTO;
+import com.ba.dto.MediaDTO;
 import com.ba.entity.CategoryTable;
+import com.ba.entity.Media;
+import com.ba.exception.BussinessRuleException;
 import com.ba.service.CategoryTableService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,14 +32,18 @@ public class CategoryTableControllerTest {
     private CategoryTableService service;
     List<CategoryTable> list = new ArrayList<>();
     List<CategoryTableDTO> dtoList = new ArrayList<>();
+    MediaBuilder mediaBuilder = new MediaBuilder();
+    Media media = mediaBuilder.name("name").id(1L).build();
+    MediaDTOBuilder mediaDTOBuilder = new MediaDTOBuilder();
+    MediaDTO mediaDTO = mediaDTOBuilder.id(1L).name("name").build();
     CategoryTableDTOBuilder categoryDTOBuilder = new CategoryTableDTOBuilder();
     CategoryTableBuilder categoryBuilder=new CategoryTableBuilder();
-    CategoryTable categoryTable =categoryBuilder.tableAmount(15).description("balkon").id(1L).name("balkon").build();
-    CategoryTableDTO categoryTableDTO = categoryDTOBuilder.description("balkon").id(1L).name("balkon").build();
+    CategoryTable categoryTable =categoryBuilder.tableAmount(15).description("balkon").media(media).id(1L).name("balkon").build();
+    CategoryTableDTO categoryTableDTO = categoryDTOBuilder.description("balkon").mediaDTO(mediaDTO).tableAmount(15).id(1L).name("balkon").build();
 
     @Test
     public void addCategoryCategoryTableControllerTest(){
-
+        categoryTableDTO.setId(null);
         when(service.addCategory(categoryTableDTO)).thenReturn("category eklendi");
         String result=controller.addCategory(categoryTableDTO);
         assertEquals(result,"category eklendi");
@@ -70,5 +77,39 @@ public class CategoryTableControllerTest {
         CategoryTableDTO result=controller.updateCategory(categoryTableDTO);
         assertEquals(result,categoryTableDTO);
      }
+    @Test(expected = BussinessRuleException.class)
+    public void addCategoryTableIdNullTest() {
+        controller.addCategory(categoryTableDTO);
+    }
 
+    @Test(expected = BussinessRuleException.class)
+    public void addCategoryTableNullTest() {
+        controller.addCategory(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void deleteCategoryTableIdNullTest() {
+        controller.deleteCategory(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void deleteCategoryTableIdTest() {
+        controller.deleteCategory(-1L);
+    }
+
+
+    @Test(expected = BussinessRuleException.class)
+    public void getCategoryTableIdNullTest() {
+        controller.getCategoryById(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void getCategoryTableIdTest() {
+        controller.getCategoryById(-1L);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void updateCategoryTableNullTest() {
+        controller.updateCategory(null);
+    }
 }

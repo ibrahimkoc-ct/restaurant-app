@@ -2,11 +2,16 @@ package com.ba.helper;
 
 import com.ba.dto.*;
 import com.ba.entity.*;
+import com.ba.exception.SystemException;
 import com.ba.mapper.MediaMapper;
+import com.ba.mapper.RoleMapper;
+import com.ba.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
 public class UpdateHelper {
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     public static Category categoryUpdateHelper(Category category, CategoryDTO categoryDTO) {
         if (!category.getDescription().equals(categoryDTO.getDescription())) {
             category.setDescription(categoryDTO.getDescription());
@@ -19,6 +24,24 @@ public class UpdateHelper {
             category.setMedia(media);
         }
         return category;
+    }
+    public static void updateUserHelper(UserDTO dto, UserRepository userRepository) {
+        Optional<User> optionalUser = userRepository.findById(dto.getId());
+        if (optionalUser.isEmpty()) {
+            throw new SystemException("User not found");
+        }
+        if (!optionalUser.get().getEmail().equals(dto.getEmail())) {
+            optionalUser.get().setEmail(dto.getEmail());
+        }
+        if (!optionalUser.get().getUsername().equals(dto.getUsername())) {
+            optionalUser.get().setUsername(dto.getUsername());
+        }
+        if (!optionalUser.get().getPassword().equals(dto.getPassword())) {
+            optionalUser.get().setPassword(encoder.encode(dto.getPassword()));
+        }
+        if (optionalUser.isEmpty() && !dto.getRoles().isEmpty()) {
+            optionalUser.get().setRoles(RoleMapper.INSTANCE.toEntityList(dto.getRoles()));
+        }
     }
 
     public static void updateCustomerHelper(CustomerDTO dto, Optional<Customer> optionalCustomer) {

@@ -4,6 +4,7 @@ import com.ba.builder.RoleBuilder;
 import com.ba.builder.RoleDTOBuilder;
 import com.ba.dto.RoleDTO;
 import com.ba.entity.Role;
+import com.ba.exception.BussinessRuleException;
 import com.ba.service.RoleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +34,7 @@ public class RoleControllerTest {
 
     @Test
     public void addRoleDTOControllerTest() {
+        dto.setId(null);
         Mockito.when(service.addRole(dto)).thenReturn(dto);
         String result = controller.addRole(dto);
         assertEquals(result, "rol eklendi");
@@ -69,5 +71,43 @@ public class RoleControllerTest {
         RoleDTO result = controller.getRoleById(id);
         assertEquals(result, dto);
     }
+    @Test(expected = BussinessRuleException.class)
+    public void deleteRoleIdNullTest() {
+        controller.deleteRole(null);
+    }
 
+    @Test(expected = BussinessRuleException.class)
+    public void deleteRoleIdTest() {
+        controller.deleteRole(-1L);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void addRoleIdNullTest() {
+        dto.setId(1L);
+        controller.addRole(dto);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void addRoleNullTest() {
+        controller.addRole(null);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void getRoleIdNullTest() {
+        controller.getRoleById(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void getRoleIdTest() {
+        controller.getRoleById(-1L);
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void updateRoleNullTest() {
+        controller.updateRole(null);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void updateRoleIdNullTest() {
+        dto.setId(null);
+        controller.updateRole(dto);
+    }
 }

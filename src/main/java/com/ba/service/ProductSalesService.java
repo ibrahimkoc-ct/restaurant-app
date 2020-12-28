@@ -22,7 +22,7 @@ public class ProductSalesService {
 
     public List<ProductSalesDTO> getAllProductSales() {
         List<ProductSales> productlist = productSalesrepository.findAll();
-        if (productlist.isEmpty()) {
+        if (productlist==null) {
             throw new SystemException("OrderList not found");
         }
         return ProductSalesMapper.INSTANCE.toDTOList(productlist);

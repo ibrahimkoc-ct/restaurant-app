@@ -8,13 +8,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ROLES")
+@Table(name = "Roles")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @SQLDelete(sql=
-        "UPDATE ROLES "+
+        "UPDATE Roles "+
                 "SET deleted =true "+
                 "Where id=?")
 @Where( clause = "deleted =false")

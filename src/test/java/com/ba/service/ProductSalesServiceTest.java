@@ -4,6 +4,7 @@ package com.ba.service;
 import com.ba.builder.ProductSalesBuilder;
 import com.ba.dto.ProductSalesDTO;
 import com.ba.entity.ProductSales;
+import com.ba.exception.SystemException;
 import com.ba.repository.ProductSalesRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,6 +55,11 @@ public class ProductSalesServiceTest {
         List<ProductSalesDTO> list = salesService.getAllProductSales();
         assertNotNull(list);
         assertNotNull(sales);
+    }
+    @Test(expected = SystemException.class)
+    public void getAllProductSalesNullTest(){
+        Mockito.when(repository.findAll()).thenReturn(null);
+        salesService.getAllProductSales();
     }
 
 

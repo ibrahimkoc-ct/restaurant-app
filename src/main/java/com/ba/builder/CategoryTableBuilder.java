@@ -1,11 +1,19 @@
 package com.ba.builder;
 
 import com.ba.entity.CategoryTable;
+import com.ba.entity.Media;
 
 public class CategoryTableBuilder extends IdBuilder{
     private String name;
     private String description;
     private int tableAmount;
+    private Media media;
+
+    public CategoryTableBuilder media(Media media) {
+        this.media = media;
+        return this;
+
+    }
 
     public CategoryTableBuilder name(String name) {
         this.name = name;
@@ -33,6 +41,7 @@ public class CategoryTableBuilder extends IdBuilder{
         categoryTable.setTableAmount(this.tableAmount);
         categoryTable.setId(this.getId());
         categoryTable.setName(this.name);
+        categoryTable.setMedia(media);
         return categoryTable;
     }
 

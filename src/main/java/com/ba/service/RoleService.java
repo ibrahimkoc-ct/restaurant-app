@@ -33,7 +33,7 @@ public class RoleService {
     }
     public RoleDTO updateRole(RoleDTO role) {
         Optional<Role> optionalRole = repository.findById(role.getId());
-        if (optionalRole.isEmpty()) {
+        if (optionalRole==null) {
             throw new SystemException("Customer not found in database");
         }
         UpdateHelper.updateRoleHelper(role, optionalRole);
@@ -43,7 +43,7 @@ public class RoleService {
 
     public RoleDTO getRoleById(Long id) {
         Optional<Role> optionalRole = repository.findById(id);
-        if (optionalRole.isEmpty()) {
+        if (optionalRole==null) {
             throw new SystemException("Customer not found in database");
         }
             return RoleMapper.INSTANCE.toDTO(optionalRole.get());

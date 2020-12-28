@@ -19,7 +19,6 @@ class CreateProductComponent extends Component {
             id: '',
             title: '',
             description: '',
-            category: '',
             price: '',
             categoryid: '',
             categorylist: [],
@@ -67,7 +66,6 @@ class CreateProductComponent extends Component {
             id: this.state.id,
             title: this.state.title,
             description: this.state.description,
-            category: this.state.categoryName,
             price: this.state.price,
             categories: this.state.selectedCategory,
             mediaDTO: this.state.mediaSelect
@@ -86,7 +84,6 @@ class CreateProductComponent extends Component {
         } else {
             this.state.selectedCategory.push(category);
         }
-        this.state.category += (category.name + ' ,')
     }
     debugBase64 = (base64URL) => {
         var win = window.open();

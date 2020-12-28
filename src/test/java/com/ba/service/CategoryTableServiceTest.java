@@ -2,8 +2,13 @@ package com.ba.service;
 
 import com.ba.builder.CategoryTableBuilder;
 import com.ba.builder.CategoryTableDTOBuilder;
+import com.ba.builder.MediaBuilder;
+import com.ba.builder.MediaDTOBuilder;
 import com.ba.dto.CategoryTableDTO;
+import com.ba.dto.MediaDTO;
 import com.ba.entity.CategoryTable;
+import com.ba.entity.Media;
+import com.ba.exception.SystemException;
 import com.ba.mapper.CategoryTableMapper;
 import com.ba.repository.CategoryTableRepository;
 import org.junit.Test;
@@ -31,10 +36,14 @@ public class CategoryTableServiceTest {
     private CategoryTableRepository repository;
     List<CategoryTable> list = new ArrayList<>();
     List<CategoryTableDTO> dtoList = new ArrayList<>();
+    MediaBuilder mediaBuilder = new MediaBuilder();
+    Media media = mediaBuilder.name("name").id(1L).build();
+    MediaDTOBuilder mediaDTOBuilder = new MediaDTOBuilder();
+    MediaDTO mediaDTO = mediaDTOBuilder.id(1L).name("name").build();
     CategoryTableDTOBuilder categoryDTOBuilder = new CategoryTableDTOBuilder();
     CategoryTableBuilder categoryBuilder = new CategoryTableBuilder();
-    CategoryTable categoryTable = categoryBuilder.tableAmount(15).description("balkon").id(1L).name("balkon").build();
-    CategoryTableDTO categoryTableDTO = categoryDTOBuilder.description("balkon").id(1L).name("balkon").build();
+    CategoryTable categoryTable = categoryBuilder.tableAmount(15).description("balkon").id(1L).media(media).name("balkon").build();
+    CategoryTableDTO categoryTableDTO = categoryDTOBuilder.description("balkon").id(1L).mediaDTO(mediaDTO).name("balkon").build();
 
 
     @Test
@@ -65,9 +74,10 @@ public class CategoryTableServiceTest {
 
     @Test
     public void shouldUpdateCategoryTable() {
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.of(categoryTable));
         Mockito.when(repository.saveAndFlush(categoryTable)).thenReturn(categoryTable);
         CategoryTableDTO result = service.updateCategory(categoryTableDTO);
-        assertEquals(result, categoryTableDTO);
+        assertEquals(result.getId(), categoryTableDTO.getId());
 
     }
 
@@ -79,4 +89,20 @@ public class CategoryTableServiceTest {
         CategoryTableDTO result = service.getCategoryById(id);
         assertEquals(result.getId(), id);
     }
+    @Test(expected = SystemException.class)
+    public void getAllCategoryTableListIsEmpty(){
+        Mockito.when(repository.findAll()).thenReturn(null);
+        service.getAllCategory();
+    }
+    @Test(expected = SystemException.class)
+    public void updateCategoryTableOptionalNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.updateCategory(categoryTableDTO);
+    }
+    @Test(expected = SystemException.class)
+    public void getCategoryByIdOptionalNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.getCategoryById(1L);
+    }
+
 }

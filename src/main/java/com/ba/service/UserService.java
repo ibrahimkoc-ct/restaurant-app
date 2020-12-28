@@ -4,6 +4,7 @@ import com.ba.dto.UserDTO;
 import com.ba.entity.User;
 import com.ba.exception.BussinessRuleException;
 import com.ba.exception.SystemException;
+import com.ba.helper.UpdateHelper;
 import com.ba.mapper.RoleMapper;
 import com.ba.mapper.UserMapper;
 import com.ba.repository.RoleRepository;
@@ -35,22 +36,7 @@ public class UserService {
     }
 
     public UserDTO updateUser(UserDTO dto) {
-        Optional<User> optionalUser = userRepository.findById(dto.getId());
-        if (optionalUser.isEmpty()) {
-            throw new SystemException("User not found");
-        }
-        if (!optionalUser.get().getEmail().equals(dto.getEmail())) {
-            optionalUser.get().setEmail(dto.getEmail());
-        }
-        if (!optionalUser.get().getUsername().equals(dto.getUsername())) {
-            optionalUser.get().setUsername(dto.getUsername());
-        }
-        if (!optionalUser.get().getPassword().equals(dto.getPassword())) {
-            optionalUser.get().setPassword(encoder.encode(dto.getPassword()));
-        }
-        if (optionalUser.isEmpty() && !dto.getRoles().isEmpty()) {
-            optionalUser.get().setRoles(RoleMapper.INSTANCE.toEntityList(dto.getRoles()));
-        }
+        UpdateHelper.updateUserHelper(dto, userRepository);
         //buraya devam et
         userRepository.saveAndFlush(UserMapper.INSTANCE.toEntity(dto));
         return dto;
@@ -58,7 +44,7 @@ public class UserService {
 
     public UserDTO getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        if (user.isEmpty()) {
+        if (user==null) {
             throw new BussinessRuleException("User not found in database");
         }
         return UserMapper.INSTANCE.toDTO(user.get());
@@ -66,7 +52,7 @@ public class UserService {
 
     public List<UserDTO> getAllUser() {
         List<User> user = userRepository.findAll();
-        if(user.isEmpty()){
+        if(user==null){
             throw new SystemException("User not found");
         }
         return UserMapper.INSTANCE.toDTOList(user);

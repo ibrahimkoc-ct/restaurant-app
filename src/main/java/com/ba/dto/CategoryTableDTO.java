@@ -10,7 +10,6 @@ public class CategoryTableDTO {
     private Long id;
     private String name;
     private String description;
-    private String imageToUrl;
     private int tableAmount;
     private MediaDTO mediaDTO;
 

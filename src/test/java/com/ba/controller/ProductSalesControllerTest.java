@@ -4,6 +4,7 @@ import com.ba.builder.ProductSalesBuilder;
 import com.ba.builder.ProductSalesDTOBuilder;
 import com.ba.dto.ProductSalesDTO;
 import com.ba.entity.ProductSales;
+import com.ba.exception.BussinessRuleException;
 import com.ba.service.ProductSalesService;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,5 +57,10 @@ public class ProductSalesControllerTest {
         Mockito.when(service.getAllProductSales()).thenReturn(dto);
         List<ProductSalesDTO> result = controller.getAllProduct();
         assertEquals(result, dto);
+    }
+
+    @Test(expected = BussinessRuleException.class)
+    public void addProductSalesNullTest() {
+        controller.addProductSales(null);
     }
 }

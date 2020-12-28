@@ -14,10 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SQLDelete(sql=
-        "UPDATE CATEGORY "+
+        "UPDATE Category "+
                 "SET deleted =true "+
                 "Where id=?")
 @Where( clause = "deleted =false")
+@Table(name = "Category")
 public class Category extends BaseEntity implements Serializable {
 
     private String name;

@@ -20,7 +20,7 @@ public class MediaService {
 
     public List<MediaDTO> getAllMedia() {
         List<Media> mediaList = repository.findAll();
-        if(mediaList.isEmpty()){
+        if(mediaList==null){
             throw new BussinessRuleException("Media not found");
         }
         return MediaMapper.INSTANCE.toDTOList(mediaList);

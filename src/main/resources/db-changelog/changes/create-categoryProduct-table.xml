@@ -6,10 +6,10 @@
     <changeSet id="09-12-2020_11:20" author="ibrahim.koc">
         <createTable tableName="TBL_CATEGORY_PRODUCT">
             <column name="category_id" type="int(10)">
-                <constraints foreignKeyName="category_id_fk" references="category(id)" primaryKey="true" nullable="false"/>
+                <constraints foreignKeyName="category_id_fk" references="Category(id)" primaryKey="true" nullable="false"/>
             </column>
             <column name="product_id" type="int(10)">
-                <constraints primaryKey="true" nullable="false" foreignKeyName="product_id_fk" references="product(id)"/>
+                <constraints primaryKey="true" nullable="false" foreignKeyName="product_id_fk" references="Product(id)"/>
             </column>
         </createTable>
         <rollback>

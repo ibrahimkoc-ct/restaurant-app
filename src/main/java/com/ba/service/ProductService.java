@@ -32,7 +32,7 @@ public class ProductService {
 
     public List<ProductDTO> getAllProduct() {
         List<Product> productList = repository.findAll();
-        if(productList.isEmpty()){
+        if(productList==null){
             throw new SystemException("Product not found");
         }
         List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(productList);
@@ -73,7 +73,7 @@ public class ProductService {
 
     public ProductDTO getProductById(Long id) {
         Optional<Product> product = repository.findById(id);
-        if (!product.isPresent()) {
+        if (product==null) {
             throw new SystemException("Customer not found in database");
         }
         return ProductMapper.INSTANCE.toDTO(product.get());
@@ -96,27 +96,15 @@ public class ProductService {
     public Page<ProductDTO> getPageProduct(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ProductDTO> dtoPage = repository.findAll(pageable).map(ProductMapper.INSTANCE::toDTO);
-        if (dtoPage.isEmpty()) {
-            throw new SystemException("Product Not found");
-        }
         return dtoPage;
-    }
-
-    public List<ProductDTO> listSelectedCategory(String categoryName) {
-        List<Product> productList = repository.findCategoryByName(categoryName);
-        if (productList.isEmpty()) {
-            throw new SystemException("Category Not found");
-        }
-        return ProductMapper.INSTANCE.toDTOList(productList);
     }
 
     public Slice<ProductDTO> loadMoreProduct(Long id, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Slice<ProductDTO> sliceDto = repository.findProductByCategoriesId(id, pageable).map(ProductMapper.INSTANCE::toDTO);
-        if (sliceDto.isEmpty()) {
-            throw new SystemException("Product Not found");
-        }
+
         return sliceDto;
 
     }
+
 }

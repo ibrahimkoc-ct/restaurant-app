@@ -19,7 +19,6 @@ class UpdateProductComponent extends Component {
             id: this.props.match.params.id,
             title: '',
             description: '',
-            category: '',
             price: '',
             token: '',
             loading: false,
@@ -60,7 +59,6 @@ class UpdateProductComponent extends Component {
         } else {
             this.state.selectedCategory.push(category);
         }
-        this.state.category += (category.name + ' ,')
     }
 
     updateProduct = (e) => {
@@ -69,7 +67,6 @@ class UpdateProductComponent extends Component {
             id: this.state.id,
             title: this.state.title,
             description: this.state.description,
-            category: this.state.categoryName,
             price: this.state.price,
             categories: this.state.selectedCategory,
             mediaDTO: this.state.mediaSelect

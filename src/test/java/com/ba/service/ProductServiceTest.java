@@ -7,6 +7,7 @@ import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Media;
 import com.ba.entity.Product;
+import com.ba.exception.SystemException;
 import com.ba.mapper.ProductMapper;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.ProductRepository;
@@ -16,13 +17,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.*;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -48,9 +49,9 @@ public class ProductServiceTest {
     CategoryDTOBuilder categoryDTOBuilder = new CategoryDTOBuilder();
     Category category = categoryBuilder.id(1L).description("pizza").name("Pizza").media(media).build();
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product = productBuilder.category("Pizza").description("pizza").id(1L).media(media).price("15").title("Pizza").categories(categoryList).build();
+    Product product = productBuilder.description("pizza").id(1L).media(media).price("15").title("Pizza").categories(categoryList).build();
     ProductDTOBuilder productDTOBuilder = new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").mediaDTO(mediaDTO).description("pizza").id(1L).price("15").title("Pizza").build();
+    ProductDTO productDTO = productDTOBuilder.mediaDTO(mediaDTO).description("pizza").id(1L).price("15").title("Pizza").build();
     CategoryDTO dto = categoryDTOBuilder.id(1L).description("pizza").name("Pizza").mediaDTO(mediaDTO).build();
 
     @Test(expected = RuntimeException.class)
@@ -117,12 +118,32 @@ public class ProductServiceTest {
 
     }
     @Test
-    public void shouldListSelectedCategory() {
+    public void getPageCustomerTest(){
         list.add(product);
-        String categoryName = "pizza";
-        Mockito.when(repository.findAll()).thenReturn(list);
-        List<ProductDTO> productsList = service.listSelectedCategory(categoryName);
-        assertEquals(list.get(0).getId(), productsList.get(0).getId());
-
+        Pageable pageable= PageRequest.of(1,10);
+        Page<Product> page =new PageImpl<>(list);
+        Mockito.when(repository.findAll(pageable)).thenReturn(page);
+        Page<ProductDTO> result = service.getPageProduct(1,10);
+        assertNotNull(result);
     }
+    @Test
+    public void getSliceCustomerTest(){
+        list.add(product);
+        Pageable pageable= PageRequest.of(1,10);
+        Slice<Product> slice =new SliceImpl<>(list);
+        Mockito.when(repository.findProductByCategoriesId(1L,pageable)).thenReturn(slice);
+        Slice<ProductDTO> result =service.loadMoreProduct(1L,1,10);
+        assertNotNull(result);
+    }
+    @Test(expected = SystemException.class)
+    public void getAllProductListNull(){
+        when(repository.findAll()).thenReturn(null);
+        service.getAllProduct();
+    }
+    @Test(expected = SystemException.class)
+    public void getProductByIdOptionalNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.getProductById(1L);
+    }
+
 }

@@ -10,7 +10,6 @@ public class ProductBuilder extends IdBuilder{
     private String title;
     private String description;
     private String price;
-    private String category;
     private List<Category> categories;
     private Media media;
 
@@ -36,10 +35,7 @@ public class ProductBuilder extends IdBuilder{
         this.price = price;
         return this;
     }
-    public ProductBuilder category(String category) {
-        this.category = category;
-        return this;
-    }
+
     public ProductBuilder id(Long id){
         this.setId(id);
         return this;
@@ -54,7 +50,6 @@ public class ProductBuilder extends IdBuilder{
         product.setDescription(this.description);
         product.setId(this.getId());
         product.setPrice(this.price);
-        product.setCategory(this.category);
         product.setCategories(this.categories);
         product.setMedia(this.media);
         return product;

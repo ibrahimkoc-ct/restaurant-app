@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import ProductService from "../../services/ProductService";
 import Table from "react-bootstrap/Table";
-
 import {Link} from 'react-router-dom';
 import HeaderComponent from "../homepage/HeaderComponent";
 import createBrowserHistory from 'history/createBrowserHistory';
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
-
 const history = createBrowserHistory({forceRefresh: true});
 
 class ListComponent extends Component {
@@ -97,7 +95,7 @@ class ListComponent extends Component {
         <div className="row">
         </div>
         <div className="row tbody-heigth">
-            <Table striped bordered hover>
+            <Table striped bordered hover id="product-table">
                 <thead>
                 <tr>
                     <th>Urun Adi</th>
@@ -149,6 +147,7 @@ class ListComponent extends Component {
                 }
                 </tbody>
             </Table>
+
         </div>
             </div>
         )

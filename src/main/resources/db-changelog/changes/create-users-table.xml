@@ -5,7 +5,7 @@
 
     <changeSet id="07-12-2020_09_15:10" author="ibrahim.koc">
 
-        <createTable tableName="users">
+        <createTable tableName="Users">
             <column autoIncrement="true" name="id" type="int(10)">
             <constraints primaryKey="true"/>
             </column>
@@ -15,12 +15,12 @@
             <column name="enabled" type="BOOLEAN"/>
         </createTable>
         <rollback>
-            <dropTable tableName="users"/>
+            <dropTable tableName="Users"/>
         </rollback>
 
     </changeSet>
     <changeSet author="22-12-2020_13:45" id="ibrahim.koc">
-        <addColumn tableName="users" >
+        <addColumn tableName="Users" >
             <column name="deleted"
                     defaultValue="false"
                     type="BOOLEAN"/>

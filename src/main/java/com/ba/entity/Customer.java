@@ -15,11 +15,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @SQLDelete(sql=
-        "UPDATE CUSTOMER "+
+        "UPDATE Customer "+
                 "SET deleted =true "+
                 "Where id=?")
 @Where( clause = "deleted =false")
 @Entity
+@Table(name = "Customer")
 public class Customer extends BaseEntity implements Serializable {
 
     private String name;

@@ -1,12 +1,21 @@
 package com.ba.builder;
 
 import com.ba.dto.CategoryTableDTO;
+import com.ba.dto.MediaDTO;
 
 
 public class CategoryTableDTOBuilder extends IdBuilder {
     private String name;
     private String description;
     private int tableAmount;
+    private MediaDTO mediaDTO;
+
+
+    public CategoryTableDTOBuilder mediaDTO(MediaDTO mediaDTO) {
+        this.mediaDTO = mediaDTO;
+        return this;
+
+    }
     public CategoryTableDTOBuilder name(String name) {
         this.name = name;
         return this;
@@ -33,6 +42,7 @@ public class CategoryTableDTOBuilder extends IdBuilder {
         categoryTableDTO.setTableAmount(this.tableAmount);
         categoryTableDTO.setId(this.getId());
         categoryTableDTO.setName(this.name);
+        categoryTableDTO.setMediaDTO(mediaDTO);
         return categoryTableDTO;
     }
 }

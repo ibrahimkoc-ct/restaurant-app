@@ -11,9 +11,8 @@
             <column name="title" type="VARCHAR(255)"/>
             <column name="description" type="VARCHAR(255)"/>
             <column name="price" type="VARCHAR(255)"/>
-            <column name="category" type="VARCHAR(255)"/>
             <column name="media_id" type="int(10)">
-                <constraints nullable="true" foreignKeyName="media_id_p" references="media(id)"></constraints>
+                <constraints nullable="true" foreignKeyName="media_id_p" references="Media(id)"></constraints>
             </column>
         </createTable>
         <rollback>

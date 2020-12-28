@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="07-12-2020_15:20" author="ibrahim.koc">
-        <createTable tableName="category_table">
+        <createTable tableName="Category_Table">
             <column autoIncrement="true" name="id" type="int(10)">
                 <constraints primaryKey="true"/>
             </column>
@@ -12,16 +12,16 @@
             <column name="description" type="VARCHAR(255)"/>
             <column name="table_Amount" type="int(10)"/>
             <column name="media_id" type="int(10)">
-                <constraints nullable="true" foreignKeyName="media_id_fk_into_category_table" references="media(id)"></constraints>
+                <constraints nullable="true" foreignKeyName="media_id_fk_into_category_table" references="Media(id)"></constraints>
             </column>
         </createTable>
         <rollback>
-            <dropTable tableName="category_table"/>
+            <dropTable tableName="Category_Table"/>
         </rollback>
 
     </changeSet>
     <changeSet author="22-12-2020_13:43" id="ibrahim.koc">
-        <addColumn tableName="category_table" >
+        <addColumn tableName="Category_Table" >
             <column name="deleted"
                     defaultValue="false"
                     type="BOOLEAN"/>

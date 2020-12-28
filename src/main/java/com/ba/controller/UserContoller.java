@@ -2,12 +2,12 @@ package com.ba.controller;
 
 import com.ba.dto.UserDTO;
 import com.ba.exception.BussinessRuleException;
-import com.ba.exception.SystemException;
 import com.ba.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/user")
@@ -18,7 +18,7 @@ public class UserContoller {
 
     @PostMapping("/add")
     public String addUser(@RequestBody UserDTO userDto) {
-        if (userDto == null || userDto.getId()!=null) {
+        if (userDto == null || userDto.getId() != null) {
             throw new BussinessRuleException("User cannot be empty!");
         }
         return service.addUser(userDto);
@@ -40,7 +40,7 @@ public class UserContoller {
 
     @PutMapping("/update")
     public UserDTO updateUser(@RequestBody UserDTO userDTO) {
-        if (userDTO == null ||userDTO.getId() ==null) {
+        if (userDTO == null || userDTO.getId() == null) {
             throw new BussinessRuleException("User cannot be empty!");
         }
         return service.updateUser(userDTO);
@@ -57,22 +57,15 @@ public class UserContoller {
 
     @GetMapping("/admin-login")
     public String loginAdminCheck() {
-        try {
-            return "giris basarılı";
-        } catch (Exception e) {
-            throw new SystemException("username or password incorrect");
-        }
-
+        return "giris basarılı";
     }
+
+
+
 
     @GetMapping("/user-login")
     public String loginUserCheck() {
-        try {
-            return "giris basarılı";
-        } catch (Exception e) {
-            throw new SystemException("username or password incorrect");
-        }
-
+        return "giris basarılı";
     }
 }
 

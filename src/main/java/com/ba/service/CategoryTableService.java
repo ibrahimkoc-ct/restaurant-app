@@ -21,7 +21,7 @@ public class CategoryTableService {
 
     public List<CategoryTableDTO> getAllCategory() {
         List<CategoryTable> categoryTableList = repository.findAll();
-        if(categoryTableList.isEmpty()){
+        if(categoryTableList==null){
             throw new SystemException("CategoryTable Not Found");
         }
         return CategoryTableMapper.INSTANCE.toDTOList(categoryTableList);
@@ -40,7 +40,7 @@ public class CategoryTableService {
 
     public CategoryTableDTO updateCategory(CategoryTableDTO category) {
         Optional<CategoryTable> categoryTableOptional = repository.findById(category.getId());
-        if (categoryTableOptional.isEmpty()) {
+        if (categoryTableOptional==null) {
             throw new SystemException("Category not found in database");
         }
         UpdateHelper.updateCategoryTableHelper(category, categoryTableOptional);
@@ -50,11 +50,10 @@ public class CategoryTableService {
     }
     public CategoryTableDTO getCategoryById(Long id) {
         Optional<CategoryTable> categoryTable = repository.findById(id);
-        if (categoryTable.isEmpty()) {
+        if (categoryTable==null) {
             throw new SystemException("Category not found in database");
         }
         return CategoryTableMapper.INSTANCE.toDTO(categoryTable.get());
-
     }
 
 }

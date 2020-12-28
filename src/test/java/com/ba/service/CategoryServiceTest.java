@@ -8,6 +8,7 @@ import com.ba.dto.ProductDTO;
 import com.ba.entity.Category;
 import com.ba.entity.Media;
 import com.ba.entity.Product;
+import com.ba.exception.SystemException;
 import com.ba.mapper.CategoryMapper;
 import com.ba.mapper.ProductMapper;
 import com.ba.repository.CategoryRepository;
@@ -25,8 +26,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 
@@ -55,9 +55,9 @@ public class CategoryServiceTest {
     MediaDTO mediaDTO = mediaDTOBuilder.id(1L).name("name").build();
 
     ProductBuilder productBuilder = new ProductBuilder();
-    Product product = productBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").media(media).build();
+    Product product = productBuilder.description("pizza").id(1L).price("15").title("Pizza").media(media).build();
     ProductDTOBuilder productDTOBuilder = new ProductDTOBuilder();
-    ProductDTO productDTO = productDTOBuilder.category("Pizza").description("pizza").id(1L).price("15").title("Pizza").mediaDTO(mediaDTO).build();
+    ProductDTO productDTO = productDTOBuilder.description("pizza").id(1L).price("15").title("Pizza").mediaDTO(mediaDTO).build();
     Category category = categoryBuilder.name("Pizza").description("pizza").id(1L).products(setProduct).media(media).build();
     CategoryDTO categoryDTO = categoryDTOBuilder.name("Pizza").description("pizza").products(dtos).mediaDTO(mediaDTO).id(1L).build();
 
@@ -70,7 +70,6 @@ public class CategoryServiceTest {
 
     @Test
     public void shouldCategoryList() {
-
         list.add(category);
         Mockito.when(repository.findAll()).thenReturn(list);
         List<CategoryDTO> dto = CategoryMapper.INSTANCE.toDTOList(list);
@@ -104,8 +103,7 @@ public class CategoryServiceTest {
         Mockito.when(repository.findById(1L)).thenReturn(categoryList);
         Mockito.when(repository.saveAndFlush(category)).thenReturn(category);
         CategoryDTO result = service.updateCategory(categoryDTO);
-        assertEquals(result, categoryDTO);
-
+        assertEquals(result.getId(),categoryDTO.getId());
     }
 
     @Test
@@ -133,4 +131,27 @@ public class CategoryServiceTest {
         List<ProductDTO> dtoset = service.getProductCategory(id);
         assertEquals(result.iterator().next().getId(), dtoset.iterator().next().getId());
     }
+    @Test(expected = SystemException.class)
+    public void getAllCategoryCategoryListNull(){
+        when(repository.findAll()).thenReturn(null);
+        service.getAllCategory();
+    }
+    @Test(expected = SystemException.class)
+    public void updateCategoryOptionalCategoryNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.updateCategory(categoryDTO);
+    }
+    @Test(expected = SystemException.class)
+    public void getCategoryByIdOptionalCategoryNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.getCategoryById(1L);
+    }
+
+    @Test(expected = SystemException.class)
+    public void getProductCategoryOptionalCategoryNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.getProductCategory(1L);
+    }
+
+
 }

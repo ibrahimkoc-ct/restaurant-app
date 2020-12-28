@@ -4,6 +4,7 @@ import com.ba.builder.MediaBuilder;
 import com.ba.builder.MediaDTOBuilder;
 import com.ba.dto.MediaDTO;
 import com.ba.entity.Media;
+import com.ba.exception.BussinessRuleException;
 import com.ba.mapper.MediaMapper;
 import com.ba.repository.MediaRepository;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doThrow;
 
 @RunWith(MockitoJUnitRunner.class)
 
@@ -61,6 +63,21 @@ public class MediaServiceTest {
         Mockito.when(repository.save(Mockito.any())).thenReturn(media);
         String result = service.addMedia(jsonPart, "indir (1).jpg");
         assertEquals(result, "Media eklendi");
+    }
+    @Test(expected = RuntimeException.class)
+    public void deleteMediaServiceTest(){
+        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(1L);
+        String result=service.deleteMedia(1L);
+        assertEquals(result,"media silindi");
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void getAllMediaMediaServiceTest(){
+        Mockito.when(repository.findAll()).thenReturn(null);
+        service.getAllMedia();
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void addMediaFileNullTest() throws IOException {
+        service.addMedia(null,"asd");
     }
 
 }

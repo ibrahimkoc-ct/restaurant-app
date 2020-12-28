@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "Users")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SQLDelete(sql=
-        "UPDATE USERS "+
+        "UPDATE Users "+
                 "SET deleted =true "+
                 "Where id=?")
 @Where( clause = "deleted =false")

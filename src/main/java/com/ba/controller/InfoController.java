@@ -61,9 +61,5 @@ public class InfoController {
         return server_info;
 
     }
-    @GetMapping("/deneme")
-    public String hello(){
-        return "welcome";
-    }
 }
 

@@ -4,6 +4,8 @@ import com.ba.builder.UserBuilder;
 import com.ba.builder.UserDTOBuilder;
 import com.ba.dto.UserDTO;
 import com.ba.entity.User;
+import com.ba.exception.BussinessRuleException;
+import com.ba.exception.SystemException;
 import com.ba.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -38,17 +42,18 @@ public class UserServiceTest {
         assertEquals(result, "kisi eklendi");
     }
 
-//    @Test(expected = RuntimeException.class)
-//    public void deleteUserTest() {
-//        Long id = 1L;
-//        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
-//        String result = service.deleteUser(id);
-//        assertEquals(result, "kisi silindi");
-//    }
+    @Test(expected = RuntimeException.class)
+    public void deleteUserTest() {
+        Long id = 1L;
+        doThrow(new RuntimeException("Cant delete here")).when(repository).deleteById(id);
+        String result = service.deleteUser(id);
+        assertEquals(result, "kisi silindi");
+    }
 
     @Test
     public void updateUserTest() {
         Mockito.when(repository.saveAndFlush(user)).thenReturn(user);
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.of(user));
         UserDTO result = service.updateUser(dto);
         assertEquals(result, dto);
     }
@@ -71,6 +76,16 @@ public class UserServiceTest {
         Mockito.when(repository.findAll()).thenReturn(users);
         List<UserDTO> result = service.getAllUser();
         assertEquals(result.get(0).getId(), users.get(0).getId());
+    }
+    @Test(expected = BussinessRuleException.class)
+    public void getUserByIdOptionalNull(){
+        when(repository.findById(1L)).thenReturn(null);
+        service.getUserById(1L);
+    }
+    @Test(expected = SystemException.class)
+    public void getAllUserListNull(){
+        when(repository.findAll()).thenReturn(null);
+        service.getAllUser();
     }
 
 }

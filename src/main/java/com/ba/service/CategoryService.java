@@ -30,7 +30,7 @@ public class CategoryService {
     @Cacheable(value = "CategoryCache", key = "'CATEGORY_LIST_ALL'")
     public List<CategoryDTO> getAllCategory() {
         List<Category> categoryList = categoryRepository.findAll();
-        if (categoryList.isEmpty()) {
+        if (categoryList==null) {
             throw new SystemException("Categories not found!");
         }
         return CategoryMapper.INSTANCE.toDTOList(categoryList);
@@ -51,7 +51,7 @@ public class CategoryService {
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public CategoryDTO updateCategory(CategoryDTO categoryDTO) {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryDTO.getId());
-        if (optionalCategory.isEmpty()) {
+        if (optionalCategory==null) {
             throw new SystemException("Category Not found");
         }
         Category category = UpdateHelper.categoryUpdateHelper(optionalCategory.get(), categoryDTO);
@@ -62,7 +62,7 @@ public class CategoryService {
     @Cacheable(value = "CATEGORY_CACHE_BY", key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
     public CategoryDTO getCategoryById(Long id) {
         Optional<Category> dto = categoryRepository.findById(id);
-        if (dto.isEmpty()) {
+        if (dto==null) {
             throw new SystemException("Category Not found");
         }
         return CategoryMapper.INSTANCE.toDTO(dto.get());
@@ -70,7 +70,7 @@ public class CategoryService {
     @Cacheable(value = "CATEGORY_CACHE_BY", key = "'CUSTOMER_CACHE_NY_ID'.concat(#id)")
     public List<ProductDTO> getProductCategory(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
-        if (category.isEmpty()) {
+        if (category==null) {
             throw new SystemException("Category Not found");
         }
         List<ProductDTO> dtoList = ProductMapper.INSTANCE.toDTOList(category.get().getProducts());
