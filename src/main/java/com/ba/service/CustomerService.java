@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,5 +68,13 @@ public class CustomerService {
         Pageable pageable = PageRequest.of(page, size);
         Slice<CustomerDTO> customerDTO = repository.findAllBy(pageable).map(mapper::toDTO);
         return customerDTO;
+    }
+    public List<CustomerDTO> getAllCustomer(){
+        List<Customer> customers =repository.findAll();
+        if(customers==null){
+            throw  new SystemException("Customer not found in database");
+        }
+        customers.forEach((customer -> customer.setMedia(null)));
+        return mapper.toDTOList(customers);
     }
 }

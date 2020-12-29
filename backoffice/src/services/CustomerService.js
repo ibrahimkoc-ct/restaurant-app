@@ -3,12 +3,8 @@ const Customer_Api_Base_URL="http://localhost:8080/customer";
 const Customer_Api_Page_URL="http://localhost:8080/customer/page?page=";
 
 class CustomerService{
-    getCustomer(token){
-      return axios.get(Customer_Api_Base_URL,{
-            headers: {
-                Authorization:token
-            }
-        })
+    getCustomer(){
+      return axios.get(Customer_Api_Base_URL)
     }
     addCustomer(customer,token){
         return axios.post(Customer_Api_Base_URL,customer,{

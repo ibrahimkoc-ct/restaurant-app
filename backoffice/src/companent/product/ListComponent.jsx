@@ -66,14 +66,6 @@ class ListComponent extends Component {
         });
     }
 
-    ViewCategory = (category) => {
-        this.setState({loading: true})
-        this.setState({
-            productslist: this.state.productslist.filter(product => product.category == category),
-            loading: false
-
-        })
-    }
     ViewPage = (page) => {
         let lastSelectedButton = document.getElementById(this.state.lastPage)
         lastSelectedButton.className = "btn btn-outline-secondary";
@@ -114,16 +106,15 @@ class ListComponent extends Component {
                                 <td>{product.title}</td>
                                 <td>{product.description}</td>
                                 <td>
-                                    <button className="btn btn-link">
                                         {
                                             product.categories.map(
                                                 category =>
                                                     <ul className="text-left" key={category.name}>
-                                                        <li onClick={() => this.ViewCategory(category.name)}>{category.name}</li>
+                                                        <li>{category.name}</li>
                                                     </ul>
                                             )
                                         }
-                                    </button>
+
                                 </td>
                                 <td align="center"><img
                                     src={'data:image/png;base64,' + product.mediaDTO.fileContent}

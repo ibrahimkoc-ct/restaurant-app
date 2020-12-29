@@ -6,6 +6,11 @@ import {Table} from "react-bootstrap";
 import BackofficeContext from "../../BackofficeContext";
 import FullPageLoading from "../loading/FullPageLoading";
 import {redirectWithId} from '../../RouterRedirect';
+import ReactExport from "react-data-export";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 class CustomerListComponent extends Component {
     static contextType = BackofficeContext;
@@ -17,13 +22,17 @@ class CustomerListComponent extends Component {
             lastSelectedPage: 0,
             selectedPage: 0,
             loading: false,
-            token: ''
+            token: '',
+            allCustomerList: []
         }
     }
 
 
     componentDidMount() {
-        this.setState({loading:true})
+        this.setState({loading: true})
+        CustomerService.getCustomer().then((res) => {
+            this.setState({allCustomerList: res.data})
+        })
         this.getTokenFromDb();
         this.getCustomerList(0, 0)
 
@@ -43,7 +52,7 @@ class CustomerListComponent extends Component {
             let selectedButton = document.getElementById(page)
             selectedButton.className = "btn btn-secondary";
         }).catch(
-            this.setState({ loading: false})
+            this.setState({loading: false})
         )
     }
     getTokenFromDb = () => {
@@ -65,20 +74,20 @@ class CustomerListComponent extends Component {
         this.getCustomerList(page, this.state.lastSelectedPage)
 
     }
-    viewCustomer =(customer)=>{
+    viewCustomer = (customer) => {
         this.props.history.push({
-            pathname:`view-customer/{customer.id}`,
-            state:{
-                customer:customer
+            pathname: `view-customer/{customer.id}`,
+            state: {
+                customer: customer
             }
         });
     }
 
-    updateCustomer =(customer)=>{
+    updateCustomer = (customer) => {
         this.props.history.push({
-            pathname:`update-customer/{customer.id}`,
-            state:{
-                customer:customer
+            pathname: `update-customer/{customer.id}`,
+            state: {
+                customer: customer
             }
         });
     }
@@ -108,7 +117,7 @@ class CustomerListComponent extends Component {
         }
 
         return (
-            <Table striped bordered hover>
+            <Table striped bordered hover id="table-to-xls">
                 <thead>
                 <tr>
                     <th>Musteri Id</th>
@@ -122,30 +131,32 @@ class CustomerListComponent extends Component {
                 </thead>
                 <tbody>
                 {
-                customerList.map((customer) =>{
-                    return(
-                <tr key={customer.id}>
-                    <td>{customer.id}</td>
-                    <td>{customer.name}</td>
-                    <td>{customer.surname}</td>
-                    <td>{customer.phoneNumber}</td>
-                    <td align="center"><img
-                        src={'data:image/png;base64,' + customer.mediaDTO.fileContent}
-                        width="100"/></td>
-                    <td>{customer.address}</td>
-                    <td>
-                        <button onClick={() => this.updateCustomer(customer)}
-                                className="btn btn-info">Guncelle
-                        </button>
-                        <button onClick={() => this.deleteCustomer(customer.id)} style={{marginLeft: "10px"}}
-                                className="btn btn-danger">Sil
-                        </button>
-                        <button onClick={() => this.viewCustomer(customer)}
-                                style={{marginLeft: "10px"}} className="btn btn-success">Detay
-                        </button>
-                    </td>
-                </tr>)}
-                )}
+                    customerList.map((customer) => {
+                            return (
+                                <tr key={customer.id}>
+                                    <td>{customer.id}</td>
+                                    <td>{customer.name}</td>
+                                    <td>{customer.surname}</td>
+                                    <td>{customer.phoneNumber}</td>
+                                    <td align="center"><img
+                                        src={'data:image/png;base64,' + customer.mediaDTO.fileContent}
+                                        width="100"/></td>
+                                    <td>{customer.address}</td>
+                                    <td>
+                                        <button onClick={() => this.updateCustomer(customer)}
+                                                className="btn btn-info">Guncelle
+                                        </button>
+                                        <button onClick={() => this.deleteCustomer(customer.id)}
+                                                style={{marginLeft: "10px"}}
+                                                className="btn btn-danger">Sil
+                                        </button>
+                                        <button onClick={() => this.viewCustomer(customer)}
+                                                style={{marginLeft: "10px"}} className="btn btn-success">Detay
+                                        </button>
+                                    </td>
+                                </tr>)
+                        }
+                    )}
                 </tbody>
             </Table>
         )
@@ -173,6 +184,15 @@ class CustomerListComponent extends Component {
                 </Link>
                 <div className="container productlist">
                     <h2 className="text-center">Musteriler</h2>
+                    <ExcelFile filename={"Customers"} element={<button  className="btn btn-success csvButton">Müsterileri İndir</button>}>
+                        <ExcelSheet data={this.state.allCustomerList} name="Customers">
+                            <ExcelColumn label="id" value="id"/>
+                            <ExcelColumn label="Name" value="name"/>
+                            <ExcelColumn label="Surname" value="surname"/>
+                            <ExcelColumn label="Phone Number" value="phoneNumber"/>
+                            <ExcelColumn label="Address" value="address"/>
+                        </ExcelSheet>
+                    </ExcelFile>
                     <div className="row">
                     </div>
                     <div className="row" align="center">

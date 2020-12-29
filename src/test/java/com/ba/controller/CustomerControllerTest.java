@@ -117,5 +117,14 @@ public class CustomerControllerTest {
         controller.customerDTOById(-1L);
     }
 
+    @Test
+    public void getAllCustomer(){
+        List<CustomerDTO> dtoList = new ArrayList<>();
+        dtoList.add(dto);
+        Mockito.when(service.getAllCustomer()).thenReturn(dtoList);
+        List<CustomerDTO> result = controller.getAllCustomer();
+        assertEquals(dtoList,result);
+    }
+
 }
 

@@ -8,7 +8,7 @@ import {redirectWithId} from '../../RouterRedirect';
 import axios from "axios";
 
 class CreateCustomerComponent extends Component {
-    static contextType = BackofficeContext;
+
 
     constructor(props) {
         super(props);

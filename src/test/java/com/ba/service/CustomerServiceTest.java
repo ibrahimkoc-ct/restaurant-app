@@ -126,4 +126,20 @@ public class CustomerServiceTest {
         when(repository.findAllBy(pageable)).thenReturn(null);
         service.getSliceCustomers(1,1);
     }
+    @Test(expected = SystemException.class)
+    public void getAllCustomerNull(){
+        when(repository.findAll()).thenReturn(null);
+        service.getAllCustomer();
+    }
+    @Test
+    public void getAllCustomerTest(){
+        List<Customer> customers =new ArrayList<>();
+        customers.add(customer);
+        List<CustomerDTO> dtoList = new ArrayList<>();
+        dtoList.add(dto);
+        when(mapper.toDTOList(customers)).thenReturn(dtoList);
+        when(repository.findAll()).thenReturn(customers);
+        List<CustomerDTO> result=service.getAllCustomer();
+        assertNotNull(result);
+    }
 }

@@ -1,12 +1,16 @@
 package com.ba.controller;
 
 import com.ba.dto.CustomerDTO;
+import com.ba.entity.Customer;
 import com.ba.exception.BussinessRuleException;
 import com.ba.service.CustomerService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -57,5 +61,8 @@ public class CustomerController {
 
         return service.getSliceCustomers(page, size);
     }
-
+    @GetMapping()
+    public List<CustomerDTO> getAllCustomer(){
+        return service.getAllCustomer();
+    }
 }

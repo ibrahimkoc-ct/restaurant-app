@@ -87,6 +87,11 @@
   width: 12%;
 
 }
+.csvButton{
+  position: absolute;
+  left: 72.6%;
+  top: 10.2%;
+}
 .productlist{
   margin-top: 2%;
 
