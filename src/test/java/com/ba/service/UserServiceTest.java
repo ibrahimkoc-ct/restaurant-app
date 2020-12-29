@@ -3,6 +3,7 @@ package com.ba.service;
 import com.ba.builder.UserBuilder;
 import com.ba.builder.UserDTOBuilder;
 import com.ba.dto.UserDTO;
+import com.ba.entity.Product;
 import com.ba.entity.User;
 import com.ba.exception.BussinessRuleException;
 import com.ba.exception.SystemException;
@@ -86,6 +87,11 @@ public class UserServiceTest {
     public void getAllUserListNull(){
         when(repository.findAll()).thenReturn(null);
         service.getAllUser();
+    }
+    @Test
+    public void deleteUserByIdTest(){
+        String result =service.deleteUser(1L);
+        assertEquals(result,"kisi silindi");
     }
 
 }

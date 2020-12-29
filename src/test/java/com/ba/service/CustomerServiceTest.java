@@ -28,8 +28,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
@@ -141,5 +140,11 @@ public class CustomerServiceTest {
         when(repository.findAll()).thenReturn(customers);
         List<CustomerDTO> result=service.getAllCustomer();
         assertNotNull(result);
+    }
+    @Test
+    public void deleteCustomerById(){
+        String result =service.deleteCustomer(1L);
+        assertEquals(result,"müsteri silindi");
+        verify(repository).deleteById(1L);
     }
 }

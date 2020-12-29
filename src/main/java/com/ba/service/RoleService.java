@@ -20,7 +20,7 @@ public class RoleService {
 
     public List<RoleDTO> getAllRole() {
         List<Role> roleList = repository.findAll();
-        if (roleList.isEmpty()) {
+        if (roleList==null) {
             throw new SystemException("Role not found");
         }
         return RoleMapper.INSTANCE.toDTOList(roleList);

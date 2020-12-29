@@ -152,6 +152,12 @@ public class CategoryServiceTest {
         when(repository.findById(1L)).thenReturn(null);
         service.getProductCategory(1L);
     }
+    @Test
+    public void deleteById(){
+       String res= service.deleteCategory(1L);
+       verify(repository).deleteById(1L);
+        assertEquals(res,"kisi silindi");
+    }
 
 
 }

@@ -22,6 +22,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 
@@ -78,6 +79,12 @@ public class MediaServiceTest {
     @Test(expected = BussinessRuleException.class)
     public void addMediaFileNullTest() throws IOException {
         service.addMedia(null,"asd");
+    }
+    @Test
+    public void deleteMediaById(){
+        String result =service.deleteMedia(1L);
+        assertEquals(result,"media silindi");
+        verify(repository).deleteById(1L);
     }
 
 }

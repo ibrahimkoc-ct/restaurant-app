@@ -104,5 +104,11 @@ public class CategoryTableServiceTest {
         when(repository.findById(1L)).thenReturn(null);
         service.getCategoryById(1L);
     }
+    @Test
+    public void deleteCategoryById(){
+        String result =service.deleteCategory(1L);
+        assertEquals(result,"kisi silindi");
+        verify(repository).deleteById(1L);
+    }
 
 }

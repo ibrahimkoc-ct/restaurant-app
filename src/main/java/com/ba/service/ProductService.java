@@ -88,6 +88,7 @@ public class ProductService {
             category.getProducts().add(product1);
             categoryList.add(category);
         });
+
         product1.setCategories(categoryList);
         repository.save(product1);
         return "kisi eklendi";

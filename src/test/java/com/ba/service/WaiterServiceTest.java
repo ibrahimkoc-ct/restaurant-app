@@ -7,6 +7,7 @@ import com.ba.builder.WaiterDTOBuilder;
 import com.ba.dto.MediaDTO;
 import com.ba.dto.WaiterDTO;
 import com.ba.entity.Media;
+import com.ba.entity.Product;
 import com.ba.entity.Waiter;
 import com.ba.exception.BussinessRuleException;
 import com.ba.exception.SystemException;
@@ -103,5 +104,10 @@ public class WaiterServiceTest {
     public void getWaiterByIdOptionalNull(){
         when(repository.findById(1L)).thenReturn(null);
         service.getWaiterById(1L);
+    }
+    @Test
+    public void deleteWaiterByIdTest(){
+        String result =service.deleteWaiter(1L);
+        assertEquals(result,"garson silindi");
     }
 }

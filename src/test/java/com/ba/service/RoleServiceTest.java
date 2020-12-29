@@ -3,6 +3,7 @@ package com.ba.service;
 import com.ba.builder.RoleBuilder;
 import com.ba.builder.RoleDTOBuilder;
 import com.ba.dto.RoleDTO;
+import com.ba.entity.Product;
 import com.ba.entity.Role;
 import com.ba.exception.SystemException;
 import com.ba.repository.RoleRepository;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RoleServiceTest {
@@ -89,9 +91,15 @@ public class RoleServiceTest {
     }
     @Test(expected = SystemException.class)
     public void getAllRoleNullTest(){
-        List<Role> role= new ArrayList<>();
-        Mockito.when(repository.findAll()).thenReturn(role);
-        RoleDTO result = service.updateRole(dto);
+        Mockito.when(repository.findAll()).thenReturn(null);
+         service.getAllRole();
     }
+    @Test
+    public void deleteRoleById(){
+        String result =service.deleteById(1L);
+        assertEquals(result,"kisi silindi");
+        verify(repository).deleteById(1L);
+    }
+
 
 }

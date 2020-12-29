@@ -8,6 +8,7 @@ import com.ba.entity.Category;
 import com.ba.entity.Media;
 import com.ba.entity.Product;
 import com.ba.exception.SystemException;
+import com.ba.mapper.CategoryMapper;
 import com.ba.mapper.ProductMapper;
 import com.ba.repository.CategoryRepository;
 import com.ba.repository.ProductRepository;
@@ -32,6 +33,9 @@ public class ProductServiceTest {
     private ProductService service;
     @Mock
     private ProductRepository repository;
+
+    @Mock
+    private CategoryMapper categoryMapper;
 
     @Mock
     private CategoryRepository categoryRepository;
@@ -104,17 +108,18 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void shouldAddNewBackOfficeProduct() {
+    public void shouldProductadd() {
         Long id = 1L;
         productSet.add(product);
         category.setProducts(list);
+        categoryDTO.add(dto);
         productDTO.setCategories(categoryDTO);
         Optional<Category> optionalCategory = Optional.of(category);
         Mockito.when(categoryRepository.findById(id)).thenReturn(optionalCategory);
         Mockito.when(categoryRepository.save(any())).thenReturn(category);
+        when(categoryMapper.toEntityList(productDTO.getCategories())).thenReturn(product.getCategories());
         String result = service.addProductId(productDTO);
         assertEquals(result, "kisi eklendi");
-        //burası patlayabilir
 
     }
     @Test
@@ -144,6 +149,13 @@ public class ProductServiceTest {
     public void getProductByIdOptionalNull(){
         when(repository.findById(1L)).thenReturn(null);
         service.getProductById(1L);
+    }
+    @Test
+    public void deleteProductById(){
+        Optional<Product> list = Optional.of(product);
+        Mockito.when(repository.findById(1L)).thenReturn(list);
+        String result =service.deleteProduct(1L);
+        assertEquals(result,"kisi silindi");
     }
 
 }
