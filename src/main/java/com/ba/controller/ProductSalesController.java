@@ -6,6 +6,7 @@ import com.ba.service.ProductSalesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -17,10 +18,7 @@ public class ProductSalesController {
     private ProductSalesService productsales;
 
     @PostMapping("/add")
-    public String addProductSales(@RequestBody List<ProductSalesDTO> productSalesdto) {
-        if (productSalesdto == null ) {
-            throw new BussinessRuleException("OrderList cannot be empty!");
-        }
+    public String addProductSales(@Valid @RequestBody List<ProductSalesDTO> productSalesdto) {
         productsales.addProductSales(productSalesdto);
         return "Product Sales Eklendi";
 

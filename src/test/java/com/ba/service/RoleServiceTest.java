@@ -56,7 +56,7 @@ public class RoleServiceTest {
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(role));
         Mockito.when(repository.saveAndFlush(role)).thenReturn(role);
         RoleDTO result = service.updateRole(dto);
-        assertEquals(result, dto);
+        assertEquals(result.getId(), dto.getId());
     }
 
     @Test

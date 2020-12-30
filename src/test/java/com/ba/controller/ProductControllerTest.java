@@ -95,20 +95,13 @@ public class ProductControllerTest {
         controller.addProductId(productDTO);
     }
 
-    @Test(expected = BussinessRuleException.class)
-    public void addProductNullTest() {
-        controller.addProductId(null);
-    }
+
     @Test(expected = BussinessRuleException.class)
     public void updateProductIdNullTest() {
         productDTO.setId(null);
         controller.updateProduct(null,productDTO);
     }
 
-    @Test(expected = BussinessRuleException.class)
-    public void updateProductNullTest() {
-        controller.updateProduct(null,null);
-    }
     @Test(expected = BussinessRuleException.class)
     public void getProductIdNullTest() {
         controller.getProductById(null);

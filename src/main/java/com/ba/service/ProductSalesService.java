@@ -7,6 +7,7 @@ import com.ba.mapper.ProductSalesMapper;
 import com.ba.repository.ProductSalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class ProductSalesService {
     @Autowired
     ProductSalesRepository productSalesrepository;
 
+    @Transactional
     public String addProductSales(List<ProductSalesDTO> productSalesDTO) {
         productSalesrepository.saveAll(ProductSalesMapper.INSTANCE.toEntityList(productSalesDTO));
         return "kullanıcı eklendi";

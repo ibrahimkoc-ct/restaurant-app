@@ -58,9 +58,4 @@ public class ProductSalesControllerTest {
         List<ProductSalesDTO> result = controller.getAllProduct();
         assertEquals(result, dto);
     }
-
-    @Test(expected = BussinessRuleException.class)
-    public void addProductSalesNullTest() {
-        controller.addProductSales(null);
-    }
 }

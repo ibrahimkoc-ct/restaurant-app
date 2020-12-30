@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -28,8 +29,8 @@ public class ProductController {
         return "ürün silindi";
     }
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@PathVariable Long id, @RequestBody ProductDTO product) {
-        if (product==null || product.getId()==null){
+    public ProductDTO updateProduct(@Valid @PathVariable Long id, @RequestBody ProductDTO product) {
+        if (product.getId()==null){
             throw new BussinessRuleException("Product cannot be empty!");
         }
         productService.updateProduct(id,product);
@@ -43,8 +44,8 @@ public class ProductController {
         return productService.getProductById(id);
     }
     @PostMapping()
-    public String addProductId(@RequestBody ProductDTO product){
-        if (product == null || product.getId() !=null) {
+    public String addProductId(@Valid @RequestBody ProductDTO product){
+        if (product.getId() !=null) {
             throw new BussinessRuleException("Product cannot be empty!");
         }
         productService.addProductId(product);

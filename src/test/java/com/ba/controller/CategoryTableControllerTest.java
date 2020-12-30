@@ -83,11 +83,6 @@ public class CategoryTableControllerTest {
     }
 
     @Test(expected = BussinessRuleException.class)
-    public void addCategoryTableNullTest() {
-        controller.addCategory(null);
-    }
-
-    @Test(expected = BussinessRuleException.class)
     public void deleteCategoryTableIdNullTest() {
         controller.deleteCategory(null);
     }
@@ -109,7 +104,9 @@ public class CategoryTableControllerTest {
     }
 
     @Test(expected = BussinessRuleException.class)
-    public void updateCategoryTableNullTest() {
-        controller.updateCategory(null);
+    public void updateCategoryTableNullIdTest() {
+        categoryTableDTO.setId(-1L);
+        controller.updateCategory(categoryTableDTO);
     }
+
 }

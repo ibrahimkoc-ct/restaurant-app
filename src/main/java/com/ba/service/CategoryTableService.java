@@ -10,6 +10,8 @@ import com.ba.mapper.MediaMapper;
 import com.ba.repository.CategoryTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,18 +28,18 @@ public class CategoryTableService {
         }
         return CategoryTableMapper.INSTANCE.toDTOList(categoryTableList);
     }
-
+    @Transactional
     public String deleteCategory(Long id) {
         repository.deleteById(id);
         return "kisi silindi";
     }
-
+    @Transactional
     public String addCategory(CategoryTableDTO categoryTableDTO) {
         CategoryTable categoryTable =CategoryTableMapper.INSTANCE.toEntity(categoryTableDTO);
         repository.save(categoryTable);
         return "kisi eklendi";
     }
-
+    @Transactional
     public CategoryTableDTO updateCategory(CategoryTableDTO category) {
         Optional<CategoryTable> categoryTableOptional = repository.findById(category.getId());
         if (categoryTableOptional==null) {

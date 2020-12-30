@@ -90,10 +90,7 @@ public class UserContollerTest {
         contoller.addUser(dto);
     }
 
-    @Test(expected = BussinessRuleException.class)
-    public void addUserNullTest() {
-        contoller.addUser(null);
-    }
+
     @Test(expected = BussinessRuleException.class)
     public void deleteUserIdNullTest() {
         contoller.deleteUser(null);
@@ -102,10 +99,6 @@ public class UserContollerTest {
     @Test(expected = BussinessRuleException.class)
     public void deleteUserIdTest() {
         contoller.deleteUser(-1L);
-    }
-    @Test(expected = BussinessRuleException.class)
-    public void updateUserNullTest() {
-        contoller.updateUser(null);
     }
 
     @Test(expected = BussinessRuleException.class)

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,17 +29,17 @@ public class CustomerController {
     }
 
     @PostMapping()
-    public CustomerDTO addCustomer(@RequestBody CustomerDTO dto) {
-        if (dto == null || dto.getId() !=null) {
+    public CustomerDTO addCustomer(@Valid @RequestBody CustomerDTO dto) {
+        if (dto.getId() !=null) {
             throw new BussinessRuleException("Customer cannot be empty!");
         }
         return service.addCustomer(dto);
     }
 
     @PutMapping()
-    public CustomerDTO updateCustomer(@RequestBody CustomerDTO dto) {
-        if (dto == null || dto.getId() ==null) {
-            throw new BussinessRuleException("Customer cannot be empty!");
+    public CustomerDTO updateCustomer(@Valid @RequestBody CustomerDTO dto) {
+        if (dto.getId() ==null) {
+            throw new BussinessRuleException("Customer Id cannot be empty!");
         }
         return service.updateCustomer(dto);
     }

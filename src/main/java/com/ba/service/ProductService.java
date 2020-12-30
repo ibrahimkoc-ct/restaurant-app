@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ProductService {
         List<ProductDTO> productDTOList = ProductMapper.INSTANCE.toDTOList(productList);
         return productDTOList;
     }
-
+    @Transactional
     public String deleteProduct(Long id) {
         Optional<Product> optionalProduct = repository.findById(id);
         optionalProduct.get().getCategories().forEach(category -> category.getProducts().remove(optionalProduct.get()));
@@ -46,6 +47,7 @@ public class ProductService {
         return "kisi silindi";
     }
 
+    @Transactional
     public ProductDTO updateProduct(long id, ProductDTO product) {
         Product product1 = repository.findById(id).get();
 
@@ -79,6 +81,7 @@ public class ProductService {
         return ProductMapper.INSTANCE.toDTO(product.get());
     }
 
+    @Transactional
     public String addProductId(ProductDTO product) {
         List<Category> categoryList = new ArrayList<>();
         Product product1 = ProductMapper.INSTANCE.toEntity(product);

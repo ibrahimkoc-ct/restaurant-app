@@ -12,6 +12,7 @@ import com.ba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,18 +24,20 @@ public class UserService {
 
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    @Transactional
     public String addUser(UserDTO userDTO) {
         User user = UserMapper.INSTANCE.toEntity(userDTO);
         user.setPassword(encoder.encode(userDTO.getPassword()));
         userRepository.save(user);
         return "kisi eklendi";
     }
-
+    @Transactional
     public String deleteUser(Long id) {
         userRepository.deleteById(id);
         return "kisi silindi";
     }
-
+    @Transactional
     public UserDTO updateUser(UserDTO dto) {
         UpdateHelper.updateUserHelper(dto, userRepository);
         //buraya devam et

@@ -7,6 +7,7 @@ import com.ba.service.WaiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -19,8 +20,8 @@ public class WaiterController {
 
 
     @PostMapping("/add")
-    public WaiterDTO addWaiterDTO(@RequestBody WaiterDTO waiterDTO) {
-        if (waiterDTO == null || waiterDTO.getId() != null) {
+    public WaiterDTO addWaiterDTO(@Valid @RequestBody WaiterDTO waiterDTO) {
+        if ( waiterDTO.getId() != null) {
             throw new BussinessRuleException("id cannot be empty");
         }
         service.addWaiterDTO(waiterDTO);
@@ -43,8 +44,8 @@ public class WaiterController {
     }
 
     @PutMapping("/update")
-    public WaiterDTO updateWaiter(@RequestBody WaiterDTO waiterDTO) {
-        if (waiterDTO == null || waiterDTO.getId() == null) {
+    public WaiterDTO updateWaiter(@Valid @RequestBody WaiterDTO waiterDTO) {
+        if (waiterDTO.getId() == null) {
             throw new BussinessRuleException("Waiter cannot be empty!");
         }
         service.updateWaiter(waiterDTO);

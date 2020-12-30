@@ -6,6 +6,8 @@ import com.ba.exception.BussinessRuleException;
 import com.ba.service.CategoryTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -16,8 +18,8 @@ public class CategoryTableController {
     @Autowired
     CategoryTableService repository;
     @PostMapping("/add")
-    public String addCategory(@RequestBody CategoryTableDTO category) {
-        if (category == null || category.getId() !=null) {
+    public String addCategory(@Valid @RequestBody CategoryTableDTO category) {
+        if ( category.getId() !=null) {
             throw new BussinessRuleException("Category cannot be empty!");
         }
          repository.addCategory(category);
@@ -43,10 +45,10 @@ public class CategoryTableController {
         return repository.getCategoryById(id);
     }
     @PutMapping("/update")
-    public CategoryTableDTO updateCategory(@RequestBody CategoryTableDTO category){
-        if (category == null) {
-            throw new BussinessRuleException("Category cannot be empty!");
-        }
+    public CategoryTableDTO updateCategory(@Valid @RequestBody CategoryTableDTO category){
+        if (category.getId() == null || category.getId()<0) {
+            throw new BussinessRuleException("Category Id cannot be empty!");
+    }
          repository.updateCategory(category);
          return category;
     }

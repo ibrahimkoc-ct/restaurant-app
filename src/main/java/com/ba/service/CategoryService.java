@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,18 +38,20 @@ public class CategoryService {
         return CategoryMapper.INSTANCE.toDTOList(categoryList);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public String deleteCategory(Long id) {
         categoryRepository.deleteById(id);
         return "kisi silindi";
     }
+    @Transactional(propagation = Propagation.REQUIRED)
 
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public String addCategory(CategoryDTO categoryDTO) {
         categoryRepository.save(CategoryMapper.INSTANCE.toEntity(categoryDTO));
         return "kisi eklendi";
     }
-
+    @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public CategoryDTO updateCategory(CategoryDTO categoryDTO) {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryDTO.getId());

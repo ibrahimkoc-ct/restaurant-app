@@ -9,6 +9,7 @@ import liquibase.pro.packaged.L;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,8 +24,8 @@ public class CategoryController {
 
 
     @PostMapping("/add")
-    public CategoryDTO addCategory(@RequestBody CategoryDTO category) {
-        if (category == null || category.getId() != null) {
+    public CategoryDTO addCategory(@Valid @RequestBody CategoryDTO category) {
+        if (category.getId() != null) {
             throw new BussinessRuleException("Category cannot be empty!");
         }
         categoryService.addCategory(category);
@@ -54,8 +55,8 @@ public class CategoryController {
     }
 
     @PutMapping("/update")
-    public CategoryDTO updateCategory(@RequestBody CategoryDTO category) {
-        if (category == null || category.getId() == null) {
+    public CategoryDTO updateCategory(@Valid @RequestBody CategoryDTO category) {
+        if (category.getId() == null) {
             throw new BussinessRuleException("Category cannot be empty!");
         }
         categoryService.updateCategory(category);

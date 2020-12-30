@@ -88,10 +88,6 @@ public class RoleControllerTest {
     }
 
     @Test(expected = BussinessRuleException.class)
-    public void addRoleNullTest() {
-        controller.addRole(null);
-    }
-    @Test(expected = BussinessRuleException.class)
     public void getRoleIdNullTest() {
         controller.getRoleById(null);
     }
@@ -99,10 +95,6 @@ public class RoleControllerTest {
     @Test(expected = BussinessRuleException.class)
     public void getRoleIdTest() {
         controller.getRoleById(-1L);
-    }
-    @Test(expected = BussinessRuleException.class)
-    public void updateRoleNullTest() {
-        controller.updateRole(null);
     }
 
     @Test(expected = BussinessRuleException.class)

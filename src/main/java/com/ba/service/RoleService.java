@@ -8,6 +8,7 @@ import com.ba.mapper.RoleMapper;
 import com.ba.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +26,14 @@ public class RoleService {
         }
         return RoleMapper.INSTANCE.toDTOList(roleList);
     }
-    public String deleteById(Long id) {
 
+    @Transactional
+    public String deleteById(Long id) {
         repository.deleteById(id);
         return "kisi silindi";
 
     }
+    @Transactional
     public RoleDTO updateRole(RoleDTO role) {
         Optional<Role> optionalRole = repository.findById(role.getId());
         if (optionalRole==null) {
@@ -48,6 +51,7 @@ public class RoleService {
         }
             return RoleMapper.INSTANCE.toDTO(optionalRole.get());
     }
+    @Transactional
     public RoleDTO addRole(RoleDTO dto) {
         repository.save(RoleMapper.INSTANCE.toEntity(dto));
         return dto;

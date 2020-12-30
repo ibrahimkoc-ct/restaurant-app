@@ -76,10 +76,6 @@ public class WaiterControllerTest {
     }
 
     @Test(expected = BussinessRuleException.class)
-    public void addWaiterNullTest() {
-        controller.addWaiterDTO(null);
-    }
-    @Test(expected = BussinessRuleException.class)
     public void deleteWaiterIdNullTest() {
         controller.deleteWaiter(null);
     }
@@ -96,11 +92,6 @@ public class WaiterControllerTest {
     @Test(expected = BussinessRuleException.class)
     public void getWaiterIdTest() {
         controller.getWaiterById(-1L);
-    }
-
-    @Test(expected = BussinessRuleException.class)
-    public void updateWaiterNullTest() {
-        controller.updateWaiter(null);
     }
 
     @Test(expected = BussinessRuleException.class)

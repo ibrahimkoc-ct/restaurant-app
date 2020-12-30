@@ -100,19 +100,11 @@ public class CategoryControllerTest {
         controller.addCategory(categoryDTO);
     }
 
-    @Test(expected = BussinessRuleException.class)
-    public void addCategoryNullTest() {
-        controller.addCategory(null);
-    }
+
     @Test(expected = BussinessRuleException.class)
     public void updateCategoryIdNullTest() {
         categoryDTO.setId(null);
         controller.updateCategory(categoryDTO);
-    }
-
-    @Test(expected = BussinessRuleException.class)
-    public void updateCategoryNullTest() {
-        controller.updateCategory(null);
     }
 
     @Test(expected = BussinessRuleException.class)

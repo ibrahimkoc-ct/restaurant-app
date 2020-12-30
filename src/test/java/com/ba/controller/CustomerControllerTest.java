@@ -93,20 +93,13 @@ public class CustomerControllerTest {
         controller.addCustomer(dto);
     }
 
-    @Test(expected = BussinessRuleException.class)
-    public void addCustomerNullTest() {
-        controller.addCustomer(null);
-    }
+
     @Test(expected = BussinessRuleException.class)
     public void updateCustomerIdNullTest() {
         dto.setId(null);
         controller.updateCustomer(dto);
     }
 
-    @Test(expected = BussinessRuleException.class)
-    public void updateCustomerNullTest() {
-        controller.updateCustomer(null);
-    }
     @Test(expected = BussinessRuleException.class)
     public void getCustomerIdNullTest() {
         controller.customerDTOById(null);

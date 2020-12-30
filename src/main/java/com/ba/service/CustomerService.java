@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -29,17 +30,18 @@ public class CustomerService {
     @Autowired
     CustomerMapper mapper;
 
+    @Transactional
     public String deleteCustomer(@PathVariable Long id) {
         repository.deleteById(id);
         return "müsteri silindi";
     }
-
+    @Transactional
     public CustomerDTO addCustomer(@RequestBody CustomerDTO dto) {
         Customer customer = mapper.toEntity(dto);
         repository.save(customer);
         return dto;
     }
-
+    @Transactional
     public CustomerDTO updateCustomer(CustomerDTO dto) {
         Optional<Customer> optionalCustomer = repository.findById(dto.getId());
         if (optionalCustomer==null) {

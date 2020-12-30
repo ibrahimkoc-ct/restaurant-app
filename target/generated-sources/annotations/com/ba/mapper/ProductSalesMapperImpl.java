@@ -8,7 +8,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-12-29T02:37:07+0300",
+    date = "2020-12-30T00:30:13+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 15.0.1 (Oracle Corporation)"
 )
 public class ProductSalesMapperImpl implements ProductSalesMapper {
@@ -21,8 +21,8 @@ public class ProductSalesMapperImpl implements ProductSalesMapper {
 
         ProductSalesDTO productSalesDTO = new ProductSalesDTO();
 
-        productSalesDTO.setProductId( productSales.getProductId() );
         productSalesDTO.setId( productSales.getId() );
+        productSalesDTO.setProductId( productSales.getProductId() );
         productSalesDTO.setPrice( productSales.getPrice() );
         productSalesDTO.setPiece( productSales.getPiece() );
         productSalesDTO.setTitle( productSales.getTitle() );
