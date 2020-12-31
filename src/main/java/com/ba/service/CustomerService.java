@@ -38,7 +38,8 @@ public class CustomerService {
     @Transactional
     public CustomerDTO addCustomer(@RequestBody CustomerDTO dto) {
         Customer customer = mapper.toEntity(dto);
-        repository.save(customer);
+        Customer customerRepo=repository.save(customer);
+        dto.setId(customerRepo.getId());
         return dto;
     }
     @Transactional

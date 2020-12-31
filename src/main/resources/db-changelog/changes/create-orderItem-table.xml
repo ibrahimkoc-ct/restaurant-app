@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="30-12-2020_22:48" author="ibrahim.koc">
+        <createTable tableName="OrderItem">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="piece" type="int(10)"></column>
+            <column name="TotalPrice" type="int(10)"></column>
+            <column name="selectedtable" type="VARCHAR(255)"/>
+            <column name="product_id" type="int(10)">
+                <constraints nullable="true" foreignKeyName="product_id_oi_pk" references="Product(id)"></constraints>
+            </column>
+            <column name="order_id" type="int(10)">
+                <constraints nullable="true" foreignKeyName="orderTable_id_pk" references="OrderTable(id)"></constraints>
+            </column>
+            <column name="deleted"
+                    defaultValue="false"
+                    type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

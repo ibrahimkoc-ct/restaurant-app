@@ -16,6 +16,11 @@
 <!--    <include file="/db-changelog/changes/insert-table.xml"/>-->
 <!--    <include file="/db-changelog/changes/products.sql"/>-->
 <!--    <include file="/db-changelog/changes/tbl-category-produc.sql"/>-->
+<!--    <include file="/db-changelog/changes/create-paymentType-table.xml"/>-->
+<!--    <include file="/db-changelog/changes/create-creditCard-table.xml"/>-->
+<!--    <include file="/db-changelog/changes/create-order-table.xml"/>-->
+<!--    <include file="/db-changelog/changes/create-orderItem-table.xml"/>-->
+
 
 
 

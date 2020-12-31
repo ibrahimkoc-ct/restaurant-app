@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="30-12-2020_22:27" author="ibrahim.koc">
+        <createTable tableName="OrderTable">
+            <column autoIncrement="true" name="id" type="int(10)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="int(10)">
+                <constraints nullable="true" foreignKeyName="customer_id_pk" references="Customer(id)"></constraints>
+            </column>
+            <column name="waiter_id" type="int(10)">
+                <constraints nullable="true" foreignKeyName="waiter_id_pk" references="Waiter(id)"></constraints>
+            </column>
+            <column name="paymentType_id" type="int(10)">
+                <constraints nullable="true" foreignKeyName="paymentType_id_pk"
+                             references="PaymentType(id)"></constraints>
+            </column>
+            <column name="TotalAmount" type="int(10)"></column>
+            <column name="TotalCount" type="int(10)"></column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="date" type="TIMESTAMP"/>
+            <column name="deleted"
+                    defaultValue="false"
+                    type="BOOLEAN"/>
+
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -8,7 +8,7 @@ import {redirectWithId} from '../../RouterRedirect';
 import axios from "axios";
 import { Formik } from 'formik';
 class CreateCustomerComponent extends Component {
-
+    static contextType = BackofficeContext;
 
     constructor(props) {
         super(props);
@@ -77,6 +77,7 @@ class CreateCustomerComponent extends Component {
             return <h2>Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.</h2>
         }
         return (
+
             <form>
                 <div className="form-group">
                     <label>Musteri Adı</label>

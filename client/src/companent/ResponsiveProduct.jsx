@@ -7,6 +7,11 @@ import "./App2.css";
 import ClientContext from "../ClientContext";
 import createBrowserHistory from 'history/createBrowserHistory';
 import FullPageLoading from './FullPageLoading'
+import {Modal} from "react-bootstrap";
+import Table from "react-bootstrap/Table";
+import Cards from 'react-credit-cards';
+import 'react-credit-cards/es/styles-compiled.css';
+
 
 const history = createBrowserHistory({forceRefresh: true});
 
@@ -30,7 +35,9 @@ class ResponsiveProduct extends Component {
                 id: 0,
                 selectedtable: '',
                 waiterName: '',
-                productId:0
+                productId: 0,
+                customerId:0
+
 
             },
             hasNext: true,
@@ -40,6 +47,14 @@ class ResponsiveProduct extends Component {
             scrollTop: 0,
             CategoryId: 0,
             pageNum: 0,
+            payModal: false,
+            creditCardModal: false,
+            cvc: '',
+            expiry: '',
+            focus: '',
+            name: '',
+            number: '',
+            paymentId:1,
 
         }
         this.myRef = React.createRef()
@@ -52,12 +67,14 @@ class ResponsiveProduct extends Component {
             scrollTop: scrollTop
         })
 
-        if (scrollTop > (this.state.pageNum+1)*700) {
+        if (scrollTop > (this.state.pageNum + 1) * 700) {
             if (this.state.hasNext.toString() === "false") {
-                this.state.pageNum+=1;
+                this.state.pageNum += 1;
                 ProductService.getProduct(this.state.token, this.state.CategoryId, this.state.pageNum).then((res) => {
-                    this.setState({hasNext: res.data.last,
-                        categorylist:[...this.state.categorylist,...res.data.content]})
+                    this.setState({
+                        hasNext: res.data.last,
+                        categorylist: [...this.state.categorylist, ...res.data.content]
+                    })
 
                 })
 
@@ -81,7 +98,7 @@ class ResponsiveProduct extends Component {
             const {waiter, setWaiter} = this.context
         }
         await ProductService.getCategory(this.state.token).then((res) => {
-            this.setState({productslist: res.data,CategoryId:1});
+            this.setState({productslist: res.data, CategoryId: 1});
         });
         this.onClickSidebar(1)
         let orders = ResponsiveProduct.getOrderFromStorage();
@@ -98,15 +115,20 @@ class ResponsiveProduct extends Component {
             }
 
         }
+
+        ProductService.getProduct(this.state.token, 6, 0).then((res) => {
+            this.setState({categorylist: res.data.content, hasNext: res.data.last})
+            this.myRef.current.scrollTop = 0;
+        });
         await this.setState({salelist: table, loading: false});
         localStorage.setItem("orders", JSON.stringify(orders));
     }
 
     onClickSidebar = (id) => {
-        this.setState({loading: true, hasNext: 0, CategoryId: id,pageNum:0})
-        ProductService.getProduct(this.state.token,id, 0).then((res) => {
+        this.setState({loading: true, hasNext: 0, CategoryId: id, pageNum: 0})
+        ProductService.getProduct(this.state.token, id, 0).then((res) => {
             this.setState({categorylist: res.data.content, hasNext: res.data.last, loading: false})
-            this.myRef.current.scrollTop=0;
+            this.myRef.current.scrollTop = 0;
         });
 
     }
@@ -132,7 +154,8 @@ class ResponsiveProduct extends Component {
                     piece: 1,
                     total: Number(product.price),
                     selectedtable: localStorage.getItem("product"),
-                    waiterName: localStorage.getItem("waiter")
+                    waiterId: sessionStorage.getItem("waiterId"),
+                    customerId:sessionStorage.getItem("customerId"),
                 }
             }, () => this.setState({salelist: [...this.state.salelist, this.state.cart], loading: false}))
         }
@@ -162,8 +185,9 @@ class ResponsiveProduct extends Component {
 
     pay() {
         this.setState({loading: true})
-
-        ProductService.pay(this.state.salelist, this.state.token).then(res => {
+       let creditCard ={number:this.state.number,name:this.state.name,cvc:this.state.cvc,expiry:this.state.expiry}
+       let ordersPay ={orderWrapperList:this.state.salelist,creditCardDTO:creditCard,paymentId:this.state.paymentId}
+        ProductService.pay(ordersPay, this.state.token).then(res => {
             this.setState({loading: false})
             this.props.history.push('/homepage')
         });
@@ -171,6 +195,8 @@ class ResponsiveProduct extends Component {
         localStorage.setItem("product", "Secili Masa Yok");
         const {waiter, setWaiter} = this.context
         setWaiter("Seçili Garson Yok")
+        sessionStorage.removeItem("customerId");
+        sessionStorage.removeItem("waiterId");
         localStorage.setItem("waiter", "Seçili Garson Yok")
 
     }
@@ -188,9 +214,20 @@ class ResponsiveProduct extends Component {
         const {waiter, setWaiter} = this.context
         setWaiter("Seçili Garson Yok")
         localStorage.setItem("waiter", "Seçili Garson Yok")
-
+        sessionStorage.removeItem("customerId");
+        sessionStorage.removeItem("waiterId");
         this.props.history.push('/homepage')
 
+    }
+
+    handleInputFocus = (e) => {
+        this.setState({focus: e.target.name});
+    }
+
+    handleInputChange = (e) => {
+        const {name, value} = e.target;
+
+        this.setState({[name]: value});
     }
 
     static getOrderFromStorage() {
@@ -264,7 +301,8 @@ class ResponsiveProduct extends Component {
                                                     <div className="card cardbodytable">
                                                         <div className="card-header">
 
-                                                            <img src={'data:image/png;base64,' + productl.mediaDTO.fileContent}
+                                                            <img
+                                                                src={'data:image/png;base64,' + productl.mediaDTO.fileContent}
                                                                 width="100"/>
                                                         </div>
                                                         <div className="card-body">
@@ -342,13 +380,114 @@ class ResponsiveProduct extends Component {
                                     <label htmlFor="name">{this.state.shoppinglistprice} ₺</label></div>
                                 <div className="col xl-5 col-lg-5 text-center ">
                                     <button className="btn btn-info btn-block paybutton"
-                                            onClick={() => this.pay(this.state.salelist)}>Öde
+                                            onClick={() => this.setState({payModal: true})}>Öde
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <Modal show={this.state.payModal}>
+                        <Modal.Header>
+                            <h2>Ödeme Ekranı</h2>
+                        </Modal.Header>
+                        <Modal.Body className="ModalBody">
+                            <Table>
+                                <thead>
+                                <th>Ürün Adı</th>
+                                <th>Ürün Adeti</th>
+                                <th>Ürün Fiyatı</th>
+                                </thead>
+                                <tbody>
+                                {
 
+                                    this.state.salelist.map(
+                                        table => {
+                                            return (
+                                                <tr key={table.title}>
+                                                    <td>{table.title}</td>
+                                                    <td>{table.piece} Adet</td>
+                                                    <td>{table.price * table.piece} ₺</td>
+                                                </tr>
+
+                                            )
+                                        })}
+                                </tbody>
+                            </Table>
+
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-success" onClick={() => this.pay(this.state.salelist)}>Nakit
+                            </button>
+                            <button className="btn btn-info"
+                                    onClick={() => this.setState({payModal: false, creditCardModal: true,paymentId:2})}>Kredi Kartı
+                            </button>
+                            <button className="btn btn-danger" onClick={() => this.setState({payModal: false,paymentId:1})}>İptal
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
+                    <Modal show={this.state.creditCardModal} size="lg" onHide={()=>this.setState({creditCardModal:false})}>
+                        <Modal.Header closeButton><h2>Kredi Kartı</h2></Modal.Header>
+                        <Modal.Body>
+                            <div className="row" id="PaymentForm">
+                                <div className="col-xl-5">
+                                    <Cards
+                                        cvc={this.state.cvc}
+                                        expiry={this.state.expiry}
+                                        focused={this.state.focus}
+                                        name={this.state.name}
+                                        number={this.state.number}
+                                    />
+                                </div>
+                                <div className="col-xl-7">
+                                    <form>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            placeholder="Name"
+                                            onChange={this.handleInputChange}
+                                            onFocus={this.handleInputFocus}
+                                            className="form-control"
+                                            style={{marginTop:3}}
+                                        />
+                                        <input
+                                            type="tel"
+                                            name="number"
+                                            placeholder="Card Number"
+                                            onChange={this.handleInputChange}
+                                            onFocus={this.handleInputFocus}
+                                            className="form-control"
+                                            style={{marginTop:3}}
+                                        />
+                                        <input
+                                            placeholder="Date"
+                                            onChange={this.handleInputChange}
+                                            type="tel"
+                                            name="expiry"
+                                            onFocus={this.handleInputFocus}
+                                            className="form-control"
+                                            style={{marginTop:3}}
+                                        />
+                                        <input
+                                            type="tel"
+                                            name="cvc"
+                                            placeholder="CVC"
+                                            onChange={this.handleInputChange}
+                                            onFocus={this.handleInputFocus}
+                                            className="form-control"
+                                            style={{marginTop:3}}
+                                        />
+                                    </form>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button className="btn btn-success" onClick={()=>this.pay()}>Ödemeyi tamamla</button>
+                            <button className="btn btn-danger"
+                                    onClick={() => this.setState({creditCardModal: false,paymentId:1})}>İptal
+                            </button>
+                        </Modal.Footer>
+                    </Modal>
+                    s
 
                 </div>
                 {this.state.loading ? <FullPageLoading/> : null}

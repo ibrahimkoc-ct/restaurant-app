@@ -51,11 +51,8 @@ class HomePageCompanent extends Component {
             this.state.token = localStorage.getItem("token")
         }
         axios.get("http://localhost:8080/file").then((res) => {
-            this.setState({media: res.data});
+            this.setState({media: res.data,loading: false});
         });
-        WaiterService.getWaiter(this.state.token).then((res) => {
-            this.setState({waiterList: res.data, loading: false})
-        })
         localStorage.setItem("product", "Secili Masa Yok")
     }
     changeSelect = (media) => {
@@ -91,8 +88,11 @@ class HomePageCompanent extends Component {
         if (!customer) {
             return
         }
-        CustomerService.addCustomer(customer, this.state.token)
-        localStorage.setItem("product", "Müsteri: " + customer.name + " " + customer.surname)
+        CustomerService.addCustomer(customer, this.state.token).then((res)=>{
+            sessionStorage.setItem("customerId",res.data.id)
+        })
+        localStorage.setItem("product", "Secili Masa Yok")
+
         this.props.history.push("/products")
         e.preventDefault();
     }
@@ -113,7 +113,8 @@ class HomePageCompanent extends Component {
     }
 
     selectedCustomer(customer) {
-        localStorage.setItem("product", "Müsteri: " + customer.name + " " + customer.surname)
+        localStorage.setItem("product", "Secili Masa Yok")
+        sessionStorage.setItem("customerId",customer.id)
         this.props.history.push('/products');
     }
 

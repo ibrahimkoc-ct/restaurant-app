@@ -3,7 +3,7 @@ const Product_Api_Base_URL="http://localhost:8080/product";
 const Product_Api_Add_URL="http://localhost:8080/product/";
 const Product_Api_Update_URL="http://localhost:8080/product";
 const Product_Api_Delete_URL="http://localhost:8080/product";
-const Product_Api_ProductSales="http://localhost:8080/productsales/list";
+const Product_Api_ProductSales="http://localhost:8080/order";
 const Product_Api_View_URL="http://localhost:8080/product/id";
 const Product_Api_PageList_URL="http://localhost:8080/product/page?page=";
 const Product_Api_Addid_URL="http://localhost:8080/product";

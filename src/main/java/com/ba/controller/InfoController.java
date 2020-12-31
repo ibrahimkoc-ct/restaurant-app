@@ -1,17 +1,25 @@
 package com.ba.controller;
 
 import com.ba.entity.ServerInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
 
 public class InfoController {
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
 
     @Value("${spring.profiles.active}")
     private String profile;
@@ -61,5 +69,11 @@ public class InfoController {
         return server_info;
 
     }
+    @GetMapping("/beans")
+    public List<String> getContextBeans(){
+     List<String> beans=  Arrays.asList(applicationContext.getBeanDefinitionNames());
+        return beans;
+    }
+
 }
 

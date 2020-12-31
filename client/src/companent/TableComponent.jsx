@@ -126,9 +126,10 @@ class TableComponent extends Component {
 
         this.setState({show: false})
         this.props.history.push('/products')
-        const {waiter, setWaiter} = this.context
-        setWaiter(waiter1.name)
-        localStorage.setItem("waiter", waiter1.name)
+        const {waiter, setWaiter} = this.context;
+        setWaiter(waiter1.name);
+        sessionStorage.setItem("waiterId",waiter1.id);
+        localStorage.setItem("waiter", waiter1.name);
     }
     DetailTable = (category, i) => {
         const {selectedTableDetail} = this.state;
@@ -267,12 +268,8 @@ class TableComponent extends Component {
                                                 <div className="col-xl-4"><img
                                                     src={'data:image/png;base64,' + waiter.mediaDTO.fileContent}
                                                     height="40" width="40" style={{margin: 10}}/></div>
-
                                             </div>
-
                                         </button>
-
-
                                     )
                                 })}
                     </Modal.Body>
@@ -320,7 +317,6 @@ class TableComponent extends Component {
                         <button className="btn btn-info" onClick={() =>
                             this.onClickTableDetail()}>Masaya Git
                         </button>
-                        <button className="btn btn-success" onClick={() => this.pay()}>Öde</button>
                     </Modal.Footer>
                 </Modal>
                 {this.state.loading ? <FullPageLoading/> : null}

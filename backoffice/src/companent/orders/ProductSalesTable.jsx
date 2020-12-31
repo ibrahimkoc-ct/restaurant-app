@@ -52,11 +52,7 @@ class ProductSalesTable extends Component {
                         <th>Siparis Numarası</th>
                         <th>Siparis Tarihi</th>
                         <th>Garson Adı</th>
-                        <th>Masa Numarası</th>
-                        <th>Urun Adi</th>
-                        <th>Urun ID</th>
                         <th>Urun Adeti</th>
-                        <th>Urun Fiyatı</th>
                         <th>Toplam Fiyat</th>
                     </tr>
                     </thead>
@@ -67,14 +63,10 @@ class ProductSalesTable extends Component {
                             product =>
                                 <tr key={product.id}>
                                     <td>{product.id}</td>
-                                    <td>{product.createDate}</td>
-                                    <td>{product.waiterName}</td>
-                                    <td>{product.selectedtable}</td>
-                                    <td>{product.title}</td>
+                                    <td>{product.date}</td>
                                     <td>{product.productId}</td>
-                                    <td>{product.piece}</td>
-                                    <td>{product.price}</td>
-                                    <td>{product.price * product.piece}</td>
+                                    <td>{product.totalCount}</td>
+                                    <td>{product.totalAmount}</td>
 
                                 </tr>
                         )

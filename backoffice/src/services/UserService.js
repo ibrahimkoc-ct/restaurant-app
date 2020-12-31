@@ -12,6 +12,7 @@ const ServerInfo_Api_Viwe_URL = "http://localhost:8080/server-info";
 const User_Api_Add_URL = "http://localhost:8080/user/add";
 const Auth_Api_Add_URL = "http://localhost:8080/role/add";
 const Login_Api_List_URL = "http://localhost:8080/user/admin-login";
+const Beans_Api_List_URL ="http://localhost:8080/beans";
 
 
 class UserService {
@@ -136,6 +137,9 @@ class UserService {
                 Authorization: token
             }
         });
+    }
+    getBeans(){
+        return axios.get(Beans_Api_List_URL)
     }
 }
 
