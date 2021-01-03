@@ -5,8 +5,6 @@ import HeaderComponent from "../homepage/HeaderComponent";
 import FooterComponent from "../homepage/FooterComponent";
 import FullPageLoading from "../loading/FullPageLoading";
 import {redirectWithId} from '../../RouterRedirect';
-import axios from "axios";
-import { Formik } from 'formik';
 class CreateCustomerComponent extends Component {
     static contextType = BackofficeContext;
 
@@ -20,14 +18,11 @@ class CreateCustomerComponent extends Component {
             phoneNumber: '',
             loading: false,
             token: '',
-            media: [],
-            mediaSelect: {},
         }
     }
 
     componentDidMount() {
         const userToken = this.context;
-        this.setState({loading: true})
         if (localStorage.getItem("token") == null) {
             if (userToken.token.length > 0) {
                 this.state.token = userToken.token;
@@ -37,9 +32,6 @@ class CreateCustomerComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-        axios.get("http://localhost:8080/file").then((res) => {
-            this.setState({media: res.data, loading: false})
-        }).catch(this.setState({loading:false}));
     }
 
     changeSelect = (media) => {
@@ -52,8 +44,7 @@ class CreateCustomerComponent extends Component {
             name: this.state.name,
             surname: this.state.surname,
             address: this.state.address,
-            phoneNumber: this.state.phoneNumber,
-            mediaDTO: this.state.mediaSelect
+            phoneNumber: this.state.phoneNumber
         };
         if (!customer) {
             return
@@ -67,15 +58,8 @@ class CreateCustomerComponent extends Component {
         })
     }
 
-    debugBase64(base64URL) {
-        var win = window.open();
-        win.document.write('<iframe src="' + base64URL + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
-    }
 
     addCustomerForm = () => {
-        if(!this.state.media){
-            return <h2>Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.</h2>
-        }
         return (
 
             <form>
@@ -93,25 +77,6 @@ class CreateCustomerComponent extends Component {
                     <label>Musteri Numarası</label>
                     <input placeholder="Musteri Numarası" name="phoneNumber" className="form-control"
                            value={this.state.phoneNumber} onChange={this.changeInput}/>
-                </div>
-                <div className="form-group">
-                    <label>Resim</label>
-                    <div className="form-group">
-                        <div className="form-check" style={{height: "4rem", overflow: "auto"}}>
-                            {
-                                this.state.media.map(
-                                    media =>
-                                        <div key={media.name} className="row col-md -12 custom-control custom-radio">
-                                            <input className="form-check-input" name="customRadio"
-                                                   type="radio"
-                                                   onClick={() => this.changeSelect(media)}/>
-                                            <label className="form-check-label">
-                                                <a onClick={() => this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
-                                        </div>
-                                )
-                            }
-                        </div>
-                    </div>
                 </div>
                 <div className="form-group">
                     <label>Musteri Adresi</label>

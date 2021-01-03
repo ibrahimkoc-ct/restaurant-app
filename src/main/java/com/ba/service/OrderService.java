@@ -63,7 +63,7 @@ public class OrderService {
         Long PaymentId =orderandCreditDTO.getPaymentId();
         List<OrderItem> orderItemList= new ArrayList<>();
 
-
+        Order order = new Order();
         if(PaymentId==2){
             creditCardRepository.save(creditCardMapper.toEntity(creditCardDTO));
         }
@@ -76,19 +76,6 @@ public class OrderService {
             orderItem.setTotalPrice(list.getPrice()*list.getPiece());
             orderItemList.add(orderItem);
           });
-
-        Order order = addOrder(orderWrapperList, PaymentId, orderItemList);
-        orderItemList.forEach(orderItem -> {
-                orderItem.setOrder(order);
-                orderItemRepository.save(orderItem);
-            });
-
-
-        return orderandCreditDTO;
-    }
-
-    public Order addOrder(List<OrderWrapper> orderWrapperList, Long paymentId, List<OrderItem> orderItemList) {
-        Order order = new Order();
         if(orderWrapperList.get(0).getCustomerId()!=null){
             Optional<Customer> optionalCustomer=customerRepository.findById(orderWrapperList.get(0).getCustomerId());
             if(optionalCustomer.isPresent()){
@@ -101,20 +88,24 @@ public class OrderService {
                 order.setWaiter(optionalWaiter.get());
             }
         }
-        Optional<PaymentType> paymentType=paymentTypeRepository.findById(paymentId);
+        Optional<PaymentType> paymentType=paymentTypeRepository.findById(PaymentId);
         if(paymentType.isPresent()){
             order.setType(paymentType.get());
         }
-
 
         int totalAmount = orderItemList.stream().mapToInt(OrderItem::getTotalPrice).sum();
         int totalCount = orderItemList.stream().mapToInt(OrderItem::getPiece).sum();
         order.setTotalCount(totalCount);
         order.setTotalAmount(totalAmount);
-        orderRepository.save(order);
-        return order;
-    }
+            orderRepository.save(order);
+            orderItemList.forEach(orderItem -> {
+                orderItem.setOrder(order);
+                orderItemRepository.save(orderItem);
+            });
 
+
+        return orderandCreditDTO;
+    }
     public List<Order> getAllOrder(){
         return orderRepository.findAll();
     }

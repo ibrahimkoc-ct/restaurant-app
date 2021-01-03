@@ -9,7 +9,7 @@ public class CustomerDTOBuilder extends IdBuilder {
     private String surname;
     private String phoneNumber;
     private String address;
-    private MediaDTO mediaDTO;
+
 
     public CustomerDTOBuilder id(Long id){
         this.setId(id);
@@ -31,14 +31,11 @@ public class CustomerDTOBuilder extends IdBuilder {
         this.phoneNumber =phoneNumber;
         return this;
     }
-    public CustomerDTOBuilder mediaDTO(MediaDTO mediaDTO){
-        this.mediaDTO =mediaDTO;
-        return this;
-    }
+
 
     @Override
     public CustomerDTO build() {
-        CustomerDTO dto = new CustomerDTO(this.getId(),name,surname,phoneNumber,address,mediaDTO);
+        CustomerDTO dto = new CustomerDTO(this.getId(),name,surname,phoneNumber,address);
         return dto;
     }
 }

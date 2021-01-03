@@ -43,7 +43,7 @@ class UpdateCustomerComponent extends Component {
             surname: this.state.surname,
             address: this.state.address,
             phoneNumber: this.state.phoneNumber,
-            mediaDTO: this.state.customer.mediaDTO,
+
 
         };
         if (!customer) {

@@ -9,7 +9,7 @@ public class CustomerBuilder extends IdBuilder {
     private String surname;
     private String phoneNumber;
     private String address;
-    private Media media;
+
 
     public CustomerBuilder id(Long id) {
         this.setId(id);
@@ -20,10 +20,7 @@ public class CustomerBuilder extends IdBuilder {
         this.name = name;
         return this;
     }
-    public CustomerBuilder media(Media media) {
-        this.media = media;
-        return this;
-    }
+
 
     public CustomerBuilder surname(String surname) {
         this.surname = surname;
@@ -42,7 +39,7 @@ public class CustomerBuilder extends IdBuilder {
 
     @Override
     public Customer build() {
-        Customer customer = new Customer(name,surname,phoneNumber,address,media);
+        Customer customer = new Customer(name,surname,phoneNumber,address);
         return customer;
     }
 }

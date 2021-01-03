@@ -13,7 +13,7 @@ class ViewCustomerComponent extends Component {
             customer: this.props.history.location.state?.customer
         }
     }
-
+s
     componentDidMount() {
 
         const userToken = this.context;
@@ -26,7 +26,6 @@ class ViewCustomerComponent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-
     }
 
     viewCustomer = () => {
@@ -46,11 +45,6 @@ class ViewCustomerComponent extends Component {
                 </div>
                 <div className="row">
                     <h3>Musteri Adresi: {this.state.customer.address}</h3>
-                </div>
-                <div className="row">
-                    <h3>Resim: <img
-                        src={'data:image/png;base64,' + this.state.customer.mediaDTO.fileContent}
-                        width="100"/></h3>
                 </div>
             </div>
         )

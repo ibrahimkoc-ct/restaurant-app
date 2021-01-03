@@ -11,6 +11,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -21,7 +23,7 @@ public class CustomerController {
     private CustomerService service;
 
     @DeleteMapping("/{id}")
-    public String deleteCustomer(@PathVariable Long id) {
+    public String deleteCustomer(@PathVariable Long id) throws IOException {
         if (id == null || id < 0) {
             throw new BussinessRuleException("id cannot be empty");
         }
@@ -29,7 +31,7 @@ public class CustomerController {
     }
 
     @PostMapping()
-    public CustomerDTO addCustomer(@Valid @RequestBody CustomerDTO dto) {
+    public CustomerDTO addCustomer(@Valid @RequestBody CustomerDTO dto) throws IOException {
         if (dto.getId() !=null) {
             throw new BussinessRuleException("Customer cannot be empty!");
         }
@@ -37,19 +39,11 @@ public class CustomerController {
     }
 
     @PutMapping()
-    public CustomerDTO updateCustomer(@Valid @RequestBody CustomerDTO dto) {
+    public CustomerDTO updateCustomer(@Valid @RequestBody CustomerDTO dto) throws IOException {
         if (dto.getId() ==null) {
             throw new BussinessRuleException("Customer Id cannot be empty!");
         }
         return service.updateCustomer(dto);
-    }
-
-    @GetMapping("/{id}")
-    public CustomerDTO customerDTOById(@PathVariable Long id) {
-        if (id == null || id < 0) {
-            throw new BussinessRuleException("id cannot be empty");
-        }
-        return service.customerDTOById(id);
     }
 
     @GetMapping("/page")
@@ -63,7 +57,7 @@ public class CustomerController {
         return service.getSliceCustomers(page, size);
     }
     @GetMapping()
-    public List<CustomerDTO> getAllCustomer(){
+    public List<CustomerDTO> getAllCustomer() throws IOException, JAXBException {
         return service.getAllCustomer();
     }
 }

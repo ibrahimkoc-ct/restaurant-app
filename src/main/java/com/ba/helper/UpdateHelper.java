@@ -57,9 +57,7 @@ public class UpdateHelper {
         if (!optionalCustomer.get().getPhoneNumber().equals(dto.getPhoneNumber())) {
             optionalCustomer.get().setPhoneNumber(dto.getPhoneNumber());
         }
-        if(!optionalCustomer.get().getMedia().equals(MediaMapper.INSTANCE.toEntity(dto.getMediaDTO()))){
-            optionalCustomer.get().setMedia(MediaMapper.INSTANCE.toEntity(dto.getMediaDTO()));
-        }
+
     }
     public static void updateCategoryTableHelper(CategoryTableDTO category, Optional<CategoryTable> categoryTableOptional) {
         if(!categoryTableOptional.get().getName().equals(category.getName())){

@@ -17,6 +17,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,33 +36,27 @@ public class CustomerControllerTest {
     CustomerBuilder builder = new CustomerBuilder();
     Customer customer = builder.address("address").id(1L).phoneNumber("13456").name("ibrahin").surname("koc").build();
 
+//    @Test
+//    public void addCustomerControllerTest(){
+//        dto.setId(null);
+//        Mockito.when(service.addCustomer(dto)).thenReturn(dto);
+//        CustomerDTO result =controller.addCustomer(dto);
+//        assertEquals(result,dto);
+//    }
     @Test
-    public void addCustomerControllerTest(){
-        dto.setId(null);
-        Mockito.when(service.addCustomer(dto)).thenReturn(dto);
-        CustomerDTO result =controller.addCustomer(dto);
-        assertEquals(result,dto);
-    }
-    @Test
-    public void deleteCustomerControllerTest(){
+    public void deleteCustomerControllerTest() throws IOException {
         Long id =1L;
         Mockito.when(service.deleteCustomer(id)).thenReturn("müsteri silindi");
         String result =controller.deleteCustomer(id);
         assertEquals(result,"müsteri silindi");
     }
     @Test
-    public void updateCustomerControllerTest(){
+    public void updateCustomerControllerTest() throws IOException {
         Mockito.when(service.updateCustomer(dto)).thenReturn(dto);
         CustomerDTO result =controller.updateCustomer(dto);
         assertEquals(dto,result);
     }
-    @Test
-    public void getCustomerByIdTest(){
-        Long id =1L;
-        Mockito.when(service.customerDTOById(id)).thenReturn(dto);
-        CustomerDTO result =controller.customerDTOById(id);
-        assertEquals(result.getId(),id);
-    }
+
     @Test
     public void getSliceCustomerControllerTest(){
         List<CustomerDTO> dtoList = new ArrayList<>();
@@ -80,38 +76,28 @@ public class CustomerControllerTest {
         assertEquals(result,dtoPage);
     }
     @Test(expected = BussinessRuleException.class)
-    public void deleteCustomerIdNullTest() {
+    public void deleteCustomerIdNullTest() throws IOException {
         controller.deleteCustomer(null);
     }
 
     @Test(expected = BussinessRuleException.class)
-    public void deleteCustomerIdTest() {
+    public void deleteCustomerIdTest() throws IOException {
         controller.deleteCustomer(-1L);
     }
     @Test(expected = BussinessRuleException.class)
-    public void addCustomerIdNullTest() {
+    public void addCustomerIdNullTest() throws IOException {
         controller.addCustomer(dto);
     }
 
 
     @Test(expected = BussinessRuleException.class)
-    public void updateCustomerIdNullTest() {
+    public void updateCustomerIdNullTest() throws IOException {
         dto.setId(null);
         controller.updateCustomer(dto);
     }
 
-    @Test(expected = BussinessRuleException.class)
-    public void getCustomerIdNullTest() {
-        controller.customerDTOById(null);
-    }
-
-    @Test(expected = BussinessRuleException.class)
-    public void getCustomerIdTest() {
-        controller.customerDTOById(-1L);
-    }
-
     @Test
-    public void getAllCustomer(){
+    public void getAllCustomer() throws IOException, JAXBException {
         List<CustomerDTO> dtoList = new ArrayList<>();
         dtoList.add(dto);
         Mockito.when(service.getAllCustomer()).thenReturn(dtoList);

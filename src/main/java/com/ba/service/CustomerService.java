@@ -4,6 +4,7 @@ import com.ba.dto.CustomerDTO;
 import com.ba.entity.Customer;
 import com.ba.entity.Media;
 import com.ba.exception.SystemException;
+import com.ba.helper.CustomerSoapHelper;
 import com.ba.helper.UpdateHelper;
 import com.ba.mapper.CustomerMapper;
 import com.ba.mapper.MediaMapper;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,35 +34,22 @@ public class CustomerService {
     CustomerMapper mapper;
 
     @Transactional
-    public String deleteCustomer(@PathVariable Long id) {
-        repository.deleteById(id);
+    public String deleteCustomer(Long id) throws IOException {
+        CustomerSoapHelper.deleteSoapCustomer(id);
         return "müsteri silindi";
     }
     @Transactional
-    public CustomerDTO addCustomer(@RequestBody CustomerDTO dto) {
-        Customer customer = mapper.toEntity(dto);
-        Customer customerRepo=repository.save(customer);
-        dto.setId(customerRepo.getId());
+    public CustomerDTO addCustomer(@RequestBody CustomerDTO dto) throws IOException {
+        CustomerSoapHelper.addSoapCustomer(dto);
         return dto;
     }
     @Transactional
-    public CustomerDTO updateCustomer(CustomerDTO dto) {
-        Optional<Customer> optionalCustomer = repository.findById(dto.getId());
-        if (optionalCustomer==null) {
-            throw new SystemException("Customer not found in database");
-        }
-        UpdateHelper.updateCustomerHelper(dto, optionalCustomer);
-        repository.saveAndFlush(optionalCustomer.get());
-        return mapper.toDTO(optionalCustomer.get());
+    public CustomerDTO updateCustomer(CustomerDTO dto) throws IOException {
+     CustomerSoapHelper.updateSoapCustomer(dto);
+
+        return dto;
     }
 
-    public CustomerDTO customerDTOById(Long id) {
-        Optional<Customer> customer = repository.findById(id);
-        if (customer==null) {
-            throw new SystemException("Customer not found in database");
-        }
-        return mapper.toDTO(customer.get());
-    }
 
     public Page<CustomerDTO> getPageCustomers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -72,12 +62,8 @@ public class CustomerService {
         Slice<CustomerDTO> customerDTO = repository.findAllBy(pageable).map(mapper::toDTO);
         return customerDTO;
     }
-    public List<CustomerDTO> getAllCustomer(){
-        List<Customer> customers =repository.findAll();
-        if(customers==null){
-            throw  new SystemException("Customer not found in database");
-        }
-        customers.forEach((customer -> customer.setMedia(null)));
-        return mapper.toDTOList(customers);
+    public List<CustomerDTO> getAllCustomer() throws IOException, JAXBException {
+
+        return CustomerSoapHelper.getAllCustomer();
     }
 }

@@ -30,16 +30,12 @@ class HomePageCompanent extends Component {
             scrollTop: 0,
             pageNum: 0,
             customers: [],
-            media: [],
-            mediaSelect: {},
         }
         this.myRef = React.createRef()
     }
 
     componentDidMount() {
-        this.setState({loading: true})
-
-        const userToken = this.context;
+            const userToken = this.context;
         if (localStorage.getItem("token") == null) {
 
             if (userToken.token.length > 0) {
@@ -50,18 +46,11 @@ class HomePageCompanent extends Component {
         } else {
             this.state.token = localStorage.getItem("token")
         }
-        axios.get("http://localhost:8080/file").then((res) => {
-            this.setState({media: res.data,loading: false});
-        });
+
         localStorage.setItem("product", "Secili Masa Yok")
     }
-    changeSelect = (media) => {
-        this.state.mediaSelect = media;
-    }
-    debugBase64(base64URL) {
-        var win = window.open();
-        win.document.write('<iframe src="' + base64URL + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
-    }
+
+
     onScroll = () => {
         const scrollTop = this.myRef.current.scrollTop
         this.setState({scrollTop: scrollTop})
@@ -82,8 +71,7 @@ class HomePageCompanent extends Component {
             name: this.state.name,
             surname: this.state.surname,
             address: this.state.address,
-            phoneNumber: this.state.phoneNumber,
-            mediaDTO:this.state.mediaSelect
+            phoneNumber: this.state.phoneNumber
         };
         if (!customer) {
             return
@@ -173,25 +161,6 @@ class HomePageCompanent extends Component {
                             <input placeholder="Musteri Adresi" name="address" className="form-control"
                                    value={this.state.address} onChange={this.changeInput}/>
                         </div>
-                        <div className="form-group">
-                            <label>Resim</label>
-                            <div className="form-group" style={{background:"white"}} align="left">
-                                <div className="form-check" style={{height: "4rem", overflow: "auto"}}>
-                                    {
-                                        this.state.media.map(
-                                            media =>
-                                                <div key={media.name} className="row col-md -12 custom-control custom-radio">
-                                                    <input className="form-check-input" name="customRadio"
-                                                           type="radio"
-                                                           onClick={() => this.changeSelect(media)}/>
-                                                    <label className="form-check-label">
-                                                        <a onClick={() => this.debugBase64('data:image/png;base64,' + media.fileContent)}>{media.name}</a></label>
-                                                </div>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                        </div>
                 </form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -221,9 +190,7 @@ class HomePageCompanent extends Component {
                                                     className="btn btn-outline-success selectCustomerButton">
                                                 <div className="row">
                                                     <div className="col-xl-8" align="left">{v.name} {v.surname}</div>
-                                                    <div className="col-xl-4"><img
-                                                        src={'data:image/png;base64,' + v.mediaDTO.fileContent}
-                                                        height="40" width="40" style={{margin: 10}}/></div>
+                                                    <div className="col-xl-4"></div>
                                                 </div>
                                             </button>
                                         </div>

@@ -1,11 +1,19 @@
 package com.ba.mapper;
 
 import com.ba.dto.CategoryDTO;
+import com.ba.dto.CustomerDTO;
+import com.ba.dto.OrderDTO;
 import com.ba.dto.OrderItemDTO;
+import com.ba.dto.PaymentTypeDTO;
 import com.ba.dto.ProductDTO;
+import com.ba.dto.WaiterDTO;
 import com.ba.entity.Category;
+import com.ba.entity.Customer;
+import com.ba.entity.Order;
 import com.ba.entity.OrderItem;
+import com.ba.entity.PaymentType;
 import com.ba.entity.Product;
+import com.ba.entity.Waiter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -13,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-12-31T01:38:16+0300",
+    date = "2021-01-03T20:10:48+0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 15.0.1 (Oracle Corporation)"
 )
 @Component
@@ -28,11 +36,15 @@ public class OrderMapperImpl implements OrderMapper {
         OrderItem orderItem = new OrderItem();
 
         orderItem.setId( orderItemDTO.getId() );
-        orderItem.setPiece( orderItemDTO.getPiece() );
-        orderItem.setTotalPrice( orderItemDTO.getTotalPrice() );
+        if ( orderItemDTO.getPiece() != null ) {
+            orderItem.setPiece( orderItemDTO.getPiece().intValue() );
+        }
+        if ( orderItemDTO.getTotalPrice() != null ) {
+            orderItem.setTotalPrice( orderItemDTO.getTotalPrice().intValue() );
+        }
         orderItem.setSelectedtable( orderItemDTO.getSelectedtable() );
         orderItem.setProduct( productDTOToProduct( orderItemDTO.getProduct() ) );
-        orderItem.setOrder( orderItemDTO.getOrder() );
+        orderItem.setOrder( orderDTOToOrder( orderItemDTO.getOrder() ) );
 
         return orderItem;
     }
@@ -46,11 +58,11 @@ public class OrderMapperImpl implements OrderMapper {
         OrderItemDTO orderItemDTO = new OrderItemDTO();
 
         orderItemDTO.setId( orderItem.getId() );
-        orderItemDTO.setPiece( orderItem.getPiece() );
-        orderItemDTO.setTotalPrice( orderItem.getTotalPrice() );
+        orderItemDTO.setPiece( (long) orderItem.getPiece() );
+        orderItemDTO.setTotalPrice( (long) orderItem.getTotalPrice() );
         orderItemDTO.setSelectedtable( orderItem.getSelectedtable() );
         orderItemDTO.setProduct( productToProductDTO( orderItem.getProduct() ) );
-        orderItemDTO.setOrder( orderItem.getOrder() );
+        orderItemDTO.setOrder( orderToOrderDTO( orderItem.getOrder() ) );
 
         return orderItemDTO;
     }
@@ -140,6 +152,70 @@ public class OrderMapperImpl implements OrderMapper {
         return product;
     }
 
+    protected Customer customerDTOToCustomer(CustomerDTO customerDTO) {
+        if ( customerDTO == null ) {
+            return null;
+        }
+
+        Customer customer = new Customer();
+
+        customer.setId( customerDTO.getId() );
+        customer.setName( customerDTO.getName() );
+        customer.setSurname( customerDTO.getSurname() );
+        customer.setPhoneNumber( customerDTO.getPhoneNumber() );
+        customer.setAddress( customerDTO.getAddress() );
+
+        return customer;
+    }
+
+    protected Waiter waiterDTOToWaiter(WaiterDTO waiterDTO) {
+        if ( waiterDTO == null ) {
+            return null;
+        }
+
+        Waiter waiter = new Waiter();
+
+        waiter.setId( waiterDTO.getId() );
+        waiter.setName( waiterDTO.getName() );
+        waiter.setPhoneNumber( waiterDTO.getPhoneNumber() );
+        waiter.setMail( waiterDTO.getMail() );
+        waiter.setAddress( waiterDTO.getAddress() );
+        waiter.setSalary( waiterDTO.getSalary() );
+
+        return waiter;
+    }
+
+    protected PaymentType paymentTypeDTOToPaymentType(PaymentTypeDTO paymentTypeDTO) {
+        if ( paymentTypeDTO == null ) {
+            return null;
+        }
+
+        PaymentType paymentType = new PaymentType();
+
+        paymentType.setId( paymentTypeDTO.getId() );
+        paymentType.setType( paymentTypeDTO.getType() );
+
+        return paymentType;
+    }
+
+    protected Order orderDTOToOrder(OrderDTO orderDTO) {
+        if ( orderDTO == null ) {
+            return null;
+        }
+
+        Order order = new Order();
+
+        order.setId( orderDTO.getId() );
+        order.setCustomer( customerDTOToCustomer( orderDTO.getCustomer() ) );
+        order.setWaiter( waiterDTOToWaiter( orderDTO.getWaiter() ) );
+        order.setType( paymentTypeDTOToPaymentType( orderDTO.getType() ) );
+        order.setTotalAmount( orderDTO.getTotalAmount() );
+        order.setTotalCount( orderDTO.getTotalCount() );
+        order.setDate( orderDTO.getDate() );
+
+        return order;
+    }
+
     protected List<ProductDTO> productListToProductDTOList(List<Product> list) {
         if ( list == null ) {
             return null;
@@ -195,5 +271,69 @@ public class OrderMapperImpl implements OrderMapper {
         productDTO.setCategories( categoryListToCategoryDTOList( product.getCategories() ) );
 
         return productDTO;
+    }
+
+    protected PaymentTypeDTO paymentTypeToPaymentTypeDTO(PaymentType paymentType) {
+        if ( paymentType == null ) {
+            return null;
+        }
+
+        PaymentTypeDTO paymentTypeDTO = new PaymentTypeDTO();
+
+        paymentTypeDTO.setId( paymentType.getId() );
+        paymentTypeDTO.setType( paymentType.getType() );
+
+        return paymentTypeDTO;
+    }
+
+    protected WaiterDTO waiterToWaiterDTO(Waiter waiter) {
+        if ( waiter == null ) {
+            return null;
+        }
+
+        WaiterDTO waiterDTO = new WaiterDTO();
+
+        waiterDTO.setId( waiter.getId() );
+        waiterDTO.setName( waiter.getName() );
+        waiterDTO.setPhoneNumber( waiter.getPhoneNumber() );
+        waiterDTO.setMail( waiter.getMail() );
+        waiterDTO.setAddress( waiter.getAddress() );
+        waiterDTO.setSalary( waiter.getSalary() );
+
+        return waiterDTO;
+    }
+
+    protected CustomerDTO customerToCustomerDTO(Customer customer) {
+        if ( customer == null ) {
+            return null;
+        }
+
+        CustomerDTO customerDTO = new CustomerDTO();
+
+        customerDTO.setId( customer.getId() );
+        customerDTO.setName( customer.getName() );
+        customerDTO.setSurname( customer.getSurname() );
+        customerDTO.setPhoneNumber( customer.getPhoneNumber() );
+        customerDTO.setAddress( customer.getAddress() );
+
+        return customerDTO;
+    }
+
+    protected OrderDTO orderToOrderDTO(Order order) {
+        if ( order == null ) {
+            return null;
+        }
+
+        OrderDTO orderDTO = new OrderDTO();
+
+        orderDTO.setId( order.getId() );
+        orderDTO.setTotalAmount( order.getTotalAmount() );
+        orderDTO.setTotalCount( order.getTotalCount() );
+        orderDTO.setDate( order.getDate() );
+        orderDTO.setType( paymentTypeToPaymentTypeDTO( order.getType() ) );
+        orderDTO.setWaiter( waiterToWaiterDTO( order.getWaiter() ) );
+        orderDTO.setCustomer( customerToCustomerDTO( order.getCustomer() ) );
+
+        return orderDTO;
     }
 }

@@ -13,9 +13,9 @@ public interface CustomerMapper {
 //    CustomerMapper INSTANCE =Mappers.getMapper(CustomerMapper.class);
 
 
-    @Mapping(source ="media", target = "mediaDTO")
+
     CustomerDTO toDTO(Customer customer);
-    @Mapping(source = "mediaDTO",target = "media")
+
     Customer toEntity(CustomerDTO dto);
 
     List<Customer> toEntityList(List<CustomerDTO> dtoList);

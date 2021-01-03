@@ -28,7 +28,4 @@ public class Customer extends BaseEntity implements Serializable {
     private String phoneNumber;
     private String address;
 
-    @ManyToOne
-    @JoinColumn(name = "media_id")
-    private Media media;
 }
